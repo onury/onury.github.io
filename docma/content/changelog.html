@@ -1,0 +1,86 @@
+
+<html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
+<hr>
+<h4 id="-v1-0-0-release-2015-06-06-"><strong>v1.0.0</strong> Release (2015-06-06)</h4>
+<ul>
+<li><p></p><p><strong>Docma</strong> (Builder):</p><p></p>
+<ul>
+<li>Convert markdown files to HTML. See documentation.</li>
+<li>Added <code>.markdown:Object</code> build configuration options. (Same as <code>marked</code> module options).</li>
+<li>Added <code>.markdown.tasks:Boolean</code> option for parsing GitHub-like markdown tasks.</li>
+<li>Added emoji (twemoji) support for converted markdown files. Added <code>.markdown.emoji:Boolean</code> option.</li>
+<li>Improved GFM parsing.  </li>
+<li>Added <code>.app.server</code> build option that defines the server/host type for generating server config file(s) for the SPA. e.g., setting to <code>"apache"</code> generates an <code>.htaccess</code> file within the root of the generated output. Supports <code>"apache"</code> and <code>"github"</code>.</li>
+<li>Added <code>.app.base:String</code> build option that sets the base path for the SPA.</li>
+<li>Added <code>.app.entrance:String</code> build option that sets the initial content to be displayed.</li>
+<li>Added <code>.debug:Boolean</code> build option.</li>
+<li>Dropped <code>.dump</code> config option in favor of <code>.debug</code> option.</li>
+<li>Moved <code>.template.document</code> configuration to <code>.app</code>.</li>
+<li>Group <code>.js</code> files into multiple, separate documentation. See <code>.src</code> build option.</li>
+<li>Rename routes generated markdown files (names). See <code>.src</code> build option.</li>
+<li>Added negated glob support (that excludes the paths) for the <code>src</code> build option.</li>
+</ul>
+</li>
+<li><p></p><p><strong>Docma Web Core</strong>:</p><p></p>
+<ul>
+<li>Added client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
+<li>Implemented <code>EventEmitter</code>.</li>
+<li><em>BREAKING CHANGE</em>: Dropped <code>docma.ready()</code> method. Use <code>docma.on('ready', listener)</code> that's only triggered once on every page load or <code>docma.on('render', listener)</code> triggered when each content is rendered. Also see <code>docma.on('route', listener)</code> triggered when SPA route is changed.</li>
+<li>Docma web initializing errors are no longer passed to event listeners. They are now immediately thrown.</li>
+<li><code>docma.app:Object</code> and <code>docma.template.main:String</code> are exposed to the SPA.</li>
+<li>The <code>docma</code> object accessible by the SPA is now <code>Object.freeze</code>d.</li>
+<li>Fixed bookmark scrolling.</li>
+<li>Added new methods to <code>docma.utils</code> such as <code>getCodeName(symbol)</code>, <code>getFullName(symbol)</code>, etc...</li>
+<li>If <code>debug &gt;= 3</code>, web app will also output logs.</li>
+</ul>
+</li>
+<li><p></p><p><strong>Default Template</strong>:</p><p></p>
+<ul>
+<li>Better layout for HTML files converted from markdown.</li>
+<li>Fixed documentation of <code>@property</code> JSDoc tags.</li>
+<li>Updated default template structure.</li>
+<li>More supported languages for syntax highlighting (Javascript, JSON, CSS, HTML, XML, CoffeeScript, TypeScript, Bash, HTTP, Markdown, Dust and YAML).</li>
+<li>Auto-language detection is enabled for syntax highlighting.</li>
+<li>Style tables in HTML generated from markdown.</li>
+<li>Style code blocks in HTML generated from markdown.</li>
+<li>Better font display for code and summary/descriptions.</li>
+<li>Font size of sidebar items are auto-adjusted to fit the sidebar, if they exceed the width.</li>
+<li>Fixed incorrect symbols sort issue when symbol(s) have aliases.</li>
+<li>Improved various API documentation styles.</li>
+</ul>
+</li>
+<li><p></p><p>Other:</p><p></p>
+<ul>
+<li>Manage web-component dependency packages via Bower.</li>
+<li>Updated project structure.</li>
+<li>Various minor revisions and clean-up.</li>
+<li>Improved Docma source code documentation.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="-v0-5-4-pre-release-2015-05-22-"><strong>v0.5.4</strong> Pre-Release (2015-05-22)</h4>
+<ul>
+<li><code>docma.template.json</code> is no more copied over to the output.</li>
+<li>Added default template option <code>badges:Boolean</code>.</li>
+</ul>
+<hr>
+<h4 id="-v0-5-3-pre-release-2015-05-22-"><strong>v0.5.3</strong> Pre-Release (2015-05-22)</h4>
+<ul>
+<li>Fixed docma-web file paths.</li>
+</ul>
+<hr>
+<h4 id="-v0-5-2-pre-release-2015-05-20-"><strong>v0.5.2</strong> Pre-Release (2015-05-20)</h4>
+<ul>
+<li>Updated default template.</li>
+<li>Updated dependencies.</li>
+<li>Clean-up.</li>
+</ul>
+<hr>
+<h4 id="-v0-5-0-pre-release-2015-05-11-"><strong>v0.5.0</strong> Pre-Release (2015-05-11)</h4>
+<ul>
+<li>Initial (pre) release.</li>
+<li>Parse JSDoc documentation.</li>
+<li>Created default template.</li>
+</ul>
+</body></html>
