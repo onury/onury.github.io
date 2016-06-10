@@ -10,8 +10,8 @@
 <li><a href="#partials">Partials</a></li>
 <li><a href="#docma-web-core">Docma-Web Core</a></li>
 <li><a href="#custom-scripts">Custom Scripts</a></li>
-<li><a href="#initializing-the-template-web-app">Initializing the Template (Web App)</a></li>
-<li><a href="#css-and-less">CSS &amp; Less</a></li>
+<li><a href="#initializing-the-template-web-app-">Initializing the Template (Web App)</a></li>
+<li><a href="#css-less">CSS &amp; Less</a></li>
 <li><a href="#other-files">Other Files</a></li>
 <li><a href="#docma-default-template">Docma Default Template</a></li>
 </ul>
@@ -138,7 +138,7 @@
 {&gt;"footer"/}
 </code></pre>
 <h4 id="content-partial">Content Partial</h4>
-<p>In order to include other HTML content in the generated output (such as markdown files converted to HTML); you can also create another partial called <code>docma-content.html</code>. This is <em>optional</em> (and will be auto-generated). However, you should always create one for the template, for better layout and style, since the auto-generated partial will have a basic layout.</p>
+<p>In order to include other HTML content in the generated output (such as markdown files converted to HTML); you can also create another partial called <code>docma-content.html</code>. This is <em>optional</em> (and will be auto-generated). However, you should always create one for the template, for better layout and style, since the auto-generated partial will have a very basic layout.</p>
 <p>Content partial should include a <code>&lt;div id="docma-content"&gt;&lt;/div&gt;</code> in itself. Docma will load the target content into this element.</p>
 <p>This partial will also be compiled and loaded into in your main HTML, when navigated; so all styles and scripts of the main file will still be available.</p>
 <p>A simple example for <code>docma-content.html</code> partial:</p>
@@ -148,23 +148,38 @@
 </code></pre>
 <h3 id="docma-web-core">Docma-Web Core</h3>
 <p>When you build the documentation with your template, a <code>docma-web.js</code> will be generated (and linked in your main HTML); which is the core engine for the documentation web app. This will include everything the app needs such as the documentation data, compiled partials, dustjs engine, etc... (Note that the size of this script depends especially on the generated documentation data.)</p>
-<p>See <a href="https://github.com/onury/docma/blob/master/doc/docma.web.md">Docma Web API</a>.</p>
+<p>See <a href="?api=docma-web">Docma Web API</a>.</p>
 <h3 id="custom-scripts">Custom Scripts</h3>
 <p>You have full control over the main HTML file so you can include any Javascript files in it. Docma web core will always be prepended before your scripts; so that you can safely access the global <code>docma</code> object.</p>
 <h3 id="initializing-the-template-web-app-">Initializing the Template (Web App)</h3>
-<p>In order to make sure you execute some script after Docma is ready (and compiled partials are rendered), use the <code>.ready()</code> method of the global <code>docma</code> object.</p>
+<p>In order to make sure you execute some script after Docma is ready:</p>
 <pre><code class="lang-js">// run this in any js file in the browser
-docma.ready(function (err) {
-    if (err) {
-        console.log(err);
+docma.on('ready', function () {
+    // initialize your code here
+    // this runs only once
+});
+</code></pre>
+<p>The <code>ready</code> event will only be fired once, right after the initial load. To execute some code after each content or page is rendered, you should use the <code>render</code> event instead.</p>
+<pre><code class="lang-js">// run this in any js file in the browser
+docma.on('render', function (currentRoute) {
+    if (!currentRoute) {
+        console.log('Page not found!');
         return;
     }
-    // initialize your code here
-})
+    if (currentRoute.type === docma.Route.Type.API) {
+        // route generated for JSDoc documentation
+        console.log('This is an API documentation route.');
+    } else {
+        // route generated for markdown/HTML content
+        console.log('This is a content route.');
+    }
+});
 </code></pre>
 <h3 id="css-less">CSS &amp; Less</h3>
 <p>You can include any <code>.css</code> files, anywhere in your template. Since you have control over the main HTML file, you can link any stylesheet in it. As a convention, it's recommended that you place all <code>.css</code> files under <code>&lt;template&gt;/css</code>.</p>
 <p>You can also include less files in your template. Main less file(s) to be compiled, should be defined in <code>docma.template.json</code>.</p>
 <h3 id="other-files">Other Files</h3>
 <p>You can include any custom files anywhere in your template. They will be copied over into the output directory. If you need to include a file in the template but don't want it to be in the generated output; define it in the <code>docma.template.json</code> file, within the <code>ignore</code> setting.</p>
+<h3 id="docma-default-template">Docma Default Template</h3>
+<p>Docma includes a built-in default template for your convenience. Read the details on how to build your documentation with <a href="?content=default-template">default template</a>.</p>
 </body></html>
