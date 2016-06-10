@@ -122,7 +122,7 @@
 &lt;/html&gt;
 </code></pre>
 <p>An empty body would also be valid but we want the footer to come after <em>docma-main</em> element. So it's explicitly defined.</p>
-<p>Also, note that <strong>title</strong> of the document is not set. Since this is a template, title will be defined at build time and <code>&lt;title&gt;</code> element will be automatically added to the output document. See <a href="#build-configuration">Build Configuration</a>.</p>
+<p>Also, note that <strong>title</strong> of the document is not set. Since this is a template, title will be defined at build time and <code>&lt;title&gt;</code> element will be automatically added to the output document. See <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a>.</p>
 <h3 id="partials">Partials</h3>
 <p>Put all <a href="http://www.dustjs.com">Dust.js</a> partials in <code>&lt;template&gt;/partials</code> directory.</p>
 <p>You can have sub directories within <code>&lt;template&gt;/partials</code> but all HTML files in these directories will be treated as if they were at the same level (under <code>&lt;template&gt;/partials</code> directory). For example, if you have a template at <code>&lt;template&gt;/partials/widgets/menu.html</code>, you should still include it like this: <code>{&gt;"menu"/}</code> not <code>{&gt;"widgets/menu"/}</code> or <code>{&gt;"partials/widgets/menu"/}</code>. That's why all partials should have unique names.</p>
