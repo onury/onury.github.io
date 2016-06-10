@@ -1,9 +1,10 @@
 
-<html><head></head><body><h2 id="docma-default-template">Docma Default Template</h2>
-<p><a href="https://github.com/onury/docma">Docma</a> includes a built-in template; with a side-bar symbols menu, search and navigation features; and a beautiful layout.</p>
-<p>Using the [default template][default-template] is straight-forward. Just set <code>buildConfig.template.path</code> to <code>"default"</code> or omit it.</p>
-<h4 id="template-options">Template Options</h4>
-<p>Template specific options that can be used while building your documentation with this default template.</p>
+<html><head></head><body><h1 id="docma-default-template">Docma Default Template</h1>
+<hr />
+<p><a href="https://github.com/onury/docma">Docma</a> includes a built-in template; with a side-bar symbols menu, search and navigation features; and a beautiful layout. Actually you're viewing it right now. :bowtie:</p>
+<p>Using this default template is straight-forward. Just set <code>buildConfig.template.path</code> to <code>"default"</code> or omit it.</p>
+<h3 id="template-options">Template Options</h3>
+<p>Template specific options that can be used when building your documentation with this default template.</p>
 <table>
     <tbody><tr>
         <td><b>Option</b></td>
@@ -120,8 +121,8 @@
     </tr>
 </tbody></table>
 
-<h4 id="usage-with-docma">Usage with Docma</h4>
-<p>Template options are defined within the <a href="https://github.com/onury/docma#build-configuration">build configuration</a>. i.e. <code>buildConfig.template.options</code>.</p>
+<h3 id="usage-with-docma">Usage with Docma</h3>
+<p>Template options are defined within the <a href="?api=docma#Docma~BuildConfiguration">build configuration</a>. i.e. <code>buildConfig.template.options</code>.</p>
 <pre><code class="lang-js">var buildConfig = {
     template: {
         // Template-specific options
@@ -169,22 +170,15 @@
                     iconClass: "ico-md ico-github"
                 }
             ]
-        },
-        // Template main document settings
-        document: {
-            title: "My Library API Documentation",
-            meta: [
-                // list of meta objects
-            ]
         }
     },
     // other build configuration options
-    // src, dest, jsdoc, etc...
+    // src, dest, app, jsdoc, markdown, debug, etc...
 }
 </code></pre>
 <p>Then you can build your documentation with these customized template options.</p>
-<pre><code class="lang-js">Docma.create(buildConfig)
-    .build()
+<pre><code class="lang-js">Docma.create()
+    .build(buildConfig)
     .then(function() {
         console.log('Documentation is built successfully.');
     })
@@ -192,6 +186,4 @@
         console.log(err);
     });
 </code></pre>
-<hr>
-<p>← <a href="https://github.com/onury/docma">Docma documentation</a>.</p>
 </body></html>

@@ -1,10 +1,8 @@
 
-<html><head></head><body><h4 id="docma-templates">Docma Templates</h4>
-<hr>
-<h1 id="-dust-filters">(Dust) Filters</h1>
+<html><head></head><body><h1 id="docma-dust-filters">Docma (Dust) Filters</h1>
 <hr />
 <p>Docma uses <a href="http://www.dustjs.com/">Dust.js</a> as the template engine; which is also globally accessible within the template (web app).</p>
-<p>As well as the Dust.js built-in filters, Docma includes pre-defined filters for ease of use. Note that you can also create your own custom filters using the <code>dust</code> object.</p>
+<p>As well as the Dust.js built-in filters, Docma includes pre-defined filters for ease of use.</p>
 <ul>
 <li>Guide on <a href="http://www.dustjs.com/guides/using-filters">how to use Dust.js filters</a></li>
 <li>Create filters using <a href="http://www.dustjs.com/docs/filter-api">Dust.js Filter API</a></li>
@@ -139,6 +137,18 @@
     </tr>
 </tbody></table>
 
-<hr>
-<p>← <a href="https://github.com/onury/docma">Docma documentation</a>.</p>
-</body></html>
+<h3 id="creating-custom-filters">Creating Custom Filters</h3>
+<p>You can also create your own custom filters using either the <code>dust</code> object or shorthand methods defined by <a href="?api=docma-web#docma.addFilter">Docma Web</a>.</p>
+<pre><code class="lang-js">// filter that adds parenthesis if the symbol is a method.
+docma.addFilter('$parenths', function (symbol) {
+    return docma.utils.isMethod(symbol)
+        ? symbol.longname + '()'
+        : symbol.longname;
+});
+</code></pre>
+<h3 id="example-usage-in-partials">Example Usage in Partials</h3>
+<pre><code>{#documentation}
+    &lt;span&gt;{.|$parenths}&lt;/span&gt;&lt;br/&gt;
+    &lt;p&gt;{descriptions|s}&lt;/p&gt;
+{/documentation}
+</code></pre></body></html>
