@@ -1,0 +1,60 @@
+
+<html><head></head><body><h1 id="geolocator-v2">Geolocator v2</h1>
+<hr />
+<p><img src="https://img.shields.io/bower/v/geolocator.svg" alt="bower">
+<img src="https://img.shields.io/npm/v/geolocator.svg" alt="npm">
+<img src="https://img.shields.io/github/release/onury/geolocator.svg" alt="release">
+<img src="http://img.shields.io/npm/l/perfy.svg" alt="license">  </p>
+<blockquote>
+<p>Author: Onur Yıldırım (@onury)<br>© 2016 — Licensed under the MIT License.<br>Please see the <a href="https://github.com/onury/geolocator/blob/master/LICENSE">Disclaimer and License</a>.</p>
+</blockquote>
+<h2 id="features">Features</h2>
+<ul>
+<li>HTML5 geolocation (by user permission)</li>
+<li>Location by IP (Supported source services: FreeGeoIP, GeoPlugin, WikiMedia)</li>
+<li>Reverse Geocoding (address lookup)</li>
+<li>Full address information (street, town, neighborhood, region,
+country, country code, postal code, etc...)</li>
+<li>Fallback mechanism (from HTML5-geolocation to IP-geo lookup)</li>
+<li><strong>NEW</strong>: Get TimeZone information</li>
+<li><strong>NEW</strong>: Get Distance Matrix information</li>
+<li><strong>NEW</strong>: Calculate Distance between two coordinates</li>
+<li>Supports Google Loader (loads Google Maps dynamically)</li>
+<li>Dynamically creates Google Maps, <strong>on demand</strong> (with marker, info window, auto-adjusted zoom)</li>
+<li>Non-blocking script loading (external sources are loaded on the fly without interrupting page load)</li>
+<li>No library/framework dependencies (such as jQuery, MooTools, etc...)</li>
+<li>Browser Support: IE 9+, Chrome, Safari, Firefox, Opera...</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<p>(If you're migrating from v1.x to v2)</p>
+<ul>
+<li>Geolocator <strong>v2</strong> is completely re-written from scratch; adding more features to it while keeping and improving the existing ones. So almost everything has changed, for good.</li>
+<li>The most significant change is; we've got rid of separate callbacks for error and success. Now, we have Node-style, single callback for each async method; with <code>err</code> as the first argument. If it's a success, <code>err</code> will be <code>null</code>.</li>
+<li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.</li>
+<li><code>.location</code> property is dropped. This is a <code>static</code> library, so we no more keep the state. You can always access the result, via the second argument of each async method's callback.</li>
+<li>Read the API documentation for details and how clean and better Geolocator is.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Install via <strong>Bower</strong>:</p>
+<pre><code class="lang-shell">bower install geolocator
+</code></pre>
+<p>Install via <strong>NPM</strong>:</p>
+<pre><code class="lang-shell">npm install geolocator
+</code></pre>
+<h2 id="usage-">Usage:</h2>
+<p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
+<pre><code class="lang-html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+    window.onload = function () {
+        var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
+        geolocator.locate(options, function (err, location) {
+            if (err) {
+                console.log(error);
+                return;
+            }
+            console.log(location);
+        });
+    };
+&lt;/script&gt;
+</code></pre>
+</body></html>

@@ -1,0 +1,53 @@
+
+<html><head></head><body><h2 id="change-log-">Change Log:</h2>
+<h3 id="v2-0-0-2016-06-13-">v2.0.0 (2016-06-13)</h3>
+<ul>
+<li><strong>BREAKING CHANGES</strong>:<ul>
+<li>Geolocator is completely written from scratch; keeping the core features and adding more to it.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>v1.2.9</strong></p>
+<ul>
+<li>Improvement: Added HTTPS secure connection support for IP geo-sources. <em>(Note: GeoPlugin does not support HTTPS. You should use FreeGeoIP or Wikimedia IP sources instead.)</em>. (Fixes <a href="https://github.com/onury/geolocator/issues/11">Issue #11</a>. PR: @iurisilvio,)</li>
+</ul>
+<p><strong>v1.2.8</strong></p>
+<ul>
+<li>Revision: Removed the <code>sensor</code> parameter from Goole Maps loader, since it's not required anymore.</li>
+<li>Revision: Bumped <em>Google Maps</em> version to <code>3.18</code>.</li>
+<li>Revision: Created <a href="https://www.npmjs.com/package/geolocator">NPM package</a>.</li>
+<li>Revision: Created Bower package.</li>
+</ul>
+<p><strong>v1.2.6</strong></p>
+<ul>
+<li>Revision: The recent <code>Error</code> or <code>PositionError</code> (HTML5) is passed to error callbacks instead of <code>String</code> error message. See updated documentation. Fixes issue <a href="https://github.com/onury/geolocator/issues/7">#7</a>. <em>(This shouldn't be a breaking-change but do test your app if you decide to upgrade.)</em></li>
+<li>Feature: Added new method: <code>isPositionError()</code>.</li>
+<li>Updated example. (Enable/disable HTML5-to-IP fallback.)</li>
+</ul>
+<p><strong>v1.2.4</strong></p>
+<ul>
+<li>Revision: Source scripts are now automatically removed from DOM after result is received.</li>
+<li>Bug-Fix: <code>errorCallback</code> would not be invoked if IP geo-source service is not available. Fixes issue <a href="https://github.com/onury/geolocator/issues/6">#6</a>.</li>
+<li>Revision: Changed default IP source to GeoPlugin (index:<code>1</code>); since FreeGeoIP is occasionally down these days.</li>
+</ul>
+<p><strong>v1.2.1</strong></p>
+<ul>
+<li>Added <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</li>
+</ul>
+<p><strong>v1.2.0</strong></p>
+<ul>
+<li>Code optimizations.</li>
+<li>Now loads the latest release version of <em>Google Maps</em> (<code>3.15</code>).</li>
+</ul>
+<p><strong>v1.1.0</strong></p>
+<ul>
+<li>JSLint compliant code.</li>
+<li>Minor code revisions.</li>
+</ul>
+<p><strong>v0.9.5</strong></p>
+<ul>
+<li>Google has deprecated <code>google.loader.ClientLocation</code> API. As a result; Google (Loader) is removed from IP-Geo Sources.</li>
+<li>Indexes changed for IP-Geo sources. New Indexes: FreeGeoIP (0), GeoPlugin (1), Wikimedia (2)</li>
+</ul>
+</body></html>
