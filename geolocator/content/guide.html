@@ -51,7 +51,7 @@ country, country code, postal code, etc...)</li>
         var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
         geolocator.locate(options, function (err, location) {
             if (err) {
-                console.log(error);
+                console.log(err);
                 return;
             }
             console.log(location);
