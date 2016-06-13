@@ -35,7 +35,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Geolocator <strong>v2</strong> is completely re-written from scratch; adding more features to it while keeping and improving the existing ones. So almost everything has changed, for good.</li>
 <li>The most significant change is; we've got rid of separate callbacks for error and success. Now, we have Node-style, single callback for each async method; with <code>err</code> as the first argument. If it's a success, <code>err</code> will be <code>null</code>.</li>
 <li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.</li>
-<li><code>.location</code> property is dropped. This is a <code>static</code>, utility library, so we no more keep the state. You can always access the result, via the second argument of each async method's callback.</li>
+<li><code>.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback.</li>
 <li>Read the API documentation for details and how clean and better Geolocator is.</li>
 </ul>
 <h2 id="installation">Installation</h2>
