@@ -4,7 +4,7 @@
     "meta": {
       "range": [
         2766,
-        56077
+        55416
       ],
       "filename": "geolocator.js",
       "lineno": 92,
@@ -26,14 +26,14 @@
     "$longname": "geolocator",
     "$members": [
       {
-        "comment": "/**\n     * Calculates the distance between two geographic points.\n     * @memberof geolocator\n     *\n     * @param {Object} options - Required. Calculation and display options.\n     *     @param {Object} options.from - Required.\n     *     Object containing the `latitude` and `longitude` of original location.\n     *     @param {Object} options.to - Required.\n     *     Object containing the `latitude` and `longitude` of destination.\n     *     @param {String} options.formula - Optional. Default: `geolocator.DistanceFormula.HAVERSINE`.\n     *     The algorithm or formula to calculate the distance.\n     *     See [DistanceFormula](geolocator.{enums}.md#geolocator.DistanceFormula) enumeration.\n     *     @param {Number} options.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Preferred unit system to use when displaying distance.\n     *     See [UnitSystem](geolocator.{enums}.md#geolocator.UnitSystem) enumeration.\n     * @returns {Number} - The calculated distance.\n     *\n     * @example\n     * // Calculate distance from London to Paris.\n     * var result = geolocator.calcDistance({\n     *     from: {\n     *         latitude: 51.5085300,\n     *         longitude: -0.1257400\n     *     },\n     *     to: {\n     *         latitude: 48.8534100,\n     *         longitude: 2.3488000\n     *     },\n     *     formula: geolocator.DistanceFormula.HAVERSINE,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * });\n     * // result: 366.41656039126093 (kilometers)\n     */",
+        "comment": "/**\n     * Calculates the distance between two geographic points.\n     *\n     * @param {Object} options - Required. Calculation and display options.\n     *     @param {Object} options.from - Required.\n     *     Object containing the `latitude` and `longitude` of original location.\n     *     @param {Object} options.to - Required.\n     *     Object containing the `latitude` and `longitude` of destination.\n     *     @param {String} options.formula - Optional. Default: `geolocator.DistanceFormula.HAVERSINE`.\n     *     The algorithm or formula to calculate the distance.\n     *     See [DistanceFormula](geolocator.{enums}.md#geolocator.DistanceFormula) enumeration.\n     *     @param {Number} options.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Preferred unit system to use when displaying distance.\n     *     See [UnitSystem](geolocator.{enums}.md#geolocator.UnitSystem) enumeration.\n     * @returns {Number} - The calculated distance.\n     *\n     * @example\n     * // Calculate distance from London to Paris.\n     * var result = geolocator.calcDistance({\n     *     from: {\n     *         latitude: 51.5085300,\n     *         longitude: -0.1257400\n     *     },\n     *     to: {\n     *         latitude: 48.8534100,\n     *         longitude: 2.3488000\n     *     },\n     *     formula: geolocator.DistanceFormula.HAVERSINE,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * });\n     * // result: 366.41656039126093 (kilometers)\n     */",
         "meta": {
           "range": [
-            50717,
-            52106
+            50224,
+            51613
           ],
           "filename": "geolocator.js",
-          "lineno": 1190,
+          "lineno": 1172,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001596",
@@ -48,7 +48,6 @@
           }
         },
         "description": "Calculates the distance between two geographic points.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -112,18 +111,19 @@
         "name": "calcDistance",
         "longname": "geolocator.calcDistance",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.calcDistance"
       },
       {
-        "comment": "/**\n     * Sets or gets the geolocator configuration object.\n     * @memberof geolocator\n     *\n     * @param {Object} options - Optional. Configuration object.\n     * If omitted, this method returns the current configuration.\n     *     @param {String} options.language - Default: `\"en\"`.\n     *     Language to be used for API requests that supports language configurations.\n     *     This is generally used for Google APIs.\n     *     See {@link https://developers.google.com/maps/faq#languagesupport|supported languages}..\n     *     @param {Boolean} options.https - Default: `true`.\n     *     As Google recommends; using HTTPS encryption makes your site more secure,\n     *     and more resistant to snooping or tampering.\n     *     If set to `true`, the API calls are made over HTTPS, at all times.\n     *     Setting to `false` will switch to HTTP (even if the page is on HTTPS).\n     *     And if set to `null`, current protocol will be used.\n     *     Note that some APIs might not work with HTTP such as Google Maps TimeZone API.\n     *     @param {Object} options.google - Google specific options.\n     *         @param {String} options.google.version - Default: `\"3.22\"`.\n     *         Google Maps API version to be used (with `geolocator.createMap()`)\n     *         method. The default version value is tested and works with Geolocator.\n     *         You can set a greater value or the latest version number and it\n     *         should work; but it's not guaranteed.\n     *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.\n     *         @param {String} options.google.key - Default: `\"\"`.\n     *         API key to be used with Google API calls. Although some calls might\n     *         work without a key, it is generally required by most Goolge APIs.\n     *         To get a free (or premium) key,\n     *         {@link https://developers.google.com/maps/documentation/javascript/|click here}.\n     *\n     * @returns {Object} - Returns the current or updated configuration object.\n     *\n     * @example\n     * geolocator.config({\n     *     language: 'en',\n     *     google: {\n     *         key: 'YOUR-KEY'\n     *     }\n     * });\n     */",
+        "comment": "/**\n     * Sets or gets the geolocator configuration object.\n     *\n     * @param {Object} options - Optional. Configuration object.\n     * If omitted, this method returns the current configuration.\n     *     @param {String} options.language - Default: `\"en\"`.\n     *     Language to be used for API requests that supports language configurations.\n     *     This is generally used for Google APIs.\n     *     See {@link https://developers.google.com/maps/faq#languagesupport|supported languages}..\n     *     @param {Boolean} options.https - Default: `true`.\n     *     As Google recommends; using HTTPS encryption makes your site more secure,\n     *     and more resistant to snooping or tampering.\n     *     If set to `true`, the API calls are made over HTTPS, at all times.\n     *     Setting to `false` will switch to HTTP (even if the page is on HTTPS).\n     *     And if set to `null`, current protocol will be used.\n     *     Note that some APIs might not work with HTTP such as Google Maps TimeZone API.\n     *     @param {Object} options.google - Google specific options.\n     *         @param {String} options.google.version - Default: `\"3.22\"`.\n     *         Google Maps API version to be used (with `geolocator.createMap()`)\n     *         method. The default version value is tested and works with Geolocator.\n     *         You can set a greater value or the latest version number and it\n     *         should work; but it's not guaranteed.\n     *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.\n     *         @param {String} options.google.key - Default: `\"\"`.\n     *         API key to be used with Google API calls. Although some calls might\n     *         work without a key, it is generally required by most Goolge APIs.\n     *         To get a free (or premium) key,\n     *         {@link https://developers.google.com/maps/documentation/javascript/|click here}.\n     *\n     * @returns {Object} - Returns the current or updated configuration object.\n     *\n     * @example\n     * geolocator.config({\n     *     language: 'en',\n     *     google: {\n     *         key: 'YOUR-KEY'\n     *     }\n     * });\n     */",
         "meta": {
           "range": [
-            8255,
-            8480
+            8003,
+            8228
           ],
           "filename": "geolocator.js",
-          "lineno": 250,
+          "lineno": 241,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000147",
@@ -138,7 +138,6 @@
           }
         },
         "description": "Sets or gets the geolocator configuration object.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -211,18 +210,19 @@
         "name": "config",
         "longname": "geolocator.config",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.config"
       },
       {
-        "comment": "/**\n     * Enumerates formulas/algorithms for calculating the distance between two\n     * latitude/longitude points.\n     * See [details](geolocator.{enums}.md#geolocator.DistanceFormula).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates formulas/algorithms for calculating the distance between two\n     * latitude/longitude points.\n     * See [details](geolocator.{enums}.md#geolocator.DistanceFormula).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            5842,
-            5916
+            5618,
+            5692
           ],
           "filename": "geolocator.js",
-          "lineno": 202,
+          "lineno": 194,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000139",
@@ -238,7 +238,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -250,17 +249,18 @@
         "scope": "static",
         "name": "DistanceFormula",
         "longname": "geolocator.DistanceFormula",
+        "memberof": "geolocator",
         "$longname": "geolocator.DistanceFormula"
       },
       {
-        "comment": "/**\n     * Ensures Google Maps API is loaded. If not, this will load all of the\n     * main Javascript objects and symbols for use in the Maps API.\n     *\n     * Note that, Google Maps API is loaded only when needed. For example,\n     * the DistanceMatrix API does not support Web Service requests and\n     * requires this API to be loaded. However, the TimeZone API requests are\n     * made throught the Web Service without requiring a `google` object\n     * within DOM.\n     *\n     * Also note that this will not re-load the API if `google.maps` object\n     * already exists. In this case, the `callback` is still executed and\n     * no errors are passed.\n     *\n     * You can use the following overload to omit the `key` argument altogether:\n     *\n     * `geolocator.ensureGoogleLoaded(callback)`\n     *\n     * @memberof geolocator\n     *\n     * @param {String} key - Optional. Default: `undefined`.\n     * Google API key.\n     * @param {Function} callback - Callback function to be executed when\n     * the operation ends.\n     * @returns {void}\n     */",
+        "comment": "/**\n     * Ensures Google Maps API is loaded. If not, this will load all of the\n     * main Javascript objects and symbols for use in the Maps API.\n     *\n     * Note that, Google Maps API is loaded only when needed. For example,\n     * the DistanceMatrix API does not support Web Service requests and\n     * requires this API to be loaded. However, the TimeZone API requests are\n     * made throught the Web Service without requiring a `google` object\n     * within DOM.\n     *\n     * Also note that this will not re-load the API if `google.maps` object\n     * already exists. In this case, the `callback` is still executed and\n     * no errors are passed.\n     *\n     * You can use the following overload to omit the `key` argument altogether:\n     *\n     * `geolocator.ensureGoogleLoaded(callback)`\n     *\n     *\n     * @param {String} key - Optional. Default: `undefined`.\n     * Google API key.\n     * @param {Function} callback - Callback function to be executed when\n     * the operation ends.\n     * @returns {void}\n     */",
         "meta": {
           "range": [
-            54381,
-            55001
+            53832,
+            54452
           ],
           "filename": "geolocator.js",
-          "lineno": 1289,
+          "lineno": 1269,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001935",
@@ -276,7 +276,6 @@
           }
         },
         "description": "Ensures Google Maps API is loaded. If not, this will load all of the\nmain Javascript objects and symbols for use in the Maps API.\n\nNote that, Google Maps API is loaded only when needed. For example,\nthe DistanceMatrix API does not support Web Service requests and\nrequires this API to be loaded. However, the TimeZone API requests are\nmade throught the Web Service without requiring a `google` object\nwithin DOM.\n\nAlso note that this will not re-load the API if `google.maps` object\nalready exists. In this case, the `callback` is still executed and\nno errors are passed.\n\nYou can use the following overload to omit the `key` argument altogether:\n\n`geolocator.ensureGoogleLoaded(callback)`",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -309,18 +308,19 @@
         "name": "ensureGoogleLoaded",
         "longname": "geolocator.ensureGoogleLoaded",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.ensureGoogleLoaded"
       },
       {
-        "comment": "/**\n     * Geolocator Error class that provides a common type of error object for\n     * the various APIs implemented in Geolocator. All callbacks of Geolocator\n     * will include an instance of this object as the first argument; if the\n     * corresponding operation fails. Also all thrown errors will be an instance\n     * of this object. This object also enumerates the Geolocator Error codes\n     * with its enumerable properties.\n     * See [details](geolocator.error.md).\n     * @see {@link geolocator.error.md|GeolocatorError}\n     * @memberof geolocator\n     * @type {GeolocatorError}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Geolocator Error class that provides a common type of error object for\n     * the various APIs implemented in Geolocator. All callbacks of Geolocator\n     * will include an instance of this object as the first argument; if the\n     * corresponding operation fails. Also all thrown errors will be an instance\n     * of this object. This object also enumerates the Geolocator Error codes\n     * with its enumerable properties.\n     * See [details](geolocator.error.md).\n     * @see {@link geolocator.error.md|GeolocatorError}\n     * @type {GeolocatorError}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            3763,
-            3821
+            3707,
+            3765
           ],
           "filename": "geolocator.js",
-          "lineno": 123,
+          "lineno": 121,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000093",
@@ -336,7 +336,6 @@
         "see": [
           "{@link geolocator.error.md|GeolocatorError}"
         ],
-        "memberof": "geolocator",
         "type": {
           "names": [
             "GeolocatorError"
@@ -347,17 +346,18 @@
         "name": "Error",
         "longname": "geolocator.Error",
         "kind": "member",
+        "memberof": "geolocator",
         "$longname": "geolocator.Error"
       },
       {
-        "comment": "/**\n     * Converts a given address (or address components) into geographic\n     * coordinates (i.e. latitude, longitude).\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/intro|Google Maps Geocoding API}\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}\n     * @memberof geolocator\n     *\n     * @param {String|Object} options - Required. Either the address to geocode\n     * or geocoding options with the following properties.\n     *     @param {String} options.address - Required. The street address to\n     *     geocode, in the format used by the national postal service of the\n     *     country concerned. Additional address elements such as business\n     *     names and unit, suite or floor numbers should be avoided. Note that\n     *     any address component (route, locality, administrativeArea,\n     *     postalCode and country) should be specified either in address or\n     *     the corresponding property - not both. Doing so may result in\n     *     `ZERO_RESULTS`.\n     *     @param {String} options.route - Optional. Default: `undefined`\n     *     \tLong or short name of a route.\n     *     @param {String} options.locality - Optional. Default: `undefined`\n     *     \tLocality and sublocality of the location.\n     *     @param {String} options.administrativeArea - Optional. Default: `undefined`\n     *     \tAdministrative area of the location.\n     *     @param {String} options.postalCode - Optional. Default: `undefined`\n     *     \tPostal code of the location.\n     *     @param {String} options.country - Optional. Default: `undefined`\n     *     \tA country name or a two letter ISO 3166-1 country code.\n     *     @param {String} options.region - Optional. Default: `undefined`\n     *     \tThe region code, specified as a ccTLD (\"top-level domain\")\n     *     \ttwo-character value. e.g.: `\"fr\"` for France.\n     *     @param {Array|Object} options.bounds - Optional. Default: `undefined`\n     *     \tThe bounding box of the viewport within which to bias geocode\n     *     \tresults more prominently. e.g.:\n     *     \t`[ southwestLat:Number, southwestLng:Number, northeastLat:Number, northeastLng:Number ]`\n     *      @param {Boolean} options.raw - Optional. Default: `false`\n     *     \tWhether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API results.\n     * @returns {void}\n     *\n     * @example\n     * var address = '1600 Amphitheatre Parkway, CA';\n     * geolocator.geocode(address, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timestamp: 1456795956380\n     * }\n     */",
+        "comment": "/**\n     * Converts a given address (or address components) into geographic\n     * coordinates (i.e. latitude, longitude).\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/intro|Google Maps Geocoding API}\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}\n     *\n     * @param {String|Object} options - Required. Either the address to geocode\n     * or geocoding options with the following properties.\n     *     @param {String} options.address - Required. The street address to\n     *     geocode, in the format used by the national postal service of the\n     *     country concerned. Additional address elements such as business\n     *     names and unit, suite or floor numbers should be avoided. Note that\n     *     any address component (route, locality, administrativeArea,\n     *     postalCode and country) should be specified either in address or\n     *     the corresponding property - not both. Doing so may result in\n     *     `ZERO_RESULTS`.\n     *     @param {String} options.route - Optional. Default: `undefined`\n     *     \tLong or short name of a route.\n     *     @param {String} options.locality - Optional. Default: `undefined`\n     *     \tLocality and sublocality of the location.\n     *     @param {String} options.administrativeArea - Optional. Default: `undefined`\n     *     \tAdministrative area of the location.\n     *     @param {String} options.postalCode - Optional. Default: `undefined`\n     *     \tPostal code of the location.\n     *     @param {String} options.country - Optional. Default: `undefined`\n     *     \tA country name or a two letter ISO 3166-1 country code.\n     *     @param {String} options.region - Optional. Default: `undefined`\n     *     \tThe region code, specified as a ccTLD (\"top-level domain\")\n     *     \ttwo-character value. e.g.: `\"fr\"` for France.\n     *     @param {Array|Object} options.bounds - Optional. Default: `undefined`\n     *     \tThe bounding box of the viewport within which to bias geocode\n     *     \tresults more prominently. e.g.:\n     *     \t`[ southwestLat:Number, southwestLng:Number, northeastLat:Number, northeastLng:Number ]`\n     *      @param {Boolean} options.raw - Optional. Default: `false`\n     *     \tWhether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API results.\n     * @returns {void}\n     *\n     * @example\n     * var address = '1600 Amphitheatre Parkway, CA';\n     * geolocator.geocode(address, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timestamp: 1456795956380\n     * }\n     */",
         "meta": {
           "range": [
-            35510,
-            36247
+            35090,
+            35827
           ],
           "filename": "geolocator.js",
-          "lineno": 838,
+          "lineno": 823,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000846",
@@ -377,7 +377,6 @@
           "{@link https://developers.google.com/maps/documentation/geocoding/intro|Google Maps Geocoding API}",
           "{@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}"
         ],
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -496,18 +495,19 @@
         "name": "geocode",
         "longname": "geolocator.geocode",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.geocode"
       },
       {
-        "comment": "/**\n     * Gets the distance and duration values based on the recommended route\n     * between start and end points.\n     * @see {@link https://developers.google.com/maps/documentation/distance-matrix/intro|Google Maps Distance Matrix API}\n     * @see {@link https://developers.google.com/maps/documentation/distance-matrix/usage-limits|Usage Limits}\n     * @memberof geolocator\n     *\n     * @param {Object} options - Required. Distance matrix options.\n     *     @param {String|Object|Array} options.origins - Required.\n     *     One or more addresses and/or an object of latitude/longitude\n     *     values, from which to calculate distance and time. If you pass an\n     *     address as a string, the service will geocode the string and\n     *     convert it to a latitude/longitude coordinate to calculate distances.\n     *     Following are valid examples:\n     * <pre>\n     * options.origins = 'London';\n     * options.origins = ['London', 'Paris'];\n     * options.origins = { latitude: 51.5085300, longitude: -0.1257400 };\n     * options.origins = [{ latitude: 51.5085300, longitude: -0.1257400 }, { latitude: 48.8534100, longitude: 2.3488000 }];\n     * </pre>\n     *     @param {String|Object|Array} options.destinations - Required.\n     *     One or more addresses and/or an object of latitude/longitude\n     *     values, from which to calculate distance and time. If you pass an\n     *     address as a string, the service will geocode the string and\n     *     convert it to a latitude/longitude coordinate to calculate distances.\n     *     @param {String} options.travelMode - Optional. Default: `geolocator.TravelMode.DRIVING`.\n     *     Type of routing requested.\n     *     @param {String} options.avoidFerries - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid ferries where possible.\n     *     @param {String} options.avoidHighways - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid highways where possible.\n     *     @param {String} options.avoidTolls - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid toll roads where possible.\n     *     @param {Number} options.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Preferred unit system to use when displaying distance.\n     *     @param {String} options.region - Optional. Default: `undefined`.\n     *     Region code used as a bias for geocoding requests.\n     * @param {Boolean} options.raw - Optional. Default: `false`.\n     * Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, result) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API result.\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     origins: [{ latitude: 51.5085300, longitude: -0.1257400 }],\n     *     destinations: [{ latitude: 48.8534100, longitude: 2.3488000 }],\n     *     travelMode: geolocator.TravelMode.DRIVING,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * };\n     * geolocator.getDistanceMatrix(options, function (err, result) {\n     *     console.log(err || result);\n     * });\n     *\n     * // result:\n     * [\n     * \t{\n     * \t\tfrom: \"449 Duncannon St, London WC2R 0DZ, UK\",\n     * \t\tto: \"1 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris-4E-Arrondissement, France\",\n     * \t\tdistance: {\n     * \t\t\tvalue: 475104,\n     * \t\t\ttext: \"475 km\"\n     * \t\t},\n     * \t\tduration: {\n     * \t\t\tvalue: 20193,\n     * \t\t\ttext: \"5 hours 37 mins\"\n     * \t\t},\n     * \t\tfare: undefined,\n     * \t\ttimestamp: 1456795956380\n     * \t}\n     * ]\n     */",
+        "comment": "/**\n     * Gets the distance and duration values based on the recommended route\n     * between start and end points.\n     * @see {@link https://developers.google.com/maps/documentation/distance-matrix/intro|Google Maps Distance Matrix API}\n     * @see {@link https://developers.google.com/maps/documentation/distance-matrix/usage-limits|Usage Limits}\n     *\n     * @param {Object} options - Required. Distance matrix options.\n     *     @param {String|Object|Array} options.origins - Required.\n     *     One or more addresses and/or an object of latitude/longitude\n     *     values, from which to calculate distance and time. If you pass an\n     *     address as a string, the service will geocode the string and\n     *     convert it to a latitude/longitude coordinate to calculate distances.\n     *     Following are valid examples:\n     * <pre>\n     * options.origins = 'London';\n     * options.origins = ['London', 'Paris'];\n     * options.origins = { latitude: 51.5085300, longitude: -0.1257400 };\n     * options.origins = [{ latitude: 51.5085300, longitude: -0.1257400 }, { latitude: 48.8534100, longitude: 2.3488000 }];\n     * </pre>\n     *     @param {String|Object|Array} options.destinations - Required.\n     *     One or more addresses and/or an object of latitude/longitude\n     *     values, from which to calculate distance and time. If you pass an\n     *     address as a string, the service will geocode the string and\n     *     convert it to a latitude/longitude coordinate to calculate distances.\n     *     @param {String} options.travelMode - Optional. Default: `geolocator.TravelMode.DRIVING`.\n     *     Type of routing requested.\n     *     @param {String} options.avoidFerries - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid ferries where possible.\n     *     @param {String} options.avoidHighways - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid highways where possible.\n     *     @param {String} options.avoidTolls - Optional. Default: `undefined`.\n     *     If true, instructs the Distance Matrix service to avoid toll roads where possible.\n     *     @param {Number} options.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Preferred unit system to use when displaying distance.\n     *     @param {String} options.region - Optional. Default: `undefined`.\n     *     Region code used as a bias for geocoding requests.\n     * @param {Boolean} options.raw - Optional. Default: `false`.\n     * Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, result) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API result.\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     origins: [{ latitude: 51.5085300, longitude: -0.1257400 }],\n     *     destinations: [{ latitude: 48.8534100, longitude: 2.3488000 }],\n     *     travelMode: geolocator.TravelMode.DRIVING,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * };\n     * geolocator.getDistanceMatrix(options, function (err, result) {\n     *     console.log(err || result);\n     * });\n     *\n     * // result:\n     * [\n     * \t{\n     * \t\tfrom: \"449 Duncannon St, London WC2R 0DZ, UK\",\n     * \t\tto: \"1 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris-4E-Arrondissement, France\",\n     * \t\tdistance: {\n     * \t\t\tvalue: 475104,\n     * \t\t\ttext: \"475 km\"\n     * \t\t},\n     * \t\tduration: {\n     * \t\t\tvalue: 20193,\n     * \t\t\ttext: \"5 hours 37 mins\"\n     * \t\t},\n     * \t\tfare: undefined,\n     * \t\ttimestamp: 1456795956380\n     * \t}\n     * ]\n     */",
         "meta": {
           "range": [
-            47448,
-            49194
+            46983,
+            48729
           ],
           "filename": "geolocator.js",
-          "lineno": 1117,
+          "lineno": 1100,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001355",
@@ -527,7 +527,6 @@
           "{@link https://developers.google.com/maps/documentation/distance-matrix/intro|Google Maps Distance Matrix API}",
           "{@link https://developers.google.com/maps/documentation/distance-matrix/usage-limits|Usage Limits}"
         ],
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -648,18 +647,19 @@
         "name": "getDistanceMatrix",
         "longname": "geolocator.getDistanceMatrix",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.getDistanceMatrix"
       },
       {
-        "comment": "/**\n     * Gets the current public IP of the client.\n     * @memberof geolocator\n     *\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, result) { ... }`\n     * @returns {void}\n     *\n     * @example\n     * geolocator.getIP(function (err, result) {\n     *     console.log(err || result);\n     * });\n     * // result:\n     * {\n     *     ip: \"176.232.71.155\",\n     *     timestamp: 1457573683427\n     * }\n     */",
+        "comment": "/**\n     * Gets the current public IP of the client.\n     *\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, result) { ... }`\n     * @returns {void}\n     *\n     * @example\n     * geolocator.getIP(function (err, result) {\n     *     console.log(err || result);\n     * });\n     * // result:\n     * {\n     *     ip: \"176.232.71.155\",\n     *     timestamp: 1457573683427\n     * }\n     */",
         "meta": {
           "range": [
-            52644,
-            53311
+            52123,
+            52790
           ],
           "filename": "geolocator.js",
-          "lineno": 1240,
+          "lineno": 1221,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001841",
@@ -674,7 +674,6 @@
           }
         },
         "description": "Gets the current public IP of the client.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -701,18 +700,19 @@
         "name": "getIP",
         "longname": "geolocator.getIP",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.getIP"
       },
       {
-        "comment": "/**\n     * Gets timezone information for the given coordinates.\n     * @see {@link https://developers.google.com/maps/documentation/timezone/intro|Google Maps TimeZone API}\n     * @see {@link https://developers.google.com/maps/documentation/timezone/usage-limits|Usage Limits}\n     * @memberof geolocator\n     *\n     * @param {Object} options - Required. Time zone options.\n     *     @param {Number} options.latitude - Required. Latitude of location.\n     *     @param {Number} options.longitude - Required. Longitude of location.\n     *     @param {Number} options.timestamp - Optional. Default: (Current timestamp).\n     *     Specifies the desired time as seconds since midnight, January 1,\n     *     1970 UTC. This is used to determine whether or not Daylight\n     *     Savings should be applied.\n     *     @param {Boolean} options.raw - Optional. Default: `false`.\n     *     Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, timezone) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API result.\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     latitude: 48.8534100,\n     *     longitude: 2.3488000\n     * };\n     * geolocator.getTimeZone(options, function (err, timezone) {\n     *     console.log(err || timezone);\n     * });\n     *\n     * // timezone:\n     * {\n     *     id: \"Europe/Paris\",\n     *     name: \"Central European Standard Time\",\n     *     abbr: \"CEST\",\n     *     dstOffset: 0,\n     *     rawOffset: 3600,\n     *     timestamp: 1455733120\n     * }\n     */",
+        "comment": "/**\n     * Gets timezone information for the given coordinates.\n     * @see {@link https://developers.google.com/maps/documentation/timezone/intro|Google Maps TimeZone API}\n     * @see {@link https://developers.google.com/maps/documentation/timezone/usage-limits|Usage Limits}\n     *\n     * @param {Object} options - Required. Time zone options.\n     *     @param {Number} options.latitude - Required. Latitude of location.\n     *     @param {Number} options.longitude - Required. Longitude of location.\n     *     @param {Number} options.timestamp - Optional. Default: (Current timestamp).\n     *     Specifies the desired time as seconds since midnight, January 1,\n     *     1970 UTC. This is used to determine whether or not Daylight\n     *     Savings should be applied.\n     *     @param {Boolean} options.raw - Optional. Default: `false`.\n     *     Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes, in the following signature:\n     * `function (err, timezone) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API result.\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     latitude: 48.8534100,\n     *     longitude: 2.3488000\n     * };\n     * geolocator.getTimeZone(options, function (err, timezone) {\n     *     console.log(err || timezone);\n     * });\n     *\n     * // timezone:\n     * {\n     *     id: \"Europe/Paris\",\n     *     name: \"Central European Standard Time\",\n     *     abbr: \"CEST\",\n     *     dstOffset: 0,\n     *     rawOffset: 3600,\n     *     timestamp: 1455733120\n     * }\n     */",
         "meta": {
           "range": [
-            41644,
-            43648
+            41207,
+            43211
           ],
           "filename": "geolocator.js",
-          "lineno": 990,
+          "lineno": 974,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001097",
@@ -732,7 +732,6 @@
           "{@link https://developers.google.com/maps/documentation/timezone/intro|Google Maps TimeZone API}",
           "{@link https://developers.google.com/maps/documentation/timezone/usage-limits|Usage Limits}"
         ],
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -804,18 +803,19 @@
         "name": "getTimeZone",
         "longname": "geolocator.getTimeZone",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.getTimeZone"
       },
       {
-        "comment": "/**\n     * Checks whether HTML5 Geolocation API is supported.\n     * @memberof geolocator\n     *\n     * @return {Boolean}\n     */",
+        "comment": "/**\n     * Checks whether HTML5 Geolocation API is supported.\n     *\n     * @return {Boolean}\n     */",
         "meta": {
           "range": [
-            55977,
-            56074
+            55316,
+            55413
           ],
           "filename": "geolocator.js",
-          "lineno": 1350,
+          "lineno": 1326,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100002031",
@@ -828,7 +828,6 @@
           }
         },
         "description": "Checks whether HTML5 Geolocation API is supported.",
-        "memberof": "geolocator",
         "returns": [
           {
             "type": {
@@ -841,18 +840,19 @@
         "name": "isGeolocationSupported",
         "longname": "geolocator.isGeolocationSupported",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.isGeolocationSupported"
       },
       {
-        "comment": "/**\n     * Checks whether the given value is an instance of `GeolocatorError`.\n     * @memberof geolocator\n     *\n     * @param {*} obj - Object to be checked.\n     * @return {Boolean}\n     */",
+        "comment": "/**\n     * Checks whether the given value is an instance of `GeolocatorError`.\n     *\n     * @param {*} obj - Object to be checked.\n     * @return {Boolean}\n     */",
         "meta": {
           "range": [
-            55745,
-            55837
+            55112,
+            55204
           ],
           "filename": "geolocator.js",
-          "lineno": 1340,
+          "lineno": 1317,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100002020",
@@ -867,7 +867,6 @@
           }
         },
         "description": "Checks whether the given value is an instance of `GeolocatorError`.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -891,18 +890,19 @@
         "name": "isGeolocatorError",
         "longname": "geolocator.isGeolocatorError",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.isGeolocatorError"
       },
       {
-        "comment": "/**\n     * Checks whether the Google Maps API is loaded.\n     * @memberof geolocator\n     *\n     * @returns {Boolean} - Returns `true` if already loaded.\n     */",
+        "comment": "/**\n     * Checks whether the Google Maps API is loaded.\n     *\n     * @returns {Boolean} - Returns `true` if already loaded.\n     */",
         "meta": {
           "range": [
-            55173,
-            55256
+            54596,
+            54679
           ],
           "filename": "geolocator.js",
-          "lineno": 1318,
+          "lineno": 1297,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100001997",
@@ -915,7 +915,6 @@
           }
         },
         "description": "Checks whether the Google Maps API is loaded.",
-        "memberof": "geolocator",
         "returns": [
           {
             "type": {
@@ -929,18 +928,19 @@
         "name": "isGoogleLoaded",
         "longname": "geolocator.isGoogleLoaded",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.isGoogleLoaded"
       },
       {
-        "comment": "/**\n     * Checks whether the type of the given object is an HTML5 `PositionError`.\n     * @memberof geolocator\n     *\n     * @param {*} obj - Object to be checked.\n     * @return {Boolean}\n     */",
+        "comment": "/**\n     * Checks whether the type of the given object is an HTML5 `PositionError`.\n     *\n     * @param {*} obj - Object to be checked.\n     * @return {Boolean}\n     */",
         "meta": {
           "range": [
-            55464,
-            55542
+            54859,
+            54937
           ],
           "filename": "geolocator.js",
-          "lineno": 1329,
+          "lineno": 1307,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100002009",
@@ -955,7 +955,6 @@
           }
         },
         "description": "Checks whether the type of the given object is an HTML5 `PositionError`.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -979,18 +978,19 @@
         "name": "isPositionError",
         "longname": "geolocator.isPositionError",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.isPositionError"
       },
       {
-        "comment": "/**\n     * Locates the user's location via HTML5 geolocation. This may\n     * require/prompt for user's permission. If the permission is granted we'll\n     * get the most accurate location information. Otherwise, we'll fallback to\n     * locating via user's IP (if enabled).\n     *\n     * Note that HTML5 Geolocation feature no more allows insecure origins.\n     * See {@link https://goo.gl/rStTGz|this} for more details.\n     * This means if you don't call this method from an HTTPS page, it will\n     * fail. And if `options.considerIp` is enabled, this will locate by IP.\n     *\n     * @memberof geolocator\n     *\n     * @param {Object} options - Optional. HTML5 geo-location settings with some\n     * additional options.\n     *     @param {Boolean} options.enableHighAccuracy - Optional. Default: `true`.\n     *     Specifies whether the device should provide the most accurate\n     *     position it can. Note that setting this to `true` might consume more\n     *     CPU and/or battery power; and result in slower response times.\n     *     @param {Number} options.timeout - Optional. Default: `6000`.\n     *     HTML5 position timeout setting in milliseconds. Setting this to\n     *     `Infinity` means that Geolocator won't return until the position\n     *     is available.\n     *     @param {Number} options.maximumAge - Optional. Default: `0`.\n     *     HTML5 position maximum age. Indicates the maximum age in\n     *     milliseconds of a possible cached position that is acceptable to\n     *     return. `0` means, the device cannot use a cached position and must\n     *     attempt to retrieve the real current position. If set to `Infinity`\n     *     the device must return a cached position regardless of its age.\n     *     @param {Boolean} options.considerIp - Optional. Default: `false`.\n     *     Specifies whether to fallback to IP geolocation if the HTML5\n     *     geolocation fails (e.g. user rejection).\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Note that this\n     *     means an additional request which requires a Google API key to be set\n     *     in the Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     *\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     enableHighAccuracy: true,\n     *     timeout: 6000,\n     *     maximumAge: 0,\n     *     considerIp: true,\n     *     addressLookup: true,\n     *     timezone: true\n     * };\n     * geolocator.locate(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499,\n     *         accuracy: 30,\n     *         altitude: null,\n     *         altitudeAccuracy: null,\n     *         heading: null,\n     *         speed: null\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timezone: {\n     *         id: \"America/Los_Angeles\",\n     *         name: \"Pacific Standard Time\",\n     *         abbr: \"PST\",\n     *         dstOffset: 0,\n     *         rawOffset: -28800\n     *     },\n     *     timestamp: 1456795956380\n     * }\n     */",
+        "comment": "/**\n     * Locates the user's location via HTML5 geolocation. This may\n     * require/prompt for user's permission. If the permission is granted we'll\n     * get the most accurate location information. Otherwise, we'll fallback to\n     * locating via user's IP (if enabled).\n     *\n     * Note that HTML5 Geolocation feature no more allows insecure origins.\n     * See {@link https://goo.gl/rStTGz|this} for more details.\n     * This means if you don't call this method from an HTTPS page, it will\n     * fail. And if `options.considerIp` is enabled, this will locate by IP.\n     *\n     *\n     * @param {Object} options - Optional. HTML5 geo-location settings with some\n     * additional options.\n     *     @param {Boolean} options.enableHighAccuracy - Optional. Default: `true`.\n     *     Specifies whether the device should provide the most accurate\n     *     position it can. Note that setting this to `true` might consume more\n     *     CPU and/or battery power; and result in slower response times.\n     *     @param {Number} options.timeout - Optional. Default: `6000`.\n     *     HTML5 position timeout setting in milliseconds. Setting this to\n     *     `Infinity` means that Geolocator won't return until the position\n     *     is available.\n     *     @param {Number} options.maximumAge - Optional. Default: `0`.\n     *     HTML5 position maximum age. Indicates the maximum age in\n     *     milliseconds of a possible cached position that is acceptable to\n     *     return. `0` means, the device cannot use a cached position and must\n     *     attempt to retrieve the real current position. If set to `Infinity`\n     *     the device must return a cached position regardless of its age.\n     *     @param {Boolean} options.considerIp - Optional. Default: `false`.\n     *     Specifies whether to fallback to IP geolocation if the HTML5\n     *     geolocation fails (e.g. user rejection).\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Note that this\n     *     means an additional request which requires a Google API key to be set\n     *     in the Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     *\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     enableHighAccuracy: true,\n     *     timeout: 6000,\n     *     maximumAge: 0,\n     *     considerIp: true,\n     *     addressLookup: true,\n     *     timezone: true\n     * };\n     * geolocator.locate(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499,\n     *         accuracy: 30,\n     *         altitude: null,\n     *         altitudeAccuracy: null,\n     *         heading: null,\n     *         speed: null\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timezone: {\n     *         id: \"America/Los_Angeles\",\n     *         name: \"Pacific Standard Time\",\n     *         abbr: \"PST\",\n     *         dstOffset: 0,\n     *         rawOffset: -28800\n     *     },\n     *     timestamp: 1456795956380\n     * }\n     */",
         "meta": {
           "range": [
-            12985,
-            14038
+            12705,
+            13758
           ],
           "filename": "geolocator.js",
-          "lineno": 358,
+          "lineno": 348,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000174",
@@ -1006,7 +1006,6 @@
           }
         },
         "description": "Locates the user's location via HTML5 geolocation. This may\nrequire/prompt for user's permission. If the permission is granted we'll\nget the most accurate location information. Otherwise, we'll fallback to\nlocating via user's IP (if enabled).\n\nNote that HTML5 Geolocation feature no more allows insecure origins.\nSee {@link https://goo.gl/rStTGz|this} for more details.\nThis means if you don't call this method from an HTTPS page, it will\nfail. And if `options.considerIp` is enabled, this will locate by IP.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -1096,18 +1095,19 @@
         "name": "locate",
         "longname": "geolocator.locate",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.locate"
       },
       {
-        "comment": "/**\n     * Locates the user's location by IP using the given IP-Geo-Source.\n     * @memberof geolocator\n     *\n     * @param {Object} options - Required. Locate options.\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Since no\n     *     precise address can be fetched from an IP addres; you should only\n     *     enable this if the IP Geo-Source returns no useful address\n     *     information other than coordinates. Also, note that this means an\n     *     additional request which requires a Google API key to be set in the\n     *     Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     * @param {Function} callback - Callback function to be executed when the\n     * request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * @returns {void}\n     */",
+        "comment": "/**\n     * Locates the user's location by IP using the given IP-Geo-Source.\n     *\n     * @param {Object} options - Required. Locate options.\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Since no\n     *     precise address can be fetched from an IP addres; you should only\n     *     enable this if the IP Geo-Source returns no useful address\n     *     information other than coordinates. Also, note that this means an\n     *     additional request which requires a Google API key to be set in the\n     *     Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     * @param {Function} callback - Callback function to be executed when the\n     * request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * @returns {void}\n     */",
         "meta": {
           "range": [
-            21297,
-            22492
+            20961,
+            22156
           ],
           "filename": "geolocator.js",
-          "lineno": 537,
+          "lineno": 525,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000493",
@@ -1123,7 +1123,6 @@
           }
         },
         "description": "Locates the user's location by IP using the given IP-Geo-Source.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -1174,18 +1173,19 @@
         "name": "locateByIP",
         "longname": "geolocator.locateByIP",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.locateByIP"
       },
       {
-        "comment": "/**\n     * Returns a location and accuracy radius based on information about cell\n     * towers and WiFi nodes that the mobile client can detect; via the Google\n     * Maps Geolocation API.\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/intro|Google Maps Geolocation API}\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/usage-limits|Usage Limits}\n     * @memberof geolocator\n     *\n     * @param {Object} options - Optional. Default: `undefined`.\n     * Geolocation options.\n     *     @param {Number} options.homeMobileCountryCode - Optional. Default: `undefined`.\n     *     The mobile country code (MCC) for the device's home network.\n     *     @param {Number} options.homeMobileNetworkCode - Optional. Default: `undefined`.\n     *     The mobile network code (MNC) for the device's home network.\n     *     @param {String} options.radioType - Optional. Default: `undefined`.\n     *     The mobile radio type. See `{@link geolocator.RadioType}` enumeration\n     *     for possible values. While this field is optional, it should be\n     *     included if a value is available, for more accurate results.\n     *     @param {string} options.carrier - Optional. Default: `undefined`.\n     *     The carrier name. e.g. \"Vodafone\"\n     *     @param {Boolean} options.considerIp - Optional. Default: `false`.\n     *     Specifies whether to fallback to IP geolocation if wifi and cell\n     *     tower signals are not available. Note that the IP address in the\n     *     request header may not be the IP of the device. Set `considerIp` to\n     *     false to disable fall back.\n     *     @param {Array} options.cellTowers - Optional. Default: `undefined`.\n     *     An array of cell tower objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#cell_tower_object|Cell tower objects} for details.\n     *     @param {Array} options.wifiAccessPoints - Optional. Default: `undefined`.\n     *     An array of WiFi access point objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#wifi_access_point_object|WiFi access point objects} for details.\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Note that this\n     *     means an additional request which requires a Google API key to be set\n     *     in the Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.raw - Optional. Default: `false`\n     *     \tWhether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     *\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     homeMobileCountryCode: 310,\n     *     homeMobileNetworkCode: 410,\n     *     carrier: 'Vodafone',\n     *     radioType: geolocator.RadioType.GSM,\n     *     considerIp: true,\n     *     addressLookup: false,\n     *     timezone: false\n     * };\n     * geolocator.locateByMobile(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     */",
+        "comment": "/**\n     * Returns a location and accuracy radius based on information about cell\n     * towers and WiFi nodes that the mobile client can detect; via the Google\n     * Maps Geolocation API.\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/intro|Google Maps Geolocation API}\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/usage-limits|Usage Limits}\n     *\n     * @param {Object} options - Optional. Default: `undefined`.\n     * Geolocation options.\n     *     @param {Number} options.homeMobileCountryCode - Optional. Default: `undefined`.\n     *     The mobile country code (MCC) for the device's home network.\n     *     @param {Number} options.homeMobileNetworkCode - Optional. Default: `undefined`.\n     *     The mobile network code (MNC) for the device's home network.\n     *     @param {String} options.radioType - Optional. Default: `undefined`.\n     *     The mobile radio type. See `{@link geolocator.RadioType}` enumeration\n     *     for possible values. While this field is optional, it should be\n     *     included if a value is available, for more accurate results.\n     *     @param {string} options.carrier - Optional. Default: `undefined`.\n     *     The carrier name. e.g. \"Vodafone\"\n     *     @param {Boolean} options.considerIp - Optional. Default: `false`.\n     *     Specifies whether to fallback to IP geolocation if wifi and cell\n     *     tower signals are not available. Note that the IP address in the\n     *     request header may not be the IP of the device. Set `considerIp` to\n     *     false to disable fall back.\n     *     @param {Array} options.cellTowers - Optional. Default: `undefined`.\n     *     An array of cell tower objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#cell_tower_object|Cell tower objects} for details.\n     *     @param {Array} options.wifiAccessPoints - Optional. Default: `undefined`.\n     *     An array of WiFi access point objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#wifi_access_point_object|WiFi access point objects} for details.\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Note that this\n     *     means an additional request which requires a Google API key to be set\n     *     in the Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.raw - Optional. Default: `false`\n     *     \tWhether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     *\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     homeMobileCountryCode: 310,\n     *     homeMobileNetworkCode: 410,\n     *     carrier: 'Vodafone',\n     *     radioType: geolocator.RadioType.GSM,\n     *     considerIp: true,\n     *     addressLookup: false,\n     *     timezone: false\n     * };\n     * geolocator.locateByMobile(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     */",
         "meta": {
           "range": [
-            17766,
-            19950
+            17458,
+            19642
           ],
           "filename": "geolocator.js",
-          "lineno": 448,
+          "lineno": 437,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000286",
@@ -1205,7 +1205,6 @@
           "{@link https://developers.google.com/maps/documentation/geolocation/intro|Google Maps Geolocation API}",
           "{@link https://developers.google.com/maps/documentation/geolocation/usage-limits|Usage Limits}"
         ],
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -1331,18 +1330,19 @@
         "name": "locateByMobile",
         "longname": "geolocator.locateByMobile",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.locateByMobile"
       },
       {
-        "comment": "/**\n     * Enumerates Google API location types.\n     * See [details](geolocator.{enums}.md#geolocator.LocationType).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates Google API location types.\n     * See [details](geolocator.{enums}.md#geolocator.LocationType).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            4423,
-            4491
+            4311,
+            4379
           ],
           "filename": "geolocator.js",
-          "lineno": 149,
+          "lineno": 145,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000107",
@@ -1358,7 +1358,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -1370,17 +1369,18 @@
         "scope": "static",
         "name": "LocationType",
         "longname": "geolocator.LocationType",
+        "memberof": "geolocator",
         "$longname": "geolocator.LocationType"
       },
       {
-        "comment": "/**\n     * Enumerates mobile radio types.\n     * See [details](geolocator.{enums}.md#geolocator.RadioType).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates mobile radio types.\n     * See [details](geolocator.{enums}.md#geolocator.RadioType).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            5432,
-            5494
+            5236,
+            5298
           ],
           "filename": "geolocator.js",
-          "lineno": 188,
+          "lineno": 181,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000131",
@@ -1396,7 +1396,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -1408,17 +1407,18 @@
         "scope": "static",
         "name": "RadioType",
         "longname": "geolocator.RadioType",
+        "memberof": "geolocator",
         "$longname": "geolocator.RadioType"
       },
       {
-        "comment": "/**\n     * Converts the given geographic coordinates into a human-readable address\n     * information.\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding|Google Maps (Reverse) Geocoding API}\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}\n     * @memberof geolocator\n     *\n     * @param {Object|String} options - Required. Either the `placeId` of the\n     * location or Reverse Geocoding options with the following properties.\n     *     @param {Number} options.latitude - Required if `placeId` is omitted.\n     *     Latitude of the target location.\n     *     @param {Number} options.longitude - Required if `placeId` is omitted.\n     *     Longitude of the target location.\n     *     @param {String} options.placeId - Required if `latitude` and `longitude`\n     *     are omitted. The place ID of the place for which you wish to\n     *     obtain the human-readable address. The place ID is a unique\n     *     identifier that can be used with other Google APIs. Note that if\n     *     `placeId` is set, `latitude` and `longitude` are ignored.\n     *     @param {Boolean} options.raw - Optional. Default: `false`.\n     *     Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API results.\n     * @returns {void}\n     *\n     * @example\n     * var coords = {\n     *     latitude: 37.4224764,\n     *     longitude: -122.0842499\n     * };\n     * geolocator.reverseGeocode(coords, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timestamp: 1456795956380\n     * }\n     */",
+        "comment": "/**\n     * Converts the given geographic coordinates into a human-readable address\n     * information.\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding|Google Maps (Reverse) Geocoding API}\n     * @see {@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}\n     * @alias geolocator.addressLookup\n     *\n     * @param {Object|String} options - Required. Either the `placeId` of the\n     * location or Reverse Geocoding options with the following properties.\n     *     @param {Number} options.latitude - Required if `placeId` is omitted.\n     *     Latitude of the target location.\n     *     @param {Number} options.longitude - Required if `placeId` is omitted.\n     *     Longitude of the target location.\n     *     @param {String} options.placeId - Required if `latitude` and `longitude`\n     *     are omitted. The place ID of the place for which you wish to\n     *     obtain the human-readable address. The place ID is a unique\n     *     identifier that can be used with other Google APIs. Note that if\n     *     `placeId` is set, `latitude` and `longitude` are ignored.\n     *     @param {Boolean} options.raw - Optional. Default: `false`.\n     *     Whether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * Note: set `options.raw` to `true` to get the raw Google API results.\n     * @returns {void}\n     *\n     * @example\n     * var coords = {\n     *     latitude: 37.4224764,\n     *     longitude: -122.0842499\n     * };\n     * geolocator.reverseGeocode(coords, function (err, location) {\n     *     console.log(err || location);\n     * });\n     *\n     * // location:\n     * {\n     *     coords: {\n     *         latitude: 37.4224764,\n     *         longitude: -122.0842499\n     *     },\n     *     address: {\n     *         commonName: \"\",\n     *         street: \"Amphitheatre Pkwy\",\n     *         route: \"Amphitheatre Pkwy\",\n     *         streetNumber: \"1600\",\n     *         neighborhood: \"\",\n     *         town: \"\",\n     *         city: \"Mountain View\",\n     *         region: \"Santa Clara County\",\n     *         state: \"California\",\n     *         stateCode: \"CA\",\n     *         postalCode: \"94043\",\n     *         country: \"United States\",\n     *         countryCode: \"US\"\n     *     },\n     *     formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n     *     type: \"ROOFTOP\",\n     *     placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n     *     timestamp: 1456795956380\n     * }\n     */",
         "meta": {
           "range": [
-            38939,
-            39937
+            38530,
+            39528
           ],
           "filename": "geolocator.js",
-          "lineno": 922,
+          "lineno": 907,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000953",
@@ -1438,7 +1438,7 @@
           "{@link https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding|Google Maps (Reverse) Geocoding API}",
           "{@link https://developers.google.com/maps/documentation/geocoding/usage-limits|Usage Limits}"
         ],
-        "memberof": "geolocator",
+        "alias": "geolocator.addressLookup",
         "params": [
           {
             "type": {
@@ -1508,21 +1508,22 @@
         "examples": [
           "var coords = {\n    latitude: 37.4224764,\n    longitude: -122.0842499\n};\ngeolocator.reverseGeocode(coords, function (err, location) {\n    console.log(err || location);\n});\n\n// location:\n{\n    coords: {\n        latitude: 37.4224764,\n        longitude: -122.0842499\n    },\n    address: {\n        commonName: \"\",\n        street: \"Amphitheatre Pkwy\",\n        route: \"Amphitheatre Pkwy\",\n        streetNumber: \"1600\",\n        neighborhood: \"\",\n        town: \"\",\n        city: \"Mountain View\",\n        region: \"Santa Clara County\",\n        state: \"California\",\n        stateCode: \"CA\",\n        postalCode: \"94043\",\n        country: \"United States\",\n        countryCode: \"US\"\n    },\n    formattedAddress: \"1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\",\n    type: \"ROOFTOP\",\n    placeId: \"ChIJ2eUgeAK6j4ARbn5u_wAGqWA\",\n    timestamp: 1456795956380\n}"
         ],
-        "name": "reverseGeocode",
-        "longname": "geolocator.reverseGeocode",
+        "name": "addressLookup",
+        "longname": "geolocator.addressLookup",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.reverseGeocode"
       },
       {
-        "comment": "/**\n     * Sets the IP Geo-Source to be used for fetching location information\n     * by user's IP; which is internally used by `geolocator.locateByIP()`\n     * method.\n     * @memberof geolocator\n     *\n     * @param {Object} options - Required. IP Geo-Source options.\n     *     @param {String} options.provider - Optional. Default: `undefined`.\n     *     Source or service provider's name.\n     *     @param {String} options.url - Required.\n     *     Source URL without the callback query parameter. The callback name\n     *     (if supported) should be set via `options.callbackParam`. Also, make\n     *     sure the service supports the protocol you use in the URL. If it\n     *     supports both HTTP and HTTPS, you can omit the protocol. In this\n     *     case, it will be determined via Geolocator configuration.\n     *     See `{@link geolocator.config}`.\n     *     NOTE: Do not forget to include your API key in the query parameters of the\n     *     URL, if you have one.\n     *     @param {String} options.callbackParam - Optional. Default: `undefined`.\n     *     If JSON callback is supported, pass the name of the callback\n     *     parameter, defined by the provider.\n     *     @param {Object} options.globalVar - Optional. Default: `undefined`.\n     *     Set this instead of `options.callbackParam` if the service does not\n     *     support JSON callbacks, but weirdly set a global variable in the\n     *     document. For example, if the response is `Geo = { lat, lng }`, you\n     *     should set this to `\"Geo\"`.\n     *     @param {Object} options.schema - Optional. Default: `undefined`.\n     *     Schema object to be used to re-structure the response returned from\n     *     the service. Set the response object's keys as values of a custom\n     *     object to map the format you like. For example; let's say you\n     *     want all responses in the following format: `{ latitude, longitude }`\n     *     and want to omit all other properties of the response.\n     *     If the service returns a response like\n     *     `{ lat: 40.112233, lng: 10.112233, otherProp: 'hello' }`.\n     *     Then you should set the following schema:\n     *     `{ latitude: 'lat', longitude: 'lng' }`.\n     *\n     * @return {geolocator}\n     */",
+        "comment": "/**\n     * Sets the IP Geo-Source to be used for fetching location information\n     * by user's IP; which is internally used by `geolocator.locateByIP()`\n     * method.\n     *\n     * @param {Object} options - Required. IP Geo-Source options.\n     *     @param {String} options.provider - Optional. Default: `undefined`.\n     *     Source or service provider's name.\n     *     @param {String} options.url - Required.\n     *     Source URL without the callback query parameter. The callback name\n     *     (if supported) should be set via `options.callbackParam`. Also, make\n     *     sure the service supports the protocol you use in the URL. If it\n     *     supports both HTTP and HTTPS, you can omit the protocol. In this\n     *     case, it will be determined via Geolocator configuration.\n     *     See `{@link geolocator.config}`.\n     *     NOTE: Do not forget to include your API key in the query parameters of the\n     *     URL, if you have one.\n     *     @param {String} options.callbackParam - Optional. Default: `undefined`.\n     *     If JSON callback is supported, pass the name of the callback\n     *     parameter, defined by the provider.\n     *     @param {Object} options.globalVar - Optional. Default: `undefined`.\n     *     Set this instead of `options.callbackParam` if the service does not\n     *     support JSON callbacks, but weirdly set a global variable in the\n     *     document. For example, if the response is `Geo = { lat, lng }`, you\n     *     should set this to `\"Geo\"`.\n     *     @param {Object} options.schema - Optional. Default: `undefined`.\n     *     Schema object to be used to re-structure the response returned from\n     *     the service. Set the response object's keys as values of a custom\n     *     object to map the format you like. For example; let's say you\n     *     want all responses in the following format: `{ latitude, longitude }`\n     *     and want to omit all other properties of the response.\n     *     If the service returns a response like\n     *     `{ lat: 40.112233, lng: 10.112233, otherProp: 'hello' }`.\n     *     Then you should set the following schema:\n     *     `{ latitude: 'lat', longitude: 'lng' }`.\n     *\n     * @return {geolocator}\n     */",
         "meta": {
           "range": [
-            25332,
-            26059
+            24968,
+            25695
           ],
           "filename": "geolocator.js",
-          "lineno": 631,
+          "lineno": 618,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000593",
@@ -1537,7 +1538,6 @@
           }
         },
         "description": "Sets the IP Geo-Source to be used for fetching location information\nby user's IP; which is internally used by `geolocator.locateByIP()`\nmethod.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -1606,18 +1606,19 @@
         "name": "setIPGeoSource",
         "longname": "geolocator.setIPGeoSource",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.setIPGeoSource"
       },
       {
-        "comment": "/**\n     * Enumerates Google API status codes.\n     * See [details](geolocator.{enums}.md#geolocator.Status).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates Google API status codes.\n     * See [details](geolocator.{enums}.md#geolocator.Status).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            4090,
-            4146
+            4006,
+            4062
           ],
           "filename": "geolocator.js",
-          "lineno": 136,
+          "lineno": 133,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000099",
@@ -1633,7 +1634,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -1645,17 +1645,18 @@
         "scope": "static",
         "name": "Status",
         "longname": "geolocator.Status",
+        "memberof": "geolocator",
         "$longname": "geolocator.Status"
       },
       {
-        "comment": "/**\n     * Enumerates Google API travel modes.\n     * See [details](geolocator.{enums}.md#geolocator.TravelMode).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates Google API travel modes.\n     * See [details](geolocator.{enums}.md#geolocator.TravelMode).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {String}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            4764,
-            4828
+            4624,
+            4688
           ],
           "filename": "geolocator.js",
-          "lineno": 162,
+          "lineno": 157,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000115",
@@ -1671,7 +1672,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -1683,17 +1683,18 @@
         "scope": "static",
         "name": "TravelMode",
         "longname": "geolocator.TravelMode",
+        "memberof": "geolocator",
         "$longname": "geolocator.TravelMode"
       },
       {
-        "comment": "/**\n     * Enumerates Google API unit systems.\n     * See [details](geolocator.{enums}.md#geolocator.UnitSystem).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @memberof geolocator\n     * @enum {Number}\n     * @readonly\n     * @static\n     */",
+        "comment": "/**\n     * Enumerates Google API unit systems.\n     * See [details](geolocator.{enums}.md#geolocator.UnitSystem).\n     * @see {@link geolocator.(enums).md|All Enumerations}\n     * @enum {Number}\n     * @readonly\n     * @static\n     */",
         "meta": {
           "range": [
-            5101,
-            5165
+            4933,
+            4997
           ],
           "filename": "geolocator.js",
-          "lineno": 175,
+          "lineno": 169,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000123",
@@ -1709,7 +1710,6 @@
         "see": [
           "{@link geolocator.(enums).md|All Enumerations}"
         ],
-        "memberof": "geolocator",
         "kind": "member",
         "isEnum": true,
         "type": {
@@ -1721,17 +1721,18 @@
         "scope": "static",
         "name": "UnitSystem",
         "longname": "geolocator.UnitSystem",
+        "memberof": "geolocator",
         "$longname": "geolocator.UnitSystem"
       },
       {
-        "comment": "/**\n     * Geo-utility constants and methods.\n     * See [detailed documentation](geolocator.utils.md).\n     * @memberof geolocator\n     * @type {Object}\n     * @mixes geoUtils\n     */",
+        "comment": "/**\n     * Geo-utility constants and methods.\n     * See [detailed documentation](geolocator.utils.md).\n     * @type {Object}\n     * @mixes geoUtils\n     */",
         "meta": {
           "range": [
-            3068,
-            3119
+            3040,
+            3091
           ],
           "filename": "geolocator.js",
-          "lineno": 105,
+          "lineno": 104,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000087",
@@ -1744,7 +1745,6 @@
           }
         },
         "description": "Geo-utility constants and methods.\nSee [detailed documentation](geolocator.utils.md).",
-        "memberof": "geolocator",
         "type": {
           "names": [
             "Object"
@@ -1756,18 +1756,19 @@
         "name": "utils",
         "longname": "geolocator.utils",
         "kind": "member",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.utils"
       },
       {
-        "comment": "/**\n     * Registers a handler for watching the user's location via HTML5\n     * geolocation; that is triggered each time the position of the device\n     * changes. This may require/prompt for user's permission.\n     * @memberof geolocator\n     *\n     * @param {Object} options - Optional. HTML5 geo-location settings.\n     *     @param {Boolean} options.enableHighAccuracy - Optional. Default: `true`.\n     *     Specifies whether the device should provide the most accurate\n     *     position it can. Note that setting this to `true` might consume more\n     *     CPU and/or battery power; and result in slower response times.\n     *     @param {Number} options.timeout - Optional. Default: `6000`.\n     *     HTML5 position timeout setting in milliseconds. Setting this to\n     *     `Infinity` means that Geolocator won't return until the position\n     *     is available.\n     *     @param {Number} options.maximumAge - Optional. Default: `0`.\n     *     HTML5 position maximum age. Indicates the maximum age in\n     *     milliseconds of a possible cached position that is acceptable to\n     *     return. `0` means, the device cannot use a cached position and must\n     *     attempt to retrieve the real current position. If set to `Infinity`\n     *     the device must return a cached position regardless of its age.\n     *     @param {Object} options.target - Optional. Default: `undefined`.\n     *     Object that defines the target location and settings; that when the\n     *     location is reached, the watcher will auto-clear itself and invoke\n     *     the callback.\n     *     @param {Number} options.target.latitude - Required.\n     *     The `latitude` of the target location.\n     *     @param {Number} options.target.longitude - Required.\n     *     The `longitude` of the target location.\n     *     @param {Number} options.target.radius - Optional. Default: `0.5`.\n     *     The radius, in other words; the minimum distance (in kilometers or\n     *     miles) to the target point that should be reached.\n     *     @param {Number} options.target.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Unit system to be used for target radius.\n     *     See `{@link geolocator.UnitSystem}` enumeration for possible values.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, position) { ... }`. If `options.target` is set, the\n     * `position` argument will also include a `targetReached:Boolean` property.\n     *\n     * @returns {Object} - A watcher object that provides a\n     * `.clear(delay:Number)` method to clear the watcher when needed.\n     * The `delay` argument can be set (in milliseconds) to clear in a later\n     * time. Omitting this argument will clear the watcher immediately.\n     * You should always call this method, except if you've set up a target;\n     * which will auto-clear the watcher when reached.\n     *\n     * @example\n     * // Watch my position for 5 minutes.\n     * var options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };\n     * var watcher = geolocator.watch(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     * console.log(watcher.id); // ID of the watcher\n     * watcher.clear(300000); // clear after 5 minutes.\n     *\n     * // Watch my position until I'm 350 meters near Disneyland Park.\n     * options.target = {\n     *     latitude: 33.8120918,\n     *     longitude: -117.9233569,\n     *     radius: 0.35,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * };\n     * watcher = geolocator.watch(options, function (err, location) {\n     *     if (location.targetReached) {\n     *         console.log(watcher.id); // null — watcher is cleared.\n     *     } else {\n     *         console.log(watcher.id); // 2 — watcher is active.\n     *     }\n     * });\n     */",
+        "comment": "/**\n     * Registers a handler for watching the user's location via HTML5\n     * geolocation; that is triggered each time the position of the device\n     * changes. This may require/prompt for user's permission.\n     *\n     * @param {Object} options - Optional. HTML5 geo-location settings.\n     *     @param {Boolean} options.enableHighAccuracy - Optional. Default: `true`.\n     *     Specifies whether the device should provide the most accurate\n     *     position it can. Note that setting this to `true` might consume more\n     *     CPU and/or battery power; and result in slower response times.\n     *     @param {Number} options.timeout - Optional. Default: `6000`.\n     *     HTML5 position timeout setting in milliseconds. Setting this to\n     *     `Infinity` means that Geolocator won't return until the position\n     *     is available.\n     *     @param {Number} options.maximumAge - Optional. Default: `0`.\n     *     HTML5 position maximum age. Indicates the maximum age in\n     *     milliseconds of a possible cached position that is acceptable to\n     *     return. `0` means, the device cannot use a cached position and must\n     *     attempt to retrieve the real current position. If set to `Infinity`\n     *     the device must return a cached position regardless of its age.\n     *     @param {Object} options.target - Optional. Default: `undefined`.\n     *     Object that defines the target location and settings; that when the\n     *     location is reached, the watcher will auto-clear itself and invoke\n     *     the callback.\n     *     @param {Number} options.target.latitude - Required.\n     *     The `latitude` of the target location.\n     *     @param {Number} options.target.longitude - Required.\n     *     The `longitude` of the target location.\n     *     @param {Number} options.target.radius - Optional. Default: `0.5`.\n     *     The radius, in other words; the minimum distance (in kilometers or\n     *     miles) to the target point that should be reached.\n     *     @param {Number} options.target.unitSystem - Optional. Default: `geolocator.UnitSystem.METRIC`.\n     *     Unit system to be used for target radius.\n     *     See `{@link geolocator.UnitSystem}` enumeration for possible values.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, position) { ... }`. If `options.target` is set, the\n     * `position` argument will also include a `targetReached:Boolean` property.\n     *\n     * @returns {Object} - A watcher object that provides a\n     * `.clear(delay:Number)` method to clear the watcher when needed.\n     * The `delay` argument can be set (in milliseconds) to clear in a later\n     * time. Omitting this argument will clear the watcher immediately.\n     * You should always call this method, except if you've set up a target;\n     * which will auto-clear the watcher when reached.\n     *\n     * @example\n     * // Watch my position for 5 minutes.\n     * var options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };\n     * var watcher = geolocator.watch(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     * console.log(watcher.id); // ID of the watcher\n     * watcher.clear(300000); // clear after 5 minutes.\n     *\n     * // Watch my position until I'm 350 meters near Disneyland Park.\n     * options.target = {\n     *     latitude: 33.8120918,\n     *     longitude: -117.9233569,\n     *     radius: 0.35,\n     *     unitSystem: geolocator.UnitSystem.METRIC\n     * };\n     * watcher = geolocator.watch(options, function (err, location) {\n     *     if (location.targetReached) {\n     *         console.log(watcher.id); // null — watcher is cleared.\n     *     } else {\n     *         console.log(watcher.id); // 2 — watcher is active.\n     *     }\n     * });\n     */",
         "meta": {
           "range": [
-            29992,
-            31806
+            29600,
+            31414
           ],
           "filename": "geolocator.js",
-          "lineno": 715,
+          "lineno": 701,
           "path": "/Users/oy/developer/javascript/geolocator/src/core",
           "code": {
             "id": "astnode100000646",
@@ -1783,7 +1784,6 @@
           }
         },
         "description": "Registers a handler for watching the user's location via HTML5\ngeolocation; that is triggered each time the position of the device\nchanges. This may require/prompt for user's permission.",
-        "memberof": "geolocator",
         "params": [
           {
             "type": {
@@ -1892,6 +1892,7 @@
         "name": "watch",
         "longname": "geolocator.watch",
         "kind": "function",
+        "memberof": "geolocator",
         "scope": "static",
         "$longname": "geolocator.watch"
       }
