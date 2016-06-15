@@ -62,6 +62,14 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
     };
 &lt;/script&gt;
 </code></pre>
+<h2 id="important-notes">Important Notes</h2>
+<ul>
+<li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&amp;lt;!DOCTYPE html&amp;gt;</code>).</li>
+<li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong> in Chrome 50. Other browsers are expected to follow.</li>
+<li>Although some calls might work without a key, it is generally required by most Goolge APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator.</li>
+<li>On Firefox 24 and older versions, <code>geolocation</code> in <code>navigator</code> always returned true even if the API was disabled. This has been fixed with Firefox 25 to comply with the spec. (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=884921">884921</a>).</li>
+<li>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never". (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>).</li>
+</ul>
 <h2 id="under-the-hood">Under the Hood</h2>
 <p>Geolocator v2 is written in ES2015 (ES6), compiled with <a href="https://github.com/babel/babel">Babel</a>, bundled with <a href="https://github.com/webpack/webpack">Webpack</a> and documented with <a href="https://github.com/onury/docma">Docma</a>.</p>
 <h2 id="license">License</h2>
