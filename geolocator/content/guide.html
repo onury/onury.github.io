@@ -47,11 +47,27 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <pre><code>npm install geolocator
 </code></pre><p><em>If somehow you need the legacy version v1.2.9 and don't need the better. <a href="https://github.com/onury/geolocator/releases/tag/v1.2.9">Here</a> it is.</em></p>
 <h2 id="usage-">Usage:</h2>
+<p>We'll try to get user's geo-location via HTML5 Geolocation and if user rejects, we'll fallback to IP based geo-location.</p>
 <p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
+
+    geolocator.config({
+        language: 'en',
+        google: {
+            key: 'YOUR-GOOGLE-API-KEY'
+        }
+    });
+
     window.onload = function () {
-        var html5Options = { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 };
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 6000,
+            maximumAge: 0,
+            considerIp: true, // fallback to IP if Geolocation fails or rejected
+            addressLookup: false, // requires Google API key
+            timezone: false // requires Google API key
+        };
         geolocator.locate(options, function (err, location) {
             if (err) {
                 console.log(err);
@@ -60,8 +76,10 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
             console.log(location);
         });
     };
+
 &lt;/script&gt;
 </code></pre>
+<p>Read <a href="?api=geolocator"><strong>API documentation</strong></a> for more features and examples.</p>
 <h2 id="important-notes">Important Notes</h2>
 <ul>
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
