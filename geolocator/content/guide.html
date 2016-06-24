@@ -12,7 +12,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <p>Geolocator.js is a utility for getting geo-location information, geocoding, address look-ups, distance &amp; durations, timezone information and more...</p>
 <h2 id="features">Features</h2>
 <ul>
-<li>HTML5 geolocation (by user permission)</li>
+<li>HTML5 geolocation (by user permission) with <strong>improved accuracy</strong>.</li>
 <li>Location by IP</li>
 <li>Reverse Geocoding (address lookup)</li>
 <li>Full address information (street, town, neighborhood, region, country, country code, postal code, etc...)</li>
@@ -44,7 +44,9 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Geolocator now supports a single Geo-IP provider, Wikimedia. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
 <li>Read the <a href="https://onury.github.io/geolocator/?api=geolocator">API documentation</a> for details...</li>
 </ul>
-<h2 id="installation">Installation</h2>
+<h2 id="get-geolocator-js">Get Geolocator.js</h2>
+<p>Link or download via <a href="https://cdnjs.com/libraries/geolocator"><strong>CDNJS</strong></a>.  </p>
+<p>Download full source code from <a href="https://github.com/onury/geolocator/releases">GitHub releases</a>.  </p>
 <p>Install via <strong>Bower</strong>:</p>
 <pre><code>bower install geolocator
 </code></pre><p>Install via <strong>NPM</strong>:</p>
@@ -53,7 +55,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <h2 id="usage-">Usage:</h2>
 <p>We'll try to get user's geo-location via HTML5 Geolocation and if user rejects, we'll fallback to IP based geo-location.</p>
 <p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
-<pre><code class="lang-html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
+<pre><code class="lang-html">&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.0.0/geolocator.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
 
     geolocator.config({
@@ -69,6 +71,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
             enableHighAccuracy: true,
             timeout: 6000,
             maximumAge: 0,
+            desiredAccuracy: 30,
             considerIp: true, // fallback to IP if Geolocation fails or rejected
             addressLookup: true,
             timezone: true,
