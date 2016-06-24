@@ -13,18 +13,20 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <h2 id="features">Features</h2>
 <ul>
 <li>HTML5 geolocation (by user permission)</li>
-<li>Location by IP (Supported source services: FreeGeoIP, GeoPlugin, WikiMedia)</li>
+<li>Location by IP</li>
 <li>Reverse Geocoding (address lookup)</li>
 <li>Full address information (street, town, neighborhood, region, country, country code, postal code, etc...)</li>
-<li>Fallback mechanism (from HTML5-geolocation to IP-geo lookup)</li>
-<li><strong>NEW</strong>: Watch geo-location</li>
+<li>Fallback mechanism (from HTML5-geolocation to Geo-IP lookup)</li>
+<li><strong>NEW</strong>: Watch geographic position</li>
 <li><strong>NEW</strong>: Locate by mobile information</li>
 <li><strong>NEW</strong>: Get timezone information</li>
 <li><strong>NEW</strong>: Get distance matrix and duration information</li>
 <li><strong>NEW</strong>: Calculate distance between two geographic points</li>
 <li><strong>NEW</strong>: Various geographic conversion utilities</li>
 <li><strong>NEW</strong>: Get client IP</li>
-<li>Supports Google Loader (loads Google Maps dynamically)</li>
+<li><strong>NEW</strong>: Fetched location includes country flag image (SVG) URL</li>
+<li><strong>NEW</strong>: Language support (depends on the service provider)</li>
+<li>Supports Google Loader (loads Google APIs dynamically)</li>
 <li>Dynamically creates Google Maps, <strong>on demand</strong> (with marker, info window, auto-adjusted zoom)</li>
 <li>Non-blocking script loading (external sources are loaded on the fly without interrupting page load)</li>
 <li>No library/framework dependencies (such as jQuery, etc...)</li>
@@ -39,6 +41,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>The most significant change is; we've got rid of separate callbacks for error and success. Now, we have Node-style, single callback for each async method; with <code>err</code> as the first argument. If it's a success, <code>err</code> will be <code>null</code>.</li>
 <li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.</li>
 <li><code>.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback.</li>
+<li>Geolocator now supports a single Geo-IP provider, Wikimedia. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
 <li>Read the <a href="https://onury.github.io/geolocator/?api=geolocator">API documentation</a> for details...</li>
 </ul>
 <h2 id="installation">Installation</h2>
@@ -54,9 +57,10 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 &lt;script type="text/javascript"&gt;
 
     geolocator.config({
-        language: 'en',
+        language: "en",
         google: {
-            key: 'YOUR-GOOGLE-API-KEY'
+            version: "3",
+            key: "YOUR-GOOGLE-API-KEY"
         }
     });
 
@@ -66,8 +70,9 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
             timeout: 6000,
             maximumAge: 0,
             considerIp: true, // fallback to IP if Geolocation fails or rejected
-            addressLookup: false, // requires Google API key
-            timezone: false // requires Google API key
+            addressLookup: true,
+            timezone: true,
+            createMap: true
         };
         geolocator.locate(options, function (err, location) {
             if (err) return console.log(err);
@@ -82,7 +87,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <ul>
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
 <li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). In Chrome 50, Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong>. Other browsers are expected to follow.</li>
-<li>Although some calls might work without a key, it is generally required by most Goolge APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator.</li>
+<li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator.</li>
 <li>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never". (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>).</li>
 </ul>
 <h2 id="under-the-hood">Under the Hood</h2>
