@@ -75,7 +75,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
             considerIp: true, // fallback to IP if Geolocation fails or rejected
             addressLookup: true,
             timezone: true,
-            createMap: true
+            map: "map-canvas"
         };
         geolocator.locate(options, function (err, location) {
             if (err) return console.log(err);
@@ -85,7 +85,10 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 
 &lt;/script&gt;
 </code></pre>
-<p>Read <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a> for more features and examples.</p>
+<p>If you've enabled <code>map</code> option, inside the <code>&lt;body&gt;</code> of your HTML:</p>
+<pre><code class="lang-html">&lt;div id="map-canvas" style="width:600px;height:400px"&gt;&lt;/div&gt;
+</code></pre>
+<p>Read <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a> for lots of other features and examples.</p>
 <h2 id="important-notes">Important Notes</h2>
 <ul>
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
