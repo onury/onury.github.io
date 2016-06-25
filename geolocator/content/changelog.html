@@ -1,9 +1,30 @@
 
 <html><head></head><body><h2 id="change-log-">Change Log:</h2>
-<h3 id="v2-0-0-2016-06-13-">v2.0.0 (2016-06-13)</h3>
+<h3 id="v2-0-0-2016-06-25-">v2.0.0 (2016-06-25)</h3>
+<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
 <ul>
-<li><strong>BREAKING CHANGES</strong>:<ul>
-<li>Geolocator is completely written from scratch; keeping the core features and adding more to it.</li>
+<li>Improvement: Better Geolocation accuracy. Fixes issue <a href="https://github.com/onury/geolocator/issues/28">#28</a>.</li>
+<li>Feature: Watch geographic position.</li>
+<li>Feature: Locate by mobile information.</li>
+<li>Feature: Get timezone information. Fixes issue <a href="https://github.com/onury/geolocator/issues/13">#13</a>.</li>
+<li>Feature: Get distance matrix and duration information.</li>
+<li>Feature: Calculate distance between two geographic points.</li>
+<li>Feature: Various geographic conversion utilities.</li>
+<li>Feature: Get client IP.</li>
+<li>Feature: Fetched location includes country flag image (SVG) URL.</li>
+<li>Feature: Language support (depends on the service provider). Fixes issue <a href="https://github.com/onury/geolocator/issues/20">#20</a>.</li>
+<li>Feature: Universal module (CommonJS/Node/AMD..). Fixes issue <a href="https://github.com/onury/geolocator/issues/16">#16</a>.</li>
+<li>Revision: Google Maps is no longer loaded by default. Depends on called methods or options.</li>
+<li>Revision: Now, we only support a single Geo-IP source (Wikimedia). Can be set/changed via <code>setGeoIPSource()</code> method.</li>
+<li>Revision: Fix issue <a href="https://github.com/onury/geolocator/issues/32">#32</a>.</li>
+<li><p>Improvement: Support multiple calls. Fixes issue <a href="https://github.com/onury/geolocator/issues/24">#24</a>.</p>
+</li>
+<li><p><strong>BREAKING CHANGES</strong>:</p>
+<ul>
+<li>Revision: Method signatures changed for <code>.locate()</code> and <code>.locateByIP()</code> methods.</li>
+<li>Revision: Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.
+If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.</li>
+<li>Revision: <code>geolocator.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback. See documented examples.</li>
 </ul>
 </li>
 </ul>

@@ -39,7 +39,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <ul>
 <li>Geolocator <strong>v2</strong> is completely re-written from scratch; adding more features to it while keeping and improving the existing ones. So almost everything has changed, for good.</li>
 <li>The most significant change is; we've got rid of separate callbacks for error and success. Now, we have Node-style, single callback for each async method; with <code>err</code> as the first argument. If it's a success, <code>err</code> will be <code>null</code>.</li>
-<li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.</li>
+<li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all. If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.</li>
 <li><code>.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback.</li>
 <li>Geolocator now supports a single Geo-IP provider, Wikimedia. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
 <li>Read the <a href="https://onury.github.io/geolocator/?api=geolocator">API documentation</a> for details...</li>
@@ -53,7 +53,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <pre><code>npm install geolocator
 </code></pre><p><em>If somehow you need the legacy version v1.2.9 and don't need the better. <a href="https://github.com/onury/geolocator/releases/tag/v1.2.9">Here</a> it is.</em></p>
 <h2 id="usage-">Usage:</h2>
-<p>We'll try to get user's geo-location via HTML5 Geolocation and if user rejects, we'll fallback to IP based geo-location.</p>
+<p>Example below, tries to get user's geo-location via HTML5 Geolocation and if user rejects, it will fallback to IP based geo-location.</p>
 <p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/geolocator/2.0.0/geolocator.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
