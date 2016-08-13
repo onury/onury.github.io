@@ -1,19 +1,104 @@
 
 <html><head></head><body><h1 id="re-js">re.js</h1>
 <hr />
-<p>Javascript <code>RegExp</code> API for Humans!
-...and for Node and Browser.</p>
-<p>.. each() instead of RegExp#exec() and more..</p>
 <blockquote>
 <p>© 2016, Onur Yıldırım (@onury). MIT License.  </p>
 </blockquote>
-<h3 id="installation">Installation</h3>
-<p>Install via NPM:</p>
-<pre><code class="lang-sh">npm i re.js --save
-</code></pre>
-<h2 id="features-">Features:</h2>
+<h3 id="-regexp-api-for-humans-"><code>RegExp</code> API for Humans!</h3>
 <ul>
-<li>JS has a weird implementation of Regular Expressions. Some utility methods are only on <code>String</code> prototype, and not on <code>RegExp</code>.</li>
-<li>Automatically resets <code>.lastIndex</code> <em>when needed</em>. A) when you call the <code>re()</code> constructor. B) when <code>re</code> call is done. If you don't know why/what this is; read this, this, this or don't worry since this is made to produce the <em>expected behavior</em>.</li>
+<li><code>.match()</code>, <code>.exec()</code>, <code>.search()</code>, <code>.test()</code>...<br>Which method belongs to what prototype? <code>RegExp</code> vs <code>String</code>..</li>
+<li>Why do you "sometimes" run into infinite loops with <code>.exec()</code> in a <code>while</code> condition?</li>
+<li>When should you set the <code>g</code> (global) flag?</li>
+<li>What is <code>.lastIndex</code> really for? When should you set it?</li>
+<li>Is there an easy way to get all the matches and/or indices at once via <code>RegExp</code>?</li>
+<li>What?! I have to call <code>.exec()</code> repeatedly?</li>
 </ul>
+<p>EcmaScript Regular Expressions specification is powerful but a bit confusing, right?</p>
+<p>For example, if you place regular expression literal or <code>RegExp</code> constructor within a <code>while</code> condition, you'll hit an infinite loop if there is a match! (Because the <code>RegExp</code> instance is re-initiated every time; which resets <code>lastIndex</code> to <code>0</code>).</p>
+<p>Or if you forget the <code>global</code> flag for a <code>RegExp#exec()</code> call in a <code>while</code> condition; you'll again, hit an inifite loop!</p>
+<p>..</p>
+<p><code>re</code> will save you from all the weirdness!  </p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Friendly API!</li>
+<li>Supports both browser and Node</li>
+<li>Universal module</li>
+<li>Small size. Only <strong>1.5 KB</strong> minified, gzipped.</li>
+<li>Well <a href="https://onury.github.io/re/?api=re">documented</a>.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Install via NPM:</p>
+<pre><code class="lang-sh">npm i re.js
+</code></pre>
+<h2 id="usage">Usage</h2>
+<pre><code class="lang-js">const re = require('re.js');
+</code></pre>
+<p>For all the features and details, please read the <a href="https://onury.github.io/re/?api=re">API reference</a>.</p>
+<h3 id="-each-"><code>.each()</code></h3>
+<pre><code class="lang-js">var input = 'Peter Piper picked a peck of pickled peppers.';
+
+re(/p\w+/i).each(input, function (matches) {
+    console.log(matches[0]); // logs words starting with a "p"
+});
+</code></pre>
+<p>Note that above example does not have a <code>g</code> flag (for global) in the <code>RegExp</code>. But logically; since you're calling <code>each()</code> it should search for all. So <code>re</code> automatically fixes it for you.</p>
+<h3 id="-eachright-"><code>.eachRight()</code></h3>
+<p>Iterate from last match to first.</p>
+<pre><code class="lang-js">re(/p\w+/i).eachRight(input, function (matches, index) {
+    if (matches[0] === 'peck') {
+        console.log('exiting @', index); // —&gt; exiting @ 2
+        // return early, no more iterations..
+        return false;
+    }
+});
+</code></pre>
+<h3 id="-map-"><code>.map()</code></h3>
+<pre><code class="lang-js">var mapped = re(/p\w+/i).map(input, function (matches) {
+    return matches[0];
+});
+console.log(mapped);
+// —&gt; ["Peter", "Piper", "picked", "peck", "pickled", "peppers"]
+</code></pre>
+<h3 id="-all-"><code>.all()</code></h3>
+<pre><code class="lang-js">re(/p\w+/i).all(input);
+// —&gt; [Array, Array, Array, Array, Array, Array]
+</code></pre>
+<h3 id="-match-"><code>.match()</code></h3>
+<pre><code class="lang-js">re(/p\w+/i).match(input);
+// —&gt; ["Peter", "Piper", "picked", "peck", "pickled", "peppers"]
+</code></pre>
+<h3 id="-exec-next-"><code>.exec().next()</code></h3>
+<pre><code class="lang-js">re(/p\w+/i)
+    .exec(input)
+    .next(function (matches, index) {
+        console.log(index + ':', matches[0]); // —&gt; 0: "Peter"
+    })
+    .next(function (matches, index) {
+        console.log(index, ':', matches[0]); // —&gt; 1: "Piper"
+    })
+    ..
+</code></pre>
+<h3 id="-test-"><code>.test()</code></h3>
+<pre><code class="lang-js">re(/p\w+/i).test(input); // —&gt; true
+</code></pre>
+<h3 id="match-index">Match Index</h3>
+<pre><code class="lang-js">re(/p\w+/i).first(input)[0];        // —&gt; "Peter"
+re(/p\w+/i).firstIndex(input);      // —&gt; 0
+re(/p\w+/i).first(input).index;     // —&gt; 0
+
+re(/none/).first(input);            // —&gt; null
+re(/none/).firstIndex(input);       // —&gt; -1
+re(/none/).first(input).index;      // —&gt; Error
+
+re(/p\w+/i).last(input)[0];         // —&gt; "peppers"
+re(/p\w+/i).lastIndex(input);       // —&gt; 37
+re(/p\w+/i).last(input).index;      // —&gt; 37
+
+re(/p\w+/i).nth(input, 3)[0];       // —&gt; "picked"
+
+re(/p\w+/i).indices(input);         // —&gt; [ 0, 6, 12, 21, 29, 37 ]
+</code></pre>
+<p>See <a href="https://onury.github.io/re/?api=re">all methods and features</a>.</p>
+<h2 id="license">License</h2>
+<p>MIT.</p>
 </body></html>
