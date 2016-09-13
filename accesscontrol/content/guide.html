@@ -1,0 +1,177 @@
+
+<html><head></head><body><h1 id="accesscontrol">AccessControl</h1>
+<hr />
+<blockquote>
+<p>© 2016, Onur Yıldırım (@onury). MIT License.  </p>
+</blockquote>
+<p>Role and Attribute based Access Control for Node.js  </p>
+<p><code>npm i accesscontrol</code>  </p>
+<p>Many <a href="https://en.wikipedia.org/wiki/Role-based_access_control">RBAC</a> (Role-Based Access Control) implementations differ, but the basics is widely adopted since it simulates real life role (job) assignments. But while data is getting more and more complex; you need to define policies on resources, subjects or even environments. This is called <a href="https://en.wikipedia.org/wiki/Attribute-Based_Access_Control">ABAC</a> (Attribute-Based Access Control).</p>
+<p>With the idea of merging the best features of the two (see this <a href="http://csrc.nist.gov/groups/SNS/rbac/documents/kuhn-coyne-weil-10.pdf">NIST paper</a>); this library implements RBAC basics and also focuses on <em>resource</em> and <em>action</em> attributes.</p>
+<h3 id="core-features">Core Features</h3>
+<ul>
+<li>Role hierarchical inheritance.</li>
+<li>Define grants at once (e.g. from database result) or one by one.</li>
+<li>Grant/deny permissions by attributes defined by glob notation.</li>
+<li>Ability to filter data (model) instance by allowed attributes.</li>
+<li>Nested object support for attributes.</li>
+<li>Chainable, friendly API.</li>
+</ul>
+<h2 id="guide">Guide</h2>
+<pre><code class="lang-js">var AccessControl = require('accesscontrol');
+</code></pre>
+<h4 id="basic-example">Basic Example</h4>
+<p>Define roles and grants one by one.</p>
+<pre><code class="lang-js">var ac = new AccessControl();
+ac.grant('user')                    // define new or modify existing role. also takes an array.
+    .createOwn('video')             // equivalent to .createOwn('video', ['*'])
+    .deleteOwn('video')
+    .readAny('video')
+  .grant('admin')                   // switch to another role without breaking the chain
+    .extend('user')                 // inherit role capabilities. also takes an array
+    .updateAny('video', ['title'])  // explicitly defined attributes
+    .deleteAny('video');
+
+var permission = ac.can('user').createOwn('video');
+console.log(permission.granted);    // —&gt; true
+console.log(permission.attributes); // —&gt; ['*'] (all attributes)
+
+permission = ac.can('admin').updateAny('video');
+console.log(permission.granted);    // —&gt; true
+console.log(permission.attributes); // —&gt; ['title']
+</code></pre>
+<h4 id="express-js-example">Express.js Example</h4>
+<p>Check role permissions for the requested resource and action, if granted; respond with filtered attributes.</p>
+<pre><code class="lang-js">var ac = new AccessControl(grants);
+// ...
+router.get('/videos/:title', function (req, res, next) {
+    var permission = ac.can(req.user.role).readAny('video');
+    if (permission.granted) {
+        Video.find(req.params.title, function (err, data) {
+            if (err || !data) return res.status(404).end();
+            // filter data by permission attributes and send.
+            res.json(permission.filter(data));
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+</code></pre>
+<h4 id="roles">Roles</h4>
+<p>You can create/define roles simply by calling <code>.grant(&lt;role&gt;)</code> or <code>.deny(&lt;role&gt;)</code> methods on an <code>AccessControl</code> instance.  </p>
+<p>Roles can extend other roles.</p>
+<pre><code class="lang-js">// user role inherits viewer role permissions
+ac.grant('user').extend('viewer');
+// admin role inherits both user and editor role permissions
+ac.grant('admin').extend(['user', 'editor']);
+// both admin and superadmin roles inherit moderator permissions
+ac.grant(['admin', 'superadmin']).extend('moderator');
+</code></pre>
+<h4 id="actions-and-action-attributes">Actions and Action-Attributes</h4>
+<p><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations are the actions you can perform on a resource. There are two action-attributes which define the <strong>possession</strong> of the resource: <em>own</em> and <em>any</em>.</p>
+<p>For example, an <code>admin</code> role can <code>create</code>, <code>read</code>, <code>update</code> or <code>delete</code> (CRUD) <strong>any</strong> <code>account</code> resource. But a <code>user</code> role might only <code>read</code> or <code>update</code> its <strong>own</strong> <code>account</code> resource.</p>
+<br><table>
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Possession</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">
+            <b>C</b>reate<br>
+            <b>R</b>ead<br>
+            <b>U</b>pdate<br>
+            <b>D</b>elete<br>
+            </td>
+            <td>Own</td>
+            <td>C|R|U|D resource(s) that belong to the current role only.</td>
+        </tr>
+        <tr>
+            <td>Any</td>
+            <td>C|R|U|D resource(s) that belong to any role, including own.</td>
+        </tr>    </tbody>
+</table>
+
+<pre><code class="lang-js">ac.grant('role').readOwn('resource');
+ac.deny('role').deleteAny('resource');
+</code></pre>
+<h4 id="resources-and-resource-attributes">Resources and Resource-Attributes</h4>
+<p>Multiple roles can have access to a specific resource. But depending on the context, you may need to limit the contents of the resource for specific roles.  </p>
+<p>This is possible by resource attributes. You can use Glob notation to define allowed or denied attributes.</p>
+<p>For example, we have a <code>video</code> resource that has the following attributes: <code>id</code>, <code>title</code> and <code>runtime</code>.
+All attributes of <em>any</em> <code>video</code> resource can be read by an <code>admin</code> role:</p>
+<pre><code class="lang-js">ac.grant('admin').readAny('video', ['*']);
+// equivalent to:
+// ac.grant('admin').readAny('video');
+</code></pre>
+<p>But the <code>id</code> attribute should not be read by a <code>user</code> role.  </p>
+<pre><code class="lang-js">ac.grant('user').readOwn('video', ['*', '!id']);
+// equivalent to:
+// ac.grant('user').readOwn('video', ['title', 'runtime']);
+</code></pre>
+<p>You can also use nested objects (attributes).</p>
+<pre><code class="lang-js">ac.grant('user').readOwn('account', ['*', '!record.id']);
+</code></pre>
+<h4 id="checking-permissions-and-filtering-attributes">Checking Permissions and Filtering Attributes</h4>
+<p>You can call <code>.can(&lt;role&gt;).&lt;action&gt;(&lt;resource&gt;)</code> on an <code>AccessControl</code> instance to check for granted permissions for a specific resource and action.</p>
+<pre><code class="lang-js">var permission = ac.can('user').readOwn('account');
+permission.granted;       // true
+permission.attributes;    // ['*', '!record.id']
+permission.filter(data);  // filtered data (without record.id)
+</code></pre>
+<p>See <a href="express-js-example">express.js example</a>.</p>
+<h4 id="defining-all-grants-at-once">Defining All Grants at Once</h4>
+<p>You can pass the grants directly to the <code>AccessControl</code> constructor.
+It accepts either an <code>Object</code>:</p>
+<pre><code class="lang-js">// This is actually how the grants are maintained internally.
+var grantsObject = {
+    admin: {
+        video: {
+            'create:any': ['*'],
+            'read:any': ['*'],
+            'update:any': ['*'],
+            'delete:any': ['*']
+        }
+    },
+    user: {
+        video: {
+            'create:own': ['*'],
+            'read:own': ['*'],
+            'update:own': ['*'],
+            'delete:own': ['*']
+        }
+    }
+};
+var ac = new AccessControl(grantsObject);
+</code></pre>
+<p>... or an <code>Array</code> (useful when fetched from a database):</p>
+<pre><code class="lang-js">// grant list fetched from DB (to be converted to a valid grants object, internally)
+var grantList = [
+    { role: 'admin', resource: 'video', action: 'create:any', attributes: ['*'] },
+    { role: 'admin', resource: 'video', action: 'read:any', attributes: ['*'] },
+    { role: 'admin', resource: 'video', action: 'update:any', attributes: ['*'] },
+    { role: 'admin', resource: 'video', action: 'delete:any', attributes: ['*'] },
+
+    { role: 'user', resource: 'video', action: 'create:own', attributes: ['*'] },
+    { role: 'user', resource: 'video', action: 'read:any', attributes: ['*'] },
+    { role: 'user', resource: 'video', action: 'update:own', attributes: ['*'] },
+    { role: 'user', resource: 'video', action: 'delete:own', attributes: ['*'] }
+];
+var ac = new AccessControl(grantList);
+</code></pre>
+<p>You can set/get grants any time:</p>
+<pre><code class="lang-js">var ac = new AccessControl();
+ac.setGrants(grantsObject);
+console.log(ac.getGrants());
+</code></pre>
+<h2 id="change-log">Change-Log</h2>
+<p><strong>v1.0.0</strong> (2016-09-10)  </p>
+<ul>
+<li>initial release.</li>
+</ul>
+<h2 id="license">License</h2>
+<p>MIT.</p>
+</body></html>
