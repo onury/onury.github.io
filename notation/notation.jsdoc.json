@@ -981,41 +981,6 @@
         "$longname": "Notation#getNotations"
       },
       {
-        "comment": "/**\n     *  Constructs a `Notation.Glob` object with the given glob string.\n     *  @name Notation.Glob\n     *  @constructs Notation.Glob\n     *\n     *  @param {String} glob - The glob string.\n     *\n     *  @example\n     *  var glob = new Notation.Glob(\"billing.account.*\");\n     *  glob.test(\"billing.account.id\"); // true\n     */",
-        "meta": {
-          "range": [
-            1016,
-            1348
-          ],
-          "filename": "notation.glob.js",
-          "lineno": 31,
-          "path": "/Users/oy/Developer/javascript/notation/src/core",
-          "code": {}
-        },
-        "description": "Constructs a `Notation.Glob` object with the given glob string.",
-        "name": "Glob",
-        "alias": "Notation.Glob",
-        "kind": "class",
-        "params": [
-          {
-            "type": {
-              "names": [
-                "String"
-              ]
-            },
-            "description": "The glob string.",
-            "name": "glob"
-          }
-        ],
-        "examples": [
-          "var glob = new Notation.Glob(\"billing.account.*\");\n glob.test(\"billing.account.id\"); // true"
-        ],
-        "memberof": "Notation",
-        "longname": "Notation.Glob",
-        "scope": "static",
-        "$longname": "Notation.Glob"
-      },
-      {
         "comment": "/**\n *  `NotationGlob` is a utility for validating, comparing and sorting\n *  dot-notation globs.\n *\n *  You can use {@link http://www.linfo.org/wildcard.html|wildcard} stars `*`\n *  and negate the notation by prepending a bang `!`. A star will include all\n *  the properties at that level and a negated notation will be excluded.\n *  @name Notation.Glob\n *  @memberof! Notation\n *  @class\n *\n *  @example\n *  // for the following object;\n *  { name: \"John\", billing: { account: { id: 1, active: true } } };\n *\n *  \"billing.account.*\"  // represents `{ id: 1, active: true }`\n *  \"billing.account.id\" // represents `1`\n *  \"!billing.account.*\" // represents `{ name: \"John\" }`\n *  \"name\" // represents `\"John\"`\n *  \"*\" // represents the whole object\n */",
         "meta": {
           "range": [
@@ -1043,8 +1008,8 @@
             "comment": "/**\n     *  Compares two given notation globs and returns an integer value as a\n     *  result. This is generally used to sort glob arrays. Loose globs (with\n     *  stars especially closer to beginning of the glob string) and globs\n     *  representing the parent/root of the compared property glob come first.\n     *  Verbose/detailed/exact globs come last. (`* < *abc < abc`). For\n     *  instance; `store.address` comes before `store.address.street`. So this\n     *  works both for `*, store.address.street, !store.address` and\n     *  `*, store.address, !store.address.street`. For cases such as\n     *  `prop.id` vs `!prop.id` which represent the same property;\n     *  the negated glob wins (comes last).\n     *  @name Notation.Glob.compare\n     *  @function\n     *\n     *  @param {String} a - First notation glob to be compared.\n     *  @param {String} b - Second notation glob to be compared.\n     *\n     *  @returns {Number} - Returns `-1` if `a` comes first, `1` if `b` comes\n     *  first and `0` if equivalent priority.\n     *\n     *  @example\n     *  var result = Notation.Glob.compare(\"prop.*.name\", \"prop.*\");\n     *  console.log(result); // 1\n     */",
             "meta": {
               "range": [
-                4663,
-                5830
+                4656,
+                5823
               ],
               "filename": "notation.glob.js",
               "lineno": 147,
@@ -1096,8 +1061,8 @@
             "comment": "/**\n     *  Basically constructs a new `NotationGlob` instance\n     *  with the given glob string.\n     *  @name Notation.Glob.create\n     *  @function\n     *\n     *  @param {String} glob - The source notation glob.\n     *\n     *  @returns {NotationGlob}\n     *\n     *  @example\n     *  var glob = Notation.Glob.create(strGlob);\n     *  // equivalent to:\n     *  var glob = new Notation.Glob(strGlob);\n     */",
             "meta": {
               "range": [
-                2694,
-                3103
+                2687,
+                3096
               ],
               "filename": "notation.glob.js",
               "lineno": 82,
@@ -1139,8 +1104,8 @@
             "comment": "/**\n     *  Validates the given notation glob.\n     *  @name Notation.Glob.isValid\n     *  @function\n     *\n     *  @param {String} glob - Notation glob to be validated.\n     *  @returns {Boolean}\n     */",
             "meta": {
               "range": [
-                4200,
-                4404
+                4193,
+                4397
               ],
               "filename": "notation.glob.js",
               "lineno": 131,
@@ -1179,8 +1144,8 @@
             "comment": "/**\n     *  Sorts the notation globs in the given array by their priorities.\n     *  Loose globs (with stars especially closer to beginning of the glob string);\n     *  globs representing the parent/root of the compared property glob come first.\n     *  Verbose/detailed/exact globs come last. (`* < *abc < abc`). For\n     *  instance; `store.address` comes before `store.address.street`. For cases\n     *  such as `prop.id` vs `!prop.id` which represent the same property; the\n     *  negated glob wins (comes last).\n     *  @name Notation.Glob.sort\n     *  @function\n     *\n     *  @param {Array} globsArray - The notation globs array to be sorted.\n     *  The passed array reference is modified.\n     *\n     *  @returns {Array}\n     *\n     *  @example\n     *  var globs = [\"!prop.*.name\", \"prop.*\", \"prop.id\"];\n     *  Notation.Glob.sort(globs);\n     *  // [\"prop.*\", \"prop.id\", \"!prop.*.name\"];\n     */",
             "meta": {
               "range": [
-                7175,
-                8081
+                7168,
+                8074
               ],
               "filename": "notation.glob.js",
               "lineno": 206,
@@ -1222,8 +1187,8 @@
             "comment": "/**\n     *  Checks whether the given notation value matches the source notation glob.\n     *  @name Notation.Glob#test\n     *  @function\n     *\n     *  @param {String} notation - The notation string to be tested.\n     *\n     *  @returns {Boolean}\n     *\n     *  @example\n     *  var glob = new Notation.Glob(\"!prop.*.name\");\n     *  glob.test(\"prop.account.name\"); // true\n     */",
             "meta": {
               "range": [
-                1892,
-                2272
+                1885,
+                2265
               ],
               "filename": "notation.glob.js",
               "lineno": 58,
@@ -1265,8 +1230,8 @@
             "comment": "/**\n     *  Gets the union from the given couple of glob arrays and returns\n     *  a new array of globs. If the exact same element is found in both\n     *  arrays, one of them is removed to prevent duplicates. If one of the\n     *  arrays contains a negated equivalent of an item in the other array,\n     *  the negated item is removed. If any item covers/matches a negated\n     *  item in the other array, the negated item is removed.\n     *  @name Notation.Glob.union\n     *  @function\n     *\n     *  @param {Array} arrA - First array of glob strings.\n     *  @param {Array} arrB - Second array of glob strings.\n     *  @param {Boolean} [sort=true] - Whether to sort the globs in the final\n     *  array.\n     *\n     *  @returns {Array}\n     *\n     *  @example\n     *  var a = [ 'foo.bar', 'bar.baz', '!*.qux' ],\n     *      b = [ '!foo.bar', 'bar.qux', 'bar.baz' ],\n     *  console.log(Notation.Glob.union(a, b));\n     *  // [ '!*.qux', 'foo.bar', 'bar.baz', 'bar.qux' ]\n     */",
             "meta": {
               "range": [
-                8246,
-                9228
+                8239,
+                9221
               ],
               "filename": "notation.glob.js",
               "lineno": 232,
@@ -1324,7 +1289,52 @@
             "scope": "static",
             "$longname": "Notation.Glob.union"
           }
-        ]
+        ],
+        "$constructor": {
+          "comment": "/**\n     *  Constructs a `Notation.Glob` object with the given glob string.\n     *  @constructs Notation.Glob\n     *  @constructor\n     *\n     *  @param {String} glob - The glob string.\n     *\n     *  @example\n     *  var glob = new Notation.Glob(\"billing.account.*\");\n     *  glob.test(\"billing.account.id\"); // true\n     */",
+          "meta": {
+            "range": [
+              1346,
+              1761
+            ],
+            "filename": "notation.glob.js",
+            "lineno": 42,
+            "path": "/Users/oy/Developer/javascript/notation/src/core",
+            "code": {
+              "id": "astnode100000103",
+              "name": "NotationGlob",
+              "type": "MethodDefinition",
+              "paramnames": [
+                "glob"
+              ]
+            },
+            "vars": {
+              "": null
+            }
+          },
+          "description": "Constructs a `Notation.Glob` object with the given glob string.",
+          "alias": "Notation.Glob",
+          "kind": "class",
+          "params": [
+            {
+              "type": {
+                "names": [
+                  "String"
+                ]
+              },
+              "description": "The glob string.",
+              "name": "glob"
+            }
+          ],
+          "examples": [
+            "var glob = new Notation.Glob(\"billing.account.*\");\n glob.test(\"billing.account.id\"); // true"
+          ],
+          "name": "Glob",
+          "longname": "Notation.Glob",
+          "memberof": "Notation",
+          "scope": "static",
+          "$longname": "Notation.NotationGlob"
+        }
       },
       {
         "comment": "/**\n     *  Checks whether the source object has the given notation\n     *  as a (leveled) enumerable property. If the property exists\n     *  but has a value of `undefined`, this will still return `true`.\n     *\n     *  @param {String} notation - The notation string to be checked.\n     *\n     *  @returns {Boolean}\n     *\n     *  @example\n     *  Notation.create({ car: { year: 1970 } }).has(\"car.year\"); // true\n     *  Notation.create({ car: { year: undefined } }).has(\"car.year\"); // true\n     *  Notation.create({}).has(\"car.color\"); // false\n     */",
@@ -2413,35 +2423,5 @@
     "kind": "class",
     "scope": "global",
     "$longname": "NotationError"
-  },
-  {
-    "comment": "",
-    "meta": {
-      "range": [
-        1353,
-        1768
-      ],
-      "filename": "notation.glob.js",
-      "lineno": 42,
-      "path": "/Users/oy/Developer/javascript/notation/src/core",
-      "code": {
-        "id": "astnode100000103",
-        "name": "NotationGlob",
-        "type": "MethodDefinition",
-        "paramnames": [
-          "glob"
-        ]
-      },
-      "vars": {
-        "": null
-      }
-    },
-    "undocumented": true,
-    "name": "NotationGlob",
-    "longname": "NotationGlob",
-    "kind": "class",
-    "scope": "global",
-    "params": [],
-    "$longname": "NotationGlob"
   }
 ]
