@@ -18,34 +18,25 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Reverse Geocoding (address lookup)</li>
 <li>Full address information (street, town, neighborhood, region, country, country code, postal code, etc...)</li>
 <li>Fallback mechanism (from HTML5-geolocation to Geo-IP lookup)</li>
-<li><strong>NEW</strong>: Watch geographic position</li>
-<li><strong>NEW</strong>: Locate by mobile information</li>
-<li><strong>NEW</strong>: Get timezone information</li>
-<li><strong>NEW</strong>: Get distance matrix and duration information</li>
-<li><strong>NEW</strong>: Calculate distance between two geographic points</li>
-<li><strong>NEW</strong>: Various geographic conversion utilities</li>
-<li><strong>NEW</strong>: Get client IP</li>
-<li><strong>NEW</strong>: Fetched location includes country flag image (SVG) URL</li>
-<li><strong>NEW</strong>: Language support (depends on the service provider)</li>
+<li>Watch geographic position</li>
+<li>Locate by mobile information</li>
+<li>Get timezone information</li>
+<li>Get distance matrix and duration information</li>
+<li>Calculate distance between two geographic points</li>
+<li>Various geographic conversion utilities</li>
+<li>Get client IP</li>
+<li>Fetched location includes country flag image (SVG) URL</li>
+<li>Language support (depends on the service provider)</li>
 <li>Supports Google Loader (loads Google APIs dynamically)</li>
-<li>Dynamically creates Google Maps, <strong>on demand</strong> (with marker, info window, auto-adjusted zoom)</li>
+<li>Dynamically create Google Maps, <strong>on demand</strong> (with marker, info window, auto-adjusted zoom)</li>
+<li><strong>NEW</strong>: Get static Google Map (image) URL for a location</li>
 <li>Non-blocking script loading (external sources are loaded on the fly without interrupting page load)</li>
 <li>No library/framework dependencies (such as jQuery, etc...)</li>
-<li><strong>NEW</strong>: Universal module (CommonJS/Node/AMD..)</li>
+<li>Universal module (CommonJS/AMD..)</li>
 <li>Small file size (9KB minified, gzipped)</li>
 <li>Browser Support: IE 9+, Chrome, Safari, Firefox, Opera...</li>
 </ul>
 <p>See a <a href="https://onury.github.io/geolocator/?content=examples"><strong>Live Demo</strong></a>.</p>
-<h3 id="breaking-changes">Breaking Changes</h3>
-<p>If you're migrating from v1.x to v2, you should consider the following changes:</p>
-<ul>
-<li>Geolocator <strong>v2</strong> is completely re-written from scratch; adding more features to it while keeping and improving the existing ones. So almost everything has changed, for good.</li>
-<li>The most significant change is; we've got rid of separate callbacks for error and success. Now, we have Node-style, single callback for each async method; with <code>err</code> as the first argument. If it's a success, <code>err</code> will be <code>null</code>.</li>
-<li>Most features make use of Google APIs. So you'll need a (single) Google API key to use them all. If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.</li>
-<li><code>.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback.</li>
-<li>Geolocator now supports a single Geo-IP provider, Wikimedia. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
-<li>Read the <a href="https://onury.github.io/geolocator/?api=geolocator">API documentation</a> for details...</li>
-</ul>
 <h2 id="get-geolocator-js">Get Geolocator.js</h2>
 <p>Link or download via <a href="https://cdnjs.com/libraries/geolocator"><strong>CDNJS</strong></a>.  </p>
 <p>Download full source code from <a href="https://github.com/onury/geolocator/releases">GitHub releases</a>.  </p>
@@ -53,9 +44,8 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <pre><code>bower install geolocator
 </code></pre><p>Install via <strong>NPM</strong>:</p>
 <pre><code>npm install geolocator
-</code></pre><p><em>If somehow you need the legacy version v1.2.9 and don't need the better. <a href="https://github.com/onury/geolocator/releases/tag/v1.2.9">Here</a> it is.</em></p>
-<h2 id="usage-">Usage:</h2>
-<p>Example below, tries to get user's geo-location via HTML5 Geolocation and if user rejects, it will fallback to IP based geo-location.</p>
+</code></pre><h2 id="usage-">Usage:</h2>
+<p>Example below, will attempt to get user's geo-location via HTML5 Geolocation and if user rejects, it will fallback to IP based geo-location.</p>
 <p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
 <pre><code class="lang-html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
@@ -71,13 +61,15 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
     window.onload = function () {
         var options = {
             enableHighAccuracy: true,
-            timeout: 6000,
-            maximumAge: 0,
-            desiredAccuracy: 30,
-            fallbackToIP: true, // fallback to IP if Geolocation fails or rejected
-            addressLookup: true,
-            timezone: true,
-            map: "map-canvas"
+            timeout: 5000,
+            maximumWait: 10000,     // max wait time for desired accuracy
+            maximumAge: 0,          // disable cache
+            desiredAccuracy: 30,    // meters
+            fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+            addressLookup: true,    // requires Google API key if true
+            timezone: true,         // requires Google API key if true
+            map: "map-canvas",      // interactive map element id (or options object)
+            staticMap: true         // map image URL (boolean or options object)
         };
         geolocator.locate(options, function (err, location) {
             if (err) return console.log(err);
@@ -95,11 +87,14 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <ul>
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
 <li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). In Chrome 50, Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong>. Other browsers are expected to follow.</li>
-<li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator.</li>
+<li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator. <em>(If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.)</em></li>
+<li>Geolocator now supports a single Geo-IP provider, FreeGeoIP. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
 <li>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never". (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>).</li>
 </ul>
 <h2 id="under-the-hood">Under the Hood</h2>
 <p>Geolocator v2 is written in ES2015 (ES6), compiled with <a href="https://github.com/babel/babel">Babel</a>, bundled with <a href="https://github.com/webpack/webpack">Webpack</a> and documented with <a href="https://github.com/onury/docma">Docma</a>.</p>
+<h2 id="change-log">Change Log</h2>
+<p>See version changes <a href="https://onury.github.io/geolocator/?content=changelog">here</a>.</p>
 <h2 id="license">License</h2>
 <p>MIT. See the <a href="https://github.com/onury/geolocator/blob/master/LICENSE">Disclaimer and License</a>.</p>
 </body></html>

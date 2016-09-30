@@ -1,7 +1,16 @@
 
 <html><head></head><body><h2 id="change-log-">Change Log:</h2>
-<h3 id="v2-0-0-2016-06-25-">v2.0.0 (2016-06-25)</h3>
+<h3 id="v2-1-0-2016-09-30-">v2.1.0 (2016-09-30)</h3>
+<ul>
+<li>Feature: Get static Google Maps (image) via <code>.getStaticMap()</code> method. <a href="https://github.com/onury/geolocator/issues/34">#34</a>. <em>Make sure you have enabled Google Static Maps API in Google Developers console.</em></li>
+<li>Feature: Ability to style Google Maps. Either set global styles via <code>geolocator.config()</code> or corresponding methods such as <code>.createMap()</code> or <code>.getStaticMap()</code>.</li>
+<li>Revision: Improved desired accuracy logic. Added <code>maximumWait:Number</code> and <code>onProgress:Function</code> options for <code>.locate()</code> method.</li>
+<li>Fix: Changed Geo-IP provider to <a href="https://freegeoip.net">FreeGeoIP</a>. (Wikimedia has shutdown the geo service.) Fixes issue <a href="https://github.com/onury/geolocator/issues/36">#36</a>.</li>
+<li>Fix: Respecting countries with states, other than US. Fixes <a href="https://github.com/onury/geolocator/pull/37">#37</a>.</li>
+<li>Minor revisions, updated dev-dependencies.</li>
+</ul>
 <p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
+<h3 id="v2-0-0-2016-06-25-">v2.0.0 (2016-06-25)</h3>
 <ul>
 <li>Improvement: Better Geolocation accuracy. Fixes issue <a href="https://github.com/onury/geolocator/issues/28">#28</a>.</li>
 <li>Feature: Watch geographic position.</li>
@@ -28,6 +37,7 @@ If you don't have a key, you can still use Geolocator like the previous versions
 </ul>
 </li>
 </ul>
+<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
 <hr>
 <p><strong>v1.2.9</strong></p>
 <ul>
