@@ -8,11 +8,11 @@
 <blockquote>
 <p>© 2016, Onur Yıldırım (@onury). MIT License.</p>
 </blockquote>
-<p>A powerful tool to easily generate beautiful HTML documentation from Javascript (<a href="http://http://usejsdoc.org">JSDoc</a>) and <a href="https://daringfireball.net/projects/markdown">Markdown</a> files.</p>
+<p>A powerful tool to easily generate beautiful HTML documentation from Javascript (<a href="http://http://usejsdoc.org">JSDoc</a>), <a href="https://daringfireball.net/projects/markdown">Markdown</a> and HTML files.</p>
 <p>Like this one you're reading now...</p>
 <h3 id="features">Features</h3>
 <ul>
-<li>Parse <strong>JSDoc</strong> documentation and <strong>Markdown</strong> files.</li>
+<li>Parse <strong>JSDoc</strong> documentation, <strong>Markdown</strong> and <strong>HTML</strong> files.</li>
 <li>Build a cool <strong>SPA</strong> (Single Page Application) from parsed files.</li>
 <li>Generate multiple/separate API documentations by grouping JS files.</li>
 <li>Path or Query-string based app routing.</li>
@@ -23,7 +23,7 @@
 <li>Well documented. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/261d.svg" /></li>
 </ul>
 <h3 id="installation">Installation</h3>
-<pre><code class="lang-sh">npm i docma
+<pre><code class="lang-sh">npm i docma -g
 </code></pre>
 <h3 id="building-documentation">Building Documentation</h3>
 <p>Once you create the configuration object (or file), building documentation is pretty simple.</p>
@@ -51,6 +51,11 @@ Docma.create()
     });
 </code></pre>
 <p>See <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a>.</p>
+<h3 id="command-line">Command-Line</h3>
+<p>You can also use Docma CLI to build documentations directly from your console.</p>
+<pre><code class="lang-bash">docma -c path/to/docma.config.json
+</code></pre>
+<p>See <a href="?content=docma-cli">Docma CLI reference</a>.</p>
 <h3 id="parsed-output">Parsed Output</h3>
 <p>To investigate the parsed JSDoc output, enable the <code>debug</code> option that will create a JSON output(s) within the root of the destination directory.</p>
 <p>If you have a problem with the parsed documentation data, open an issue @ <a href="https://github.com/onury/jsdoc-x">jsdoc-x</a>. <em>(I'm the author.)</em></p>
