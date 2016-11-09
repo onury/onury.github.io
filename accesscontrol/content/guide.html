@@ -1,6 +1,9 @@
 
 <html><head></head><body><h1 id="accesscontrol">AccessControl</h1>
 <hr />
+<p><a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="version"></a>
+<img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies">
+<img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license">  </p>
 <blockquote>
 <p>© 2016, Onur Yıldırım (@onury). MIT License.  </p>
 </blockquote>
@@ -122,7 +125,7 @@ permission.granted;       // true
 permission.attributes;    // ['*', '!record.id']
 permission.filter(data);  // filtered data (without record.id)
 </code></pre>
-<p>See <a href="express-js-example">express.js example</a>.</p>
+<p>See <a href="#expressjs-example">express.js example</a>.</p>
 <h4 id="defining-all-grants-at-once">Defining All Grants at Once</h4>
 <p>You can pass the grants directly to the <code>AccessControl</code> constructor.
 It accepts either an <code>Object</code>:</p>
@@ -167,7 +170,14 @@ var ac = new AccessControl(grantList);
 ac.setGrants(grantsObject);
 console.log(ac.getGrants());
 </code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>You can read the full <a href="http://onury.github.io/accesscontrol/?api=ac"><strong>API reference</strong> here</a>.</p>
 <h2 id="change-log">Change-Log</h2>
+<p><strong>v1.0.1</strong> (2016-11-09)  </p>
+<ul>
+<li>Bug-Fix: Permission filter would throw an error due to syntax. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
+<li>(Dev) added filter test.</li>
+</ul>
 <p><strong>v1.0.0</strong> (2016-09-10)  </p>
 <ul>
 <li>initial release.</li>
