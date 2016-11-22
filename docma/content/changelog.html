@@ -1,14 +1,36 @@
 
 <html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
-<hr>
+<h4 id="-v1-3-0-release-2016-11-23-"><strong>v1.3.0</strong> Release (2016-11-23)</h4>
+<ul>
+<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<ul>
+<li>Added case-sensitive routing option. <code>buildConfig.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
+<li>Updated dependencies to their latest versions.</li>
+<li>Minor code revisions.</li>
+</ul>
+</li>
+<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
+<ul>
+<li>Extended support for parsing back-ticks in documentation. Added triple back-tick support for multiline code blocks (<code>```</code>).</li>
+<li>Improved <code>docma.utils.normalizeTabs()</code> method. Deep indents in JSDoc comments/descriptions are also normalized.</li>
+<li>Better <code>&lt;pre&gt;&lt;/pre&gt;</code> support within JSDoc descriptions.</li>
+</ul>
+</li>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
+<ul>
+<li>Symbols with return type parameters (such as <code>Promise&lt;Array&gt;</code>) are now escaped and parsed properly. Fixes <a href="https://github.com/onury/docma/issues/4">issue #4</a>.</li>
+<li>Boolean symbol parameters' default values are now parsed properly. Fixes <a href="https://github.com/onury/docma/issues/5">issue #5</a>.</li>
+</ul>
+</li>
+</ul>
 <h4 id="-v1-2-0-release-2016-10-31-"><strong>v1.2.0</strong> Release (2016-10-31)</h4>
 <ul>
-<li><p></p><p><strong>Docma CLI</strong>:</p><p></p>
+<li><p></p><p><b>Docma CLI</b>:</p><p></p>
 <ul>
 <li>Added CLI (command-line interface). Supports <code>config</code>, <code>src</code>, <code>dest</code> and all <code>debug</code> options.</li>
 </ul>
 </li>
-<li><p></p><p><strong>Default Template</strong>:</p><p></p>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
 <li>Updated (one-dark) highlighting styles.</li>
 </ul>
@@ -20,14 +42,14 @@
 </ul>
 <h4 id="-v1-1-0-release-2016-08-12-"><strong>v1.1.0</strong> Release (2016-08-12)</h4>
 <ul>
-<li><p></p><p><strong>Docma</strong> (Builder):</p><p></p>
+<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
 <li>Constructors would still show up in the documentation even though <code>@private</code> is set. Fixed by <code>jsdoc-x</code>.</li>
 <li>Updated dependencies to their latest versions.</li>
 <li>Minor revisions.</li>
 </ul>
 </li>
-<li><p></p><p><strong>Default Template</strong>:</p><p></p>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
 <li>Fixed sidebar header/search position when sidebar is collapsed.</li>
 <li>An access badge is shown next to symbol name, if symbol has <code>private</code> or <code>protected</code> access.</li>
@@ -47,7 +69,7 @@
 </ul>
 <h4 id="-v1-0-0-release-2016-06-11-"><strong>v1.0.0</strong> Release (2016-06-11)</h4>
 <ul>
-<li><p></p><p><strong>Docma</strong> (Builder):</p><p></p>
+<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
 <li>Convert markdown files to HTML. See documentation.</li>
 <li>Added <code>.markdown:Object</code> build configuration options. (Same as <code>marked</code> module options).</li>
@@ -65,7 +87,7 @@
 <li>Added negated glob support (that excludes the paths) for the <code>src</code> build option.</li>
 </ul>
 </li>
-<li><p></p><p><strong>Docma Web Core</strong>:</p><p></p>
+<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
 <ul>
 <li>Added client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
 <li>Implemented <code>EventEmitter</code>.</li>
@@ -78,7 +100,7 @@
 <li>If <code>debug &gt;= 3</code>, web app will also output logs.</li>
 </ul>
 </li>
-<li><p></p><p><strong>Default Template</strong>:</p><p></p>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
 <li>Better layout for HTML files converted from markdown.</li>
 <li>Fixed documentation of <code>@property</code> JSDoc tags.</li>
