@@ -1,11 +1,13 @@
 
 <html><head></head><body><h1 id="geolocator-v2">Geolocator v2</h1>
 <hr />
-<p><img src="https://img.shields.io/bower/v/geolocator.svg" alt="bower">
+<p><a href="https://cdnjs.com/libraries/geolocator"><img src="https://img.shields.io/cdnjs/v/geolocator.svg" alt="CDNJS"></a>
+<img src="https://img.shields.io/bower/v/geolocator.svg" alt="bower">
 <img src="https://img.shields.io/npm/v/geolocator.svg" alt="npm">
 <img src="https://img.shields.io/github/release/onury/geolocator.svg" alt="release">
 <a href="https://codeclimate.com/github/onury/geolocator"><img src="https://codeclimate.com/github/onury/geolocator/badges/gpa.svg" alt="Code Climate"></a>
-<img src="http://img.shields.io/npm/l/perfy.svg" alt="license">  </p>
+<img src="http://img.shields.io/npm/l/perfy.svg" alt="license">
+<img src="https://img.shields.io/maintenance/yes/2016.svg" alt="maintained">  </p>
 <blockquote>
 <p>© 2016, Onur Yıldırım (@onury)
 MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/master/LICENSE">Disclaimer and License</a>.</p>
@@ -89,7 +91,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). In Chrome 50, Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong>. Other browsers are expected to follow.</li>
 <li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator. <em>(If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.)</em></li>
 <li>Geolocator now supports a single Geo-IP provider, FreeGeoIP. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
-<li>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never". (bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>).</li>
+<li><strike>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never".</strike> This is now fixed in Firefox version 53 with the new permission prompt redesign. (See bugzilla <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>.)</li>
 </ul>
 <h2 id="under-the-hood">Under the Hood</h2>
 <p>Geolocator v2 is written in ES2015 (ES6), compiled with <a href="https://github.com/babel/babel">Babel</a>, bundled with <a href="https://github.com/webpack/webpack">Webpack</a> and documented with <a href="https://github.com/onury/docma">Docma</a>.</p>
