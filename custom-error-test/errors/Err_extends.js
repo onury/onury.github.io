@@ -34,10 +34,13 @@
     // so we check here
     check();
 
+    // EXPORT
+
     if (typeof module === 'object' && typeof module.exports === 'object') {
         module.exports = Err_extends;
     } else {
         window.errors = window.errors || [];
         window.errors.push(Err_extends);
     }
+
 })();
