@@ -1,5 +1,32 @@
 
 <html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
+<h4 id="-v1-4-0-release-2017-02-13-"><strong>v1.4.0</strong> Release (2017-02-13)</h4>
+<ul>
+<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<ul>
+<li>Fixed incorrect routing when routing method is set to <code>"path"</code>.</li>
+<li>If <code>app.entrance</code> is not set in build configuration, it now defaults to <code>"api"</code>.</li>
+<li>If <code>app.server</code> is not set in build configuration, it now defaults to <code>"static"</code>. (<code>"static"</code> is similar to <code>"github"</code> which generates static HTML files.)</li>
+</ul>
+</li>
+<li><p></p><p><b>Docma CLI</b>:</p><p></p>
+<ul>
+<li>Respecting debug option in config file. If no debug options are set in the command-line arguments (such as <code>--debug</code>, <code>--quite</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>--verbose</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</li>
+</ul>
+</li>
+<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
+<ul>
+<li>Fixed <code>.split()</code> error for <code>null</code> (404) routes.</li>
+<li>Updated web dependencies to latest versions.</li>
+</ul>
+</li>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
+<ul>
+<li>Fixed a style issue where sidebar would not scroll all the way to the bottom in Firefox. Fixes <a href="https://github.com/onury/docma/issues/8">issue #8</a>.</li>
+<li>If <code>template.title</code> is omitted, <code>app.title</code> is used. (Defaults to <code>"Documentation"</code> if not set).</li>
+</ul>
+</li>
+</ul>
 <h4 id="-v1-3-0-release-2016-11-23-"><strong>v1.3.0</strong> Release (2016-11-23)</h4>
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
