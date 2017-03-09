@@ -1,0 +1,94 @@
+
+<html><head></head><body><h1 id="docma-cli">Docma CLI</h1>
+<hr />
+<p>Instead of programmatically executing the Docma builder, you can directly use the CLI from your console. Although the CLI does not provide all build configurations via command-line options; it still supports all of them via the <code>-c</code> option which you can set the configuration file's path to.</p>
+<h3 id="cli-options">CLI Options</h3>
+<table>
+    <tbody><tr>
+        <td colspan="2"><b>Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+        <td><b>Parameter</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><code>-h</code></td>
+        <td><code>--help</code></td>
+        <td></td>
+        <td>Output CLI usage information.</td>
+    </tr>
+    <tr>
+        <td><code>-V</code></td>
+        <td><code>--version</code></td>
+        <td></td>
+        <td>Output the Docma version number.</td>
+    </tr>
+    <tr>
+        <td><code>-c</code></td>
+        <td><code>--config</code></td>
+        <td><code>&lt;path&gt;</code></td>
+        <td>
+            Docma JSON configuration file path.
+            You can define all build options within this file. Any option (below) set via CLI will overwrite the value defined in this file.
+        </td>
+    </tr>
+    <tr>
+        <td><code>-s</code></td>
+        <td><code>--src</code></td>
+        <td><code>&lt;[name:]path&gt;</code></td>
+        <td>Source file path. To define multiple source files, this option can be used more than once. To group/name source files, prefix each source path with <code>name:</code>. e.g. <code>-s a.js -s mylib:b.js -s mylib:c.js -s other:d.js</code></td>
+    </tr>
+    <tr>
+        <td><code>-d</code></td>
+        <td><code>--dest</code></td>
+        <td><code>&lt;path&gt;</code></td>
+        <td>
+            Output destination directory path.
+            <b>CAUTION</b>: This directory will be emptied before the build. Make sure you set this to a correct path.
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><code>--web-logs</code></td>
+        <td></td>
+        <td>(Debug) Enable logs in the browser console, for the generated SPA.</td>
+    </tr>
+    <tr>
+        <td><code>-v</code></td>
+        <td><code>--verbose</code></td>
+        <td><code>&lt;path&gt;</code></td>
+        <td>(Debug) Output verbose logs to consoles.</td>
+    </tr>
+    <tr>
+        <td colspan="2"><code>--nomin</code></td>
+        <td></td>
+        <td>(Debug) Disable minification for the generated SPA assets. (e.g. js, css files)</td>
+    </tr>
+    <tr>
+        <td colspan="2"><code>--jd-out</code></td>
+        <td></td>
+        <td>(Debug) Output one or more <code>[name.]jsdoc.json</code> files that include documentation data for each (grouped) javascript source. name is the group name you give when you define the source files. This is useful for investigating the raw JSDoc output.</td>
+    </tr>
+    <tr>
+        <td colspan="2"><code>--debug</code></td>
+        <td></td>
+        <td>Enable all debugging options.<br>Equivalent to: <code>--web-logs -v --nomin --jd-out</code></td>
+    </tr>
+    <tr>
+        <td><code>-q</code></td>
+        <td><code>--quite</code></td>
+        <td></td>
+        <td>(Debug) Disable build logs for the Node console.</td>
+    </tr>
+</tbody></table>
+
+<p><em>Note: If no debug options are set in the CLI arguments (such as <code>--debug</code>, <code>-q</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>-v</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</em></p>
+<h3 id="examples">Examples</h3>
+<ul>
+<li><p>Build documentation with a config.json file:<br>  <code>docma -c path/to/docma.config.json</code>  </p>
+</li>
+<li><p>Output to a different directory:<br>  <code>docma -c path/to/docma.config.json -d path/to/docs</code>  </p>
+</li>
+<li><p>Define source files (instead of the ones defined in the config file):<br>  <code>docma -c path/to/docma.config.json -s path/to/lib-1.js -s path/to/lib-2.js</code>  </p>
+</li>
+<li><p>Define name-grouped source files:<br>  <code>docma -c path/to/docma.config.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js</code></p>
+</li>
+</ul>
+</body></html>

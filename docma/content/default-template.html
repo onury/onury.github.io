@@ -1,0 +1,189 @@
+
+<html><head></head><body><h1 id="docma-default-template">Docma Default Template</h1>
+<hr />
+<p><a href="https://github.com/onury/docma">Docma</a> includes a built-in template; with a side-bar symbols menu, search and navigation features; and a beautiful layout. Actually you're viewing it right now. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/1f61b.svg" /></p>
+<p>Using this default template is straight-forward. Just set <code>buildConfig.template.path</code> to <code>"default"</code> or omit it.</p>
+<h3 id="template-options">Template Options</h3>
+<p>Template specific options that can be used when building your documentation with this default template.</p>
+<table>
+    <tbody><tr>
+        <td><b>Option</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><code><b>title</b></code></td>
+        <td><code>String</code></td>
+        <td><code>""</code></td>
+        <td>
+            Title to be set on the top left of the main document and on top of the sidebar. Don't confuse this with document title (tag).
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>sidebar</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether to enable sidebar that lists the documentation symbols; as a menu.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>collapsed</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>false</code></td>
+        <td>
+            Whether to collapse the sidebar initially by default, on document load.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>badges</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether to show symbol badges (that indicate member type and symbol scope) within the sidebar.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>search</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether to enable the search box within the sidebar. For this to be visible, <code>sidebar</code> should be enabled.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>navbar</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether to enable the navigation bar on top of the main document. This is useful if you have extra views to navigate to; such as a bookmark on the same document, an external guide, demo or a repository page...
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>navItems</b></code></td>
+        <td><code>Array</code></td>
+        <td><code>[]</code></td>
+        <td>
+            List of navigation items. See <a href="#navigation-items">Navigation Items</a> below.
+        </td>
+    </tr>
+</tbody></table>
+
+<h4 id="navigation-items">Navigation Items</h4>
+<p>Linked labels that build the navigation bar on the top of the document. Each item is an arbitrary <code>Object</code> with the following properties.</p>
+<table>
+    <tbody><tr>
+        <td><b>Property</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><code><b>label</b></code></td>
+        <td><code>String</code></td>
+        <td><code>""</code></td>
+        <td>
+            Label of the navigation item. Try keeping this short.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>href</b></code></td>
+        <td><code>String</code></td>
+        <td><code>"#"</code></td>
+        <td>
+            Sets the link of the navigation item. Either a bookmark, a relative or external link.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>target</b></code></td>
+        <td><code>String</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            Sets the anchor target option. e.g. <code>"_blank"</code> to open the link in new/blank page.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>iconClass</b></code></td>
+        <td><code>String</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            One of the built-in icon CSS classes. e.g. <code>"ico-github"</code>. You can combine this with classes that define the size of the icon such as <code>"ico-md ico-github"</code>. See all icon and size classes in the <a href="https://github.com/onury/docma/blob/master/templates/default/less/icomoon.less">less file</a>.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>items</b></code></td>
+        <td><code>Array</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            Sub-items for this navigation item. You can use <code>label</code>, <code>href</code> and <code>target</code> options. You can also use an additional <code>separator</code> option, which places a horizontal line within the submenu. e.g. <code>{ separator: true }</code>.
+        </td>
+    </tr>
+</tbody></table>
+
+<h3 id="usage-with-docma">Usage with Docma</h3>
+<p>Template options are defined within the <a href="?api=docma#Docma~BuildConfiguration">build configuration</a>. i.e. <code>buildConfig.template.options</code>.</p>
+<pre><code class="lang-js">var buildConfig = {
+    template: {
+        // Template-specific options
+        options: {
+            title: "My Library",
+            sidebar: true,
+            collapsed: false,
+            badges: true,
+            search: true,
+            navbar: true,
+            navItems: [
+                {
+                    label: "Documentation",
+                    href: "#",
+                    iconClass: "ico-book"
+                },
+                {
+                    label: "Demos",
+                    href: "demos.html",
+                    iconClass: "ico-mouse-pointer"
+                },
+                {
+                    label: "Download",
+                    iconClass: "ico-md ico-download",
+                    items: [
+                        {
+                            label: "v0.5.0-pre",
+                            href: "https://github.com/&lt;user&gt;/&lt;repo&gt;/archive/v0.5.0-pre.zip"
+                        },
+                        {
+                            label: "v0.7.0-pre",
+                            href: "https://github.com/&lt;user&gt;/&lt;repo&gt;/archive/v0.7.0-pre.zip"
+                        },
+                        { separator: true },
+                        {
+                            label: "v1.0.0",
+                            href: "https://github.com/&lt;user&gt;/&lt;repo&gt;/archive/v1.0.0.zip"
+                        }
+                    ]
+                },
+                {
+                    label: "GitHub",
+                    href: "https://github.com/&lt;user&gt;/&lt;repo&gt;",
+                    target: "_blank",
+                    iconClass: "ico-md ico-github"
+                }
+            ]
+        }
+    },
+    // other build configuration options
+    // src, dest, app, jsdoc, markdown, debug, etc...
+}
+</code></pre>
+<p>Then you can build your documentation with these customized template options.</p>
+<pre><code class="lang-js">Docma.create()
+    .build(buildConfig)
+    .then(function() {
+        console.log('Documentation is built successfully.');
+    })
+    .catch(function (err) {
+        console.log(err);
+    });
+</code></pre>
+</body></html>

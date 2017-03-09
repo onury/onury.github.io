@@ -1,0 +1,75 @@
+
+<html><head></head><body><h1 id="docma">Docma</h1>
+<hr />
+<p><img src="https://img.shields.io/npm/v/docma.svg" alt="npm">
+<img src="https://img.shields.io/github/release/onury/docma.svg" alt="release">
+<img src="https://david-dm.org/onury/docma.svg" alt="dependencies">
+<img src="http://img.shields.io/npm/l/docma.svg" alt="license"></p>
+<blockquote>
+<p>© 2016, Onur Yıldırım (@onury). MIT License.</p>
+</blockquote>
+<p>A powerful tool to easily generate beautiful HTML documentation from Javascript (<a href="http://http://usejsdoc.org">JSDoc</a>), <a href="https://daringfireball.net/projects/markdown">Markdown</a> and HTML files.</p>
+<p>Like this one you're reading now...</p>
+<h3 id="features">Features</h3>
+<ul>
+<li>Parse <strong>JSDoc</strong> documentation, <strong>Markdown</strong> and <strong>HTML</strong> files.</li>
+<li>Build a cool <strong>SPA</strong> (Single Page Application) from parsed files.</li>
+<li>Generate multiple/separate API documentations by grouping JS files.</li>
+<li>Path or Query-string based app routing.</li>
+<li>Non-opinionated engine, built-in template with cool opinions. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/1f60e.svg" /></li>
+<li>Supports custom templates.</li>
+<li>Works great with <strong>GitHub Pages</strong>.</li>
+<li>Extremely configurable and debuggable.</li>
+<li>Well documented. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/261d.svg" /></li>
+</ul>
+<h3 id="installation">Installation</h3>
+<pre><code class="lang-sh">npm i docma -g
+</code></pre>
+<h3 id="building-documentation">Building Documentation</h3>
+<p>Once you create the configuration object (or file), building documentation is pretty simple.</p>
+<pre><code class="lang-js">var Docma = require('docma');
+</code></pre>
+<p>Either by passing a <a href="?api=docma#Docma~BuildConfiguration">configuration</a> object.</p>
+<pre><code class="lang-js">var config = {
+    src: [
+        './code/**/*.js',
+        './README.md'
+    ],
+    dest: './output/doc'
+};
+Docma.create()
+    .build(config)
+    .catch(function (error) {
+        console.log(error);
+    });
+</code></pre>
+<p>Or by reading configuration from a JSON file.</p>
+<pre><code class="lang-js">Docma.create()
+    .build('path/to/config.json')
+    .catch(function (error) {
+        console.log(error);
+    });
+</code></pre>
+<p>See <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a>.</p>
+<h3 id="command-line">Command-Line</h3>
+<p>You can also use Docma CLI to build documentations directly from your console.</p>
+<pre><code class="lang-bash">docma -c path/to/docma.config.json
+</code></pre>
+<p>See <a href="?content=docma-cli">Docma CLI reference</a>.</p>
+<h3 id="parsed-output">Parsed Output</h3>
+<p>To investigate the parsed JSDoc output, enable the <code>debug</code> option that will create a JSON output(s) within the root of the destination directory.</p>
+<p>If you have a problem with the parsed documentation data, open an issue @ <a href="https://github.com/onury/jsdoc-x">jsdoc-x</a>. <em>(I'm the author.)</em></p>
+<p>For markdown output issues (that are not related with style), you can open an issue @ <a href="https://github.com/chjj/marked">marked</a>.</p>
+<h3 id="change-log">Change-Log</h3>
+<p>See <a href="?content=changelog">CHANGELOG.md</a>.</p>
+<h3 id="license">License</h3>
+<p>MIT. You don't have to include any copyright notice in your documentation output or templates but I'd appreciate if you let people know about this tool so we can read better documentations.</p>
+<p>Emoji shortcuts used in source markdown files are parsed into <a href="https://github.com/twitter/twemoji">twemoji</a>. Graphics licensed under <a href="https://creativecommons.org/licenses/by/4.0">CC-BY 4.0</a>.</p>
+<h3 id="related-modules">Related Modules</h3>
+<ul>
+<li><a href="https://github.com/onury/grunt-docma">grunt-docma</a> — Grunt task for Docma.</li>
+<li><a href="https://github.com/onury/jsdoc-x">jsdoc-x</a> — Parser for outputting a Javascript object from documented code via JSDoc's explain (-X) command.</li>
+<li><a href="https://github.com/chjj/marked">marked</a> — A full-featured markdown parser and compiler, written in JavaScript. Built for speed.</li>
+<li><a href="https://github.com/linkedin/dustjs">dustjs</a> — Asynchronous Javascript templating for the browser and server.</li>
+</ul>
+</body></html>
