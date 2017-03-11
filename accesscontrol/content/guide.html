@@ -1,14 +1,17 @@
 
 <html><head></head><body><h1 id="accesscontrol">AccessControl</h1>
 <hr />
-<p><a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="version"></a>
+<p><img src="https://img.shields.io/npm/v/accesscontrol.svg" alt="npm">
+<img src="https://img.shields.io/github/release/onury/accesscontrol.svg" alt="release">
+<img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license">
 <img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies">
-<img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license">  </p>
+<img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained">
+<img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg" alt="TypeScript">  </p>
 <blockquote>
-<p>© 2016, Onur Yıldırım (@onury). MIT License.  </p>
+<p>© 2017, Onur Yıldırım (@onury). MIT License.  </p>
 </blockquote>
 <p>Role and Attribute based Access Control for Node.js  </p>
-<p><code>npm i accesscontrol</code>  </p>
+<p><code>npm i accesscontrol --save</code>  </p>
 <p>Many <a href="https://en.wikipedia.org/wiki/Role-based_access_control">RBAC</a> (Role-Based Access Control) implementations differ, but the basics is widely adopted since it simulates real life role (job) assignments. But while data is getting more and more complex; you need to define policies on resources, subjects or even environments. This is called <a href="https://en.wikipedia.org/wiki/Attribute-Based_Access_Control">ABAC</a> (Attribute-Based Access Control).</p>
 <p>With the idea of merging the best features of the two (see this <a href="http://csrc.nist.gov/groups/SNS/rbac/documents/kuhn-coyne-weil-10.pdf">NIST paper</a>); this library implements RBAC basics and also focuses on <em>resource</em> and <em>action</em> attributes.</p>
 <h3 id="core-features">Core Features</h3>
@@ -18,8 +21,10 @@
 <li>Grant/deny permissions by attributes defined by glob notation.</li>
 <li>Ability to filter data (model) instance by allowed attributes.</li>
 <li>Nested object support for attributes.</li>
+<li>TypeScript support.</li>
 <li>Chainable, friendly API.</li>
 </ul>
+<p><em>In order to build on more solid foundations, this library (v1.5.0+) is completely re-written in TypeScript.</em></p>
 <h2 id="guide">Guide</h2>
 <pre><code class="lang-js">var AccessControl = require('accesscontrol');
 </code></pre>
@@ -173,15 +178,7 @@ console.log(ac.getGrants());
 <h2 id="documentation">Documentation</h2>
 <p>You can read the full <a href="http://onury.github.io/accesscontrol/?api=ac"><strong>API reference</strong> here</a>.</p>
 <h2 id="change-log">Change-Log</h2>
-<p><strong>v1.0.1</strong> (2016-11-09)  </p>
-<ul>
-<li>Bug-Fix: Permission filter would throw an error due to syntax. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
-<li>(Dev) added filter test.</li>
-</ul>
-<p><strong>v1.0.0</strong> (2016-09-10)  </p>
-<ul>
-<li>initial release.</li>
-</ul>
+<p>See <a href="https://github.com/onury/accesscontrol/blob/master/CHANGELOG.md">CHANGELOG.md</a>.</p>
 <h2 id="license">License</h2>
 <p>MIT.</p>
 </body></html>

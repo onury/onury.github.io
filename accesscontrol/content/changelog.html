@@ -1,0 +1,21 @@
+
+<html><head></head><body><h2 id="accesscontrol-change-log">AccessControl - Change Log</h2>
+<h3 id="-v1-5-0-2017-03-08-"><strong>v1.5.0</strong> (2017-03-08)</h3>
+<ul>
+<li>Migrated whole code base to TypeScript.</li>
+<li>More strict validation checks. It will now throw on invalid information passed for both grants and permission checks. This helps prevent typos, unintended permission checks, etc...</li>
+<li>Fixed a bug where checking permission with multiple roles would mutate the permission attributes. Fixes <a href="https://github.com/onury/accesscontrol/issues/2">issue #2</a>.</li>
+<li>When an access definition object (<code>IAccessInfo</code> instead of role(s)) passed to <code>.grant()</code> or <code>.deny()</code> methods, it's no longer mutated.</li>
+<li>You could grant permissions for multiple roles at once. Now, you can also grant permissions for multiple resources at the same time. This is very handy when you permit <em>all attributes</em> of the resources; e.g. <code>ac.grant(['admin', 'superadmin']).readAny(['account', 'video'], ['*'])</code>. The caveat is that the resources (most probably) have different attributes; so you can either permit all, or only common attributes (e.g. <code>['id', 'name']</code>).</li>
+<li>Extending a role with a non-existent role will now throw.</li>
+</ul>
+<h3 id="-v1-0-1-2016-11-09-"><strong>v1.0.1</strong> (2016-11-09)</h3>
+<ul>
+<li>Permission filter would throw an error due to syntax. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
+<li>(Dev) added filter test.</li>
+</ul>
+<h3 id="-v1-0-0-2016-09-10-"><strong>v1.0.0</strong> (2016-09-10)</h3>
+<ul>
+<li>initial release.</li>
+</ul>
+</body></html>
