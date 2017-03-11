@@ -1,18 +1,40 @@
 
 <html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
+<h4 id="-v1-5-0-release-2017-03-10-"><strong>v1.5.0</strong> Release (2017-03-10)</h4>
+<ul>
+<li><p><b>Docma</b> (Builder):</p><ul>
+<li>Added <code>config.jsdoc.ignored:Boolean</code> option which specifies whether to include documentation symbols marked with <code>@ignore</code> tag.</li>
+</ul>
+</li>
+<li><p><b>Docma Web Core</b>:</p><ul>
+<li>Empty lines would be stripped out from <code>@example</code> content. Fixed.</li>
+<li>Better auto-indention for code in comments.</li>
+<li>Improved <code>$val</code> filter.</li>
+</ul>
+</li>
+<li><p><b>Default Template</b>:</p><ul>
+<li>Improved sidebar design.</li>
+<li>Added template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/?content=default-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
+<li>Added template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
+<li><code>Type.&lt;T&gt;</code> is now represented as <code>Type&lt;T&gt;</code>.</li>
+<li>Default string values are now represented in quotes.</li>
+<li>Added <code>static</code> badge for static members, <code>deprecated</code> badge for deprecated symbols.</li>
+</ul>
+</li>
+</ul>
 <h4 id="-v1-4-7-release-2017-03-09-"><strong>v1.4.7</strong> Release (2017-03-09)</h4>
 <ul>
 <li><p><b>Docma</b> (Builder):</p><ul>
-<li>Respecting <code>jsdoc.includePattern</code> build config when filtering files..</li>
-<li>When <code>jsdoc.hierarchy</code> option is enabled, sorting would change. Fixed.</li>
+<li>Respecting <code>config.jsdoc.includePattern</code> build config when filtering files..</li>
+<li>When <code>config.jsdoc.hierarchy</code> option is enabled, sorting would change. Fixed.</li>
 </ul>
 </li>
 </ul>
 <h4 id="-v1-4-5-release-2017-03-05-"><strong>v1.4.5</strong> Release (2017-03-05)</h4>
 <ul>
 <li><p><b>Docma</b> (Builder):</p><ul>
-<li>Added build config options: <code>jsdoc.allowUnknownTags</code>, <code>jsdoc.dictionaries</code>, <code>jsdoc.includePattern</code>, <code>jsdoc.excludePattern</code> (<code>jsdoc-x</code> feature).</li>
-<li>Added <a href="http://usejsdoc.org/about-plugins.html">JSDoc plugin</a> support via the new <code>jsdoc.plugins</code> option (<code>jsdoc-x</code> feature).</li>
+<li>Added build config options: <code>config.jsdoc.allowUnknownTags</code>, <code>config.jsdoc.dictionaries</code>, <code>config.jsdoc.includePattern</code>, <code>config.jsdoc.excludePattern</code> (<code>jsdoc-x</code> feature).</li>
+<li>Added <a href="http://usejsdoc.org/about-plugins.html">JSDoc plugin</a> support via the new <code>config.jsdoc.plugins</code> option (<code>jsdoc-x</code> feature).</li>
 </ul>
 </li>
 </ul>
@@ -21,8 +43,8 @@
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
 <li>Fixed incorrect routing when routing method is set to <code>"path"</code>.</li>
-<li>If <code>app.entrance</code> is not set in build configuration, it now defaults to <code>"api"</code>.</li>
-<li>If <code>app.server</code> is not set in build configuration, it now defaults to <code>"static"</code>. (<code>"static"</code> is similar to <code>"github"</code> which generates static HTML files.)</li>
+<li>If <code>config.app.entrance</code> is not set in build configuration, it now defaults to <code>"api"</code>.</li>
+<li>If <code>config.app.server</code> is not set in build configuration, it now defaults to <code>"static"</code>. (<code>"static"</code> is similar to <code>"github"</code> which generates static HTML files.)</li>
 </ul>
 </li>
 <li><p></p><p><b>Docma CLI</b>:</p><p></p>
@@ -39,7 +61,7 @@
 <li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
 <li>Fixed a style issue where sidebar would not scroll all the way to the bottom in Firefox. Fixes <a href="https://github.com/onury/docma/issues/8">issue #8</a>.</li>
-<li>If <code>template.title</code> is omitted, <code>app.title</code> is used. (Defaults to <code>"Documentation"</code> if not set).</li>
+<li>If <code>config.template.title</code> is omitted, <code>config.app.title</code> is used. (Defaults to <code>"Documentation"</code> if not set).</li>
 </ul>
 </li>
 </ul>
@@ -47,7 +69,7 @@
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
-<li>Added case-sensitive routing option. <code>buildConfig.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
+<li>Added case-sensitive routing option. <code>config.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
 <li>Updated dependencies to their latest versions.</li>
 <li>Minor code revisions.</li>
 </ul>
