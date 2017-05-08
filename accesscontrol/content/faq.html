@@ -1,0 +1,184 @@
+
+<html><head></head><body><h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<hr>
+<blockquote>
+<p><em>This FAQ provides general information about the term "Access Control" but most definitions are specific to AccessControl.js - how the library is implemented.</em></p>
+</blockquote>
+<h3 id="what-is-access-control-">What is "Access Control"?</h3>
+<p>In information security, <strong>Access Control</strong> is selective restriction of <strong><em>access</em></strong> to a <strong><em>resource</em></strong>. </p>
+<p>AccessControl.js ...</p>
+<ul>
+<li>defines act of accessing by "actions".</li>
+<li>provides an abstract layer between the application logic and the requested resource and action. </li>
+</ul>
+<h3 id="what-is-an-action-">What is an "action"?</h3>
+<p>AccessControl.js defines "accessing" by <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> actions (<code>create</code>, <code>read</code>, <code>update</code>, <code>delete</code>). It does not specify <strong>how an <em>action</em> is performed</strong> on the <em>resource</em>.  But rather, decides <strong>whether the <em>action</em> can be performed</strong> by the accessing party: <strong><em>role</em></strong>.</p>
+<p>Below is a typical match of AC actions to actual HTTP and database operations:</p>
+<table>
+<thead>
+<tr>
+<th>AccessControl.js</th>
+<th>REST/HTTP</th>
+<th>Database</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>CREATE</code></strong></td>
+<td><code>POST</code></td>
+<td><code>INSERT</code></td>
+</tr>
+<tr>
+<td><strong><code>READ</code></strong></td>
+<td><code>GET</code></td>
+<td><code>SELECT</code></td>
+</tr>
+<tr>
+<td><strong><code>UPDATE</code></strong></td>
+<td><code>PUT</code> or <code>PATCH</code></td>
+<td><code>UPDATE</code></td>
+</tr>
+<tr>
+<td><strong><code>DELETE</code></strong></td>
+<td><code>DELETE</code></td>
+<td><code>DELETE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Most of the time this might be the case; but depending on the context or resource; you could map these actions to completely different operations.</p>
+<ul>
+<li>a <strong><code>CREATE</code></strong> might mean sending an SMS to a user.</li>
+<li>a <strong><code>READ</code></strong> might mean downloading a file.</li>
+<li>a <strong><code>DELETE</code></strong> in AccessControl logic might mean an <strong><code>UPDATE</code></strong> in database.<br>e.g. setting a table field, named <code>isDeleted</code> to <code>1</code> (soft-delete).</li>
+</ul>
+<p>and so on...</p>
+<h3 id="what-is-a-resource-">What is a "resource"?</h3>
+<p>A <strong>resource</strong> identifies a unique thing (noun) that's named/referenced and being accessed. This is typically an abstract definition. What the resource actually is; and how that resource is implemented is a <strong>design decision</strong>, the developer makes. </p>
+<p>Depending on the context; a resource can be a <em>document</em>, a <em>database record</em>, an <em>apple</em>, the <em>relationship of two people</em>, <em>fear of dark</em>, a <em>cat breed</em>, a <em>cat</em>, <a href="http://stackoverflow.com/a/10883810/112731">etc...</a></p>
+<p>When defining a resource for AccessControl, the developer should decide whether that <em>"thing"</em>...</p>
+<ul>
+<li>is semantically unique (different than other defined resources),</li>
+<li>requires a distinguished control of access. </li>
+</ul>
+<p>For example:</p>
+<ul>
+<li>We have a database table called <code>accounts</code>.</li>
+<li>The <code>accounts</code> table has fields such as <code>firstName</code>, <code>lastName</code>, <code>email</code> and <code>pwd</code>.</li>
+<li>In our application context, a user can modify <code>firstName</code> and <code>lastName</code> freely. But we'll have a separate page for changing the password and/or email address; which will prompt for current password.</li>
+</ul>
+<p>In this scenario, we may have two resources: <code>account</code> and <code>credentials</code></p>
+<pre><code class="lang-js">ac.grant('user')
+  .createAny('account')                           // create new account with all attributes
+  .updateOwn('account', ['*', '!pwd', '!email'])  // update own account except password and email
+  .updateOwn('credentials')                       // update own credentials (password and email)
+</code></pre>
+<h3 id="how-do-you-define-a-resource-">How do you define a resource?</h3>
+<p>In AccessControl.js, a resource is defined whenever a permission is granted or denied for the first time, for that resource.</p>
+<pre><code class="lang-js">ac.can('monkey').createOwn('banana').granted   // false
+ac.hasResource('banana');                      // false
+ac.grant('monkey').createOwn('banana');        // resource is defined for the first time
+ac.hasResource('banana');                      // true
+ac.can('monkey').createOwn('banana').granted   // true
+</code></pre>
+<h3 id="can-i-use-accesscontrol-js-with-a-database-how-">Can I use AccessControl.js with a database? How?</h3>
+<p>(MySQL,  PostgreSQL, MongoDB, etc..)</p>
+<p>AccessControl.js is not coupled with any kind of database system. Actually it's unrelated. It only grants or denies access to a resource. The rest depends on your application's logic and decisions you (the developer) make.</p>
+<p>Here is a scenario;</p>
+<ul>
+<li>Application logic: <em>"Users can assign folders to users."</em><br>In the backend, this is done by creating a record in a relational  table: <code>folderUsers</code> </li>
+<li>So, we have 3 tables in our database:  <code>users</code>, <code>folders</code> and <code>folderUsers</code> </li>
+<li><p>The relation is established by two fields, in <code>folderUsers</code> table:</p>
+<ul>
+<li><code>folderId</code> ( foreign-key: <code>folders.id</code> )</li>
+<li><code>userId</code> ( foreign-key: <code>users.id</code> )  </li>
+</ul>
+</li>
+<li><p>In AccessControl, we'll represent this resource as <code>"fu-relation"</code>.<br>And we'll restrict access for <code>create</code> actions performed on this resource.</p>
+</li>
+</ul>
+<p>In this case, we have 4 options.  </p>
+<p>By <strong>creating</strong> a <strong><code>fu-relation</code></strong> resource, <strong>a user of this role</strong>, can assign...</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Permission</th>
+<th>covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>... <strong>own</strong> <code>folder</code> to itself (<strong>own</strong> <code>user</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>... <strong>any</strong> <code>folder</code> to itself (<strong>own</strong> <code>user</code>)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>... <strong>own</strong> <code>folder</code> to <strong>any</strong> <code>user</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>... <strong>any</strong> <code>folder</code> to <strong>any</strong> <code>user</code></td>
+<td>1, 2, 3</td>
+</tr>
+</tbody>
+</table>
+<p>When you grant or check for a permission via <code>.createOwn()</code>, you (the developer) should decide what <strong><em>own</em></strong> stands for.  So I will make the following <strong>decision</strong> as the developer.  </p>
+<p>In <strong>this context</strong>:</p>
+<ul>
+<li><strong>own</strong> <code>fu-relation</code> means <em>"<strong>own</strong> <code>folder</code> to <strong>any</strong> <code>user</code>"</em> (option # 3)</li>
+<li><strong>any</strong> <code>fu-relation</code> means <em>"<strong>any</strong> <code>folder</code> to <strong>any</strong> <code>user</code>"</em> (option #4)</li>
+</ul>
+<p>With this <strong>decision</strong>:</p>
+<ul>
+<li>I don't need to check whether the assigned-user is current (<em>own</em>) user. </li>
+<li>I need to check whether the assigned-folder is <em>own</em> <code>folder</code> (implied resource) of the current user.</li>
+</ul>
+<p>First I'll define 2 roles; <code>user</code> and <code>admin</code>; and grant access permissions accordingly:</p>
+<pre><code class="lang-js">ac.grant('user').createOwn('fu-relation')
+  .grant('admin').createAny('fu-relation');
+</code></pre>
+<p>So when the resource is accessed, I'll check these permissions, and restrict or allow the request:</p>
+<pre><code class="lang-js">// psuedo (sync) code
+
+var role = session.role; // role of the requesting user: 'user' or 'admin'
+var userIdToBeAssigned = request.params.userId; // can be any user id
+var folderId = request.params.folderId;
+
+// First check if current role can create "ANY" fu-relation. (ANY &gt; OWN)
+var permission = ac.can(role).createAny('fu-relation');
+
+// if not granted, check if current role can create "OWN" fu-relation:
+if (permission.granted === false) {
+    // Determine whether the implied resource (folder) is "owned" 
+    // by the current user. This is app's responsibility, not AC's.
+    if (session.userId === getFolder(folderId).userId) {
+        // We made sure that the implied resource is "owned" by this user.
+        // Now we can ask AccessControl permission for performing 
+        // the action on the target resource:
+        permission = ac.can(role).createOwn('fu-relation');
+    }
+}
+
+// Finally, execute the operation if allowed:
+if (permission.granted) {
+    // whatever app-logic here.. e.g.:
+    db.insert({ 
+        table: folderUsers,
+        row: { 
+            folderId: request.params.folderId, 
+            userId: userIdToBeAssigned
+        }
+    });  
+} else {
+    // forbidden
+    console.log('Access Denied!');
+}
+</code></pre>
+</body></html>
