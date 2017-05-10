@@ -1,6 +1,7 @@
 
-<html><head></head><body><h1 id="accesscontrol">AccessControl</h1>
-<hr />
+<html><head></head><body><p align="center"><img width="465" height="170" src="https://raw.github.com/onury/accesscontrol/master/ac-logo.png"></p>
+
+
 <p><img src="https://img.shields.io/npm/v/accesscontrol.svg" alt="npm">
 <img src="https://img.shields.io/github/release/onury/accesscontrol.svg" alt="release">
 <img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license">
@@ -15,13 +16,14 @@
 <p>With the idea of merging the best features of the two (see this <a href="http://csrc.nist.gov/groups/SNS/rbac/documents/kuhn-coyne-weil-10.pdf">NIST paper</a>); this library implements RBAC basics and also focuses on <em>resource</em> and <em>action</em> attributes.</p>
 <h3 id="core-features">Core Features</h3>
 <ul>
+<li>Chainable, friendly API.<br>e.g. <code>ac.can(role).createOwn(resource)</code></li>
 <li>Role hierarchical inheritance.</li>
 <li>Define grants at once (e.g. from database result) or one by one.</li>
-<li>Grant/deny permissions by attributes defined by glob notation.</li>
+<li>Grant/deny permissions by attributes defined by glob notation (with nested object support).</li>
 <li>Ability to filter data (model) instance by allowed attributes.</li>
-<li>Nested object support for attributes.</li>
+<li>Ability to control access on "own" or "any" resources.</li>
+<li>Fast. (Grants are stored in memory, no database queries.)</li>
 <li>TypeScript support.</li>
-<li>Chainable, friendly API.</li>
 </ul>
 <p><em>In order to build on more solid foundations, this library (v1.5.0+) is completely re-written in TypeScript.</em></p>
 <h2 id="guide">Guide</h2>
@@ -175,9 +177,9 @@ ac.setGrants(grantsObject);
 console.log(ac.getGrants());
 </code></pre>
 <h2 id="documentation">Documentation</h2>
-<p>You can read the full <a href="http://onury.github.io/accesscontrol/?api=ac"><strong>API reference</strong> here</a>.</p>
+<p>You can read the full <a href="http://onury.github.io/accesscontrol/?api=ac"><strong>API reference</strong></a> with lots of details, features and examples.<br>And more at the <a href="http://onury.github.io/accesscontrol/?content=faq">F.A.Q. section</a>.</p>
 <h2 id="change-log">Change-Log</h2>
-<p>See <a href="https://github.com/onury/accesscontrol/blob/master/CHANGELOG.md">CHANGELOG.md</a>.</p>
+<p>See <a href="https://github.com/onury/accesscontrol/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
 <h2 id="license">License</h2>
-<p>MIT.</p>
+<p><a href="https://github.com/onury/accesscontrol/blob/master/LICENSE">MIT</a>.</p>
 </body></html>
