@@ -31,7 +31,7 @@
 // for TypeScript:
 // import { AccessControl } from 'accesscontrol';
 </code></pre>
-<h4 id="basic-example">Basic Example</h4>
+<h3 id="basic-example">Basic Example</h3>
 <p>Define roles and grants one by one.</p>
 <pre><code class="lang-js">var ac = new AccessControl();
 ac.grant('user')                    // define new or modify existing role. also takes an array.
@@ -51,7 +51,7 @@ permission = ac.can('admin').updateAny('video');
 console.log(permission.granted);    // —&gt; true
 console.log(permission.attributes); // —&gt; ['title']
 </code></pre>
-<h4 id="express-js-example">Express.js Example</h4>
+<h3 id="express-js-example">Express.js Example</h3>
 <p>Check role permissions for the requested resource and action, if granted; respond with filtered attributes.</p>
 <pre><code class="lang-js">var ac = new AccessControl(grants);
 // ...
@@ -69,7 +69,7 @@ router.get('/videos/:title', function (req, res, next) {
     }
 });
 </code></pre>
-<h4 id="roles">Roles</h4>
+<h3 id="roles">Roles</h3>
 <p>You can create/define roles simply by calling <code>.grant(&lt;role&gt;)</code> or <code>.deny(&lt;role&gt;)</code> methods on an <code>AccessControl</code> instance.  </p>
 <p>Roles can extend other roles.</p>
 <pre><code class="lang-js">// user role inherits viewer role permissions
@@ -79,7 +79,7 @@ ac.grant('admin').extend(['user', 'editor']);
 // both admin and superadmin roles inherit moderator permissions
 ac.grant(['admin', 'superadmin']).extend('moderator');
 </code></pre>
-<h4 id="actions-and-action-attributes">Actions and Action-Attributes</h4>
+<h3 id="actions-and-action-attributes">Actions and Action-Attributes</h3>
 <p><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations are the actions you can perform on a resource. There are two action-attributes which define the <strong>possession</strong> of the resource: <em>own</em> and <em>any</em>.</p>
 <p>For example, an <code>admin</code> role can <code>create</code>, <code>read</code>, <code>update</code> or <code>delete</code> (CRUD) <strong>any</strong> <code>account</code> resource. But a <code>user</code> role might only <code>read</code> or <code>update</code> its <strong>own</strong> <code>account</code> resource.</p>
 <br><table>
@@ -109,7 +109,7 @@ ac.grant(['admin', 'superadmin']).extend('moderator');
 <pre><code class="lang-js">ac.grant('role').readOwn('resource');
 ac.deny('role').deleteAny('resource');
 </code></pre>
-<h4 id="resources-and-resource-attributes">Resources and Resource-Attributes</h4>
+<h3 id="resources-and-resource-attributes">Resources and Resource-Attributes</h3>
 <p>Multiple roles can have access to a specific resource. But depending on the context, you may need to limit the contents of the resource for specific roles.  </p>
 <p>This is possible by resource attributes. You can use Glob notation to define allowed or denied attributes.</p>
 <p>For example, we have a <code>video</code> resource that has the following attributes: <code>id</code>, <code>title</code> and <code>runtime</code>.
@@ -126,7 +126,7 @@ All attributes of <em>any</em> <code>video</code> resource can be read by an <co
 <p>You can also use nested objects (attributes).</p>
 <pre><code class="lang-js">ac.grant('user').readOwn('account', ['*', '!record.id']);
 </code></pre>
-<h4 id="checking-permissions-and-filtering-attributes">Checking Permissions and Filtering Attributes</h4>
+<h3 id="checking-permissions-and-filtering-attributes">Checking Permissions and Filtering Attributes</h3>
 <p>You can call <code>.can(&lt;role&gt;).&lt;action&gt;(&lt;resource&gt;)</code> on an <code>AccessControl</code> instance to check for granted permissions for a specific resource and action.</p>
 <pre><code class="lang-js">var permission = ac.can('user').readOwn('account');
 permission.granted;       // true
@@ -134,7 +134,7 @@ permission.attributes;    // ['*', '!record.id']
 permission.filter(data);  // filtered data (without record.id)
 </code></pre>
 <p>See <a href="#expressjs-example">express.js example</a>.</p>
-<h4 id="defining-all-grants-at-once">Defining All Grants at Once</h4>
+<h3 id="defining-all-grants-at-once">Defining All Grants at Once</h3>
 <p>You can pass the grants directly to the <code>AccessControl</code> constructor.
 It accepts either an <code>Object</code>:</p>
 <pre><code class="lang-js">// This is actually how the grants are maintained internally.
