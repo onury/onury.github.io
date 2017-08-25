@@ -3,7 +3,10 @@
 
         {% if repo.fork != true %}
             <li class="repo">
-                <a href="{{ repo.homepage }}">{{ repo.name }}</a>
+                <a href="{% if !repo.homepage %}{{ repo.html_url %}{% else %}{{ repo.homepage }}{% endif %}">
+                    {{ repo.name }}<br />
+                    {{ repo.description }}
+                </a>
             </li>
         {% endif %}
 
