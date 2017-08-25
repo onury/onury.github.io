@@ -5,16 +5,16 @@ styles: true
 @import url(https://fonts.googleapis.com/css?family=Ropa+Sans:400,400i&amp;subset=latin-ext);
 
 // Variables
-$font-family:           'Ropa Sans, Open Sans, Roboto, "Helvetica Neue", Arial';
-$color-background:      #1f1f1f;
-$color-link:            #1A9FFF;
+$font-family:           "Ropa Sans", "Open Sans", Roboto, "Helvetica Neue", Arial;
+$color-background:      #EDEFF0;
+$color-link:            #000000;
 $color-icon:            #1A9FFF;
-$color-heading:         #D5D5D5;
-$color-subheading:      #D9D9D9;
-$color-paragraph:       #D3D3D3;
-$color-keyline:         darken($color-background, 10%);
-$color-footnote:        #DADADA;
-$width-keyline:         .5rem;
+$color-heading:         #121212;
+$color-subheading:      #2D2D2D;
+$color-paragraph:       #262626;
+$color-footnote:        #464646;
+// $color-keyline:         darken($color-background, 10%);
+// $width-keyline:         .5rem;
 
 
 html, body {
