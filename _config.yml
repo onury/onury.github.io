@@ -1,3 +1,38 @@
 # Ignore repo files
 exclude:
 - README.md
+- LICENSE
+- CNAME
+
+repository: "onury/onury.github.io"
+
+# Gems
+gems:
+- jekyll-github-metadata
+- jekyll-sitemap
+- jekyll-paginate
+- jekyll-seo-tag
+- jekyll-redirect-from
+- jemoji
+# - jekyll-mentions
+
+# SCSS
+sass:
+  style: :compressed
+
+
+# Site info
+url: https://onury.github.io
+title: "@onury"
+name: "Onur Yıldırım"
+description: "Open source projects, experiments, utilities, apps..."
+logo: "https://s.gravatar.com/avatar/e477fb0489953bbc8165f7553e47c95c?s=80"
+
+# twitter:
+#   username: _onury
+
+# author:
+#   twitter: _onury
+
+seo:
+  author: "@onury"
