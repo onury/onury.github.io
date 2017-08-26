@@ -2,11 +2,11 @@
 styles: true
 ---
 
-@import url(https://fonts.googleapis.com/css?family=Ropa+Sans:400,400i&amp;subset=latin-ext);
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:400,400i,500,500i,700,700i&subset=latin-ext');
 
 // Variables
-$font-family:           "Ropa Sans", "Open Sans", Roboto, "Helvetica Neue", Arial;
-$color-background:      #EDEFF0;
+$font-family:           "Fira Sans Condensed", "Open Sans", Roboto, "Helvetica Neue", Arial;
+$color-background:      #fff; // #EDEFF0
 $color-link:            #000000;
 $color-icon:            #1A9FFF;
 $color-heading:         #121212;
@@ -15,6 +15,9 @@ $color-paragraph:       #262626;
 $color-footnote:        #464646;
 // $color-keyline:         darken($color-background, 10%);
 // $width-keyline:         .5rem;
+
+$sidebar-width:         20%; // 25vw;
+$sidebar-min-width:     250px;
 
 
 html, body {
@@ -38,6 +41,8 @@ html {
 body {
     min-height: 100%;
     background: $color-background;
+    // padding: 20px;
+    position: relative;
 }
 
 * {
@@ -74,29 +79,118 @@ p {
     margin-top: 0;
 }
 
+a {
+    font-weight: 400;
+    color: #4AA7E2;
+    text-decoration: none;
+    &:hover {
+        color: #E24A88;
+    }
+}
+
 // Header
 .header {
     position: relative;
 }
 
-// Content
-.content {
+#sidebar {
     display: block;
-    margin-left: 7rem;
-    @media (max-width: 500px) {
-        margin-left: 5.2rem;
+    position: fixed;
+    z-index: 9;
+    background: #3D4454;
+    width: $sidebar-width;
+    min-width: $sidebar-min-width;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    text-align: center;
+    & img.logo {
+        display: inline-block;
+        margin-top: 30px;
+        max-width: 270px;
     }
-    &--header {
-        padding-top: .5rem;
+    & .sidebar-box {
+        width: 100%;
+        background: #495163;
+        margin-top: 20px;
+        & > span {
+            display: inline-block;
+            font-size: 25px;
+            padding: 25px 5px;
+            color: #fff;
+        }
     }
-    &--main {
-        margin-bottom: 5rem;
+    & .sidebar-text {
+        font-size: 25px;
+        color: #565F75;
+        margin-top: 25px;
     }
-    &--footer {
-        margin-top: 6.5rem;
+}
+
+#wrapper {
+    display: table;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    & > .content {
+        display: table-cell;
+        width: 100%;
+        padding: 20px;
     }
-    &--site {
-        margin-bottom: 3rem;
-        padding-top: .35rem;
+
+    &:before {
+        content: '';
+        display: table-cell;
+        width: $sidebar-width;
+        height: 100%;
+        min-width: $sidebar-min-width;
+    }
+}
+
+.big-title {
+    font-size: 30px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 35px;
+    margin-left: 10px;
+    color: #3d4454;
+}
+
+ul#repos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+
+    & > li {
+        display: inline-block;
+        background: #FFFFFF;
+        // box-shadow: 0 0px 1px 0 rgba(0,0,0,0.15);
+        border: 1px solid rgba(60, 67, 83, 0.07);
+        margin: 10px;
+        padding: 17px 22px;
+        width: 42%;
+        min-width: 400px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 4px;
+
+        & > a.repo-title {
+            display: block;
+            margin-bottom: 15px;
+        }
+        & > span.repo-desc {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 10px;
+            font-style: italic;
+            font-size: 0.85em;
+            line-height: 1.4em;
+            height: 2.8em;
+            overflow: hidden;
+        }
+
     }
 }

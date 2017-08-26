@@ -1,6 +1,6 @@
 ---
-title: Hello
-layout: default
+title: "@onury"
+layout: front
 ---
 
 ## onury.github.io

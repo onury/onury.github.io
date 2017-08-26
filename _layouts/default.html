@@ -2,12 +2,17 @@
 <html lang="en-US">
 	<head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% include favicons.html %}
         {% include styles.html %}
     </head>
     <body>
-
-        {{ content }}
-        {% include repos.html %}
-
+        <div id="sidebar">
+            <img class="logo" src="{{ site.bigLogo }}" width="80%" />
+            <div class="sidebar-box"><span>@onury</span></div>
+            <!-- <div class="sidebar-text">@onury</div> -->
+        </div>
+        <div id="wrapper">
+            <div class="content">{{ content }}</div>
+        </div>
     </body>
 </html>

@@ -6,8 +6,8 @@ exclude:
 
 repository: "onury/onury.github.io"
 
-# Gems
-gems:
+# Plugin Gems
+plugins:
 - jekyll-github-metadata
 - jekyll-sitemap
 - jekyll-paginate
@@ -27,6 +27,7 @@ title: "@onury"
 name: "Onur Yıldırım"
 description: "Open source projects, experiments, utilities, apps..."
 logo: "https://s.gravatar.com/avatar/e477fb0489953bbc8165f7553e47c95c?s=80"
+bigLogo: "img/onury-logo-circle.png"
 
 # twitter:
 #   username: _onury

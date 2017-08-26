@@ -1,14 +1,15 @@
-<ul class="portfolio">
-    {% for repo in site.github.public_repositories limit:28 %}
+<ul id="repos">
+{% for repo in site.github.public_repositories limit:28 %}
 
-        {% if repo.fork != true %}
-            <li class="repo">
-                <a href="{% if !repo.homepage %}{{ repo.html_url %}{% else %}{{ repo.homepage }}{% endif %}">
-                    {{ repo.name }}<br />
-                    {{ repo.description }}
-                </a>
-            </li>
-        {% endif %}
+    {% if repo.fork != true %}
+        <li>
+            <a class="repo-title" href="{% if repo.homepage == "" or repo.homepage == nil %}{{ repo.html_url }}{% else %}{{ repo.homepage }}{% endif %}">
+                {{ repo.name }}
+            </a>
+            <span class="repo-desc">{{ repo.description }}</span>
+        </li>
+    {% endif %}
 
-    {% endfor %}
+{% endfor %}
 </ul>
+
