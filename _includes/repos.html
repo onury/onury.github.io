@@ -3,9 +3,17 @@
 
     {% if repo.fork != true %}
         <li>
-            <a class="repo-title" href="{% if repo.homepage == "" or repo.homepage == nil %}{{ repo.html_url }}{% else %}{{ repo.homepage }}{% endif %}">
-                {{ repo.name }}
-            </a>
+            <div class="repo-header">
+                <a class="repo-title" href="{% if repo.homepage == '' or repo.homepage == nil %}{{ repo.html_url }}{% else %}{{ repo.homepage }}{% endif %}">
+                    {{ repo.name }}
+                </a>
+                <div class="repo-btns">
+                    <a href="{{ repo.html_url }}"><img src="img/svg/github.svg" class="icon" /></a>
+                    <svg class="icon" role="img" title="GitHub" aria-label="icon">
+                        <use xlink:href="img/svg/github.svg#1" fill="#e36500" />
+                    </svg>
+                </div>
+            </div>
             <span class="repo-desc">{{ repo.description }}</span>
         </li>
     {% endif %}
