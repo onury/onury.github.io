@@ -34,10 +34,6 @@ html {
     font-size: 18px;
     line-height: 1.3rem;
     color: $color-paragraph;
-    @media (max-width: 500px) {
-        font-size: 16px;
-        line-height: 1.5rem;
-    }
 }
 
 body {
@@ -78,7 +74,7 @@ h3 {
 }
 
 img {
-    max-width: 100%;
+    // max-width: 100%;
     height: auto;
     border: 0;
 }
@@ -136,7 +132,7 @@ img.logo {
     .page-title {
         display: table-cell;
         vertical-align: middle;
-        font-size: 30px;
+        font-size: 1.8em;
         font-weight: 400;
         font-style: italic;
         line-height: 35px;
@@ -229,4 +225,53 @@ img.logo {
 
 .pointer {
     cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    $logo-size:             120px;
+
+    html {
+        font-size: 15px;
+        line-height: 1.4rem;
+    }
+
+    img.logo {
+        width: $logo-size;
+    }
+
+    .page-header {
+        margin-left: $spacing;
+    }
+
+    .circle {
+        display: none;
+    }
+
+    .repo {
+
+        & .repo-header {
+            .repo-btns {
+                display: none;
+                visibility: hidden;
+                width: 0;
+            }
+
+            .repo-title a {
+                margin-left: $spacing;
+            }
+        }
+
+        & .repo-desc {
+            margin-left: $spacing;
+        }
+    }
+
+    .side-bg {
+        display: none;
+    }
+
+    .page-title {
+        font-size: 1em;
+    }
 }
