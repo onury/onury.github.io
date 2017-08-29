@@ -228,7 +228,7 @@ img.logo {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 680px) {
     $logo-size:             120px;
 
     html {
@@ -264,6 +264,8 @@ img.logo {
 
         & .repo-desc {
             margin-left: $spacing;
+            width: auto;
+            min-width: 300px;
         }
     }
 
@@ -271,7 +273,7 @@ img.logo {
         display: none;
     }
 
-    .page-title {
-        font-size: 1em;
+    .page-header .page-title {
+        font-size: 1.3em;
     }
 }
