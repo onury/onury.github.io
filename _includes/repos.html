@@ -1,9 +1,9 @@
 <div id="repos">
         {% for repo in site.github.public_repositories limit:50 %}
 
-            {% assign npm_package = site.data.npm[repo.name] %}
+            {% assign project = site.data.projects[repo.name] %}
 
-            {% if repo.fork != true %}
+            {% if repo.fork != true and project.hidden != true %}
             <div class="repo">
 
                 <div class="circle"></div>
@@ -18,8 +18,8 @@
                         </a>
                         {% endunless %}
 
-                        {% unless npm_package == false %}
-                        <a href="https://npmjs.com/package/{% unless npm_package == nil %}{{ npm_package }}{% else %}{{ repo.name }}{% endunless %}">
+                        {% unless project.npm == false %}
+                        <a href="https://npmjs.com/package/{% unless project.npm == nil %}{{ project.npm }}{% else %}{{ repo.name }}{% endunless %}">
                             <svg class="icon sm" role="img" title="npm">
                                 <use xlink:href="img/icons.svg#npm" />
                             </svg>

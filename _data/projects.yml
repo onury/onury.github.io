@@ -1,0 +1,11 @@
+# special treatment for some of my GH projects
+alfred-video-downloader:
+    npm: false
+custom-error-test:
+    npm: false
+ocpp:
+    hidden: true
+onury.github.io:
+    npm: false
+re:
+    npm: "re.js"
