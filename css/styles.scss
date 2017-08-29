@@ -41,6 +41,7 @@ body {
     background: $color-background;
     // padding: 20px;
     position: relative;
+    padding-bottom: $spacing;
 }
 
 * {
@@ -228,7 +229,7 @@ img.logo {
 }
 
 
-@media (max-width: 680px) {
+@media (max-width: 650px) {
     $logo-size:             120px;
 
     html {
