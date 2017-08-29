@@ -11,7 +11,7 @@
 
                     <div class="repo-btns">
                         {% unless repo.homepage == '' or repo.homepage == nil %}
-                        <a href="{{ repo.html_url }}">
+                        <a href="{{ repo.homepage }}">
                             <svg class="icon" role="img" title="Documentation">
                                 <use xlink:href="img/icons.svg#book" />
                             </svg>
