@@ -6,18 +6,20 @@ styles: true
 
 // Variables
 $font-family:           "Fira Sans Condensed", "Open Sans", Roboto, "Helvetica Neue", Arial;
-$color-background:      #fff; // #EDEFF0
-$color-link:            #000000;
-$color-icon:            #1A9FFF;
+$color-background:      #fafafb; // #fff; // #EDEFF0
 $color-heading:         #121212;
 $color-subheading:      #2D2D2D;
-$color-paragraph:       #262626;
+$color-paragraph:       #0F0C0C;
 $color-footnote:        #464646;
-// $color-keyline:         darken($color-background, 10%);
-// $width-keyline:         .5rem;
 
-$sidebar-width:         20%; // 25vw;
-$sidebar-min-width:     250px;
+$logo-size:             150px;
+$top-space:             30px;
+$side-width:            200px;
+$border-color:          #e6eaee;
+$contrast-color:        darken($border-color, 3%);
+$spacing:               30px;
+$title-font-size:       1.2rem;
+$icon-size:             $title-font-size * 1.15;
 
 
 html, body {
@@ -86,8 +88,8 @@ p {
 }
 
 a {
-    font-weight: 400;
-    color: #4AA7E2;
+    font-weight: 500;
+    color: #495163;
     text-decoration: none;
     &:hover {
         color: #E24A88;
@@ -95,132 +97,133 @@ a {
 }
 
 .icon {
-    width: 1.3rem;
-    height: 1.3rem;
+    width: $icon-size;
+    height: $icon-size;
     vertical-align: middle;
-    opacity: 0.3;
+    margin-left: 5px;
+    opacity: 0.4;
+
+    fill: darken($border-color, 20%);
+
+    &.sm {
+        width: $icon-size * 0.87;
+        height: $icon-size * 0.87;
+    }
 
     &:hover {
         opacity: 1;
+        fill: #565f75;
     }
 }
 
-.header {
-    position: relative;
+img.logo {
+    display: block;
+    // position: absolute;
+    width: $logo-size;
+    height: auto;
 }
 
-#sidebar {
+.page-header {
+    display: table;
+    margin-top: $spacing;
+    margin-bottom: $spacing * 1.5;
+    margin-left: $side-width - ($logo-size / 2);
+    z-index: 9;
+
+    .page-logo {
+        display: table-cell;
+    }
+    .page-title {
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 30px;
+        font-weight: 400;
+        font-style: italic;
+        line-height: 35px;
+        color: #3d4454;
+        padding-right: $spacing;
+
+        & > span {
+            display: inline-block;
+            margin-left: $spacing;
+        }
+    }
+}
+
+.circle {
+    $circle-size: 10px;
+    $circle-border: 2px;
+    display: block;
+    position: absolute;
+    border-radius: $circle-size / 2;
+    width: $circle-size;
+    height: $circle-size;
+    background-color: $border-color;
+    margin-left: $side-width - ($circle-size / 2) - ($circle-border / 2);
+    margin-top: ($title-font-size / 3);
+    border: $circle-border solid darken($contrast-color, 2%);
+}
+
+.side-bg {
     display: block;
     position: fixed;
-    z-index: 9;
-    background: #3D4454;
-    width: $sidebar-width;
-    min-width: $sidebar-min-width;
+    z-index: -1;
+    background: $border-color;
+    border-right: 2px solid $contrast-color;
+    width: $side-width;
     height: 100%;
     top: 0;
     left: 0;
     overflow: hidden;
-    text-align: center;
-    & img.logo {
-        display: inline-block;
-        margin-top: 30px;
-        max-width: 270px;
-    }
-    & .sidebar-box {
-        width: 100%;
-        background: #495163;
-        margin-top: 20px;
-        & > span {
-            display: inline-block;
-            font-size: 25px;
-            padding: 25px 5px;
-            color: #fff;
+}
+
+.content {
+    z-index: 9;
+}
+
+.repo {
+    position: relative;
+    margin-bottom: $spacing;
+
+    $margin-fix: 20px;
+    width: 100%;
+    padding-right: $spacing;
+
+    & .repo-header {
+        display: table;
+        position: relative;
+        white-space: nowrap;
+        margin-bottom: 7px;
+
+        & .repo-btns {
+            display: table-cell;
+            width: $side-width - $margin-fix;
+            text-align: right;
+        }
+        & .repo-title {
+            display: table-cell;
+            font-family: $font-family;
+            font-size: $title-font-size;
+
+            & > a {
+                display: inline-block;
+                margin-left: $spacing + $margin-fix;
+            }
         }
     }
-    & .sidebar-text {
-        font-size: 25px;
-        color: #565F75;
-        margin-top: 25px;
-    }
-}
-
-#wrapper {
-    display: table;
-    position: relative;
-    height: 100%;
-    width: 100%;
-
-    & > .content {
-        display: table-cell;
-        width: 100%;
-        padding: 20px;
-    }
-
-    &:before {
-        content: '';
-        display: table-cell;
-        width: $sidebar-width;
-        height: 100%;
-        min-width: $sidebar-min-width;
-    }
-}
-
-.big-title {
-    font-size: 30px;
-    font-weight: 400;
-    font-style: italic;
-    line-height: 35px;
-    margin-left: 10px;
-    color: #3d4454;
-}
-
-ul#repos {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-
-    & > li {
+    .repo-desc {
         display: inline-block;
-        background: #FFFFFF;
+        font-style: italic;
+        margin-left: $side-width + $spacing;
+
+        background: #fff;
         // box-shadow: 0 0px 1px 0 rgba(0,0,0,0.15);
-        border: 1px solid rgba(60, 67, 83, 0.1);
-        margin: 10px;
+        border: 1px solid $border-color;
         padding: 17px 22px;
-        width: 42%;
+        width: auto;
         min-width: 400px;
-        height: 120px;
         overflow: hidden;
         border-radius: 4px;
-        // border: 1px solid blue;
-
-        & > .repo-header {
-            display: table;
-            position: relative;
-            width: 100%;
-            margin-bottom: 15px;
-            white-space: nowrap;
-
-            & > a.repo-title {
-                display: table-cell;
-            }
-            & > .repo-btns {
-                display: table-cell;
-                text-align: right;
-            }
-        }
-
-        & > span.repo-desc {
-            display: inline-block;
-            position: relative;
-            margin-bottom: 10px;
-            font-style: italic;
-            font-size: 0.85em;
-            line-height: 1.4em;
-            height: 2.8em;
-            overflow: hidden;
-        }
-
     }
 }
 

@@ -1,23 +1,47 @@
-<ul id="repos">
-{% for repo in site.github.public_repositories limit:28 %}
+<div id="repos">
+        {% for repo in site.github.public_repositories limit:50 %}
 
-    {% if repo.fork != true %}
-        <li>
-            <div class="repo-header">
-                <a class="repo-title" href="{% if repo.homepage == '' or repo.homepage == nil %}{{ repo.html_url }}{% else %}{{ repo.homepage }}{% endif %}">
-                    {{ repo.name }}
-                </a>
-                <div class="repo-btns">
-                    <a href="{{ repo.html_url }}"><img src="img/svg/github.svg" class="icon" /></a>
-                    <svg class="icon" role="img" title="GitHub" aria-label="icon">
-                        <use xlink:href="img/svg/github.svg#1" fill="#e36500" />
-                    </svg>
+            {% assign npm_package = site.data.npm[repo.name] %}
+
+            {% if repo.fork != true %}
+            <div class="repo">
+
+                <div class="circle"></div>
+                <div class="repo-header">
+
+                    <div class="repo-btns">
+                        {% unless repo.homepage == '' or repo.homepage == nil %}
+                        <a href="{{ repo.html_url }}">
+                            <svg class="icon" role="img" title="Documentation">
+                                <use xlink:href="img/icons.svg#book" />
+                            </svg>
+                        </a>
+                        {% endunless %}
+
+                        {% unless npm_package == false %}
+                        <a href="https://npmjs.com/package/{% unless npm_package == nil %}{{ npm_package }}{% else %}{{ repo.name }}{% endunless %}">
+                            <svg class="icon sm" role="img" title="npm">
+                                <use xlink:href="img/icons.svg#npm" />
+                            </svg>
+                        </a>
+                        {% endunless %}
+
+                        <a href="{{ repo.html_url }}">
+                            <svg class="icon" role="img" title="GitHub">
+                                <use xlink:href="img/icons.svg#github" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="repo-title">
+                        <a href="{% if repo.homepage == '' or repo.homepage == nil %}{{ repo.html_url }}{% else %}{{ repo.homepage }}{% endif %}">
+                            {{ repo.name }}
+                        </a>
+                    </div>
                 </div>
+                <span class="repo-desc">{{ repo.description }}</span>
             </div>
-            <span class="repo-desc">{{ repo.description }}</span>
-        </li>
-    {% endif %}
+            {% endif %}
 
-{% endfor %}
-</ul>
+        {% endfor %}
+        </div>
 

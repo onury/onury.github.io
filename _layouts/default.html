@@ -8,13 +8,18 @@
         {% include styles.html %}
     </head>
     <body>
-        <div id="sidebar">
-            <img class="logo" src="{{ site.bigLogo }}" width="80%" />
-            <div class="sidebar-box"><span>@onury</span></div>
-            <!-- <div class="sidebar-text">@onury</div> -->
+
+        <div class="page-header">
+            <div class="page-logo">
+                <img class="logo" src="{{ site.bigLogo }}" />
+            </div>
+            <div class="page-title">
+                <span>{{ site.description }}</span>
+            </div>
         </div>
-        <div id="wrapper">
-            <div class="content">{{ content }}</div>
-        </div>
+
+        <div class="side-bg"></div>
+        <div class="content">{{ content }}</div>
+
     </body>
 </html>

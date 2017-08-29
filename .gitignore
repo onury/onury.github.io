@@ -8,5 +8,6 @@ _site/
 .sass-cache/
 node_modules/
 bower_components/
+_backup/
 _design/
 _jekyll-*.md

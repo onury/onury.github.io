@@ -11,7 +11,7 @@ plugins:
 - jekyll-github-metadata
 - jekyll-sitemap
 - jekyll-paginate
-- jekyll-seo-tag
+# - jekyll-seo-tag
 - jekyll-redirect-from
 - jemoji
 # - jekyll-mentions
@@ -25,7 +25,7 @@ sass:
 url: https://onury.github.io
 title: "@onury"
 name: "Onur Yıldırım"
-description: "Open source projects, experiments, utilities, apps..."
+description: "open source projects, experiments, utilities by @onury"
 logo: "https://s.gravatar.com/avatar/e477fb0489953bbc8165f7553e47c95c?s=80"
 bigLogo: "img/onury-logo-circle.png"
 
