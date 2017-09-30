@@ -1,19 +1,14 @@
 
 <html><head></head><body><h2 id="notation-js">Notation.js</h2>
 <p>for Node and Browser.</p>
-<p><a href="https://www.npmjs.com/package/notation"><img src="http://img.shields.io/npm/v/notation.svg" alt="npm"></a>
-<a href="https://github.com/onury/notation"><img src="https://img.shields.io/github/release/onury/notation.svg" alt="release"></a>
-<a href="https://david-dm.org/onury/notation"><img src="https://david-dm.org/onury/notation.svg" alt="dependencies"></a>
-<a href="https://github.com/onury/notation/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/notation.svg" alt="license"></a>
-<a href="https://github.com/onury/notation/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>  </p>
 <blockquote>
-<p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
+<p>© 2016, Onur Yıldırım (@onury). MIT License.  </p>
 </blockquote>
 <p>Utility for modifying / processing the contents of Javascript objects by parsing object notation strings or globs.</p>
 <p>Note that this library will only deal with enumerable properties of the source object; so it should be used to manipulate data objects. It will not deal with preserving the prototype-chain of the given object.</p>
 <h2 id="usage">Usage</h2>
 <p>Install via <strong>NPM</strong>:</p>
-<pre><code class="lang-sh">npm i notation --save
+<pre><code class="lang-shell">npm i notation --save
 </code></pre>
 <pre><code class="lang-js">var Notation = require('notation');
 
@@ -34,24 +29,7 @@ notation
 <h2 id="documentation">Documentation</h2>
 <p>You can read the full <a href="http://onury.github.io/notation/?api=notation"><strong>API reference</strong> here</a>.</p>
 <h2 id="change-log">Change-Log</h2>
-<p><strong>1.2.0</strong> (2017-09-28)  </p>
-<ul>
-<li>Completely re-wrote <code>Notation.Glob.union()</code> static method.<ul>
-<li>Fixed the array mutation issue. Fixes <a href="https://github.com/onury/notation/issues/2">issue #2</a>.</li>
-<li>Fixed an issue where a glob with wildcard is not properly union'ed. Fixes <a href="https://github.com/onury/notation/issues/3">issue #3</a>. </li>
-<li><code>sort</code> (<code>boolean</code>) argument is removed (the output is now always sorted.)</li>
-<li>Union output is now properly normalized, duplicates and redundant globs are removed, etc...</li>
-</ul>
-</li>
-<li>Fixed an issue where negated wildcards would be filtered incorrectly in some edge cases (e.g. <code>!*.*.*</code>).</li>
-<li>Added <code>Notation.Glob.normalize(array)</code> static method.</li>
-<li>Added <code>Notation.Glob.toRegExp(glob)</code> static method.</li>
-<li>Aded <code>Notation.countNotes(notation)</code> convenience method.</li>
-<li>Improved glob validation.</li>
-<li>Minor revisions, clean-up.</li>
-<li>(dev) Removed dev-dependencies (Grunt and plugins) in favor of NPM scripts. Updated other dev-dependencies. Added more, comprehensive tests.</li>
-</ul>
-<p><strong>1.1.0</strong> (2016-09-27)  </p>
+<p><strong>1.1.0</strong> (2015-09-27)  </p>
 <ul>
 <li>Added <code>Notation#expand()</code> method (alias <code>Notation#aggregate()</code>).</li>
 <li>Refactored <code>Notation#getFlat()</code> to <code>Notation#flatten()</code>. Returns instance (chainable) instead of source.</li>
@@ -63,5 +41,5 @@ notation
 <li>initial release.</li>
 </ul>
 <h2 id="license">License</h2>
-<p><a href="https://github.com/onury/notation/blob/master/LICENSE"><strong>MIT</strong></a>.</p>
+<p>MIT.</p>
 </body></html>
