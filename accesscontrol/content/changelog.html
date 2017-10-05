@@ -1,32 +1,51 @@
 
 <html><head></head><body><h2 id="accesscontrol-change-log">AccessControl - Change Log</h2>
-<h3 id="-v1-5-3-2017-08-25-"><strong>v1.5.3</strong> (2017-08-25)</h3>
+<h3 id="v2-0-0-2017-10-05-">v2.0.0 (2017-10-05)</h3>
 <ul>
-<li>Errors thrown with more <a href="https://github.com/onury/accesscontrol/issues/13#issuecomment-324755478">meaningful messages</a>.</li>
+<li><strong>Breaking-Change</strong>: Cross role inheritance is no more allowed. Fixes <a href="https://github.com/onury/accesscontrol/issues/18">issue #18</a>.</li>
+<li><strong>Breaking-Change</strong>: Grants model cannot be emptied any more by omitting the parameter (e.g. <code>ac.setGrants()</code>) or passing <code>null</code>, <code>undefined</code>. This will throw. You need to either, explicitly call <code>#reset()</code> or set grants to an empty object (<code>{}</code>) in order to reset/empty grants safely. </li>
+<li><strong>Breaking-Change</strong>: Renamed <code>#access()</code> to <code>#query()</code>. This is an alias for <code>#can()</code> method.  </li>
+<li><strong>Fixed</strong> an issue where deeper inherited roles (more than 1 level) would not be taken into account while querying for permissions. Fixes <a href="https://github.com/onury/accesscontrol/issues/17">issue #17</a>.</li>
+<li><strong>Added</strong> <code>AccessControl#lock()</code> method that freezes the underlying grants model and disables all functionality for modifying it. This is useful when you want to restrict any changes. Any attempts to modify (such as <code>#setGrants()</code>, <code>#grant()</code>, <code>#deny()</code>, etc) will throw after grants are locked. There is no <code>unlock()</code> method.</li>
+<li><strong>Added</strong> <code>AccessControl#isLocked</code> <code>boolean</code> property.</li>
+<li><strong>Added</strong> <code>AccessControl#getInheritedRolesOf()</code> convenience method.</li>
+<li><strong>Fixed</strong> a mutation issue occurred when resource attributes are unioned. (<a href="https://github.com/onury/notation/issues/2">Notation issue #2</a>).</li>
+<li><strong>Fixed</strong> an issue with unioned attributes (when a role extends another and attributes (globs) are unioned for querying permissions). Fixes <a href="https://github.com/onury/accesscontrol/issues/19">issue #19</a> (<a href="https://github.com/onury/notation/issues/3">Notation issue #3</a>).</li>
+<li><strong>Added</strong> the ability to detect invalid grants object passed to <code>AccessControl</code> instance. In order to prevent silent, future errors and mistakes; <code>AccessControl</code> now thoroughly inspects the grants object passed to constructor or <code>#setGrants()</code> method; and throws immediately if it has an invalid structure or configuration.</li>
+<li><strong>Revision</strong>: <code>AccessControl</code> will throw if any reserved keywords are used (i.e. for role, resource names) such as <code>"$"</code>, <code>"$extend"</code>.</li>
+<li><strong>Added</strong> the ability to parse comma-separated attributes. You can now use this, in addition to string arrays; for defining resource attributes.</li>
 </ul>
-<h3 id="-v1-5-2-2017-07-02-"><strong>v1.5.2</strong> (2017-07-02)</h3>
+<h3 id="v1-5-4-2017-09-22-">v1.5.4 (2017-09-22)</h3>
 <ul>
-<li>Fixed an issue where the grants were not processed into the inner grants model structure; if an array is passed to <code>AccessControl</code> constructor; instead of using <code>.setGrants()</code>. Fixes <a href="https://github.com/onury/accesscontrol/issues/10">issue #10</a>.</li>
+<li><strong>Fixed</strong> an issue where the static method <code>AccessControl.filter()</code> does not return the filtered data properly. Fixes <a href="https://github.com/onury/accesscontrol/issues/16">issue #16</a>.</li>
 </ul>
-<h3 id="-v1-5-1-2017-05-24-"><strong>v1.5.1</strong> (2017-05-24)</h3>
+<h3 id="v1-5-3-2017-08-25-">v1.5.3 (2017-08-25)</h3>
 <ul>
-<li>Fixed TS import issue. Use <code>import { AccessControl } from 'accesscontrol'</code> in TypeScript projects.</li>
+<li><strong>Improvement</strong>: Errors are now thrown with more <a href="https://github.com/onury/accesscontrol/issues/13#issuecomment-324755478">meaningful messages</a>.</li>
 </ul>
-<h3 id="-v1-5-0-2017-03-08-"><strong>v1.5.0</strong> (2017-03-08)</h3>
+<h3 id="v1-5-2-2017-07-02-">v1.5.2 (2017-07-02)</h3>
 <ul>
-<li>Migrated whole code base to TypeScript.</li>
-<li>More strict validation checks. It will now throw on invalid information passed for both grants and permission checks. This helps prevent typos, unintended permission checks, etc...</li>
-<li>Fixed a bug where checking permission with multiple roles would mutate the permission attributes. Fixes <a href="https://github.com/onury/accesscontrol/issues/2">issue #2</a>.</li>
-<li>When an access definition object (<code>IAccessInfo</code> instead of role(s)) passed to <code>.grant()</code> or <code>.deny()</code> methods, it's no longer mutated.</li>
-<li>You could grant permissions for multiple roles at once. Now, you can also grant permissions for multiple resources at the same time. This is very handy when you permit <em>all attributes</em> of the resources; e.g. <code>ac.grant(['admin', 'superadmin']).readAny(['account', 'video'], ['*'])</code>. The caveat is that the resources (most probably) have different attributes; so you can either permit all, or only common attributes (e.g. <code>['id', 'name']</code>).</li>
-<li>Extending a role with a non-existent role will now throw.</li>
+<li><strong>Fixed</strong> an issue where the grants were not processed into the inner grants model structure; if an array is passed to <code>AccessControl</code> constructor; instead of using <code>.setGrants()</code>. Fixes <a href="https://github.com/onury/accesscontrol/issues/10">issue #10</a>.</li>
 </ul>
-<h3 id="-v1-0-1-2016-11-09-"><strong>v1.0.1</strong> (2016-11-09)</h3>
+<h3 id="v1-5-1-2017-05-24-">v1.5.1 (2017-05-24)</h3>
 <ul>
-<li>Permission filter would throw an error due to syntax. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
+<li><strong>Fixed</strong> TS import issue. Use <code>import { AccessControl } from 'accesscontrol'</code> in TypeScript projects.</li>
+</ul>
+<h3 id="v1-5-0-2017-03-08-">v1.5.0 (2017-03-08)</h3>
+<ul>
+<li><strong>Improvement</strong>: Migrated whole code base to TypeScript.</li>
+<li><strong>Added</strong> more strict validation checks. It will now throw on invalid information passed for both grants and permission checks. This helps prevent typos, unintended permission checks, etc...</li>
+<li><strong>Fixed</strong> a bug where checking permission with multiple roles would mutate the permission attributes. Fixes <a href="https://github.com/onury/accesscontrol/issues/2">issue #2</a>.</li>
+<li><strong>Fixed</strong> a mutation issue when an access definition object (<code>IAccessInfo</code> instead of role(s)) passed to <code>.grant()</code> or <code>.deny()</code> methods.</li>
+<li><strong>Improvement</strong>: You could grant permissions for multiple roles at once. Now, you can also grant permissions for multiple resources at the same time. This is very handy when you permit <em>all attributes</em> of the resources; e.g. <code>ac.grant(['admin', 'superadmin']).readAny(['account', 'video'], ['*'])</code>. The caveat is that the resources (most probably) have different attributes; so you can either permit all, or only common attributes (e.g. <code>['id', 'name']</code>).</li>
+<li><strong>Improvement</strong>: Extending a role with a non-existent role will now throw.</li>
+</ul>
+<h3 id="v1-0-1-2016-11-09-">v1.0.1 (2016-11-09)</h3>
+<ul>
+<li><strong>Fixed</strong> a syntax issue that throws when permission filter is called. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
 <li>(Dev) added filter test.</li>
 </ul>
-<h3 id="-v1-0-0-2016-09-10-"><strong>v1.0.0</strong> (2016-09-10)</h3>
+<h3 id="v1-0-0-2016-09-10-">v1.0.0 (2016-09-10)</h3>
 <ul>
 <li>initial release.</li>
 </ul>

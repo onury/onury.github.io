@@ -7,7 +7,8 @@
 <a href="https://github.com/onury/accesscontrol/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license"></a>
 <a href="https://david-dm.org/onury/accesscontrol"><img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies"></a>
 <a href="https://github.com/onury/accesscontrol/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>
-<a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg" alt="TypeScript"></a>    </p>
+<a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg" alt="TypeScript"></a>
+<a href="http://onury.io/accesscontrol/?api=ac"><img src="https://img.shields.io/badge/documentation-click_to_read-c27cf4.svg?documentation=click_to_read" alt="documentation"></a>    </p>
 <blockquote>
 <p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
@@ -28,13 +29,13 @@
 </ul>
 <p><em>In order to build on more solid foundations, this library (v1.5.0+) is completely re-written in TypeScript.</em></p>
 <h2 id="guide">Guide</h2>
-<pre><code class="lang-js">var AccessControl = require('accesscontrol');
-// for TypeScript:
+<pre><code class="lang-js">const AccessControl = require('accesscontrol');
+// or:
 // import { AccessControl } from 'accesscontrol';
 </code></pre>
 <h3 id="basic-example">Basic Example</h3>
 <p>Define roles and grants one by one.</p>
-<pre><code class="lang-js">var ac = new AccessControl();
+<pre><code class="lang-js">const ac = new AccessControl();
 ac.grant('user')                    // define new or modify existing role. also takes an array.
     .createOwn('video')             // equivalent to .createOwn('video', ['*'])
     .deleteOwn('video')
@@ -44,7 +45,7 @@ ac.grant('user')                    // define new or modify existing role. also 
     .updateAny('video', ['title'])  // explicitly defined attributes
     .deleteAny('video');
 
-var permission = ac.can('user').createOwn('video');
+const permission = ac.can('user').createOwn('video');
 console.log(permission.granted);    // —&gt; true
 console.log(permission.attributes); // —&gt; ['*'] (all attributes)
 
@@ -54,10 +55,10 @@ console.log(permission.attributes); // —&gt; ['title']
 </code></pre>
 <h3 id="express-js-example">Express.js Example</h3>
 <p>Check role permissions for the requested resource and action, if granted; respond with filtered attributes.</p>
-<pre><code class="lang-js">var ac = new AccessControl(grants);
+<pre><code class="lang-js">const ac = new AccessControl(grants);
 // ...
 router.get('/videos/:title', function (req, res, next) {
-    var permission = ac.can(req.user.role).readAny('video');
+    const permission = ac.can(req.user.role).readAny('video');
     if (permission.granted) {
         Video.find(req.params.title, function (err, data) {
             if (err || !data) return res.status(404).end();
@@ -72,7 +73,9 @@ router.get('/videos/:title', function (req, res, next) {
 </code></pre>
 <h3 id="roles">Roles</h3>
 <p>You can create/define roles simply by calling <code>.grant(&lt;role&gt;)</code> or <code>.deny(&lt;role&gt;)</code> methods on an <code>AccessControl</code> instance.  </p>
-<p>Roles can extend other roles.</p>
+<ul>
+<li>Roles can extend other roles.</li>
+</ul>
 <pre><code class="lang-js">// user role inherits viewer role permissions
 ac.grant('user').extend('viewer');
 // admin role inherits both user and editor role permissions
@@ -80,36 +83,60 @@ ac.grant('admin').extend(['user', 'editor']);
 // both admin and superadmin roles inherit moderator permissions
 ac.grant(['admin', 'superadmin']).extend('moderator');
 </code></pre>
-<h3 id="actions-and-action-attributes">Actions and Action-Attributes</h3>
-<p><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations are the actions you can perform on a resource. There are two action-attributes which define the <strong>possession</strong> of the resource: <em>own</em> and <em>any</em>.</p>
-<p>For example, an <code>admin</code> role can <code>create</code>, <code>read</code>, <code>update</code> or <code>delete</code> (CRUD) <strong>any</strong> <code>account</code> resource. But a <code>user</code> role might only <code>read</code> or <code>update</code> its <strong>own</strong> <code>account</code> resource.</p>
-<br><table>
-    <thead>
-        <tr>
-            <th>Action</th>
-            <th>Possession</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td rowspan="2">
-            <b>C</b>reate<br>
-            <b>R</b>ead<br>
-            <b>U</b>pdate<br>
-            <b>D</b>elete<br>
-            </td>
-            <td>Own</td>
-            <td>The C|R|U|D action is (or not) to be performed on own resource(s) of the current subject.</td>
-        </tr>
-        <tr>
-            <td>Any</td>
-            <td>The C|R|U|D action is (or not) to be performed on any resource(s); including own.</td>
-        </tr>    </tbody>
-</table>
+<ul>
+<li>Inheritance is done by reference, so you can grant resource permissions before or after extending a role. 
+```js
+// case #1
+ac.grant('admin').extend('user') // assuming user role already exists
+.grant('user').createOwn('video');</li>
+</ul>
+<p>// case #2
+ac.grant('user').createOwn('video')
+  .grant('admin').extend('user');</p>
+<p>// below results the same for both cases
+const permission = ac.can('admin').createOwn('video');
+console.log(permission.granted); // true</p>
+<pre><code>
+Notes on inheritance:  
+- A role cannot extend itself.
+- Cross-inheritance is not allowed. e.g. `ac.grant('user').extend('admin').grant('admin').extend('user')` will throw.
+- A role cannot (pre)extend a non-existing role. In other words, you should first create the base role. e.g. `ac.grant('baseRole').grant('role').extend('baseRole')`
 
-<pre><code class="lang-js">ac.grant('role').readOwn('resource');
+### Actions and Action-Attributes
+
+[CRUD][crud] operations are the actions you can perform on a resource. There are two action-attributes which define the **possession** of the resource: *own* and *any*.
+
+For example, an `admin` role can `create`, `read`, `update` or `delete` (CRUD) **any** `account` resource. But a `user` role might only `read` or `update` its **own** `account` resource.
+
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Action&lt;/th&gt;
+            &lt;th&gt;Possession&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td rowspan="2"&gt;
+            &lt;b&gt;C&lt;/b&gt;reate&lt;br /&gt;
+            &lt;b&gt;R&lt;/b&gt;ead&lt;br /&gt;
+            &lt;b&gt;U&lt;/b&gt;pdate&lt;br /&gt;
+            &lt;b&gt;D&lt;/b&gt;elete&lt;br /&gt;
+            &lt;/td&gt;
+            &lt;td&gt;Own&lt;/td&gt;
+            &lt;td&gt;The C|R|U|D action is (or not) to be performed on own resource(s) of the current subject.&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Any&lt;/td&gt;
+            &lt;td&gt;The C|R|U|D action is (or not) to be performed on any resource(s); including own.&lt;/td&gt;
+        &lt;/tr&gt;   
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+```js
+ac.grant('role').readOwn('resource');
 ac.deny('role').deleteAny('resource');
-</code></pre>
+</code></pre><p><em>Note that <strong>own</strong> requires you to also check for the actual possession. See <a href="https://github.com/onury/accesscontrol/issues/14#issuecomment-328316670">this</a> for more.</em></p>
 <h3 id="resources-and-resource-attributes">Resources and Resource-Attributes</h3>
 <p>Multiple roles can have access to a specific resource. But depending on the context, you may need to limit the contents of the resource for specific roles.  </p>
 <p>This is possible by resource attributes. You can use Glob notation to define allowed or denied attributes.</p>
@@ -129,7 +156,7 @@ All attributes of <em>any</em> <code>video</code> resource can be read by an <co
 </code></pre>
 <h3 id="checking-permissions-and-filtering-attributes">Checking Permissions and Filtering Attributes</h3>
 <p>You can call <code>.can(&lt;role&gt;).&lt;action&gt;(&lt;resource&gt;)</code> on an <code>AccessControl</code> instance to check for granted permissions for a specific resource and action.</p>
-<pre><code class="lang-js">var permission = ac.can('user').readOwn('account');
+<pre><code class="lang-js">const permission = ac.can('user').readOwn('account');
 permission.granted;       // true
 permission.attributes;    // ['*', '!record.id']
 permission.filter(data);  // filtered data (without record.id)
@@ -139,50 +166,53 @@ permission.filter(data);  // filtered data (without record.id)
 <p>You can pass the grants directly to the <code>AccessControl</code> constructor.
 It accepts either an <code>Object</code>:</p>
 <pre><code class="lang-js">// This is actually how the grants are maintained internally.
-var grantsObject = {
+let grantsObject = {
     admin: {
         video: {
-            'create:any': ['*'],
+            'create:any': ['*', '!views'],
             'read:any': ['*'],
-            'update:any': ['*'],
+            'update:any': ['*', '!views'],
             'delete:any': ['*']
         }
     },
     user: {
         video: {
-            'create:own': ['*'],
+            'create:own': ['*', '!rating', '!views'],
             'read:own': ['*'],
-            'update:own': ['*'],
+            'update:own': ['*', '!rating', '!views'],
             'delete:own': ['*']
         }
     }
 };
-var ac = new AccessControl(grantsObject);
+const ac = new AccessControl(grantsObject);
 </code></pre>
 <p>... or an <code>Array</code> (useful when fetched from a database):</p>
 <pre><code class="lang-js">// grant list fetched from DB (to be converted to a valid grants object, internally)
-var grantList = [
-    { role: 'admin', resource: 'video', action: 'create:any', attributes: ['*'] },
-    { role: 'admin', resource: 'video', action: 'read:any', attributes: ['*'] },
-    { role: 'admin', resource: 'video', action: 'update:any', attributes: ['*'] },
-    { role: 'admin', resource: 'video', action: 'delete:any', attributes: ['*'] },
+let grantList = [
+    { role: 'admin', resource: 'video', action: 'create:any', attributes: '*, !views' },
+    { role: 'admin', resource: 'video', action: 'read:any', attributes: '*' },
+    { role: 'admin', resource: 'video', action: 'update:any', attributes: '*, !views' },
+    { role: 'admin', resource: 'video', action: 'delete:any', attributes: '*' },
 
-    { role: 'user', resource: 'video', action: 'create:own', attributes: ['*'] },
-    { role: 'user', resource: 'video', action: 'read:any', attributes: ['*'] },
-    { role: 'user', resource: 'video', action: 'update:own', attributes: ['*'] },
-    { role: 'user', resource: 'video', action: 'delete:own', attributes: ['*'] }
+    { role: 'user', resource: 'video', action: 'create:own', attributes: '*, !rating, !views' },
+    { role: 'user', resource: 'video', action: 'read:any', attributes: '*' },
+    { role: 'user', resource: 'video', action: 'update:own', attributes: '*, !rating, !views' },
+    { role: 'user', resource: 'video', action: 'delete:own', attributes: '*' }
 ];
-var ac = new AccessControl(grantList);
+const ac = new AccessControl(grantList);
 </code></pre>
-<p>You can set/get grants any time:</p>
-<pre><code class="lang-js">var ac = new AccessControl();
+<p>You can set grants any time...</p>
+<pre><code class="lang-js">const ac = new AccessControl();
 ac.setGrants(grantsObject);
 console.log(ac.getGrants());
 </code></pre>
+<p>...unless you lock it:</p>
+<pre><code class="lang-js">ac.lock().setGrants(); // throws after locked
+</code></pre>
 <h2 id="documentation">Documentation</h2>
-<p>You can read the full <a href="http://onury.github.io/accesscontrol/?api=ac"><strong>API reference</strong></a> with lots of details, features and examples.<br>And more at the <a href="http://onury.github.io/accesscontrol/?content=faq">F.A.Q. section</a>.</p>
+<p>You can read the full <a href="http://onury.io/accesscontrol/?api=ac"><strong>API reference</strong></a> with lots of details, features and examples.<br>And more at the <a href="http://onury.io/accesscontrol/?content=faq">F.A.Q. section</a>.</p>
 <h2 id="change-log">Change-Log</h2>
 <p>See <a href="https://github.com/onury/accesscontrol/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
 <h2 id="license">License</h2>
-<p><a href="https://github.com/onury/accesscontrol/blob/master/LICENSE">MIT</a>.</p>
+<p><a href="https://github.com/onury/accesscontrol/blob/master/LICENSE"><strong>MIT</strong></a>.</p>
 </body></html>
