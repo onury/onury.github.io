@@ -206,7 +206,7 @@ ac.setGrants(grantsObject);
 console.log(ac.getGrants());
 </code></pre>
 <p>...unless you lock it:</p>
-<pre><code class="lang-js">ac.lock().setGrants(); // throws after locked
+<pre><code class="lang-js">ac.lock().setGrants({}); // throws after locked
 </code></pre>
 <h2 id="documentation">Documentation</h2>
 <p>You can read the full <a href="http://onury.io/accesscontrol/?api=ac"><strong>API reference</strong></a> with lots of details, features and examples.<br>And more at the <a href="http://onury.io/accesscontrol/?content=faq">F.A.Q. section</a>.</p>
