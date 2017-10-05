@@ -85,59 +85,57 @@ ac.grant('admin').extend(['user', 'editor']);
 ac.grant(['admin', 'superadmin']).extend('moderator');
 </code></pre>
 <ul>
-<li>Inheritance is done by reference, so you can grant resource permissions before or after extending a role. 
-```js
-// case #1
-ac.grant('admin').extend('user') // assuming user role already exists
-.grant('user').createOwn('video');</li>
+<li>Inheritance is done by reference, so you can grant resource permissions before or after extending a role. </li>
 </ul>
-<p>// case #2
+<pre><code class="lang-js">// case #1
+ac.grant('admin').extend('user') // assuming user role already exists
+  .grant('user').createOwn('video');
+
+// case #2
 ac.grant('user').createOwn('video')
-  .grant('admin').extend('user');</p>
-<p>// below results the same for both cases
+  .grant('admin').extend('user');
+
+// below results the same for both cases
 const permission = ac.can('admin').createOwn('video');
-console.log(permission.granted); // true</p>
-<pre><code>
-Notes on inheritance:  
-- A role cannot extend itself.
-- Cross-inheritance is not allowed. e.g. `ac.grant('user').extend('admin').grant('admin').extend('user')` will throw.
-- A role cannot (pre)extend a non-existing role. In other words, you should first create the base role. e.g. `ac.grant('baseRole').grant('role').extend('baseRole')`
+console.log(permission.granted); // true
+</code></pre>
+<p>Notes on inheritance:  </p>
+<ul>
+<li>A role cannot extend itself.</li>
+<li>Cross-inheritance is not allowed. e.g. <code>ac.grant('user').extend('admin').grant('admin').extend('user')</code> will throw.</li>
+<li>A role cannot (pre)extend a non-existing role. In other words, you should first create the base role. e.g. <code>ac.grant('baseRole').grant('role').extend('baseRole')</code></li>
+</ul>
+<h3 id="actions-and-action-attributes">Actions and Action-Attributes</h3>
+<p><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations are the actions you can perform on a resource. There are two action-attributes which define the <strong>possession</strong> of the resource: <em>own</em> and <em>any</em>.</p>
+<p>For example, an <code>admin</code> role can <code>create</code>, <code>read</code>, <code>update</code> or <code>delete</code> (CRUD) <strong>any</strong> <code>account</code> resource. But a <code>user</code> role might only <code>read</code> or <code>update</code> its <strong>own</strong> <code>account</code> resource.</p>
+<br><table>
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Possession</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="2">
+            <b>C</b>reate<br>
+            <b>R</b>ead<br>
+            <b>U</b>pdate<br>
+            <b>D</b>elete<br>
+            </td>
+            <td>Own</td>
+            <td>The C|R|U|D action is (or not) to be performed on own resource(s) of the current subject.</td>
+        </tr>
+        <tr>
+            <td>Any</td>
+            <td>The C|R|U|D action is (or not) to be performed on any resource(s); including own.</td>
+        </tr>    </tbody>
+</table>
 
-### Actions and Action-Attributes
-
-[CRUD][crud] operations are the actions you can perform on a resource. There are two action-attributes which define the **possession** of the resource: *own* and *any*.
-
-For example, an `admin` role can `create`, `read`, `update` or `delete` (CRUD) **any** `account` resource. But a `user` role might only `read` or `update` its **own** `account` resource.
-
-&lt;table&gt;
-    &lt;thead&gt;
-        &lt;tr&gt;
-            &lt;th&gt;Action&lt;/th&gt;
-            &lt;th&gt;Possession&lt;/th&gt;
-        &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;td rowspan="2"&gt;
-            &lt;b&gt;C&lt;/b&gt;reate&lt;br /&gt;
-            &lt;b&gt;R&lt;/b&gt;ead&lt;br /&gt;
-            &lt;b&gt;U&lt;/b&gt;pdate&lt;br /&gt;
-            &lt;b&gt;D&lt;/b&gt;elete&lt;br /&gt;
-            &lt;/td&gt;
-            &lt;td&gt;Own&lt;/td&gt;
-            &lt;td&gt;The C|R|U|D action is (or not) to be performed on own resource(s) of the current subject.&lt;/td&gt;
-        &lt;/tr&gt;
-        &lt;tr&gt;
-            &lt;td&gt;Any&lt;/td&gt;
-            &lt;td&gt;The C|R|U|D action is (or not) to be performed on any resource(s); including own.&lt;/td&gt;
-        &lt;/tr&gt;   
-    &lt;/tbody&gt;
-&lt;/table&gt;
-
-```js
-ac.grant('role').readOwn('resource');
+<pre><code class="lang-js">ac.grant('role').readOwn('resource');
 ac.deny('role').deleteAny('resource');
-</code></pre><p><em>Note that <strong>own</strong> requires you to also check for the actual possession. See <a href="https://github.com/onury/accesscontrol/issues/14#issuecomment-328316670">this</a> for more.</em></p>
+</code></pre>
+<p><em>Note that <strong>own</strong> requires you to also check for the actual possession. See <a href="https://github.com/onury/accesscontrol/issues/14#issuecomment-328316670">this</a> for more.</em></p>
 <h3 id="resources-and-resource-attributes">Resources and Resource-Attributes</h3>
 <p>Multiple roles can have access to a specific resource. But depending on the context, you may need to limit the contents of the resource for specific roles.  </p>
 <p>This is possible by resource attributes. You can use Glob notation to define allowed or denied attributes.</p>
