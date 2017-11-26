@@ -2,13 +2,14 @@
 <html><head></head><body><p align="center"><img width="465" height="170" src="https://raw.github.com/onury/accesscontrol/master/ac-logo.png"></p>
 
 <p><a href="https://travis-ci.org/onury/accesscontrol"><img src="https://img.shields.io/travis/onury/accesscontrol.svg?branch=master" alt="build-status"></a>
-<a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="npm"></a>
+<a href="https://coveralls.io/github/onury/accesscontrol?branch=master"><img src="https://coveralls.io/repos/github/onury/accesscontrol/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://david-dm.org/onury/accesscontrol"><img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies"></a>
+<a href="https://snyk.io/test/github/onury/accesscontrol"><img src="https://snyk.io/test/github/onury/accesscontrol/badge.svg" alt="Known Vulnerabilities"></a>
+<a href="https://github.com/onury/accesscontrol/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a><br><a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="npm"></a>
 <a href="https://github.com/onury/accesscontrol"><img src="https://img.shields.io/github/release/onury/accesscontrol.svg" alt="release"></a>
 <a href="https://github.com/onury/accesscontrol/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license"></a>
-<a href="https://david-dm.org/onury/accesscontrol"><img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies"></a>
-<a href="https://github.com/onury/accesscontrol/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>
 <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg" alt="TypeScript"></a>
-<a href="http://onury.io/accesscontrol/?api=ac"><img src="https://img.shields.io/badge/docs-click_to_read-c27cf4.svg?documentation=click_to_read" alt="documentation"></a>    </p>
+<a href="http://onury.io/accesscontrol/?api=ac"><img src="https://img.shields.io/badge/documentation-click_to_read-c27cf4.svg?documentation=click_to_read" alt="documentation"></a>    </p>
 <blockquote>
 <p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
@@ -18,14 +19,16 @@
 <p>With the idea of merging the best features of the two (see this <a href="http://csrc.nist.gov/groups/SNS/rbac/documents/kuhn-coyne-weil-10.pdf">NIST paper</a>); this library implements RBAC basics and also focuses on <em>resource</em> and <em>action</em> attributes.</p>
 <h3 id="core-features">Core Features</h3>
 <ul>
-<li>Chainable, friendly API.<br>e.g. <code>ac.can(role).createOwn(resource)</code></li>
+<li>Chainable, friendly API.<br>e.g. <code>ac.can(role).create(resource)</code></li>
 <li>Role hierarchical <strong>inheritance</strong>.</li>
 <li>Define grants <strong>at once</strong> (e.g. from database result) or <strong>one by one</strong>.</li>
 <li>Grant/deny permissions by attributes defined by <strong>glob notation</strong> (with nested object support).</li>
 <li>Ability to <strong>filter</strong> data (model) instance by allowed attributes.</li>
 <li>Ability to control access on <strong>own</strong> or <strong>any</strong> resources.</li>
 <li>Ability to <strong>lock</strong> underlying grants model.</li>
+<li>No <strong>silent</strong> errors.</li>
 <li><strong>Fast</strong>. (Grants are stored in memory, no database queries.)</li>
+<li>Brutally <strong>tested</strong>.</li>
 <li>TypeScript support.</li>
 </ul>
 <p><em>In order to build on more solid foundations, this library (v1.5.0+) is completely re-written in TypeScript.</em></p>
@@ -102,8 +105,8 @@ console.log(permission.granted); // true
 <p>Notes on inheritance:  </p>
 <ul>
 <li>A role cannot extend itself.</li>
-<li>Cross-inheritance is not allowed. e.g. <code>ac.grant('user').extend('admin').grant('admin').extend('user')</code> will throw.</li>
-<li>A role cannot (pre)extend a non-existing role. In other words, you should first create the base role. e.g. <code>ac.grant('baseRole').grant('role').extend('baseRole')</code></li>
+<li>Cross-inheritance is not allowed.<br>e.g. <code>ac.grant('user').extend('admin').grant('admin').extend('user')</code> will throw.</li>
+<li>A role cannot (pre)extend a non-existing role. In other words, you should first create the base role.  e.g. <code>ac.grant('baseRole').grant('role').extend('baseRole')</code></li>
 </ul>
 <h3 id="actions-and-action-attributes">Actions and Action-Attributes</h3>
 <p><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations are the actions you can perform on a resource. There are two action-attributes which define the <strong>possession</strong> of the resource: <em>own</em> and <em>any</em>.</p>
@@ -212,6 +215,17 @@ console.log(ac.getGrants());
 <p>You can read the full <a href="http://onury.io/accesscontrol/?api=ac"><strong>API reference</strong></a> with lots of details, features and examples.<br>And more at the <a href="http://onury.io/accesscontrol/?content=faq">F.A.Q. section</a>.</p>
 <h2 id="change-log">Change-Log</h2>
 <p>See <a href="https://github.com/onury/accesscontrol/blob/master/CHANGELOG.md">CHANGELOG</a>.</p>
+<h2 id="contributing">Contributing</h2>
+<p>Clone original project:</p>
+<pre><code class="lang-sh">git clone https://github.com/onury/accesscontrol.git
+</code></pre>
+<p>Install dependencies:</p>
+<pre><code class="lang-sh">yarn install
+</code></pre>
+<p>Add tests to relevant file under <a href="test/">/test</a> directory and run:  </p>
+<pre><code class="lang-sh">yarn build &amp;&amp; yarn cover
+</code></pre>
+<p>Use included <code>tslint.json</code> and <code>editorconfig</code> for style and linting.<br>Travis build should pass, coverage should not degrade.</p>
 <h2 id="license">License</h2>
 <p><a href="https://github.com/onury/accesscontrol/blob/master/LICENSE"><strong>MIT</strong></a>.</p>
 </body></html>

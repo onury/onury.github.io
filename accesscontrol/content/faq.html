@@ -181,4 +181,11 @@ if (permission.granted) {
     console.log('Access Denied!');
 }
 </code></pre>
+<h3 id="what-to-do-when-accesscontrol-js-throws-an-error-">What to do when AccessControl.js throws an error?</h3>
+<p>Granting permissions for valuable resources and managing access levels for user roles... This is a highly sensitive context; in which mostly, any failure or exception becomes critical. So in any case, an <code>AccessControlError</code> is thrown right away. <strong>No silent errors</strong>!</p>
+<p><strong>In Development:</strong>
+Hard-test your application with all or most possible use cases, in terms of access management and control. If you see any <code>AccessControlError</code> thrown you should definitely fix it immediately. Because this typically indicates that your grants model either has a logical or technical flaw.</p>
+<p><strong>In Production:</strong>
+You did all your tests in development but still, if a caught exception is an instance of <code>AccessControlError</code>, I highly recommend the host application should be gracefully shut down when in production.  </p>
+<p>For details on errors thrown, see <a href="http://onury.io/accesscontrol/?content=errors">AccessControl Errors</a> section.</p>
 </body></html>
