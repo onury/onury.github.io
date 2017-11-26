@@ -14,7 +14,6 @@
 <p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
 <p>Role and Attribute based Access Control for Node.js  </p>
-<p><code>npm i accesscontrol --save</code>  </p>
 <p>Many <a href="https://en.wikipedia.org/wiki/Role-based_access_control">RBAC</a> (Role-Based Access Control) implementations differ, but the basics is widely adopted since it simulates real life role (job) assignments. But while data is getting more and more complex; you need to define policies on resources, subjects or even environments. This is called <a href="https://en.wikipedia.org/wiki/Attribute-Based_Access_Control">ABAC</a> (Attribute-Based Access Control).</p>
 <p>With the idea of merging the best features of the two (see this <a href="http://csrc.nist.gov/groups/SNS/rbac/documents/kuhn-coyne-weil-10.pdf">NIST paper</a>); this library implements RBAC basics and also focuses on <em>resource</em> and <em>action</em> attributes.</p>
 <h3 id="core-features">Core Features</h3>
@@ -32,6 +31,9 @@
 <li>TypeScript support.</li>
 </ul>
 <p><em>In order to build on more solid foundations, this library (v1.5.0+) is completely re-written in TypeScript.</em></p>
+<h2 id="installation">Installation</h2>
+<p>with <a href="https://www.npmjs.com/package/accesscontrol"><strong>npm</strong></a>: <code>npm i accesscontrol --save</code>  </p>
+<p>with <a href="https://yarn.pm/accesscontrol"><strong>yarn</strong></a>: <code>yarn add accesscontrol</code></p>
 <h2 id="guide">Guide</h2>
 <pre><code class="lang-js">const AccessControl = require('accesscontrol');
 // or:
