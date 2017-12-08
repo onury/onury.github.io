@@ -3,7 +3,6 @@
 <hr />
 <p>Instead of programmatically executing the Docma builder, you can directly use the CLI from your console. Although the CLI does not provide all build configurations as command-line options; it still supports all of them via the <code>-c</code> option which you can set the configuration file's path to.</p>
 <h2 id="cli-options">CLI Options</h2>
-<hr />
 <table>
     <tbody><tr>
         <td colspan="2"><b>Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
@@ -81,7 +80,7 @@
 </tbody></table>
 
 <p><em>Note: If no debug options are set in the CLI arguments (such as <code>--debug</code>, <code>-q</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>-v</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</em></p>
-<h3 id="examples" class="docma bookmark"><a href="#examples">Examples</a></h3>
+<h3 id="examples">Examples</h3>
 <ul>
 <li><p>Build documentation with a Docma configuration (JSON) file:<br>  <code>docma -c path/to/docma.config.json</code>  </p>
 </li>
@@ -95,8 +94,7 @@
 </li>
 </ul>
 <h2 id="extra-commands">Extra Commands</h2>
-<hr />
-<h3 id="-serve-spa-path-" class="docma bookmark"><a href="#-serve-spa-path-"><code>serve [spa-path]</code></a></h3>
+<h3 id="-serve-spa-path-"><code>serve [spa-path]</code></h3>
 <p>You can run a mock server for testing the generated SPA with this command. This will boot up a simple static-files server. If <code>spa-path</code> is omitted, current working directory will be served.</p>
 <p>Additionally, you can use the following options:</p>
 <table>
@@ -119,7 +117,7 @@
     </tr>
 </tbody></table>
 
-<h3 id="examples" class="docma bookmark"><a href="#examples">Examples</a></h3>
+<h3 id="examples">Examples</h3>
 <ul>
 <li><p>Serve generated SPA at the default port (9000):<br>  <code>docma serve /path/to/docs</code>  </p>
 </li>

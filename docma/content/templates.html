@@ -16,7 +16,6 @@
 <li><a href="#docma-default-template">Docma Default Template</a></li>
 </ul>
 <h2 id="template-structure">Template Structure</h2>
-<hr />
 <pre><code class="lang-html">/template                        Required
     ├─ docma.template.json          ✔︎      Template configuration.
     ├─ index.html                   ✔︎      Main entry point. (defined in docma.template.json)
@@ -31,7 +30,6 @@
     :
 </code></pre>
 <h2 id="template-configuration">Template Configuration</h2>
-<hr />
 <p>Docma templates should have a <code>docma.template.json</code> in the root of the template. This file defines template specific settings such as name of the template, version, the main entry point, document settings, ignored files, etc... This object can be accessed via <code>docma.template.options</code> within the template.</p>
 <table>
     <tbody><tr>
@@ -107,7 +105,7 @@
 </tbody></table>
 
 <p>Note that <code>docma.template.json</code> does not include any build configuration. This only configures the template.</p>
-<h3 id="html" class="docma bookmark"><a href="#html">HTML</a></h3>
+<h3 id="html">HTML</h3>
 <p><code>&lt;template&gt;/index.html</code> is the default entry point (main file) of the generated documentation. It should not include any Dust templates, but can of course include other custom HTML.</p>
 <p>It should also include a <code>&lt;div id="docma-main"&gt;&lt;/div&gt;</code> which all the Dust templates will be compiled into. If you don't define this element, it will be created and dynamically appended to the body of the document.</p>
 <p>Note that <code>index.html</code> is the default name of the entry point. You can customize this (name) in <code>docma.template.json</code>.</p>
@@ -125,11 +123,11 @@
 </code></pre>
 <p>An empty body would also be valid but we want the footer to come after <em>docma-main</em> element. So it's explicitly defined.</p>
 <p>Also, note that <strong>title</strong> of the document is not set. Since this is a template, title will be defined at build time and <code>&lt;title&gt;</code> element will be automatically added to the output document. See <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a>.</p>
-<h3 id="partials" class="docma bookmark"><a href="#partials">Partials</a></h3>
+<h3 id="partials">Partials</h3>
 <p>Put all <a href="http://www.dustjs.com">Dust.js</a> partials in <code>&lt;template&gt;/partials</code> directory.</p>
 <p>You can have sub directories within <code>&lt;template&gt;/partials</code> but all HTML files in these directories will be treated as if they were at the same level (under <code>&lt;template&gt;/partials</code> directory). For example, if you have a template at <code>&lt;template&gt;/partials/widgets/menu.html</code>, you should still include it like this: <code>{&gt;"menu"/}</code> not <code>{&gt;"widgets/menu"/}</code> or <code>{&gt;"partials/widgets/menu"/}</code>. That's why all partials should have unique names.</p>
 <p>These HTML files under <code>&lt;template&gt;/partials</code> are pre-compiled into Javascript and will be included as Dust JS templates. (Note that this directory will not be copied over to output directory.)</p>
-<h4 id="api-documentation-partial" class="docma bookmark"><a href="#api-documentation-partial">API Documentation Partial</a></h4>
+<h4 id="api-documentation-partial">API Documentation Partial</h4>
 <p>You should include a (documentation) partial and name it <code>docma-api.html</code>. This partial is required and, will be compiled and loaded into your main HTML (i.e. <code>index.html</code>), when navigated. All JSDoc generated documentation data should be displayed within this partial. JSDoc data is accessible via <code>docma.documentation</code> (array). Since <code>docma</code> is global, within a partial you can iterate documentation symbols/items by <code>{#documentation}..{/documentation}</code>.</p>
 <p>A simple example for <code>docma-api.html</code> partial:</p>
 <pre><code class="lang-html">{&gt;"menu"/}
@@ -139,7 +137,7 @@
 {/documentation}
 {&gt;"footer"/}
 </code></pre>
-<h4 id="content-partial" class="docma bookmark"><a href="#content-partial">Content Partial</a></h4>
+<h4 id="content-partial">Content Partial</h4>
 <p>In order to include other HTML content in the generated output (such as markdown files converted to HTML); you can also create another partial called <code>docma-content.html</code>. This is <em>optional</em> (and will be auto-generated). However, you should always create one for the template, for better layout and style, since the auto-generated partial will have a very basic layout.</p>
 <p>Content partial should include a <code>&lt;div id="docma-content"&gt;&lt;/div&gt;</code> in itself. Docma will load the target content into this element.</p>
 <p>This partial will also be compiled and loaded into in your main HTML, when navigated; so all styles and scripts of the main file will still be available.</p>
@@ -148,12 +146,12 @@
 &lt;div id="docma-content"&gt;&lt;/div&gt;
 {&gt;"footer"/}
 </code></pre>
-<h3 id="docma-web-core" class="docma bookmark"><a href="#docma-web-core">Docma-Web Core</a></h3>
+<h3 id="docma-web-core">Docma-Web Core</h3>
 <p>When you build the documentation with your template, a <code>docma-web.js</code> will be generated (and linked in your main HTML); which is the core engine for the documentation web app. This will include everything the app needs such as the documentation data, compiled partials, dustjs engine, etc... (Note that the size of this script depends especially on the generated documentation data.)</p>
 <p>See <a href="?api=docma-web">Docma Web API</a>.</p>
-<h3 id="custom-scripts" class="docma bookmark"><a href="#custom-scripts">Custom Scripts</a></h3>
+<h3 id="custom-scripts">Custom Scripts</h3>
 <p>You have full control over the main HTML file so you can include any Javascript files in it. Docma web core will always be prepended before your scripts; so that you can safely access the global <code>docma</code> object.</p>
-<h3 id="initializing-the-template-web-app-" class="docma bookmark"><a href="#initializing-the-template-web-app-">Initializing the Template (Web App)</a></h3>
+<h3 id="initializing-the-template-web-app-">Initializing the Template (Web App)</h3>
 <p>In order to make sure you execute some script after Docma is ready:</p>
 <pre><code class="lang-js">// run this in any js file in the browser
 docma.on('ready', function () {
@@ -177,11 +175,11 @@ docma.on('render', currentRoute =&gt; {
     }
 });
 </code></pre>
-<h3 id="css-less" class="docma bookmark"><a href="#css-less">CSS &amp; Less</a></h3>
+<h3 id="css-less">CSS &amp; Less</h3>
 <p>You can include any <code>.css</code> files, anywhere in your template. Since you have control over the main HTML file, you can link any stylesheet in it. As a convention, it's recommended that you place all <code>.css</code> files under <code>&lt;template&gt;/css</code>.</p>
 <p>You can also include less files in your template. Main less file(s) to be compiled, should be defined in <code>docma.template.json</code>.</p>
-<h3 id="other-files" class="docma bookmark"><a href="#other-files">Other Files</a></h3>
+<h3 id="other-files">Other Files</h3>
 <p>You can include any custom files anywhere in your template. They will be copied over into the output directory. If you need to include a file in the template but don't want it to be in the generated output; define it in the <code>docma.template.json</code> file, within the <code>ignore</code> setting.</p>
-<h3 id="docma-default-template" class="docma bookmark"><a href="#docma-default-template">Docma Default Template</a></h3>
+<h3 id="docma-default-template">Docma Default Template</h3>
 <p>Docma includes a built-in default template for your convenience. Read the details on how to build your documentation with <a href="?content=default-template">default template</a>.</p>
 </body></html>

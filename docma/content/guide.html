@@ -1,18 +1,18 @@
 
 <html><head></head><body><h1 id="docma">Docma</h1>
 <hr />
-<p><a href="https://www.npmjs.com/package/docma"><img src="http://img.shields.io/npm/v/docma.svg" alt="npm" style="max-width: 100%;"></a>
-<a href="https://github.com/onury/docma"><img src="https://img.shields.io/github/release/onury/docma.svg" alt="release" style="max-width: 100%;"></a>
-<a href="https://github.com/onury/docma/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/docma.svg" alt="license" style="max-width: 100%;"></a>
-<a href="https://www.npmjs.com/package/docma"><img src="https://img.shields.io/npm/dt/docma.svg" alt="downloads" style="max-width: 100%;"></a>
-<a href="https://david-dm.org/onury/docma"><img src="https://david-dm.org/onury/docma.svg" alt="dependencies" style="max-width: 100%;"></a>
-<a href="https://github.com/onury/docma/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained" style="max-width: 100%;"></a>  </p>
+<p><a href="https://www.npmjs.com/package/docma"><img src="http://img.shields.io/npm/v/docma.svg" alt="npm"></a>
+<a href="https://github.com/onury/docma"><img src="https://img.shields.io/github/release/onury/docma.svg" alt="release"></a>
+<a href="https://github.com/onury/docma/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/docma.svg" alt="license"></a>
+<a href="https://www.npmjs.com/package/docma"><img src="https://img.shields.io/npm/dt/docma.svg" alt="downloads"></a>
+<a href="https://david-dm.org/onury/docma"><img src="https://david-dm.org/onury/docma.svg" alt="dependencies"></a>
+<a href="https://github.com/onury/docma/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>  </p>
 <blockquote>
 <p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
 <p>A powerful tool to easily generate beautiful HTML documentation from Javascript (<a href="http://http://usejsdoc.org">JSDoc</a>), <a href="https://daringfireball.net/projects/markdown">Markdown</a> and HTML files.</p>
 <p>Like this one you're reading now...</p>
-<h3 id="features" class="docma bookmark"><a href="#features">Features</a></h3>
+<h3 id="features">Features</h3>
 <ul>
 <li>Parse <strong>JSDoc</strong> documentation, <strong>Markdown</strong> and <strong>HTML</strong> files.</li>
 <li>Build a cool <strong>SPA</strong> (Single Page Application) from parsed files.</li>
@@ -25,10 +25,10 @@
 <li>Extremely configurable and debuggable.</li>
 <li>Well documented. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/261d.svg" /></li>
 </ul>
-<h3 id="installation" class="docma bookmark"><a href="#installation">Installation</a></h3>
+<h3 id="installation">Installation</h3>
 <pre><code class="lang-sh">npm i docma -g
 </code></pre>
-<h3 id="building-documentation-with-cli" class="docma bookmark"><a href="#building-documentation-with-cli">Building Documentation with CLI</a></h3>
+<h3 id="building-documentation-with-cli">Building Documentation with CLI</h3>
 <p>You can use Docma CLI to build documentations directly from your console. Once you create the configuration (JSON) file, it's quite simple.</p>
 <pre><code class="lang-sh">docma -c path/to/docma.config.json
 </code></pre>
@@ -40,7 +40,7 @@
 <li><a href="?content=docma-cli"><b>Docma CLI reference</b></a>.</li>
 <li><a href="?api=docma#Docma~BuildConfiguration"><b>Build Configuration</b></a>.</li>
 </ul>
-<h3 id="building-documentation-with-api" class="docma bookmark"><a href="#building-documentation-with-api">Building Documentation with API</a></h3>
+<h3 id="building-documentation-with-api">Building Documentation with API</h3>
 <p>If you need to build documentation from within your code, use the API.</p>
 <pre><code class="lang-js">const Docma = require('docma');
 </code></pre>
@@ -65,15 +65,15 @@ Docma.create()
         console.log(error);
     });
 </code></pre>
-<h3 id="parsed-output" class="docma bookmark"><a href="#parsed-output">Parsed Output</a></h3>
+<h3 id="parsed-output">Parsed Output</h3>
 <p>To investigate the parsed JSDoc output, enable the <code>debug</code> option that will create a JSON output(s) within the root of the destination directory. If you have a problem with the parsed documentation data, open an issue @ <a href="https://github.com/onury/jsdoc-x">jsdoc-x</a>. <em>(I'm the author.)</em></p>
 <p>For markdown output issues (that are not related with style), you can open an issue @ <a href="https://github.com/chjj/marked">marked</a>.</p>
-<h3 id="change-log" class="docma bookmark"><a href="#change-log">Change-log</a></h3>
+<h3 id="change-log">Change-log</h3>
 <p>See <a href="?content=changelog"><strong>CHANGELOG</strong></a>. <em>Note: If you're upgrading from Docma v1.x to v2.x, there are some <a href="?content=changelog"><strong>breaking changes</strong></a>.</em></p>
-<h3 id="license" class="docma bookmark"><a href="#license">License</a></h3>
+<h3 id="license">License</h3>
 <p><a href="https://github.com/onury/docma/blob/master/LICENSE"><strong>MIT</strong></a>. You don't have to include any copyright notice in your documentation output or templates but I'd appreciate if you let people know about this tool so we can read better documentations.</p>
 <p>Emoji shortcuts used in source markdown files are parsed into <a href="https://github.com/twitter/twemoji">twemoji</a>. Graphics licensed under <a href="https://creativecommons.org/licenses/by/4.0">CC-BY 4.0</a>.</p>
-<h3 id="related-modules" class="docma bookmark"><a href="#related-modules">Related Modules</a></h3>
+<h3 id="related-modules">Related Modules</h3>
 <ul>
 <li><a href="https://github.com/onury/jsdoc-x">jsdoc-x</a> — Parser for outputting a Javascript object from documented code via JSDoc's explain (-X) command.</li>
 <li><a href="https://github.com/chjj/marked">marked</a> — A full-featured markdown parser and compiler, written in JavaScript. Built for speed.</li>

@@ -1,110 +1,64 @@
 
 <html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
-<hr />
-<h4 id="-v2-0-0-2017-09-04-" class="docma bookmark"><a href="#-v2-0-0-2017-09-04-"><strong>v2.0.0</strong> (2017-09-04)</a></h4>
-<ul>
-<li><p></p><p><b>Breaking Changes</b>:</p><p></p>
-<ul>
-<li>Due to a <code>jsdom</code> dependency upgrade, Docma v2+ requires Node.js v6 or newer.</li>
-</ul>
-</li>
-<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
-<ul>
-<li>This release adds support for documenting code with <strong>ES2015</strong> syntax. (JSDoc and jsdoc-x dep. update.) Fixes <a href="https://github.com/onury/docma/issues/18">issue #18</a>.</li>
-<li>Fixed an issue where images in HTML (generated from markdown) would overflow out of page. Now, limiting the image width to <code>100%</code> of parent container while keeping the aspect ratio.</li>
-<li>Fixed an issue where compiled template scripts were altered when full-debug is enabled.</li>
-<li>Fixed an issue with redirecting a page when the routing method is set to <code>"path"</code>.</li>
-<li>For markdown, both <code>&lt;h1 /&gt;</code> and <code>&lt;h2 /&gt;</code> tags are now followed with a <code>&lt;hr/&gt;</code>, like on GitHub.</li>
-<li>Added <code>config.markdown.bookmarks</code> option (<code>Boolean|String</code>) which automatically adds bookmark links to headings. Default: <code>false</code>.</li>
-<li>Now, displaying gzipped size of generated (docma-web) script, in addition to minified size.</li>
-<li>Updated builder/core dependencies to their latest versions.</li>
-</ul>
-</li>
-<li><p></p><p><b>Docma CLI</b>:</p><p></p>
-<ul>
-<li>Added static mock server for serving / testing the generated SPA; e.g.<br><code>docma serve [spa-path]</code>. See <a href="http://onury.io/docma/?content=docma-cli">CLI documentation</a> for detailed information.</li>
-<li>CLI will now auto-check for <code>docma.config.json</code> file in the current working directory if <code>-c</code> option is omitted.</li>
-</ul>
-</li>
-<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
-<ul>
-<li>Fixed an issue where URI encoded characters after hash (<code>#</code>) would break the bookmark link. e.g. when navigated to <code>#MyClass%7EInnerObject</code> instead of <code>#MyClass~InnerObject</code>.</li>
-<li>Fixed an issue with <code>docma.utils.getLongName()</code>, occured after JSDoc core upgrade.</li>
-<li>Updated web-core dependencies.</li>
-</ul>
-</li>
-<li><p></p><p><b>Default Template</b> (v2.0.0):</p><p></p>
-<ul>
-<li>Added support for <code>@example &lt;caption&gt;Title&lt;/caption&gt;</code>. Fixes <a href="https://github.com/onury/docma/issues/14">issue #14</a>. </li>
-<li>Added <code>toolbar</code> (<code>boolean</code>) template option that toggles a tiny toolbar below the search box, for switching symbol list outline or quick-filtering symbols by symbol-kind. Enabled by default.</li>
-<li>Added <code>animations</code> (<code>boolean</code>) template option that specifies whether animations are enabled for sidebar and listed symbols.</li>
-<li>Improved symbol listing. Also; when search is active, outline is temporarily set to <code>"flat"</code> so that you see the parent of the symbol. When search box is cleaned, it's set back to the initial template setting. (e.g. <code>"tree"</code> if set).</li>
-<li>Better example outputs. If there are multiple examples for a symbol, they will be numbered now.</li>
-<li><code>.badges</code> template option (default: <code>true</code>) now also accepts a string value for custom bullets instead of badges.</li>
-<li>Added support for <code>@hideconstructor</code> tag. Fixes <a href="https://github.com/onury/docma/issues/21">issue #21</a>.</li>
-<li>Fixed some spacing issues with class descriptions. Empty tables are auto-removed now.</li>
-<li>Fixed an issue where the constructor would be incorrectly marked as alias by JSDoc core.</li>
-<li>Improved nested bullet list spacing, for better readability.</li>
-<li>Fixed an anchor/bookmark issue with multiple symbols having the same id.</li>
-<li>Sub-symbols that are listed in a table, will not wrap to new line anymore.</li>
-<li>Fixed an issue where the (heading) title would be hidden under the nav-bar when navigated via a local bookmark on a page, generated from a markdown file. Also improved spacing for headings.</li>
-<li>Fixed an issue where sidebar scrollbars were not fully visible.</li>
-<li>Fixed some issues with navbar margins when sidebar is disabled.</li>
-<li>Responsive layout. On small screens, sidebar auto-collapses; top navbar turns into hamburger menu.</li>
-<li>Removed bootstrap dependencies (css and js) which dramatically reduces the size of the generated SPA.</li>
-</ul>
-</li>
-</ul>
-<h4 id="-v1-5-1-release-2017-03-11-" class="docma bookmark"><a href="#-v1-5-1-release-2017-03-11-"><strong>v1.5.1</strong> Release (2017-03-11)</a></h4>
+<h3 id="v1-5-2-2017-12-09-">v1.5.2 (2017-12-09)</h3>
 <ul>
 <li><p><b>Docma Web Core</b>:</p><ul>
-<li>Fix <code>slice</code> error for non-string default value.</li>
+<li><strong>Fixed</strong> <code>$ is not a function</code> error on Windows. PR <a href="https://github.com/onury/docma/pull/23">#23</a> by <a href="https://github.com/warpdesign">@warpdesign</a>.</li>
+<li><strong>Fixed</strong> some typos in documentation. PRs <a href="https://github.com/onury/docma/pull/13">#13</a>, <a href="https://github.com/onury/docma/pull/17">#17</a>.</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-5-0-release-2017-03-10-" class="docma bookmark"><a href="#-v1-5-0-release-2017-03-10-"><strong>v1.5.0</strong> Release (2017-03-10)</a></h4>
+<p><em><strong>Note</strong>: For this release, some dependencies are NOT updated on purpose. They introduce too many breaking changes. In <strong>v2</strong> (WIP, to be released) many things has changed and improved.</em></p>
+<h3 id="v1-5-1-2017-03-11-">v1.5.1 (2017-03-11)</h3>
+<ul>
+<li><p><b>Docma Web Core</b>:</p><ul>
+<li><strong>Fixed</strong> <code>slice</code> error for non-string default value.</li>
+</ul>
+</li>
+</ul>
+<h3 id="v1-5-0-2017-03-10-">v1.5.0 (2017-03-10)</h3>
 <ul>
 <li><p><b>Docma</b> (Builder):</p><ul>
-<li>Added <code>config.jsdoc.ignored:Boolean</code> option which specifies whether to include documentation symbols marked with <code>@ignore</code> tag.</li>
+<li><strong>Added</strong> <code>config.jsdoc.ignored:Boolean</code> option which specifies whether to include documentation symbols marked with <code>@ignore</code> tag.</li>
 </ul>
 </li>
 <li><p><b>Docma Web Core</b>:</p><ul>
-<li>Empty lines would be stripped out from <code>@example</code> content. Fixed.</li>
-<li>Better auto-indention for code in comments.</li>
-<li>Improved <code>$val</code> filter.</li>
+<li><strong>Fixed</strong> an issue where empty lines would be stripped out from <code>@example</code> content.</li>
+<li><strong>Improved</strong> auto-indention for code in comments.</li>
+<li><strong>Improved</strong> <code>$val</code> filter.</li>
 </ul>
 </li>
-<li><p><b>Default Template</b> (v1.7.0):</p><ul>
-<li>Improved sidebar design.</li>
-<li>Added template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="http://onury.io/docma/?content=default-template">documentation</a> and <a href="http://onury.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
-<li>Added template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
-<li><code>Type.&lt;T&gt;</code> is now represented as <code>Type&lt;T&gt;</code>.</li>
-<li>Default string values are now represented in quotes.</li>
-<li>Added <code>static</code> badge for static members, <code>deprecated</code> badge for deprecated symbols.</li>
+<li><p><b>Default Template</b>:</p><ul>
+<li><strong>Improved</strong> sidebar design.</li>
+<li><strong>Added</strong> template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/?content=default-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
+<li><strong>Added</strong> template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
+<li><strong>Revision</strong>: <code>Type.&lt;T&gt;</code> is now represented as <code>Type&lt;T&gt;</code>.</li>
+<li><strong>Revision</strong>: Default string values are now represented in quotes.</li>
+<li><strong>Added</strong> <code>static</code> badge for static members, <code>deprecated</code> badge for deprecated symbols.</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-4-7-release-2017-03-09-" class="docma bookmark"><a href="#-v1-4-7-release-2017-03-09-"><strong>v1.4.7</strong> Release (2017-03-09)</a></h4>
+<h3 id="v1-4-7-2017-03-09-">v1.4.7 (2017-03-09)</h3>
 <ul>
 <li><p><b>Docma</b> (Builder):</p><ul>
-<li>Respecting <code>config.jsdoc.includePattern</code> build config when filtering files..</li>
-<li>When <code>config.jsdoc.hierarchy</code> option is enabled, sorting would change. Fixed.</li>
+<li><strong>Fixed</strong> an issue where build config <code>config.jsdoc.includePattern</code> would not be respected when filtering files.</li>
+<li><strong>Fixed</strong> an issue where sorting would change when <code>config.jsdoc.hierarchy</code> option is enabled.</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-4-5-release-2017-03-05-" class="docma bookmark"><a href="#-v1-4-5-release-2017-03-05-"><strong>v1.4.5</strong> Release (2017-03-05)</a></h4>
+<h3 id="v1-4-5-2017-03-05-">v1.4.5 (2017-03-05)</h3>
 <ul>
 <li><p><b>Docma</b> (Builder):</p><ul>
-<li>Added build config options: <code>config.jsdoc.allowUnknownTags</code>, <code>config.jsdoc.dictionaries</code>, <code>config.jsdoc.includePattern</code>, <code>config.jsdoc.excludePattern</code> (<code>jsdoc-x</code> feature).</li>
-<li>Added <a href="http://usejsdoc.org/about-plugins.html">JSDoc plugin</a> support via the new <code>config.jsdoc.plugins</code> option (<code>jsdoc-x</code> feature).</li>
+<li><strong>Added</strong> build config options: <code>config.jsdoc.allowUnknownTags</code>, <code>config.jsdoc.dictionaries</code>, <code>config.jsdoc.includePattern</code>, <code>config.jsdoc.excludePattern</code> (<code>jsdoc-x</code> feature).</li>
+<li><strong>Added</strong> <a href="http://usejsdoc.org/about-plugins.html">JSDoc plugin</a> support via the new <code>config.jsdoc.plugins</code> option (<code>jsdoc-x</code> feature).</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-4-0-release-2017-02-13-" class="docma bookmark"><a href="#-v1-4-0-release-2017-02-13-"><strong>v1.4.0</strong> Release (2017-02-13)</a></h4>
+<h3 id="v1-4-0-2017-02-13-">v1.4.0 (2017-02-13)</h3>
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
-<li>Fixed incorrect routing when routing method is set to <code>"path"</code>.</li>
+<li><strong>Fixed</strong> incorrect routing when routing method is set to <code>"path"</code>.</li>
 <li>If <code>config.app.entrance</code> is not set in build configuration, it now defaults to <code>"api"</code>.</li>
 <li>If <code>config.app.server</code> is not set in build configuration, it now defaults to <code>"static"</code>. (<code>"static"</code> is similar to <code>"github"</code> which generates static HTML files.)</li>
 </ul>
@@ -116,164 +70,164 @@
 </li>
 <li><p></p><p><b>Docma Web Core</b>:</p><p></p>
 <ul>
-<li>Fixed <code>.split()</code> error for <code>null</code> (404) routes.</li>
-<li>Updated web dependencies to latest versions.</li>
+<li><strong>Fixed</strong> <code>.split()</code> error for <code>null</code> (404) routes.</li>
+<li><strong>Updated</strong> web dependencies to latest versions.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b> (v1.6.3):</p><p></p>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
-<li>Fixed a style issue where sidebar would not scroll all the way to the bottom in Firefox. Fixes <a href="https://github.com/onury/docma/issues/8">issue #8</a>.</li>
+<li><strong>Fixed</strong> a style issue where sidebar would not scroll all the way to the bottom in Firefox. Fixes <a href="https://github.com/onury/docma/issues/8">issue #8</a>.</li>
 <li>If <code>config.template.title</code> is omitted, <code>config.app.title</code> is used. (Defaults to <code>"Documentation"</code> if not set).</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-3-0-release-2016-11-23-" class="docma bookmark"><a href="#-v1-3-0-release-2016-11-23-"><strong>v1.3.0</strong> Release (2016-11-23)</a></h4>
+<h3 id="v1-3-0-2016-11-23-">v1.3.0 (2016-11-23)</h3>
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
-<li>Added case-sensitive routing option. <code>config.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
-<li>Updated dependencies to their latest versions.</li>
+<li><strong>Added</strong> case-sensitive routing option. <code>config.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
+<li><strong>Updated</strong> dependencies to their latest versions.</li>
 <li>Minor code revisions.</li>
 </ul>
 </li>
 <li><p></p><p><b>Docma Web Core</b>:</p><p></p>
 <ul>
-<li>Extended support for parsing back-ticks in documentation. Added triple back-tick support for multiline code blocks (<code>```</code>).</li>
-<li>Improved <code>docma.utils.normalizeTabs()</code> method. Deep indents in JSDoc comments/descriptions are also normalized.</li>
-<li>Better <code>&lt;pre&gt;&lt;/pre&gt;</code> support within JSDoc descriptions.</li>
-</ul>
-</li>
-<li><p></p><p><b>Default Template</b> (v1.6.0):</p><p></p>
-<ul>
-<li>Symbols with return type parameters (such as <code>Promise&lt;Array&gt;</code>) are now escaped and parsed properly. Fixes <a href="https://github.com/onury/docma/issues/4">issue #4</a>.</li>
-<li>Boolean symbol parameters' default values are now parsed properly. Fixes <a href="https://github.com/onury/docma/issues/5">issue #5</a>.</li>
-</ul>
-</li>
-</ul>
-<h4 id="-v1-2-0-release-2016-10-31-" class="docma bookmark"><a href="#-v1-2-0-release-2016-10-31-"><strong>v1.2.0</strong> Release (2016-10-31)</a></h4>
-<ul>
-<li><p></p><p><b>Docma CLI</b>:</p><p></p>
-<ul>
-<li>Added CLI (command-line interface). Supports <code>config</code>, <code>src</code>, <code>dest</code> and all <code>debug</code> options.</li>
+<li><strong>Extended</strong> support for parsing back-ticks in documentation. Added triple back-tick support for multiline code blocks (<code>```</code>).</li>
+<li><strong>Improved</strong> <code>docma.utils.normalizeTabs()</code> method. Deep indents in JSDoc comments/descriptions are also normalized.</li>
+<li><strong>Improved</strong> support for <code>&lt;pre&gt;&lt;/pre&gt;</code> tags within JSDoc descriptions.</li>
 </ul>
 </li>
 <li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
-<li>Updated (one-dark) highlighting styles.</li>
+<li><strong>Fixed</strong> an issue where symbols with return type parameters (such as <code>Promise&lt;Array&gt;</code>) would not be escaped and parsed properly. Fixes <a href="https://github.com/onury/docma/issues/4">issue #4</a>.</li>
+<li><strong>Fixed</strong> an issue where boolean symbol parameters' default values would not be parsed properly. Fixes <a href="https://github.com/onury/docma/issues/5">issue #5</a>.</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-1-1-release-2016-08-13-" class="docma bookmark"><a href="#-v1-1-1-release-2016-08-13-"><strong>v1.1.1</strong> Release (2016-08-13)</a></h4>
+<h3 id="v1-2-0-2016-10-31-">v1.2.0 (2016-10-31)</h3>
 <ul>
-<li>Fixed an anchor/linking issue which prevented some browsers (such as Safari) to navigate properly.</li>
+<li><p></p><p><b>Docma CLI</b>:</p><p></p>
+<ul>
+<li><strong>Added</strong> CLI (command-line interface). Supports <code>config</code>, <code>src</code>, <code>dest</code> and all <code>debug</code> options.</li>
 </ul>
-<h4 id="-v1-1-0-release-2016-08-12-" class="docma bookmark"><a href="#-v1-1-0-release-2016-08-12-"><strong>v1.1.0</strong> Release (2016-08-12)</a></h4>
+</li>
+<li><p></p><p><b>Default Template</b>:</p><p></p>
+<ul>
+<li><strong>Updated</strong> (one-dark) highlighting styles.</li>
+</ul>
+</li>
+</ul>
+<h3 id="v1-1-1-2016-08-13-">v1.1.1 (2016-08-13)</h3>
+<ul>
+<li><strong>Fixed</strong> an anchor/linking issue which prevented some browsers (such as Safari) to navigate properly.</li>
+</ul>
+<h3 id="v1-1-0-2016-08-12-">v1.1.0 (2016-08-12)</h3>
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
-<li>Constructors would still show up in the documentation even though <code>@private</code> is set. Fixed by <code>jsdoc-x</code>.</li>
-<li>Updated dependencies to their latest versions.</li>
+<li><strong>Fixed</strong> an issue where constructors would still show up in the documentation even though <code>@private</code> is set. Fixed by <code>jsdoc-x</code>.</li>
+<li><strong>Updated</strong> dependencies to their latest versions.</li>
 <li>Minor revisions.</li>
 </ul>
 </li>
 <li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
-<li>Fixed sidebar header/search position when sidebar is collapsed.</li>
+<li><strong>Fixed</strong> sidebar header/search position when sidebar is collapsed.</li>
 <li>An access badge is shown next to symbol name, if symbol has <code>private</code> or <code>protected</code> access.</li>
 <li>Clean up.</li>
 </ul>
 </li>
 </ul>
-<h4 id="-v1-0-3-release-2016-06-27-" class="docma bookmark"><a href="#-v1-0-3-release-2016-06-27-"><strong>v1.0.3</strong> Release (2016-06-27)</a></h4>
+<h3 id="v1-0-3-2016-06-27-">v1.0.3 (2016-06-27)</h3>
 <ul>
 <li><strong>Docma</strong> (Builder): Added HTML source file support. You can include HTML files together with JS and markdown files while building your documentation.</li>
 <li><strong>Default Template</strong>: Removed YAML syntax highlighting support because of incorrect auto-detection. Opened an issue <a href="https://github.com/isagalaev/highlight.js/issues/1213">here</a>.</li>
 </ul>
-<h4 id="-v1-0-1-release-2016-06-11-" class="docma bookmark"><a href="#-v1-0-1-release-2016-06-11-"><strong>v1.0.1</strong> Release (2016-06-11)</a></h4>
+<h3 id="v1-0-1-2016-06-11-">v1.0.1 (2016-06-11)</h3>
 <ul>
-<li>Fixed missing web components.</li>
+<li><strong>Fixed</strong> missing web components.</li>
 <li>David considers <a href="https://github.com/chjj/marked">marked</a> as <a href="https://david-dm.org/onury/docma">insecure dependency</a>. This is <a href="https://nodesecurity.io/advisories/marked_content-injection">already</a> <a href="https://github.com/chjj/marked/pull/592">reported</a>.</li>
 </ul>
-<h4 id="-v1-0-0-release-2016-06-11-" class="docma bookmark"><a href="#-v1-0-0-release-2016-06-11-"><strong>v1.0.0</strong> Release (2016-06-11)</a></h4>
+<h3 id="v1-0-0-2016-06-11-">v1.0.0 (2016-06-11)</h3>
 <ul>
 <li><p></p><p><b>Docma</b> (Builder):</p><p></p>
 <ul>
-<li>Convert markdown files to HTML. See documentation.</li>
-<li>Added <code>.markdown:Object</code> build configuration options. (Same as <code>marked</code> module options).</li>
-<li>Added <code>.markdown.tasks:Boolean</code> option for parsing GitHub-like markdown tasks.</li>
-<li>Added emoji (twemoji) support for converted markdown files. Added <code>.markdown.emoji:Boolean</code> option.</li>
-<li>Improved GFM parsing.  </li>
-<li>Added <code>.app.server</code> build option that defines the server/host type for generating server config file(s) for the SPA. e.g., setting to <code>"apache"</code> generates an <code>.htaccess</code> file within the root of the generated output. Supports <code>"apache"</code> and <code>"github"</code>.</li>
-<li>Added <code>.app.base:String</code> build option that sets the base path for the SPA.</li>
-<li>Added <code>.app.entrance:String</code> build option that sets the initial content to be displayed.</li>
-<li>Added <code>.debug:Boolean</code> build option.</li>
-<li>Dropped <code>.dump</code> config option in favor of <code>.debug</code> option.</li>
-<li>Moved <code>.template.document</code> configuration to <code>.app</code>.</li>
-<li>Group <code>.js</code> files into multiple, separate documentation. See <code>.src</code> build option.</li>
-<li>Rename routes generated markdown files (names). See <code>.src</code> build option.</li>
-<li>Added negated glob support (that excludes the paths) for the <code>src</code> build option.</li>
+<li><strong>Added</strong> ability to convert markdown files to HTML. See documentation.</li>
+<li><strong>Added</strong> <code>.markdown:Object</code> build configuration options. (Same as <code>marked</code> module options).</li>
+<li><strong>Added</strong> <code>.markdown.tasks:Boolean</code> option for parsing GitHub-like markdown tasks.</li>
+<li><strong>Added</strong> emoji (twemoji) support for converted markdown files. Added <code>.markdown.emoji:Boolean</code> option.</li>
+<li><strong>Improved</strong> GFM parsing.  </li>
+<li><strong>Added</strong> <code>.app.server</code> build option that defines the server/host type for generating server config file(s) for the SPA. e.g., setting to <code>"apache"</code> generates an <code>.htaccess</code> file within the root of the generated output. Supports <code>"apache"</code> and <code>"github"</code>.</li>
+<li><strong>Added</strong> <code>.app.base:String</code> build option that sets the base path for the SPA.</li>
+<li><strong>Added</strong> <code>.app.entrance:String</code> build option that sets the initial content to be displayed.</li>
+<li><strong>Added</strong> <code>.debug:Boolean</code> build option.</li>
+<li><strong>Dropped</strong> <code>.dump</code> config option in favor of <code>.debug</code> option.</li>
+<li><strong>Moved</strong> <code>.template.document</code> configuration to <code>.app</code>.</li>
+<li><strong>Added</strong> ability to group <code>.js</code> files into multiple, separate documentation. See <code>.src</code> build option.</li>
+<li><strong>Added</strong> ability to rename routes for generated markdown files. See <code>.src</code> build option.</li>
+<li><strong>Added</strong> negated glob support (that excludes the paths) for the <code>src</code> build option.</li>
 </ul>
 </li>
 <li><p></p><p><b>Docma Web Core</b>:</p><p></p>
 <ul>
-<li>Added client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
-<li>Implemented <code>EventEmitter</code>.</li>
-<li><em>BREAKING CHANGE</em>: Dropped <code>docma.ready()</code> method. Use <code>docma.on('ready', listener)</code> that's only triggered once on every page load or <code>docma.on('render', listener)</code> triggered when each content is rendered. Also see <code>docma.on('route', listener)</code> triggered when SPA route is changed.</li>
+<li><strong>Added</strong> client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
+<li><strong>Implemented</strong> <code>EventEmitter</code>.</li>
+<li><strong>BREAKING CHANGE</strong>: Dropped <code>docma.ready()</code> method. Use <code>docma.on('ready', listener)</code> that's only triggered once on every page load or <code>docma.on('render', listener)</code> triggered when each content is rendered. Also see <code>docma.on('route', listener)</code> triggered when SPA route is changed.</li>
 <li>Docma web initializing errors are no longer passed to event listeners. They are now immediately thrown.</li>
-<li><code>docma.app:Object</code> and <code>docma.template.main:String</code> are exposed to the SPA.</li>
-<li>The <code>docma</code> object accessible by the SPA is now <code>Object.freeze</code>d.</li>
-<li>Fixed bookmark scrolling.</li>
-<li>Added new methods to <code>docma.utils</code> such as <code>getCodeName(symbol)</code>, <code>getFullName(symbol)</code>, etc...</li>
-<li>If <code>debug &gt;= 3</code>, web app will also output logs.</li>
+<li><strong>Revision</strong>: <code>docma.app:Object</code> and <code>docma.template.main:String</code> are exposed to the SPA.</li>
+<li><strong>Revision</strong>: The <code>docma</code> object accessible by the SPA is now <code>Object.freeze</code>d.</li>
+<li><strong>Fixed</strong> bookmark scrolling.</li>
+<li><strong>Added</strong> new methods to <code>docma.utils</code> such as <code>getCodeName(symbol)</code>, <code>getFullName(symbol)</code>, etc...</li>
+<li><strong>Revision</strong>: If <code>debug &gt;= 3</code>, web app will also output logs.</li>
 </ul>
 </li>
 <li><p></p><p><b>Default Template</b>:</p><p></p>
 <ul>
-<li>Better layout for HTML files converted from markdown.</li>
-<li>Fixed documentation of <code>@property</code> JSDoc tags.</li>
-<li>Updated default template structure.</li>
-<li>More supported languages for syntax highlighting (Javascript, JSON, CSS, HTML, XML, CoffeeScript, TypeScript, Bash, HTTP, Markdown, Dust and YAML).</li>
-<li>Auto-language detection is enabled for syntax highlighting.</li>
-<li>Style tables in HTML generated from markdown.</li>
-<li>Style code blocks in HTML generated from markdown.</li>
-<li>Better font display for code and summary/descriptions.</li>
-<li>Font size of sidebar items are auto-adjusted to fit the sidebar, if they exceed the width.</li>
-<li>Fixed incorrect symbols sort issue when symbol(s) have aliases.</li>
-<li>Improved various API documentation styles.</li>
+<li><strong>Improved</strong> layout for HTML files converted from markdown.</li>
+<li><strong>Fixed</strong> documentation of <code>@property</code> JSDoc tags.</li>
+<li><strong>Updated</strong> default template structure.</li>
+<li><strong>Added</strong> more supported languages for syntax highlighting (Javascript, JSON, CSS, HTML, XML, CoffeeScript, TypeScript, Bash, HTTP, Markdown, Dust and YAML).</li>
+<li><strong>Added</strong> ability to auto-detect language for syntax highlighting.</li>
+<li><strong>Added</strong> ability to style tables in HTML generated from markdown.</li>
+<li><strong>Added</strong> ability to style code blocks in HTML generated from markdown.</li>
+<li><strong>Improved</strong> font display for code and summary/descriptions.</li>
+<li><strong>Improved</strong> UX by auto-adjusting font size of sidebar items to fit the sidebar, if they exceed the width.</li>
+<li><strong>Fixed</strong> incorrect symbols sort issue when symbol(s) have aliases.</li>
+<li><strong>Improved</strong> various API documentation styles.</li>
 </ul>
 </li>
 <li><p></p><p>Other:</p><p></p>
 <ul>
-<li>Manage web-component dependency packages via Bower.</li>
-<li>Updated project structure.</li>
+<li><strong>(Dev)</strong> Manage web-component dependency packages via Bower.</li>
+<li><strong>Updated</strong> project structure.</li>
 <li>Various minor revisions and clean-up.</li>
-<li>Improved Docma source code documentation.</li>
+<li><strong>Improved</strong> Docma source code documentation.</li>
 </ul>
 </li>
 </ul>
 <hr>
-<h4 id="-v0-5-4-pre-release-2016-05-22-" class="docma bookmark"><a href="#-v0-5-4-pre-release-2016-05-22-"><strong>v0.5.4</strong> Pre-Release (2016-05-22)</a></h4>
+<h3 id="v0-5-4-pre-release-2016-05-22-">v0.5.4 Pre-Release (2016-05-22)</h3>
 <ul>
 <li><code>docma.template.json</code> is no more copied over to the output.</li>
-<li>Added default template option <code>badges:Boolean</code>.</li>
+<li><strong>Added</strong> default template option <code>badges:Boolean</code>.</li>
 </ul>
 <hr>
-<h4 id="-v0-5-3-pre-release-2016-05-22-" class="docma bookmark"><a href="#-v0-5-3-pre-release-2016-05-22-"><strong>v0.5.3</strong> Pre-Release (2016-05-22)</a></h4>
+<h3 id="v0-5-3-pre-release-2016-05-22-">v0.5.3 Pre-Release (2016-05-22)</h3>
 <ul>
-<li>Fixed docma-web file paths.</li>
+<li><strong>Fixed</strong> docma-web file paths.</li>
 </ul>
 <hr>
-<h4 id="-v0-5-2-pre-release-2016-05-20-" class="docma bookmark"><a href="#-v0-5-2-pre-release-2016-05-20-"><strong>v0.5.2</strong> Pre-Release (2016-05-20)</a></h4>
+<h3 id="v0-5-2-pre-release-2016-05-20-">v0.5.2 Pre-Release (2016-05-20)</h3>
 <ul>
-<li>Updated default template.</li>
-<li>Updated dependencies.</li>
+<li><strong>Updated</strong> default template.</li>
+<li><strong>Updated</strong> dependencies.</li>
 <li>Clean-up.</li>
 </ul>
 <hr>
-<h4 id="-v0-5-0-pre-release-2016-05-11-" class="docma bookmark"><a href="#-v0-5-0-pre-release-2016-05-11-"><strong>v0.5.0</strong> Pre-Release (2016-05-11)</a></h4>
+<h3 id="v0-5-0-pre-release-2016-05-11-">v0.5.0 Pre-Release (2016-05-11)</h3>
 <ul>
 <li>Initial (pre) release.</li>
-<li>Parse JSDoc documentation.</li>
-<li>Created default template.</li>
+<li><strong>Added</strong> ability to parse JSDoc documentation.</li>
+<li><strong>Created</strong> default template.</li>
 </ul>
 </body></html>
