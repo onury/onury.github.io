@@ -1,0 +1,1685 @@
+[
+  {
+    "comment": "/**\n     *  Docma (builder) class for generating HTML documentation from the given\n     *  Javascript and/or markdown source files.\n     *\n     *  This documentation you're reading is built with Docma.\n     *  @class\n     *\n     *  @example\n     *  const Docma = require('docma');\n     *  const docma = new Docma();\n     */",
+    "meta": {
+      "range": [
+        4667,
+        4686
+      ],
+      "filename": "docma.js",
+      "lineno": 136,
+      "columnno": 4,
+      "path": "/Users/oy/Developer/@onury/docma/lib",
+      "code": {
+        "id": "astnode100000346",
+        "name": "Docma",
+        "type": "FunctionDeclaration",
+        "paramnames": []
+      }
+    },
+    "description": "Docma (builder) class for generating HTML documentation from the given\n Javascript and/or markdown source files.\n\n This documentation you're reading is built with Docma.",
+    "kind": "class",
+    "examples": [
+      "const Docma = require('docma');\n const docma = new Docma();"
+    ],
+    "name": "Docma",
+    "longname": "<anonymous>~Docma",
+    "memberof": "<anonymous>",
+    "scope": "inner",
+    "params": [],
+    "$longname": "Docma",
+    "$members": [
+      {
+        "comment": "/**\n     *  Parses the given source files and builds a Single Page Application (SPA)\n     *  with the given Docma template.\n     *\n     *  For a verbose build, `debug` option should be {@link #Docma.Debug|enabled}.\n     *\n     *  @param {Object|String} config\n     *         Either a build configuration object or the file path of a\n     *         configuration JSON file.\n     *         See {@link #Docma~BuildConfiguration|`BuildConfiguration`} for details.\n     *\n     *  @returns {Promise}\n     *           Promise that returns a `Boolean` value for whether the build\n     *           operation is successful. This will always returns `true` if\n     *           no errors occur. You should `.catch()` the errors of the\n     *           promise chain.\n     *\n     *  @example\n     *  const docma = new Docma();\n     *  docma.build(config)\n     *  \t.then(success => {\n     *  \t\tconsole.log('Documentation is built successfully.');\n     *  \t})\n     *  \t.catch(error => {\n     *  \t\tconsole.log(error.stack);\n     *  \t});\n     */",
+        "meta": {
+          "range": [
+            27651,
+            31852
+          ],
+          "filename": "docma.js",
+          "lineno": 685,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002219",
+            "name": "Docma.prototype.build",
+            "type": "FunctionExpression",
+            "funcscope": "<anonymous>",
+            "paramnames": [
+              "config"
+            ]
+          },
+          "vars": {
+            "self": "<anonymous>~Docma#build~self",
+            "": null
+          }
+        },
+        "description": "Parses the given source files and builds a Single Page Application (SPA)\n with the given Docma template.\n\n For a verbose build, `debug` option should be {@link #Docma.Debug|enabled}.",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object",
+                "String"
+              ]
+            },
+            "description": "Either a build configuration object or the file path of a\n        configuration JSON file.\n        See {@link #Docma~BuildConfiguration|`BuildConfiguration`} for details.",
+            "name": "config"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Promise"
+              ]
+            },
+            "description": "Promise that returns a `Boolean` value for whether the build\n          operation is successful. This will always returns `true` if\n          no errors occur. You should `.catch()` the errors of the\n          promise chain."
+          }
+        ],
+        "examples": [
+          "const docma = new Docma();\n docma.build(config)\n \t.then(success => {\n \t\tconsole.log('Documentation is built successfully.');\n \t})\n \t.catch(error => {\n \t\tconsole.log(error.stack);\n \t});"
+        ],
+        "name": "build",
+        "longname": "<anonymous>~Docma#build",
+        "kind": "function",
+        "memberof": "<anonymous>~Docma",
+        "scope": "instance",
+        "$longname": "Docma#build"
+      },
+      {
+        "comment": "/**\n *  Docma build configuration object that defines parse options for the given\n *  source files; and templating options for the Single Page Application to\n *  be generated.\n *\n *  This is very configurable but, you're only required to define very few\n *  options such as the source files (`src`) and the destination directory\n *  (`dest`) for a simple build.\n *\n *  See the example at the bottom or for a real example; check out Docma's own\n *  build configuration file, that generates this documentation you're reading\n *  {@link https://github.com/onury/docma/blob/master/doc/docma.config.json|here}.\n *\n *  @typedef Docma~BuildConfiguration\n *  @type Object\n *\n *  @param {String|Array|Object} src\n *         One or more file/directory paths to be processed. This also accepts\n *         {@link https://github.com/isaacs/node-glob|Glob} strings or array of\n *         globs. e.g. `./src/&#x2A;&#x2A;/&#x2A;.js` will produce an array of\n *         all `.js` files under `./src` directory and sub-directories. See\n *         examples below for how to <b>name-group</b> source files.\n *  @param {String} dest\n *         Destination output directory path. <b>CAUTION:</b> This directory\n *         will be emptied before the build. Make sure you set this to a correct\n *         path.\n *  @param {Boolean|Number} [debug=false]\n *         Specifies debug settings for build operation and generated SPA.\n *         This takes a bitwise numeric value so you can combine flags to\n *         your liking. If a `Boolean` value set, `false` means\n *         `Docma.Debug.DISABLED` and `true` means `Docma.Debug.ALL` which\n *         enables all debugging options.\n *         See {@link #Docma.Debug|`Debug` flags enumeration} for all possible\n *         values.\n *  @param {Object} [jsdoc] - JSDoc parse options.\n *  @param {String} [jsdoc.encoding=\"utf8\"]\n *         Encoding to be used when reading JS source files.\n *  @param {Boolean} [jsdoc.recurse=false]\n *         Specifies whether to recurse into sub-directories when scanning for\n *         source files.\n *  @param {Boolean} [jsdoc.pedantic=false]\n *         Specifies whether to treat errors as fatal errors, and treat warnings\n *         as errors.\n *  @param {String|Array} [jsdoc.access]\n *         Specifies which symbols to be processed with the given access\n *         property. Possible values: `\"private\"`, `\"protected\"`, `\"public\"` or\n *         `\"all\"` (for all access levels). By default, all except private\n *         symbols are processed. Note that, if access is not set for a\n *         documented symbol, it will still be included, regardless of this\n *         option.\n *  @param {Boolean} [jsdoc.private=false] -\n *  @param {String} [jsdoc.package]\n *         The path to the `package.json` file that contains the project name,\n *         version, and other details. If set to `true` instead of a path\n *         string, the first `package.json` file found in the source paths.\n *  @param {Boolean} [jsdoc.module=true]\n *         Specifies whether to include `module.exports` symbols.\n *  @param {Boolean} [jsdoc.undocumented=false]\n *         Specifies whether to include undocumented symbols.\n *  @param {Boolean} [jsdoc.undescribed=false]\n *         Specifies whether to include symbols without a description.\n *  @param {Boolean} [jsdoc.ignored=false]\n *         Specifies whether to include symbols marked with `ignore` tag.\n *  @param {String} [jsdoc.relativePath]\n *         When set, all `symbol.meta.path` values will be relative to this path.\n *  @param {Function} [jsdoc.predicate]\n *         This is used to filter the parsed documentation output array. If a\n *         `Function` is passed; it's invoked for each included `symbol`. e.g.\n *         `function (symbol) { return symbol; }` Returning a falsy value will\n *         remove the symbol from the output. Returning `true` will keep the\n *         original symbol. To keep the symbol and alter its contents, simply\n *         return an altered symbol object.\n *  @param {Boolean} [jsdoc.hierarchy=false]\n *         Specifies whether to arrange symbols by their hierarchy. This will\n *         find and move symbols that have a `memberof` property to a `$members`\n *         property of their corresponding owners. Also the constructor symbol\n *         will be moved to a `$constructor` property of the `ClassDeclaration`\n *         symbol; if any.\n *  @param {Boolean|String} [jsdoc.sort=false]\n *         Specifies whether to sort the documentation symbols. For alphabetic\n *         sort, set to `true` or `\"alphabetic\"`. To additionally group by scope\n *         (static/instance) set to `\"grouped\"`. Set to `false` to disable.\n *  @param {Boolean} [jsdoc.allowUnknownTags=true]\n *         Specifies whether to allow unrecognized tags. If set to `false`\n *         parsing will fail on unknown tags.\n *  @param {Array} [jsdoc.dictionaries=[\"jsdoc\", \"closure\"]]\n *         Indicates the dictionaries to be used. By default, both standard\n *         JSDoc tags and Closure Compiler tags are enabled.\n *  @param {String} [jsdoc.includePattern=\".+\\\\.js(doc|x)?$\"]\n *         String pattern for defining sources to be included. By default, only\n *         files ending in \".js\", \".jsdoc\", and \".jsx\" will be processed.\n *  @param {String} [jsdoc.excludePattern=\"(^|\\\\/|\\\\\\\\)_\"]\n *         String pattern for defining sources to be ignored. By default, any\n *         file starting with an underscore or in a directory starting with an\n *         underscore will be ignored.\n *  @param {Array} [jsdoc.plugins=[]]\n *         Defines the JSDoc plugins to be used. See\n *         {@link http://usejsdoc.org/about-plugins.html|this guide} on JSDoc plugins.\n *  @param {Object} [markdown] - Markdown parse options.\n *  @param {Boolean} [markdown.gfm=true]\n *         Whether to enable {@link https://help.github.com/categories/writing-on-github|GitHub flavored markdown}.\n *  @param {Boolean} [markdown.tables=true]\n *         Whether to enable enable GFM {@link https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables|tables}.\n *         This option requires the `gfm` option to be `true`.\n *  @param {Boolean} [markdown.breaks=false]\n *         Whether to enable enable GFM {@link https://help.github.com/articles/basic-writing-and-formatting-syntax/#paragraphs-and-line-breaks|line breaks}.\n *         This option requires the `gfm` option to be `true`.\n *  @param {Boolean} [markdown.pedantic=false]\n *         Whether to conform with obscure parts of `markdown.pl` as much as\n *         possible. Don't fix any of the original markdown bugs or poor\n *         behavior.\n *  @param {Boolean} [markdown.sanitize=false]\n *         Whether to use smarter list behavior than the original markdown. May\n *         eventually be default with the old behavior moved into `pedantic`.\n *  @param {Boolean} [markdown.smartypants=false]\n *         Whether to use \"smart\" typographic punctuation for things like quotes\n *         and dashes.\n *  @param {Boolean|String} [markdown.bookmarks=false]\n *         Whether to automatically add bookmark links for headings. In order to\n *         customize the list of heading tags, set to a comma separated tag name\n *         list. e.g. `\"h3, h4, h5\"`.\n *  @param {Boolean} [markdown.tasks=true]\n *         Whether to parse GitHub style task markdown (e.g. `- [x] task`) into\n *         checkbox elements.\n *  @param {Boolean} [markdown.emoji=true]\n *         If set to `true`, emoji shortcuts (e.g. `&#x3A;smiley&#x3A;`) are\n *         parsed into `&lt;img /&gt;` elements with\n *         {@link http://twitter.github.io/twemoji|twemoji} SVG URLs.\n *  @param {Object} [app]\n *         Configuration for the generated SPA (Single Page Application).\n *  @param {String} [app.title=\"\"]\n *         Title of the main HTML document of the generated web app.\n *         (Sets the value of the `&lt;title&gt;` element.)\n *  @param {Array|Object} [app.meta]\n *         One or more meta elements to be set for the main HTML document of\n *         the generated web app. Set arbitrary object(s) for each meta element\n *         to be added. e.g. `[{ charset: \"utf-8\"}, { name: \"robots\", \"content\": \"index, follow\" }]`.\n *  @param {String} [app.base=\"/\"]\n *         Sets the base path of the generated web app. For example if the app\n *         will operate within `/doc/*` set the base path to `\"/doc\"`.\n *  @param {String} [app.entrance=\"api\"]\n *         Defines the home content to be displayed for the application root\n *         (when you enter the base path i.e. `\"/\"`). Pass the type and name of\n *         the route in `{type}:{name}` format. There are 2 types of routes: `api`\n *         for JS source documentation and `content` for other HTML content such\n *         as parsed markdown files. For example, if you have a grouped JS files\n *         documented with a name `mylib`; to define this as the entrance of the\n *         app, set this to `\"api:mylib\"`. If you have `\"README.md\"` in your\n *         source files; to define this as the entrance, set this to\n *         `\"content:readme\"`.\n *  @param {String|Object} [app.routing]\n *         Either a `String` defining the route method or an `Object` defining\n *         both the method and whether the routes should be case-sensitive.\n *         @param {String} [app.routing.method=\"query\"]\n *                Indicates the routing method for the generated SPA (Single\n *                Page Application).\n *                See {@link #Docma.RoutingMethod|`RoutingMethod` enumeration}.\n *         @param {Boolean} [app.routing.caseSensitive=true]\n *                Indicates whether the routes should be case-sensitive.\n *                Note that if this is set to `false`, same route names will\n *                overwrite the previous, even if they have different case.\n *  @param {String} [app.server=\"static\"]\n *         Server or host type for the SPA. This information helps Docma\n *         determine how to configure the generated SPA, especially if\n *         `routing.method` is set to `\"path\"`.\n *         See {@link #Docma.ServerType|`ServerType` enumeration} for details.\n *  @param {Object} [template] - SPA template configuration.\n *  @param {String} [template.path=\"default\"]\n *         Either the path of a custom Docma template or the name of a built-in\n *         template. Omit to use the default built-in template.\n *  @param {Object} [template.options]\n *         SPA template options. This is defined by the template itself.\n *         Refer to the template's documentation for options to be set at\n *         build-time. See {@link ?content=default-template|Default Template options}.\n *\n *  @example\n *  const buildConfig = {\n *  \tsrc: [\n *  \t    {\n *  \t    \t// including js (\"api\") files\n *  \t    \t// grouping JS files under a name.\n *  \t    \t// This name also defines the api route name.\n *  \t    \t// i.e. /?api=my-lib\n *  \t    \t'my-lib': [\n *  \t    \t\t'./src/** /*.js', // recurse\n *  \t    \t\t'./lib/some-other.js',\n *  \t    \t\t'!./lib/ignored.js' // notice the bang!\n *  \t    \t],\n *  \t    \t// naming another api route\n *  \t    \t'other-lib': './other/*.js', // /?api=other-lib\n *  \t    },\n *  \t    // unnamed js files\n *  \t    './src/main.js', // /?api or /?api=_def_\n *  \t    './src/main.utils.js', // merged into same /?api or /?api=_def_\n *  \t    // including markdown (\"content\") files\n *  \t    './src/CHANGELOG.md', // this will have 'changelog' as route name. i.e. /?content=changelog\n *  \t    // including markdown and renaming the route\n *  \t    {\n *  \t    \t// this will have 'guide' as content route name\n *  \t    \t// i.e. /?content=guide\n *  \t    \tguide: './src/README.md'\n *  \t    }\n *  \t],\n *  \tdest: './output/docs',\n *  \tapp: {\n *  \t\ttitle: 'My Documentation',\n *  \t\trouting: 'query',\n *  \t\tentrance: 'content:guide',\n *          base: '/'\n *  \t},\n *  \ttemplate: {\n *  \t\tpath: 'default',\n *          options: {\n *              title: 'My Documentation',\n *              navbar: true,\n *              sidebar: true,\n *              outline: 'tree'\n *          }\n *  \t}\n *  };\n */",
+        "meta": {
+          "filename": "docma.js",
+          "lineno": 958,
+          "columnno": 0,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {}
+        },
+        "description": "Docma build configuration object that defines parse options for the given\n source files; and templating options for the Single Page Application to\n be generated.\n\n This is very configurable but, you're only required to define very few\n options such as the source files (`src`) and the destination directory\n (`dest`) for a simple build.\n\n See the example at the bottom or for a real example; check out Docma's own\n build configuration file, that generates this documentation you're reading\n {@link https://github.com/onury/docma/blob/master/doc/docma.config.json|here}.",
+        "kind": "typedef",
+        "name": "BuildConfiguration",
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String",
+                "Array",
+                "Object"
+              ]
+            },
+            "description": "One or more file/directory paths to be processed. This also accepts\n        {@link https://github.com/isaacs/node-glob|Glob} strings or array of\n        globs. e.g. `./src/&#x2A;&#x2A;/&#x2A;.js` will produce an array of\n        all `.js` files under `./src` directory and sub-directories. See\n        examples below for how to <b>name-group</b> source files.",
+            "name": "src"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "Destination output directory path. <b>CAUTION:</b> This directory\n        will be emptied before the build. Make sure you set this to a correct\n        path.",
+            "name": "dest"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean",
+                "Number"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies debug settings for build operation and generated SPA.\n        This takes a bitwise numeric value so you can combine flags to\n        your liking. If a `Boolean` value set, `false` means\n        `Docma.Debug.DISABLED` and `true` means `Docma.Debug.ALL` which\n        enables all debugging options.\n        See {@link #Docma.Debug|`Debug` flags enumeration} for all possible\n        values.",
+            "name": "debug"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "JSDoc parse options.",
+            "name": "jsdoc"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"utf8\"",
+            "description": "Encoding to be used when reading JS source files.",
+            "name": "jsdoc.encoding"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to recurse into sub-directories when scanning for\n        source files.",
+            "name": "jsdoc.recurse"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to treat errors as fatal errors, and treat warnings\n        as errors.",
+            "name": "jsdoc.pedantic"
+          },
+          {
+            "type": {
+              "names": [
+                "String",
+                "Array"
+              ]
+            },
+            "optional": true,
+            "description": "Specifies which symbols to be processed with the given access\n        property. Possible values: `\"private\"`, `\"protected\"`, `\"public\"` or\n        `\"all\"` (for all access levels). By default, all except private\n        symbols are processed. Note that, if access is not set for a\n        documented symbol, it will still be included, regardless of this\n        option.",
+            "name": "jsdoc.access"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "-",
+            "name": "jsdoc.private"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "description": "The path to the `package.json` file that contains the project name,\n        version, and other details. If set to `true` instead of a path\n        string, the first `package.json` file found in the source paths.",
+            "name": "jsdoc.package"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Specifies whether to include `module.exports` symbols.",
+            "name": "jsdoc.module"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to include undocumented symbols.",
+            "name": "jsdoc.undocumented"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to include symbols without a description.",
+            "name": "jsdoc.undescribed"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to include symbols marked with `ignore` tag.",
+            "name": "jsdoc.ignored"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "description": "When set, all `symbol.meta.path` values will be relative to this path.",
+            "name": "jsdoc.relativePath"
+          },
+          {
+            "type": {
+              "names": [
+                "function"
+              ]
+            },
+            "optional": true,
+            "description": "This is used to filter the parsed documentation output array. If a\n        `Function` is passed; it's invoked for each included `symbol`. e.g.\n        `function (symbol) { return symbol; }` Returning a falsy value will\n        remove the symbol from the output. Returning `true` will keep the\n        original symbol. To keep the symbol and alter its contents, simply\n        return an altered symbol object.",
+            "name": "jsdoc.predicate"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to arrange symbols by their hierarchy. This will\n        find and move symbols that have a `memberof` property to a `$members`\n        property of their corresponding owners. Also the constructor symbol\n        will be moved to a `$constructor` property of the `ClassDeclaration`\n        symbol; if any.",
+            "name": "jsdoc.hierarchy"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean",
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Specifies whether to sort the documentation symbols. For alphabetic\n        sort, set to `true` or `\"alphabetic\"`. To additionally group by scope\n        (static/instance) set to `\"grouped\"`. Set to `false` to disable.",
+            "name": "jsdoc.sort"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Specifies whether to allow unrecognized tags. If set to `false`\n        parsing will fail on unknown tags.",
+            "name": "jsdoc.allowUnknownTags"
+          },
+          {
+            "type": {
+              "names": [
+                "Array"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "[\"jsdoc\", \"closure\"]",
+            "description": "Indicates the dictionaries to be used. By default, both standard\n        JSDoc tags and Closure Compiler tags are enabled.",
+            "name": "jsdoc.dictionaries"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\".+\\\\.js(doc|x)?$\"",
+            "description": "String pattern for defining sources to be included. By default, only\n        files ending in \".js\", \".jsdoc\", and \".jsx\" will be processed.",
+            "name": "jsdoc.includePattern"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"(^|\\\\/|\\\\\\\\)_\"",
+            "description": "String pattern for defining sources to be ignored. By default, any\n        file starting with an underscore or in a directory starting with an\n        underscore will be ignored.",
+            "name": "jsdoc.excludePattern"
+          },
+          {
+            "type": {
+              "names": [
+                "Array"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "[]",
+            "description": "Defines the JSDoc plugins to be used. See\n        {@link http://usejsdoc.org/about-plugins.html|this guide} on JSDoc plugins.",
+            "name": "jsdoc.plugins"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Markdown parse options.",
+            "name": "markdown"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Whether to enable {@link https://help.github.com/categories/writing-on-github|GitHub flavored markdown}.",
+            "name": "markdown.gfm"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Whether to enable enable GFM {@link https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#tables|tables}.\n        This option requires the `gfm` option to be `true`.",
+            "name": "markdown.tables"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Whether to enable enable GFM {@link https://help.github.com/articles/basic-writing-and-formatting-syntax/#paragraphs-and-line-breaks|line breaks}.\n        This option requires the `gfm` option to be `true`.",
+            "name": "markdown.breaks"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Whether to conform with obscure parts of `markdown.pl` as much as\n        possible. Don't fix any of the original markdown bugs or poor\n        behavior.",
+            "name": "markdown.pedantic"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Whether to use smarter list behavior than the original markdown. May\n        eventually be default with the old behavior moved into `pedantic`.",
+            "name": "markdown.sanitize"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Whether to use \"smart\" typographic punctuation for things like quotes\n        and dashes.",
+            "name": "markdown.smartypants"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean",
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "Whether to automatically add bookmark links for headings. In order to\n        customize the list of heading tags, set to a comma separated tag name\n        list. e.g. `\"h3, h4, h5\"`.",
+            "name": "markdown.bookmarks"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Whether to parse GitHub style task markdown (e.g. `- [x] task`) into\n        checkbox elements.",
+            "name": "markdown.tasks"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "If set to `true`, emoji shortcuts (e.g. `&#x3A;smiley&#x3A;`) are\n        parsed into `&lt;img /&gt;` elements with\n        {@link http://twitter.github.io/twemoji|twemoji} SVG URLs.",
+            "name": "markdown.emoji"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Configuration for the generated SPA (Single Page Application).",
+            "name": "app"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"\"",
+            "description": "Title of the main HTML document of the generated web app.\n        (Sets the value of the `&lt;title&gt;` element.)",
+            "name": "app.title"
+          },
+          {
+            "type": {
+              "names": [
+                "Array",
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "One or more meta elements to be set for the main HTML document of\n        the generated web app. Set arbitrary object(s) for each meta element\n        to be added. e.g. `[{ charset: \"utf-8\"}, { name: \"robots\", \"content\": \"index, follow\" }]`.",
+            "name": "app.meta"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"/\"",
+            "description": "Sets the base path of the generated web app. For example if the app\n        will operate within `/doc/*` set the base path to `\"/doc\"`.",
+            "name": "app.base"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"api\"",
+            "description": "Defines the home content to be displayed for the application root\n        (when you enter the base path i.e. `\"/\"`). Pass the type and name of\n        the route in `{type}:{name}` format. There are 2 types of routes: `api`\n        for JS source documentation and `content` for other HTML content such\n        as parsed markdown files. For example, if you have a grouped JS files\n        documented with a name `mylib`; to define this as the entrance of the\n        app, set this to `\"api:mylib\"`. If you have `\"README.md\"` in your\n        source files; to define this as the entrance, set this to\n        `\"content:readme\"`.",
+            "name": "app.entrance"
+          },
+          {
+            "type": {
+              "names": [
+                "String",
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Either a `String` defining the route method or an `Object` defining\n        both the method and whether the routes should be case-sensitive.",
+            "name": "app.routing"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"query\"",
+            "description": "Indicates the routing method for the generated SPA (Single\n               Page Application).\n               See {@link #Docma.RoutingMethod|`RoutingMethod` enumeration}.",
+            "name": "app.routing.method"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": true,
+            "description": "Indicates whether the routes should be case-sensitive.\n               Note that if this is set to `false`, same route names will\n               overwrite the previous, even if they have different case.",
+            "name": "app.routing.caseSensitive"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"static\"",
+            "description": "Server or host type for the SPA. This information helps Docma\n        determine how to configure the generated SPA, especially if\n        `routing.method` is set to `\"path\"`.\n        See {@link #Docma.ServerType|`ServerType` enumeration} for details.",
+            "name": "app.server"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "SPA template configuration.",
+            "name": "template"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": "\"default\"",
+            "description": "Either the path of a custom Docma template or the name of a built-in\n        template. Omit to use the default built-in template.",
+            "name": "template.path"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "SPA template options. This is defined by the template itself.\n        Refer to the template's documentation for options to be set at\n        build-time. See {@link ?content=default-template|Default Template options}.",
+            "name": "template.options"
+          }
+        ],
+        "examples": [
+          "const buildConfig = {\n \tsrc: [\n \t    {\n \t    \t// including js (\"api\") files\n \t    \t// grouping JS files under a name.\n \t    \t// This name also defines the api route name.\n \t    \t// i.e. /?api=my-lib\n \t    \t'my-lib': [\n \t    \t\t'./src/** /*.js', // recurse\n \t    \t\t'./lib/some-other.js',\n \t    \t\t'!./lib/ignored.js' // notice the bang!\n \t    \t],\n \t    \t// naming another api route\n \t    \t'other-lib': './other/*.js', // /?api=other-lib\n \t    },\n \t    // unnamed js files\n \t    './src/main.js', // /?api or /?api=_def_\n \t    './src/main.utils.js', // merged into same /?api or /?api=_def_\n \t    // including markdown (\"content\") files\n \t    './src/CHANGELOG.md', // this will have 'changelog' as route name. i.e. /?content=changelog\n \t    // including markdown and renaming the route\n \t    {\n \t    \t// this will have 'guide' as content route name\n \t    \t// i.e. /?content=guide\n \t    \tguide: './src/README.md'\n \t    }\n \t],\n \tdest: './output/docs',\n \tapp: {\n \t\ttitle: 'My Documentation',\n \t\trouting: 'query',\n \t\tentrance: 'content:guide',\n         base: '/'\n \t},\n \ttemplate: {\n \t\tpath: 'default',\n         options: {\n             title: 'My Documentation',\n             navbar: true,\n             sidebar: true,\n             outline: 'tree'\n         }\n \t}\n };"
+        ],
+        "memberof": "Docma",
+        "longname": "Docma~BuildConfiguration",
+        "scope": "inner",
+        "$longname": "Docma~BuildConfiguration"
+      },
+      {
+        "comment": "/**\n     *  Creates a new instance of `Docma`.\n     *  This is equivalent to `new Docma()`.\n     *\n     *  @returns {Docma} - Docma instance.\n     */",
+        "meta": {
+          "range": [
+            37144,
+            37206
+          ],
+          "filename": "docma.js",
+          "lineno": 942,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002732",
+            "name": "Docma.create",
+            "type": "FunctionExpression",
+            "funcscope": "<anonymous>",
+            "paramnames": []
+          }
+        },
+        "description": "Creates a new instance of `Docma`.\n This is equivalent to `new Docma()`.",
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Docma"
+              ]
+            },
+            "description": "- Docma instance."
+          }
+        ],
+        "name": "create",
+        "longname": "<anonymous>~Docma.create",
+        "kind": "function",
+        "memberof": "<anonymous>~Docma",
+        "scope": "static",
+        "$longname": "Docma.create"
+      },
+      {
+        "comment": "/**\n     *  Enumerates bitwise debug flags.\n     *  @enum {Number}\n     */",
+        "meta": {
+          "range": [
+            35669,
+            36880
+          ],
+          "filename": "docma.js",
+          "lineno": 889,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002712",
+            "name": "Docma.Debug",
+            "type": "ObjectExpression",
+            "funcscope": "<anonymous>",
+            "value": "{\"DISABLED\":0,\"BUILD_LOGS\":1,\"WEB_LOGS\":2,\"VERBOSE\":4,\"NO_MINIFY\":8,\"JSDOC_OUTPUT\":16,\"ALL\":31}",
+            "paramnames": []
+          }
+        },
+        "description": "Enumerates bitwise debug flags.",
+        "kind": "member",
+        "isEnum": true,
+        "type": {
+          "names": [
+            "Number"
+          ]
+        },
+        "name": "Debug",
+        "longname": "<anonymous>~Docma.Debug",
+        "memberof": "<anonymous>~Docma",
+        "scope": "static",
+        "properties": [
+          {
+            "comment": "/**\n         *  Enables all debug flags.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36867,
+                36874
+              ],
+              "filename": "docma.js",
+              "lineno": 929,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002729",
+                "name": "ALL",
+                "type": "Literal",
+                "value": 31
+              }
+            },
+            "description": "Enables all debug flags.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "ALL",
+            "longname": "<anonymous>~Docma.Debug.ALL",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 31
+          },
+          {
+            "comment": "/**\n         *  Outputs build logs to the Node console.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                35900,
+                35913
+              ],
+              "filename": "docma.js",
+              "lineno": 899,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002719",
+                "name": "BUILD_LOGS",
+                "type": "Literal",
+                "value": 1
+              }
+            },
+            "description": "Outputs build logs to the Node console.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "BUILD_LOGS",
+            "longname": "<anonymous>~Docma.Debug.BUILD_LOGS",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 1
+          },
+          {
+            "comment": "/**\n         *  Disables debugging.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                35776,
+                35787
+              ],
+              "filename": "docma.js",
+              "lineno": 894,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002717",
+                "name": "DISABLED",
+                "type": "Literal",
+                "value": 0
+              }
+            },
+            "description": "Disables debugging.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "DISABLED",
+            "longname": "<anonymous>~Docma.Debug.DISABLED",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 0
+          },
+          {
+            "comment": "/**\n         *  Outputs one or more `[name.]jsdoc.json` files that include\n         *  documentation data for each (grouped) javascript source.\n         *  `name` is the group name you give when you define the source\n         *  files. This is useful for investigating the raw JSDoc output.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36753,
+                36769
+              ],
+              "filename": "docma.js",
+              "lineno": 924,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002727",
+                "name": "JSDOC_OUTPUT",
+                "type": "Literal",
+                "value": 16
+              }
+            },
+            "description": "Outputs one or more `[name.]jsdoc.json` files that include\n documentation data for each (grouped) javascript source.\n `name` is the group name you give when you define the source\n files. This is useful for investigating the raw JSDoc output.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "JSDOC_OUTPUT",
+            "longname": "<anonymous>~Docma.Debug.JSDOC_OUTPUT",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 16
+          },
+          {
+            "comment": "/**\n         *  Disables minification for the generated web app assets such as\n         *  Javascript files. This is useful if you're debugging a custom\n         *  Docma template.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36393,
+                36405
+              ],
+              "filename": "docma.js",
+              "lineno": 916,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002725",
+                "name": "NO_MINIFY",
+                "type": "Literal",
+                "value": 8
+              }
+            },
+            "description": "Disables minification for the generated web app assets such as\n Javascript files. This is useful if you're debugging a custom\n Docma template.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "NO_MINIFY",
+            "longname": "<anonymous>~Docma.Debug.NO_MINIFY",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 8
+          },
+          {
+            "comment": "/**\n         *  Outputs verbose logs to consoles.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36145,
+                36155
+              ],
+              "filename": "docma.js",
+              "lineno": 909,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002723",
+                "name": "VERBOSE",
+                "type": "Literal",
+                "value": 4
+              }
+            },
+            "description": "Outputs verbose logs to consoles.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "VERBOSE",
+            "longname": "<anonymous>~Docma.Debug.VERBOSE",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 4
+          },
+          {
+            "comment": "/**\n         *  Outputs app logs to the browser console.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36027,
+                36038
+              ],
+              "filename": "docma.js",
+              "lineno": 904,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002721",
+                "name": "WEB_LOGS",
+                "type": "Literal",
+                "value": 2
+              }
+            },
+            "description": "Outputs app logs to the browser console.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "WEB_LOGS",
+            "longname": "<anonymous>~Docma.Debug.WEB_LOGS",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 2
+          }
+        ],
+        "$longname": "Docma.Debug",
+        "$members": [
+          {
+            "comment": "/**\n         *  Enables all debug flags.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36867,
+                36874
+              ],
+              "filename": "docma.js",
+              "lineno": 929,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002729",
+                "name": "ALL",
+                "type": "Literal",
+                "value": 31
+              }
+            },
+            "description": "Enables all debug flags.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "ALL",
+            "longname": "<anonymous>~Docma.Debug.ALL",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 31,
+            "$longname": "Docma.Debug.ALL"
+          },
+          {
+            "comment": "/**\n         *  Outputs build logs to the Node console.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                35900,
+                35913
+              ],
+              "filename": "docma.js",
+              "lineno": 899,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002719",
+                "name": "BUILD_LOGS",
+                "type": "Literal",
+                "value": 1
+              }
+            },
+            "description": "Outputs build logs to the Node console.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "BUILD_LOGS",
+            "longname": "<anonymous>~Docma.Debug.BUILD_LOGS",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 1,
+            "$longname": "Docma.Debug.BUILD_LOGS"
+          },
+          {
+            "comment": "/**\n         *  Disables debugging.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                35776,
+                35787
+              ],
+              "filename": "docma.js",
+              "lineno": 894,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002717",
+                "name": "DISABLED",
+                "type": "Literal",
+                "value": 0
+              }
+            },
+            "description": "Disables debugging.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "DISABLED",
+            "longname": "<anonymous>~Docma.Debug.DISABLED",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 0,
+            "$longname": "Docma.Debug.DISABLED"
+          },
+          {
+            "comment": "/**\n         *  Outputs one or more `[name.]jsdoc.json` files that include\n         *  documentation data for each (grouped) javascript source.\n         *  `name` is the group name you give when you define the source\n         *  files. This is useful for investigating the raw JSDoc output.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36753,
+                36769
+              ],
+              "filename": "docma.js",
+              "lineno": 924,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002727",
+                "name": "JSDOC_OUTPUT",
+                "type": "Literal",
+                "value": 16
+              }
+            },
+            "description": "Outputs one or more `[name.]jsdoc.json` files that include\n documentation data for each (grouped) javascript source.\n `name` is the group name you give when you define the source\n files. This is useful for investigating the raw JSDoc output.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "JSDOC_OUTPUT",
+            "longname": "<anonymous>~Docma.Debug.JSDOC_OUTPUT",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 16,
+            "$longname": "Docma.Debug.JSDOC_OUTPUT"
+          },
+          {
+            "comment": "/**\n         *  Disables minification for the generated web app assets such as\n         *  Javascript files. This is useful if you're debugging a custom\n         *  Docma template.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36393,
+                36405
+              ],
+              "filename": "docma.js",
+              "lineno": 916,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002725",
+                "name": "NO_MINIFY",
+                "type": "Literal",
+                "value": 8
+              }
+            },
+            "description": "Disables minification for the generated web app assets such as\n Javascript files. This is useful if you're debugging a custom\n Docma template.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "NO_MINIFY",
+            "longname": "<anonymous>~Docma.Debug.NO_MINIFY",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 8,
+            "$longname": "Docma.Debug.NO_MINIFY"
+          },
+          {
+            "comment": "/**\n         *  Outputs verbose logs to consoles.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36145,
+                36155
+              ],
+              "filename": "docma.js",
+              "lineno": 909,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002723",
+                "name": "VERBOSE",
+                "type": "Literal",
+                "value": 4
+              }
+            },
+            "description": "Outputs verbose logs to consoles.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "VERBOSE",
+            "longname": "<anonymous>~Docma.Debug.VERBOSE",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 4,
+            "$longname": "Docma.Debug.VERBOSE"
+          },
+          {
+            "comment": "/**\n         *  Outputs app logs to the browser console.\n         *  @type {Number}\n         */",
+            "meta": {
+              "range": [
+                36027,
+                36038
+              ],
+              "filename": "docma.js",
+              "lineno": 904,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002721",
+                "name": "WEB_LOGS",
+                "type": "Literal",
+                "value": 2
+              }
+            },
+            "description": "Outputs app logs to the browser console.",
+            "type": {
+              "names": [
+                "Number"
+              ]
+            },
+            "name": "WEB_LOGS",
+            "longname": "<anonymous>~Docma.Debug.WEB_LOGS",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.Debug",
+            "scope": "static",
+            "defaultvalue": 2,
+            "$longname": "Docma.Debug.WEB_LOGS"
+          }
+        ]
+      },
+      {
+        "comment": "/**\n     *  Enumerates Docma SPA route types.\n     *  @enum {String}\n     *  @readonly\n     *\n     *  @example <caption>Routing Method: <code>\"query\"</code></caption>\n     *  type     name              path\n     *  -------  ----------------  --------------------------\n     *  api      _def_             /?api\n     *  api      docma-web         /?api=docma-web\n     *  content  templates         /?content=templates\n     *  content  guide             /?content=guide\n     *\n     *  @example <caption>Routing Method: <code>\"path\"</code></caption>\n     *  type     name              path\n     *  -------  ----------------  --------------------------\n     *  api      _def_             /api\n     *  api      docma-web         /api/docma-web\n     *  content  templates         /templates\n     *  content  guide             /guide\n     */",
+        "meta": {
+          "range": [
+            34033,
+            34435
+          ],
+          "filename": "docma.js",
+          "lineno": 838,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002690",
+            "name": "Docma.RouteType",
+            "type": "ObjectExpression",
+            "funcscope": "<anonymous>",
+            "value": "{\"API\":\"api\",\"CONTENT\":\"content\"}",
+            "paramnames": []
+          }
+        },
+        "description": "Enumerates Docma SPA route types.",
+        "kind": "member",
+        "isEnum": true,
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "readonly": true,
+        "examples": [
+          "<caption>Routing Method: <code>\"query\"</code></caption>\n type     name              path\n -------  ----------------  --------------------------\n api      _def_             /?api\n api      docma-web         /?api=docma-web\n content  templates         /?content=templates\n content  guide             /?content=guide\n\n ",
+          "<caption>Routing Method: <code>\"path\"</code></caption>\n type     name              path\n -------  ----------------  --------------------------\n api      _def_             /api\n api      docma-web         /api/docma-web\n content  templates         /templates\n content  guide             /guide"
+        ],
+        "name": "RouteType",
+        "longname": "<anonymous>~Docma.RouteType",
+        "memberof": "<anonymous>~Docma",
+        "scope": "static",
+        "properties": [
+          {
+            "comment": "/**\n         *  Indicates a route for API documentation content, generated from\n         *  Javascript source files via JSDoc.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                34235,
+                34245
+              ],
+              "filename": "docma.js",
+              "lineno": 844,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002695",
+                "name": "API",
+                "type": "Literal",
+                "value": "api"
+              }
+            },
+            "description": "Indicates a route for API documentation content, generated from\n Javascript source files via JSDoc.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "API",
+            "longname": "<anonymous>~Docma.RouteType.API",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RouteType",
+            "scope": "static",
+            "defaultvalue": "api"
+          },
+          {
+            "comment": "/**\n         *  Indicates a route for other content, such as HTML files generated\n         *  from markdown.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                34411,
+                34429
+              ],
+              "filename": "docma.js",
+              "lineno": 850,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002697",
+                "name": "CONTENT",
+                "type": "Literal",
+                "value": "content"
+              }
+            },
+            "description": "Indicates a route for other content, such as HTML files generated\n from markdown.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "CONTENT",
+            "longname": "<anonymous>~Docma.RouteType.CONTENT",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RouteType",
+            "scope": "static",
+            "defaultvalue": "content"
+          }
+        ],
+        "$longname": "Docma.RouteType",
+        "$members": [
+          {
+            "comment": "/**\n         *  Indicates a route for API documentation content, generated from\n         *  Javascript source files via JSDoc.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                34235,
+                34245
+              ],
+              "filename": "docma.js",
+              "lineno": 844,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002695",
+                "name": "API",
+                "type": "Literal",
+                "value": "api"
+              }
+            },
+            "description": "Indicates a route for API documentation content, generated from\n Javascript source files via JSDoc.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "API",
+            "longname": "<anonymous>~Docma.RouteType.API",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RouteType",
+            "scope": "static",
+            "defaultvalue": "api",
+            "$longname": "Docma.RouteType.API"
+          },
+          {
+            "comment": "/**\n         *  Indicates a route for other content, such as HTML files generated\n         *  from markdown.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                34411,
+                34429
+              ],
+              "filename": "docma.js",
+              "lineno": 850,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002697",
+                "name": "CONTENT",
+                "type": "Literal",
+                "value": "content"
+              }
+            },
+            "description": "Indicates a route for other content, such as HTML files generated\n from markdown.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "CONTENT",
+            "longname": "<anonymous>~Docma.RouteType.CONTENT",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RouteType",
+            "scope": "static",
+            "defaultvalue": "content",
+            "$longname": "Docma.RouteType.CONTENT"
+          }
+        ]
+      },
+      {
+        "comment": "/**\n     *  Enumerates the routing methods for a Docma generated web application.\n     *  @enum {String}\n     *  @readonly\n     */",
+        "meta": {
+          "range": [
+            32097,
+            33188
+          ],
+          "filename": "docma.js",
+          "lineno": 794,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002680",
+            "name": "Docma.RoutingMethod",
+            "type": "ObjectExpression",
+            "funcscope": "<anonymous>",
+            "value": "{\"QUERY\":\"query\",\"PATH\":\"path\"}",
+            "paramnames": []
+          }
+        },
+        "description": "Enumerates the routing methods for a Docma generated web application.",
+        "kind": "member",
+        "isEnum": true,
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "readonly": true,
+        "name": "RoutingMethod",
+        "longname": "<anonymous>~Docma.RoutingMethod",
+        "memberof": "<anonymous>~Docma",
+        "scope": "static",
+        "properties": [
+          {
+            "comment": "/**\n         *  Indicates that the SPA routes are based on path params rather than\n         *  query-strings. For example, for a named group of JS source files\n         *  (e.g. `\"mylib\"`), the generated documentation will be accessible at\n         *  `/api/mylib`. Ungrouped JS documentation will be accessible at `/api`.\n         *  And for other HTML content such as files generated from markdown\n         *  files (e.g. README.md) will be accessible at `/readme`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                33170,
+                33182
+              ],
+              "filename": "docma.js",
+              "lineno": 814,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002687",
+                "name": "PATH",
+                "type": "Literal",
+                "value": "path"
+              }
+            },
+            "description": "Indicates that the SPA routes are based on path params rather than\n query-strings. For example, for a named group of JS source files\n (e.g. `\"mylib\"`), the generated documentation will be accessible at\n `/api/mylib`. Ungrouped JS documentation will be accessible at `/api`.\n And for other HTML content such as files generated from markdown\n files (e.g. README.md) will be accessible at `/readme`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "PATH",
+            "longname": "<anonymous>~Docma.RoutingMethod.PATH",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RoutingMethod",
+            "scope": "static",
+            "defaultvalue": "path"
+          },
+          {
+            "comment": "/**\n         *  Indicates that the SPA routes are based on query-strings.\n         *  For example, for a named group of JS source files (e.g. `\"mylib\"`),\n         *  the generated documentation will be accessible at `/?api=mylib`.\n         *  Ungrouped JS documentation will be accessible at `/?api`.\n         *  And for other HTML content such as files generated from markdown\n         *  files (e.g. README.md) will be accessible at `/?content=readme`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                32631,
+                32645
+              ],
+              "filename": "docma.js",
+              "lineno": 804,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002685",
+                "name": "QUERY",
+                "type": "Literal",
+                "value": "query"
+              }
+            },
+            "description": "Indicates that the SPA routes are based on query-strings.\n For example, for a named group of JS source files (e.g. `\"mylib\"`),\n the generated documentation will be accessible at `/?api=mylib`.\n Ungrouped JS documentation will be accessible at `/?api`.\n And for other HTML content such as files generated from markdown\n files (e.g. README.md) will be accessible at `/?content=readme`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "QUERY",
+            "longname": "<anonymous>~Docma.RoutingMethod.QUERY",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RoutingMethod",
+            "scope": "static",
+            "defaultvalue": "query"
+          }
+        ],
+        "$longname": "Docma.RoutingMethod",
+        "$members": [
+          {
+            "comment": "/**\n         *  Indicates that the SPA routes are based on path params rather than\n         *  query-strings. For example, for a named group of JS source files\n         *  (e.g. `\"mylib\"`), the generated documentation will be accessible at\n         *  `/api/mylib`. Ungrouped JS documentation will be accessible at `/api`.\n         *  And for other HTML content such as files generated from markdown\n         *  files (e.g. README.md) will be accessible at `/readme`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                33170,
+                33182
+              ],
+              "filename": "docma.js",
+              "lineno": 814,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002687",
+                "name": "PATH",
+                "type": "Literal",
+                "value": "path"
+              }
+            },
+            "description": "Indicates that the SPA routes are based on path params rather than\n query-strings. For example, for a named group of JS source files\n (e.g. `\"mylib\"`), the generated documentation will be accessible at\n `/api/mylib`. Ungrouped JS documentation will be accessible at `/api`.\n And for other HTML content such as files generated from markdown\n files (e.g. README.md) will be accessible at `/readme`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "PATH",
+            "longname": "<anonymous>~Docma.RoutingMethod.PATH",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RoutingMethod",
+            "scope": "static",
+            "defaultvalue": "path",
+            "$longname": "Docma.RoutingMethod.PATH"
+          },
+          {
+            "comment": "/**\n         *  Indicates that the SPA routes are based on query-strings.\n         *  For example, for a named group of JS source files (e.g. `\"mylib\"`),\n         *  the generated documentation will be accessible at `/?api=mylib`.\n         *  Ungrouped JS documentation will be accessible at `/?api`.\n         *  And for other HTML content such as files generated from markdown\n         *  files (e.g. README.md) will be accessible at `/?content=readme`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                32631,
+                32645
+              ],
+              "filename": "docma.js",
+              "lineno": 804,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002685",
+                "name": "QUERY",
+                "type": "Literal",
+                "value": "query"
+              }
+            },
+            "description": "Indicates that the SPA routes are based on query-strings.\n For example, for a named group of JS source files (e.g. `\"mylib\"`),\n the generated documentation will be accessible at `/?api=mylib`.\n Ungrouped JS documentation will be accessible at `/?api`.\n And for other HTML content such as files generated from markdown\n files (e.g. README.md) will be accessible at `/?content=readme`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "QUERY",
+            "longname": "<anonymous>~Docma.RoutingMethod.QUERY",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.RoutingMethod",
+            "scope": "static",
+            "defaultvalue": "query",
+            "$longname": "Docma.RoutingMethod.QUERY"
+          }
+        ]
+      },
+      {
+        "comment": "/**\n     *  Enumerates the server/host types for Docma generated SPA.\n     *  The generated SPA is not limited to these hosts but Docma will generate\n     *  additional server config files for these hosts; especially if the\n     *  routing method is set to `\"path\"`. For example, for Apache;\n     *  an `.htaccess` file will be auto-generated with redirect rules for\n     *  (sub) routes. For GitHub, sub-directories will be generated\n     *  (just like Jekyll) with index files for redirecting via http-meta\n     *  refresh.\n     *  @enum {String}\n     *  @readonly\n     */",
+        "meta": {
+          "range": [
+            35021,
+            35583
+          ],
+          "filename": "docma.js",
+          "lineno": 865,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib",
+          "code": {
+            "id": "astnode100002700",
+            "name": "Docma.ServerType",
+            "type": "ObjectExpression",
+            "funcscope": "<anonymous>",
+            "value": "{\"APACHE\":\"apache\",\"GITHUB\":\"github\",\"STATIC\":\"static\"}",
+            "paramnames": []
+          }
+        },
+        "description": "Enumerates the server/host types for Docma generated SPA.\n The generated SPA is not limited to these hosts but Docma will generate\n additional server config files for these hosts; especially if the\n routing method is set to `\"path\"`. For example, for Apache;\n an `.htaccess` file will be auto-generated with redirect rules for\n (sub) routes. For GitHub, sub-directories will be generated\n (just like Jekyll) with index files for redirecting via http-meta\n refresh.",
+        "kind": "member",
+        "isEnum": true,
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "readonly": true,
+        "name": "ServerType",
+        "longname": "<anonymous>~Docma.ServerType",
+        "memberof": "<anonymous>~Docma",
+        "scope": "static",
+        "properties": [
+          {
+            "comment": "/**\n         *  Indicates that an Apache server will be hosting the generated SPA.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35180,
+                35196
+              ],
+              "filename": "docma.js",
+              "lineno": 870,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002705",
+                "name": "APACHE",
+                "type": "Literal",
+                "value": "apache"
+              }
+            },
+            "description": "Indicates that an Apache server will be hosting the generated SPA.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "APACHE",
+            "longname": "<anonymous>~Docma.ServerType.APACHE",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "apache"
+          },
+          {
+            "comment": "/**\n         *  Indicates that SPA will be hosted via\n         *  {@link https://pages.github.com|GitHub Pages}.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35366,
+                35382
+              ],
+              "filename": "docma.js",
+              "lineno": 876,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002707",
+                "name": "GITHUB",
+                "type": "Literal",
+                "value": "github"
+              }
+            },
+            "description": "Indicates that SPA will be hosted via\n {@link https://pages.github.com|GitHub Pages}.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "GITHUB",
+            "longname": "<anonymous>~Docma.ServerType.GITHUB",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "github"
+          },
+          {
+            "comment": "/**\n         *  Indicates that SPA will be hosted as static HTML files.\n         *  Similar to `Docma.ServerType.GITHUB`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35561,
+                35577
+              ],
+              "filename": "docma.js",
+              "lineno": 882,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002709",
+                "name": "STATIC",
+                "type": "Literal",
+                "value": "static"
+              }
+            },
+            "description": "Indicates that SPA will be hosted as static HTML files.\n Similar to `Docma.ServerType.GITHUB`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "STATIC",
+            "longname": "<anonymous>~Docma.ServerType.STATIC",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "static"
+          }
+        ],
+        "$longname": "Docma.ServerType",
+        "$members": [
+          {
+            "comment": "/**\n         *  Indicates that an Apache server will be hosting the generated SPA.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35180,
+                35196
+              ],
+              "filename": "docma.js",
+              "lineno": 870,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002705",
+                "name": "APACHE",
+                "type": "Literal",
+                "value": "apache"
+              }
+            },
+            "description": "Indicates that an Apache server will be hosting the generated SPA.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "APACHE",
+            "longname": "<anonymous>~Docma.ServerType.APACHE",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "apache",
+            "$longname": "Docma.ServerType.APACHE"
+          },
+          {
+            "comment": "/**\n         *  Indicates that SPA will be hosted via\n         *  {@link https://pages.github.com|GitHub Pages}.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35366,
+                35382
+              ],
+              "filename": "docma.js",
+              "lineno": 876,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002707",
+                "name": "GITHUB",
+                "type": "Literal",
+                "value": "github"
+              }
+            },
+            "description": "Indicates that SPA will be hosted via\n {@link https://pages.github.com|GitHub Pages}.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "GITHUB",
+            "longname": "<anonymous>~Docma.ServerType.GITHUB",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "github",
+            "$longname": "Docma.ServerType.GITHUB"
+          },
+          {
+            "comment": "/**\n         *  Indicates that SPA will be hosted as static HTML files.\n         *  Similar to `Docma.ServerType.GITHUB`.\n         *  @type {String}\n         */",
+            "meta": {
+              "range": [
+                35561,
+                35577
+              ],
+              "filename": "docma.js",
+              "lineno": 882,
+              "columnno": 8,
+              "path": "/Users/oy/Developer/@onury/docma/lib",
+              "code": {
+                "id": "astnode100002709",
+                "name": "STATIC",
+                "type": "Literal",
+                "value": "static"
+              }
+            },
+            "description": "Indicates that SPA will be hosted as static HTML files.\n Similar to `Docma.ServerType.GITHUB`.",
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "name": "STATIC",
+            "longname": "<anonymous>~Docma.ServerType.STATIC",
+            "kind": "member",
+            "memberof": "<anonymous>~Docma.ServerType",
+            "scope": "static",
+            "defaultvalue": "static",
+            "$longname": "Docma.ServerType.STATIC"
+          }
+        ]
+      }
+    ]
+  }
+]

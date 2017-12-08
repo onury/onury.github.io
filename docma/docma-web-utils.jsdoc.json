@@ -1,0 +1,1534 @@
+[
+  {
+    "comment": "/**\n *  Utilities for inspecting JSDoc documentation and symbols; and parsing\n *  documentation data into proper HTML.\n *  @name docma.utils\n *  @type {Object}\n *  @namespace\n */",
+    "meta": {
+      "filename": "core.utils.js",
+      "lineno": 7,
+      "columnno": 0,
+      "path": "/Users/oy/Developer/@onury/docma/lib/web",
+      "code": {}
+    },
+    "description": "Utilities for inspecting JSDoc documentation and symbols; and parsing\n documentation data into proper HTML.",
+    "name": "utils",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "kind": "namespace",
+    "memberof": "docma",
+    "longname": "docma.utils",
+    "scope": "static",
+    "$longname": "docma.utils",
+    "$members": [
+      {
+        "comment": "/**\n     *  Gets code file information from the given symbol.\n     *  @memberof docma.utils\n     *  @name getCodeFileInfo\n     *  @function\n     *\n     *  @param {Object} symbol - Target documentation symbol.\n     *  @returns {Object}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 752,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets code file information from the given symbol.",
+        "memberof": "docma.utils",
+        "name": "getCodeFileInfo",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Target documentation symbol.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getCodeFileInfo",
+        "$longname": "docma.utils.getCodeFileInfo"
+      },
+      {
+        "comment": "/**\n     *  Gets the code name of the given symbol.\n     *  @memberof docma.utils\n     *  @name getCodeName\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {String} - If no code name, falls back to long name.\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 125,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the code name of the given symbol.",
+        "memberof": "docma.utils",
+        "name": "getCodeName",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "- If no code name, falls back to long name."
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getCodeName",
+        "$longname": "docma.utils.getCodeName"
+      },
+      {
+        "comment": "/**\n     *  Builds a string of keywords from the given symbol.\n     *  This is useful for filter/search features of a template.\n     *  @memberof docma.utils\n     *  @name getKeywords\n     *  @function\n     *\n     *  @param {Object} symbol - Target documentation symbol.\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 722,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Builds a string of keywords from the given symbol.\n This is useful for filter/search features of a template.",
+        "memberof": "docma.utils",
+        "name": "getKeywords",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Target documentation symbol.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getKeywords",
+        "$longname": "docma.utils.getKeywords"
+      },
+      {
+        "comment": "/**\n     *  Gets the original long name of the given symbol.\n     *  JSDoc overwrites the `longname` and `name` of the symbol, if it has an\n     *  alias. This returns the correct long name.\n     *  @memberof docma.utils\n     *  @name getLongName\n     *  @function\n     *  @alias getFullName\n     *  @static\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 88,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the original long name of the given symbol.\n JSDoc overwrites the `longname` and `name` of the symbol, if it has an\n alias. This returns the correct long name.",
+        "memberof": "docma.utils",
+        "name": "getLongName",
+        "kind": "function",
+        "alias": "getFullName",
+        "scope": "static",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "longname": "docma.utils.getLongName",
+        "$longname": "docma.utils.getLongName"
+      },
+      {
+        "comment": "/**\n     *  Gets the short name of the given symbol.\n     *  JSDoc overwrites the `longname` and `name` of the symbol, if it has an\n     *  alias. This returns the correct short name.\n     *  @memberof docma.utils\n     *  @name getName\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 68,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the short name of the given symbol.\n JSDoc overwrites the `longname` and `name` of the symbol, if it has an\n alias. This returns the correct short name.",
+        "memberof": "docma.utils",
+        "name": "getName",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getName",
+        "$longname": "docma.utils.getName"
+      },
+      {
+        "comment": "/**\n     *  Gets the return types of the symbol as a string (joined with pipes `|`).\n     *  @memberof docma.utils\n     *  @name getReturnTypes\n     *  @function\n     *\n     *  @param {Object} symbol - Target documentation symbol.\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 523,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the return types of the symbol as a string (joined with pipes `|`).",
+        "memberof": "docma.utils",
+        "name": "getReturnTypes",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Target documentation symbol.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getReturnTypes",
+        "$longname": "docma.utils.getReturnTypes"
+      },
+      {
+        "comment": "/**\n     *  Gets the first matching symbol by the given name.\n     *  @memberof docma.utils\n     *  @name getSymbolByName\n     *  @function\n     *\n     *  @param {Array} docs - Documentation symbols array.\n     *  @param {String} name - Symbol name to be checked.\n     *  @returns {Object} - Symbol object if found. Otherwise, returns `null`.\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 138,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the first matching symbol by the given name.",
+        "memberof": "docma.utils",
+        "name": "getSymbolByName",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Array"
+              ]
+            },
+            "description": "Documentation symbols array.",
+            "name": "docs"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "Symbol name to be checked.",
+            "name": "name"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "- Symbol object if found. Otherwise, returns `null`."
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getSymbolByName",
+        "$longname": "docma.utils.getSymbolByName"
+      },
+      {
+        "comment": "/**\n     *  GGets the types of the symbol as a string (joined with pipes `|`).\n     *  @memberof docma.utils\n     *  @name getTypes\n     *  @function\n     *\n     *  @param {Object} symbol - Target documentation symbol.\n     *  @returns {String}\n     *\n     *  @example\n     *  var symbol = { \"type\": { \"names\": [\"Number\", \"String\"] } };\n     *  docma.util.getTypes(symbol); // Number|String\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 492,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "GGets the types of the symbol as a string (joined with pipes `|`).",
+        "memberof": "docma.utils",
+        "name": "getTypes",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Target documentation symbol.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "examples": [
+          "var symbol = { \"type\": { \"names\": [\"Number\", \"String\"] } };\n docma.util.getTypes(symbol); // Number|String"
+        ],
+        "scope": "static",
+        "longname": "docma.utils.getTypes",
+        "$longname": "docma.utils.getTypes"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has description.\n     *  @memberof docma.utils\n     *  @name hasDescription\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 477,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has description.",
+        "memberof": "docma.utils",
+        "name": "hasDescription",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.hasDescription",
+        "$longname": "docma.utils.hasDescription"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a class.\n     *  @memberof docma.utils\n     *  @name isClass\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 217,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a class.",
+        "memberof": "docma.utils",
+        "name": "isClass",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isClass",
+        "$longname": "docma.utils.isClass"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a constructor.\n     *  @memberof docma.utils\n     *  @name isConstructor\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 232,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a constructor.",
+        "memberof": "docma.utils",
+        "name": "isConstructor",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isConstructor",
+        "$longname": "docma.utils.isConstructor"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is deprecated.\n     *  @memberof docma.utils\n     *  @name isDeprecated\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 165,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is deprecated.",
+        "memberof": "docma.utils",
+        "name": "isDeprecated",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isDeprecated",
+        "$longname": "docma.utils.isDeprecated"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is an enumeration.\n     *  @memberof docma.utils\n     *  @name isEnum\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 394,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is an enumeration.",
+        "memberof": "docma.utils",
+        "name": "isEnum",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isEnum",
+        "$longname": "docma.utils.isEnum"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has global scope.\n     *  @memberof docma.utils\n     *  @name isGlobal\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 178,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has global scope.",
+        "memberof": "docma.utils",
+        "name": "isGlobal",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isGlobal",
+        "$longname": "docma.utils.isGlobal"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has an inner scope.\n     *  @memberof docma.utils\n     *  @name isInner\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 266,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has an inner scope.",
+        "memberof": "docma.utils",
+        "name": "isInner",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isInner",
+        "$longname": "docma.utils.isInner"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is an instance member.\n     *  @memberof docma.utils\n     *  @name isInstanceMember\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 279,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is an instance member.",
+        "memberof": "docma.utils",
+        "name": "isInstanceMember",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isInstanceMember",
+        "$longname": "docma.utils.isInstanceMember"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is an instance method.\n     *  @memberof docma.utils\n     *  @name isInstanceMethod\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 308,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is an instance method.",
+        "memberof": "docma.utils",
+        "name": "isInstanceMethod",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isInstanceMethod",
+        "$longname": "docma.utils.isInstanceMethod"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is an instance property.\n     *  @memberof docma.utils\n     *  @name isInstanceProperty\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 348,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is an instance property.",
+        "memberof": "docma.utils",
+        "name": "isInstanceProperty",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isInstanceProperty",
+        "$longname": "docma.utils.isInstanceProperty"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a method (function).\n     *  @memberof docma.utils\n     *  @name isMethod\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 292,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a method (function).",
+        "memberof": "docma.utils",
+        "name": "isMethod",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isMethod",
+        "$longname": "docma.utils.isMethod"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a module.\n     *  @memberof docma.utils\n     *  @name isModule\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 204,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a module.",
+        "memberof": "docma.utils",
+        "name": "isModule",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isModule",
+        "$longname": "docma.utils.isModule"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a namespace.\n     *  @memberof docma.utils\n     *  @name isNamespace\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 191,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a namespace.",
+        "memberof": "docma.utils",
+        "name": "isNamespace",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isNamespace",
+        "$longname": "docma.utils.isNamespace"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has `private` access.\n     *  @memberof docma.utils\n     *  @name isPrivate\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 433,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has `private` access.",
+        "memberof": "docma.utils",
+        "name": "isPrivate",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isPrivate",
+        "$longname": "docma.utils.isPrivate"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a property.\n     *  @memberof docma.utils\n     *  @name isProperty\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 334,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a property.",
+        "memberof": "docma.utils",
+        "name": "isProperty",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isProperty",
+        "$longname": "docma.utils.isProperty"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has `protected` access.\n     *  @memberof docma.utils\n     *  @name isProtected\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 446,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has `protected` access.",
+        "memberof": "docma.utils",
+        "name": "isProtected",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isProtected",
+        "$longname": "docma.utils.isProtected"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol has `public` access.\n     *  @memberof docma.utils\n     *  @name isPublic\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 420,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol has `public` access.",
+        "memberof": "docma.utils",
+        "name": "isPublic",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isPublic",
+        "$longname": "docma.utils.isPublic"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is read-only.\n     *  @memberof docma.utils\n     *  @name isReadOnly\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 407,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is read-only.",
+        "memberof": "docma.utils",
+        "name": "isReadOnly",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isReadOnly",
+        "$longname": "docma.utils.isReadOnly"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a static member.\n     *  @memberof docma.utils\n     *  @name isStaticMember\n     *  @function\n     *  @alias isStatic\n     *  @static\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 246,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a static member.",
+        "memberof": "docma.utils",
+        "name": "isStaticMember",
+        "kind": "function",
+        "alias": "isStatic",
+        "scope": "static",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "longname": "docma.utils.isStaticMember",
+        "$longname": "docma.utils.isStaticMember"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a static method.\n     *  @memberof docma.utils\n     *  @name isStaticMethod\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 321,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a static method.",
+        "memberof": "docma.utils",
+        "name": "isStaticMethod",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isStaticMethod",
+        "$longname": "docma.utils.isStaticMethod"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a static property.\n     *  @memberof docma.utils\n     *  @name isStaticProperty\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 361,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a static property.",
+        "memberof": "docma.utils",
+        "name": "isStaticProperty",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isStaticProperty",
+        "$longname": "docma.utils.isStaticProperty"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is a custom type definition.\n     *  @memberof docma.utils\n     *  @name isTypeDef\n     *  @function\n     *  @alias isCustomType\n     *  @static\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 374,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is a custom type definition.",
+        "memberof": "docma.utils",
+        "name": "isTypeDef",
+        "kind": "function",
+        "alias": "isCustomType",
+        "scope": "static",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "longname": "docma.utils.isTypeDef",
+        "$longname": "docma.utils.isTypeDef"
+      },
+      {
+        "comment": "/**\n     *  Checks whether the given symbol is undocumented.\n     *  This checks if the symbol has any comments.\n     *  @memberof docma.utils\n     *  @name isUndocumented\n     *  @function\n     *\n     *  @param {Object} symbol - Documented symbol object.\n     *  @returns {Boolean}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 459,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Checks whether the given symbol is undocumented.\n This checks if the symbol has any comments.",
+        "memberof": "docma.utils",
+        "name": "isUndocumented",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Documented symbol object.",
+            "name": "symbol"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.isUndocumented",
+        "$longname": "docma.utils.isUndocumented"
+      },
+      {
+        "comment": "/**\n     *  Normalizes the number of spaces/tabs to multiples of 2 spaces, in the\n     *  beginning of each line. Useful for fixing mixed indets of a description\n     *  or example.\n     *  @memberof docma.utils\n     *  @name normalizeTabs\n     *  @function\n     *\n     *  @param {String} string\n     *         String to process.\n     *\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 680,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Normalizes the number of spaces/tabs to multiples of 2 spaces, in the\n beginning of each line. Useful for fixing mixed indets of a description\n or example.",
+        "memberof": "docma.utils",
+        "name": "normalizeTabs",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to process.",
+            "name": "string"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.normalizeTabs",
+        "$longname": "docma.utils.normalizeTabs"
+      },
+      {
+        "comment": "/**\n     *  Gets the value of the target property by the given dot\n     *  {@link https://github.com/onury/notation|notation}.\n     *  @memberof docma.utils\n     *  @name notate\n     *  @function\n     *\n     *  @param {Object} obj - Source object.\n     *  @param {String} notation - Path of the property in dot-notation.\n     *\n     *  @returns {*} - The value of the notation. If the given notation does\n     *  not exist, safely returns `undefined`.\n     *\n     *  @example\n     *  var symbol = { code: { meta: { type: \"MethodDefinition\" } } };\n     *  docma.utils.notate(symbol, \"code.meta.type\"); // returns \"MethodDefinition\"\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 35,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Gets the value of the target property by the given dot\n {@link https://github.com/onury/notation|notation}.",
+        "memberof": "docma.utils",
+        "name": "notate",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "description": "Source object.",
+            "name": "obj"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "Path of the property in dot-notation.",
+            "name": "notation"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "*"
+              ]
+            },
+            "description": "- The value of the notation. If the given notation does\n not exist, safely returns `undefined`."
+          }
+        ],
+        "examples": [
+          "var symbol = { code: { meta: { type: \"MethodDefinition\" } } };\n docma.utils.notate(symbol, \"code.meta.type\"); // returns \"MethodDefinition\""
+        ],
+        "scope": "static",
+        "longname": "docma.utils.notate",
+        "$longname": "docma.utils.notate"
+      },
+      {
+        "comment": "/**\n     *  Parses the given string into proper HTML. Removes leading whitespace,\n     *  converts new lines to paragraphs, ticks to code tags and JSDoc links to\n     *  anchors.\n     *  @memberof docma.utils\n     *  @name parse\n     *  @function\n     *\n     *  @param {String} string\n     *         String to be parsed.\n     *  @param {Object} [options]\n     *         Parse options.\n     *         @param {Object} [options.keepIfSingle=false]\n     *                If enabled, single lines will not be converted to paragraphs.\n     *         @param {String} [options.target]\n     *                Href target for links. e.g. `\"_blank\"`\n     *\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 653,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Parses the given string into proper HTML. Removes leading whitespace,\n converts new lines to paragraphs, ticks to code tags and JSDoc links to\n anchors.",
+        "memberof": "docma.utils",
+        "name": "parse",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to be parsed.",
+            "name": "string"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Parse options.",
+            "name": "options"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "If enabled, single lines will not be converted to paragraphs.",
+            "name": "options.keepIfSingle"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "description": "Href target for links. e.g. `\"_blank\"`",
+            "name": "options.target"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.parse",
+        "$longname": "docma.utils.parse"
+      },
+      {
+        "comment": "/**\n     *  Converts JSDoc `@link` directives to HTML anchor tags.\n     *  @memberof docma.utils\n     *  @name parseLinks\n     *  @function\n     *\n     *  @param {String} string\n     *         String to be parsed.\n     *  @param {Object} [options]\n     *         Parse options.\n     *         @param {String} [options.target]\n     *                Href target. e.g. `\"_blank\"`\n     *\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 611,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Converts JSDoc `@link` directives to HTML anchor tags.",
+        "memberof": "docma.utils",
+        "name": "parseLinks",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to be parsed.",
+            "name": "string"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Parse options.",
+            "name": "options"
+          },
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "optional": true,
+            "description": "Href target. e.g. `\"_blank\"`",
+            "name": "options.target"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.parseLinks",
+        "$longname": "docma.utils.parseLinks"
+      },
+      {
+        "comment": "/**\n     *  Converts new lines to HTML paragraphs.\n     *  @memberof docma.utils\n     *  @name parseNewLines\n     *  @function\n     *\n     *  @param {String} string\n     *         String to be parsed.\n     *  @param {Object} [options]\n     *         Parse options.\n     *         @param {Boolean} [options.keepIfSingle=false]\n     *                If `true`, lines will not be converted to paragraphs.\n     *\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 584,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Converts new lines to HTML paragraphs.",
+        "memberof": "docma.utils",
+        "name": "parseNewLines",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to be parsed.",
+            "name": "string"
+          },
+          {
+            "type": {
+              "names": [
+                "Object"
+              ]
+            },
+            "optional": true,
+            "description": "Parse options.",
+            "name": "options"
+          },
+          {
+            "type": {
+              "names": [
+                "Boolean"
+              ]
+            },
+            "optional": true,
+            "defaultvalue": false,
+            "description": "If `true`, lines will not be converted to paragraphs.",
+            "name": "options.keepIfSingle"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.parseNewLines",
+        "$longname": "docma.utils.parseNewLines"
+      },
+      {
+        "comment": "/**\n     *  Converts back-ticks to HTML code tags.\n     *  @memberof docma.utils\n     *  @name parseTicks\n     *  @function\n     *\n     *  @param {String} string\n     *         String to be parsed.\n     *\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 563,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Converts back-ticks to HTML code tags.",
+        "memberof": "docma.utils",
+        "name": "parseTicks",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to be parsed.",
+            "name": "string"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.parseTicks",
+        "$longname": "docma.utils.parseTicks"
+      },
+      {
+        "comment": "/**\n     *  Removes leading spaces and dashes. Useful when displaying symbol\n     *  descriptions.\n     *  @memberof docma.utils\n     *  @name trimLeft\n     *  @function\n     *\n     *  @param {String} string - String to be trimmed.\n     *  @returns {String}\n     */",
+        "meta": {
+          "filename": "core.utils.js",
+          "lineno": 548,
+          "columnno": 4,
+          "path": "/Users/oy/Developer/@onury/docma/lib/web",
+          "code": {}
+        },
+        "description": "Removes leading spaces and dashes. Useful when displaying symbol\n descriptions.",
+        "memberof": "docma.utils",
+        "name": "trimLeft",
+        "kind": "function",
+        "params": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            },
+            "description": "String to be trimmed.",
+            "name": "string"
+          }
+        ],
+        "returns": [
+          {
+            "type": {
+              "names": [
+                "String"
+              ]
+            }
+          }
+        ],
+        "scope": "static",
+        "longname": "docma.utils.trimLeft",
+        "$longname": "docma.utils.trimLeft"
+      }
+    ]
+  }
+]

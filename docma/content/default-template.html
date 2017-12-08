@@ -3,7 +3,7 @@
 <hr />
 <p><a href="https://github.com/onury/docma">Docma</a> includes a built-in template; with a side-bar symbols menu, search and navigation features; and a beautiful layout. Actually you're viewing it right now. <img class="docma emoji" src="https://twemoji.maxcdn.com/svg/1f61b.svg" /></p>
 <p>Using this default template is straight-forward. Just set <code>buildConfig.template.path</code> to <code>"default"</code> or omit it.</p>
-<h3 id="template-options">Template Options</h3>
+<h3 id="template-options" class="docma bookmark"><a href="#template-options">Template Options</a></h3>
 <p>Template specific options that can be used when building your documentation with this default template.</p>
 <table>
     <tbody><tr>
@@ -45,11 +45,27 @@
         </td>
     </tr>
     <tr>
-        <td><code><b>badges</b></code></td>
+        <td><code><b>toolbar</b></code></td>
         <td><code>Boolean</code></td>
         <td><code>true</code></td>
         <td>
-            Whether to show symbol badges (that indicate member type and symbol scope) within the sidebar.
+            Specifies whether the toolbar below the sidebar search box should be shown. This toolbar provides buttons for switching between outlines and quick-filtering symbols by symbol-kind.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>animations</b></code></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether animations are enabled for sidebar and listed symbols.
+        </td>
+    </tr>
+    <tr>
+        <td><code><b>badges</b></code></td>
+        <td><code>Boolean|String</code></td>
+        <td><code>true</code></td>
+        <td>
+            Whether to show symbol badges (that indicate member type and symbol scope) within the sidebar. If set to false, <code>•</code> will be used as bullets, instead of badges. Or you can set a string for custom bullets.
         </td>
     </tr>
     <tr>
@@ -86,7 +102,7 @@
     </tr>
 </tbody></table>
 
-<h4 id="navigation-items">Navigation Items</h4>
+<h4 id="navigation-items" class="docma bookmark"><a href="#navigation-items">Navigation Items</a></h4>
 <p>Linked labels that build the navigation bar on the top of the document. Each item is an arbitrary <code>Object</code> with the following properties.</p>
 <table>
     <tbody><tr>
@@ -137,9 +153,9 @@
     </tr>
 </tbody></table>
 
-<h3 id="usage-with-docma">Usage with Docma</h3>
+<h3 id="usage-with-docma" class="docma bookmark"><a href="#usage-with-docma">Usage with Docma</a></h3>
 <p>Template options are defined within the <a href="?api=docma#Docma~BuildConfiguration">build configuration</a>. i.e. <code>buildConfig.template.options</code>.</p>
-<pre><code class="lang-js">var buildConfig = {
+<pre><code class="lang-js">const buildConfig = {
     template: {
         // Template-specific options
         options: {
@@ -148,6 +164,10 @@
             collapsed: false,
             badges: true,
             search: true,
+            toolbar: true,
+            symbolMeta: true,
+            outline: "tree",
+            animations: true,
             navbar: true,
             navItems: [
                 {
@@ -195,10 +215,10 @@
 <p>Then you can build your documentation with these customized template options.</p>
 <pre><code class="lang-js">Docma.create()
     .build(buildConfig)
-    .then(function() {
+    .then(() =&gt; {
         console.log('Documentation is built successfully.');
     })
-    .catch(function (err) {
+    .catch(err =&gt; {
         console.log(err);
     });
 </code></pre>

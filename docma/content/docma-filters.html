@@ -7,7 +7,7 @@
 <li>Guide on <a href="http://www.dustjs.com/guides/using-filters">how to use Dust.js filters</a></li>
 <li>Create filters using <a href="http://www.dustjs.com/docs/filter-api">Dust.js Filter API</a></li>
 </ul>
-<h3 id="built-in-filters-by-dust-js">Built-in Filters by Dust.js</h3>
+<h3 id="built-in-filters-by-dust-js" class="docma bookmark"><a href="#built-in-filters-by-dust-js">Built-in Filters by Dust.js</a></h3>
 <table>
     <tbody><tr>
         <td><b>Input</b></td>
@@ -51,7 +51,7 @@
     </tr>
 </tbody></table>
 
-<h3 id="built-in-filters-by-docma">Built-in Filters by Docma</h3>
+<h3 id="built-in-filters-by-docma" class="docma bookmark"><a href="#built-in-filters-by-docma">Built-in Filters by Docma</a></h3>
 <table>
     <tbody><tr>
         <td><b>Input</b></td>
@@ -137,16 +137,16 @@
     </tr>
 </tbody></table>
 
-<h3 id="creating-custom-filters">Creating Custom Filters</h3>
+<h3 id="creating-custom-filters" class="docma bookmark"><a href="#creating-custom-filters">Creating Custom Filters</a></h3>
 <p>You can also create your own custom filters using either the <code>dust</code> object or shorthand methods defined by <a href="?api=docma-web#docma.addFilter">Docma Web</a>.</p>
 <pre><code class="lang-js">// filter that adds parenthesis if the symbol is a method.
-docma.addFilter('$parenths', function (symbol) {
+docma.addFilter('$parenths', symbol =&gt; {
     return docma.utils.isMethod(symbol)
         ? symbol.longname + '()'
         : symbol.longname;
 });
 </code></pre>
-<h3 id="example-usage-in-partials">Example Usage in Partials</h3>
+<h3 id="example-usage-in-partials" class="docma bookmark"><a href="#example-usage-in-partials">Example Usage in Partials</a></h3>
 <pre><code>{#documentation}
     &lt;h3&gt;{.|$parenths}&lt;/h3&gt;
     &lt;p&gt;{description|s}&lt;/p&gt;
