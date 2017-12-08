@@ -2,33 +2,45 @@
 <html><head></head><body><h2 id="docma-change-log">Docma Change-Log</h2>
 <h3 id="v1-5-2-2017-12-09-">v1.5.2 (2017-12-09)</h3>
 <ul>
-<li><p><b>Docma Web Core</b>:</p><ul>
+<li><p><b>Docma Web Core</b>:</p>
+
+<ul>
 <li><strong>Fixed</strong> <code>$ is not a function</code> error on Windows. PR <a href="https://github.com/onury/docma/pull/23">#23</a> by <a href="https://github.com/warpdesign">@warpdesign</a>.</li>
 <li><strong>Fixed</strong> some typos in documentation. PRs <a href="https://github.com/onury/docma/pull/13">#13</a>, <a href="https://github.com/onury/docma/pull/17">#17</a>.</li>
 </ul>
 </li>
 </ul>
-<p><em><strong>Note</strong>: For this release, some dependencies (such as <code>jsdom</code>) are NOT updated on purpose. They introduce too many breaking changes. In <strong>v2</strong> (WIP, to be released) many things has changed and improved.</em></p>
+<blockquote>
+<p><em><strong>Note</strong>: For this release, some dependencies (such as <code>jsdoc-x</code>, <code>jsdom</code>) are NOT updated on purpose 'cause they introduce breaking changes. In <strong>v2</strong> (WIP, to be released) these will be updated and many things will be improved.</em></p>
+</blockquote>
 <h3 id="v1-5-1-2017-03-11-">v1.5.1 (2017-03-11)</h3>
 <ul>
-<li><p><b>Docma Web Core</b>:</p><ul>
+<li><p><b>Docma Web Core</b>:</p>
+
+<ul>
 <li><strong>Fixed</strong> <code>slice</code> error for non-string default value.</li>
 </ul>
 </li>
 </ul>
 <h3 id="v1-5-0-2017-03-10-">v1.5.0 (2017-03-10)</h3>
 <ul>
-<li><p><b>Docma</b> (Builder):</p><ul>
+<li><p><b>Docma</b> (Builder):</p>
+
+<ul>
 <li><strong>Added</strong> <code>config.jsdoc.ignored:Boolean</code> option which specifies whether to include documentation symbols marked with <code>@ignore</code> tag.</li>
 </ul>
 </li>
-<li><p><b>Docma Web Core</b>:</p><ul>
+<li><p><b>Docma Web Core</b>:</p>
+
+<ul>
 <li><strong>Fixed</strong> an issue where empty lines would be stripped out from <code>@example</code> content.</li>
 <li><strong>Improved</strong> auto-indention for code in comments.</li>
 <li><strong>Improved</strong> <code>$val</code> filter.</li>
 </ul>
 </li>
-<li><p><b>Default Template</b>:</p><ul>
+<li><p><b>Default Template</b>:</p>
+
+<ul>
 <li><strong>Improved</strong> sidebar design.</li>
 <li><strong>Added</strong> template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/?content=default-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
 <li><strong>Added</strong> template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
@@ -40,7 +52,9 @@
 </ul>
 <h3 id="v1-4-7-2017-03-09-">v1.4.7 (2017-03-09)</h3>
 <ul>
-<li><p><b>Docma</b> (Builder):</p><ul>
+<li><p><b>Docma</b> (Builder):</p>
+
+<ul>
 <li><strong>Fixed</strong> an issue where build config <code>config.jsdoc.includePattern</code> would not be respected when filtering files.</li>
 <li><strong>Fixed</strong> an issue where sorting would change when <code>config.jsdoc.hierarchy</code> option is enabled.</li>
 </ul>
@@ -48,7 +62,9 @@
 </ul>
 <h3 id="v1-4-5-2017-03-05-">v1.4.5 (2017-03-05)</h3>
 <ul>
-<li><p><b>Docma</b> (Builder):</p><ul>
+<li><p><b>Docma</b> (Builder):</p>
+
+<ul>
 <li><strong>Added</strong> build config options: <code>config.jsdoc.allowUnknownTags</code>, <code>config.jsdoc.dictionaries</code>, <code>config.jsdoc.includePattern</code>, <code>config.jsdoc.excludePattern</code> (<code>jsdoc-x</code> feature).</li>
 <li><strong>Added</strong> <a href="http://usejsdoc.org/about-plugins.html">JSDoc plugin</a> support via the new <code>config.jsdoc.plugins</code> option (<code>jsdoc-x</code> feature).</li>
 </ul>
@@ -56,25 +72,29 @@
 </ul>
 <h3 id="v1-4-0-2017-02-13-">v1.4.0 (2017-02-13)</h3>
 <ul>
-<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<li><p><b>Docma</b> (Builder):</p>
+
 <ul>
 <li><strong>Fixed</strong> incorrect routing when routing method is set to <code>"path"</code>.</li>
 <li>If <code>config.app.entrance</code> is not set in build configuration, it now defaults to <code>"api"</code>.</li>
 <li>If <code>config.app.server</code> is not set in build configuration, it now defaults to <code>"static"</code>. (<code>"static"</code> is similar to <code>"github"</code> which generates static HTML files.)</li>
 </ul>
 </li>
-<li><p></p><p><b>Docma CLI</b>:</p><p></p>
+<li><p><b>Docma CLI</b>:</p>
+
 <ul>
 <li>Respecting debug option in config file. If no debug options are set in the command-line arguments (such as <code>--debug</code>, <code>--quite</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>--verbose</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</li>
 </ul>
 </li>
-<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
+<li><p><b>Docma Web Core</b>:</p>
+
 <ul>
 <li><strong>Fixed</strong> <code>.split()</code> error for <code>null</code> (404) routes.</li>
 <li><strong>Updated</strong> web dependencies to latest versions.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b>:</p><p></p>
+<li><p><b>Default Template</b>:</p>
+
 <ul>
 <li><strong>Fixed</strong> a style issue where sidebar would not scroll all the way to the bottom in Firefox. Fixes <a href="https://github.com/onury/docma/issues/8">issue #8</a>.</li>
 <li>If <code>config.template.title</code> is omitted, <code>config.app.title</code> is used. (Defaults to <code>"Documentation"</code> if not set).</li>
@@ -83,21 +103,24 @@
 </ul>
 <h3 id="v1-3-0-2016-11-23-">v1.3.0 (2016-11-23)</h3>
 <ul>
-<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<li><p><b>Docma</b> (Builder):</p>
+
 <ul>
 <li><strong>Added</strong> case-sensitive routing option. <code>config.app.routing</code> accepts either a <code>String</code> (<code>"query"</code> or <code>"path"</code> as before) or now, an <code>Object</code>. e.g. <code>{ type: "query", caseSensitive: true }</code>. This also fixes <a href="https://github.com/onury/docma/issues/3">issue #3</a>.</li>
 <li><strong>Updated</strong> dependencies to their latest versions.</li>
 <li>Minor code revisions.</li>
 </ul>
 </li>
-<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
+<li><p><b>Docma Web Core</b>:</p>
+
 <ul>
 <li><strong>Extended</strong> support for parsing back-ticks in documentation. Added triple back-tick support for multiline code blocks (<code>```</code>).</li>
 <li><strong>Improved</strong> <code>docma.utils.normalizeTabs()</code> method. Deep indents in JSDoc comments/descriptions are also normalized.</li>
 <li><strong>Improved</strong> support for <code>&lt;pre&gt;&lt;/pre&gt;</code> tags within JSDoc descriptions.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b>:</p><p></p>
+<li><p><b>Default Template</b>:</p>
+
 <ul>
 <li><strong>Fixed</strong> an issue where symbols with return type parameters (such as <code>Promise&lt;Array&gt;</code>) would not be escaped and parsed properly. Fixes <a href="https://github.com/onury/docma/issues/4">issue #4</a>.</li>
 <li><strong>Fixed</strong> an issue where boolean symbol parameters' default values would not be parsed properly. Fixes <a href="https://github.com/onury/docma/issues/5">issue #5</a>.</li>
@@ -106,12 +129,14 @@
 </ul>
 <h3 id="v1-2-0-2016-10-31-">v1.2.0 (2016-10-31)</h3>
 <ul>
-<li><p></p><p><b>Docma CLI</b>:</p><p></p>
+<li><p><b>Docma CLI</b>:</p>
+
 <ul>
 <li><strong>Added</strong> CLI (command-line interface). Supports <code>config</code>, <code>src</code>, <code>dest</code> and all <code>debug</code> options.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b>:</p><p></p>
+<li><p><b>Default Template</b>:</p>
+
 <ul>
 <li><strong>Updated</strong> (one-dark) highlighting styles.</li>
 </ul>
@@ -123,14 +148,16 @@
 </ul>
 <h3 id="v1-1-0-2016-08-12-">v1.1.0 (2016-08-12)</h3>
 <ul>
-<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<li><p><b>Docma</b> (Builder):</p>
+
 <ul>
 <li><strong>Fixed</strong> an issue where constructors would still show up in the documentation even though <code>@private</code> is set. Fixed by <code>jsdoc-x</code>.</li>
 <li><strong>Updated</strong> dependencies to their latest versions.</li>
 <li>Minor revisions.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b>:</p><p></p>
+<li><p><b>Default Template</b>:</p>
+
 <ul>
 <li><strong>Fixed</strong> sidebar header/search position when sidebar is collapsed.</li>
 <li>An access badge is shown next to symbol name, if symbol has <code>private</code> or <code>protected</code> access.</li>
@@ -150,7 +177,8 @@
 </ul>
 <h3 id="v1-0-0-2016-06-11-">v1.0.0 (2016-06-11)</h3>
 <ul>
-<li><p></p><p><b>Docma</b> (Builder):</p><p></p>
+<li><p><b>Docma</b> (Builder):</p>
+
 <ul>
 <li><strong>Added</strong> ability to convert markdown files to HTML. See documentation.</li>
 <li><strong>Added</strong> <code>.markdown:Object</code> build configuration options. (Same as <code>marked</code> module options).</li>
@@ -168,7 +196,8 @@
 <li><strong>Added</strong> negated glob support (that excludes the paths) for the <code>src</code> build option.</li>
 </ul>
 </li>
-<li><p></p><p><b>Docma Web Core</b>:</p><p></p>
+<li><p><b>Docma Web Core</b>:</p>
+
 <ul>
 <li><strong>Added</strong> client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
 <li><strong>Implemented</strong> <code>EventEmitter</code>.</li>
@@ -181,7 +210,8 @@
 <li><strong>Revision</strong>: If <code>debug &gt;= 3</code>, web app will also output logs.</li>
 </ul>
 </li>
-<li><p></p><p><b>Default Template</b>:</p><p></p>
+<li><p><b>Default Template</b>:</p>
+
 <ul>
 <li><strong>Improved</strong> layout for HTML files converted from markdown.</li>
 <li><strong>Fixed</strong> documentation of <code>@property</code> JSDoc tags.</li>
@@ -196,7 +226,8 @@
 <li><strong>Improved</strong> various API documentation styles.</li>
 </ul>
 </li>
-<li><p></p><p>Other:</p><p></p>
+<li><p>Other:</p>
+
 <ul>
 <li><strong>(Dev)</strong> Manage web-component dependency packages via Bower.</li>
 <li><strong>Updated</strong> project structure.</li>
