@@ -93,39 +93,4 @@
 <li><p>Define name-grouped source files:<br>  <code>docma -c path/to/docma.config.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js</code></p>
 </li>
 </ul>
-<h2 id="extra-commands">Extra Commands</h2>
-<h3 id="-serve-spa-path-"><code>serve [spa-path]</code></h3>
-<p>You can run a mock server for testing the generated SPA with this command. This will boot up a simple static-files server. If <code>spa-path</code> is omitted, current working directory will be served.</p>
-<p>Additionally, you can use the following options:</p>
-<table>
-    <tbody><tr>
-        <td colspan="2"><b>Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-        <td><b>Parameter</b></td>
-        <td><b>Description</b></td>
-    </tr>
-    <tr>
-        <td><code>-p</code></td>
-        <td><code>--port</code></td>
-        <td><code>&lt;number&gt;</code></td>
-        <td>Port number to bind the mock-server on. Default: <code>9000</code></td>
-    </tr>
-    <tr>
-        <td><code>-q</code></td>
-        <td><code>--quite</code></td>
-        <td></td>
-        <td>Disable request logs for the mock-server.</td>
-    </tr>
-</tbody></table>
-
-<h3 id="examples">Examples</h3>
-<ul>
-<li><p>Serve generated SPA at the default port (9000):<br>  <code>docma serve /path/to/docs</code>  </p>
-</li>
-<li><p>Serve current working directory:<br>  <code>cd /path/to/docs &amp;&amp; docma serve</code>  </p>
-</li>
-<li><p>Configure a custom port and serve:<br>  <code>docma serve /path/to/docs -p 8080</code>    </p>
-</li>
-<li><p>Serve without request logs:<br>  <code>docma serve /path/to/docs -q</code>  </p>
-</li>
-</ul>
 </body></html>
