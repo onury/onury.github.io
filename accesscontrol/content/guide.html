@@ -5,13 +5,13 @@
 <a href="https://coveralls.io/github/onury/accesscontrol?branch=master"><img src="https://coveralls.io/repos/github/onury/accesscontrol/badge.svg?branch=master" alt="Coverage Status"></a>
 <a href="https://david-dm.org/onury/accesscontrol"><img src="https://david-dm.org/onury/accesscontrol.svg" alt="dependencies"></a>
 <a href="https://snyk.io/test/github/onury/accesscontrol"><img src="https://snyk.io/test/github/onury/accesscontrol/badge.svg" alt="Known Vulnerabilities"></a>
-<a href="https://github.com/onury/accesscontrol/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a><br><a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="npm"></a>
+<a href="https://github.com/onury/accesscontrol/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2018.svg" alt="maintained"></a><br><a href="https://www.npmjs.com/package/accesscontrol"><img src="http://img.shields.io/npm/v/accesscontrol.svg" alt="npm"></a>
 <a href="https://github.com/onury/accesscontrol"><img src="https://img.shields.io/github/release/onury/accesscontrol.svg" alt="release"></a>
 <a href="https://github.com/onury/accesscontrol/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/accesscontrol.svg" alt="license"></a>
 <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg" alt="TypeScript"></a>
 <a href="http://onury.io/accesscontrol/?api=ac"><img src="https://img.shields.io/badge/documentation-click_to_read-c27cf4.svg?documentation=click_to_read" alt="documentation"></a>    </p>
 <blockquote>
-<p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
+<p>© 2018, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
 <p>Role and Attribute based Access Control for Node.js  </p>
 <p>Many <a href="https://en.wikipedia.org/wiki/Role-based_access_control">RBAC</a> (Role-Based Access Control) implementations differ, but the basics is widely adopted since it simulates real life role (job) assignments. But while data is getting more and more complex; you need to define policies on resources, subjects or even environments. This is called <a href="https://en.wikipedia.org/wiki/Attribute-Based_Access_Control">ABAC</a> (Attribute-Based Access Control).</p>
@@ -222,10 +222,10 @@ console.log(ac.getGrants());
 <pre><code class="lang-sh">git clone https://github.com/onury/accesscontrol.git
 </code></pre>
 <p>Install dependencies:</p>
-<pre><code class="lang-sh">yarn install
+<pre><code class="lang-sh">npm install
 </code></pre>
 <p>Add tests to relevant file under <a href="test/">/test</a> directory and run:  </p>
-<pre><code class="lang-sh">yarn build &amp;&amp; yarn cover
+<pre><code class="lang-sh">npm run build &amp;&amp; npm run cover
 </code></pre>
 <p>Use included <code>tslint.json</code> and <code>editorconfig</code> for style and linting.<br>Travis build should pass, coverage should not degrade.</p>
 <h2 id="license">License</h2>
