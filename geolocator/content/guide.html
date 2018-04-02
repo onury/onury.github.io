@@ -5,12 +5,11 @@
 <a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/bower/v/geolocator.svg" alt="bower"></a>
 <a href="https://www.npmjs.com/package/geolocator"><img src="http://img.shields.io/npm/v/geolocator.svg" alt="npm"></a>
 <a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/github/release/onury/geolocator.svg" alt="release"></a>
-<a href="https://codeclimate.com/github/onury/geolocator"><img src="https://codeclimate.com/github/onury/geolocator/badges/gpa.svg" alt="Code Climate"></a>
 <a href="https://david-dm.org/onury/geolocator"><img src="https://david-dm.org/onury/geolocator.svg" alt="dependencies"></a>
 <a href="https://github.com/onury/geolocator/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/geolocator.svg" alt="license"></a>
-<a href="https://github.com/onury/geolocator/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>  </p>
+<a href="https://github.com/onury/geolocator/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2018.svg" alt="maintained"></a>  </p>
 <blockquote>
-<p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>)
+<p>© 2018, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>)
 MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/master/DISCLAIMER">Disclaimer</a> and <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</p>
 </blockquote>
 <p>Geolocator.js is a utility for getting geo-location information, geocoding, address look-ups, distance &amp; durations, timezone information and more...</p>
@@ -91,7 +90,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
 <li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). In Chrome 50, Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong>. Other browsers are expected to follow.</li>
 <li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator. <em>(If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.)</em></li>
-<li>Geolocator now supports a single Geo-IP provider, FreeGeoIP. You can use <code>geolcoator.setGeoIPSource()</code> method to set a different Geo-IP source.</li>
+<li>Geolocator now supports a single Geo-IP provider, Geobytes. You can use <code>geolcoator.setGeoIPSource()</code> method to set a <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">different Geo-IP source</a>.</li>
 <li><strike>On Firefox, callback is not fired for Geolocation, if user clicks "Not Now" instead of "Never".</strike> This is now fixed in Firefox version 53 with the new permission prompt redesign. (See bugzilla <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=675533">675533</a>.)</li>
 </ul>
 <h2 id="under-the-hood">Under the Hood</h2>

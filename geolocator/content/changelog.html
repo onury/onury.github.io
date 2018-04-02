@@ -1,23 +1,47 @@
 
-<html><head></head><body><h2 id="change-log-">Change Log:</h2>
-<h3 id="v2-1-1-2017-03-11-">v2.1.1 (2017-03-11)</h3>
+<html><head></head><body><h1 id="geolocator-changelog-">Geolocator Changelog:</h1>
+<hr />
+<p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
+<h2 id="-2-1-2-https-github-com-onury-geolocator-compare-v2-1-1-v2-1-2-2018-04-02-"><a href="https://github.com/onury/geolocator/compare/v2.1.1...v2.1.2">2.1.2</a> (2018-04-02)</h2>
+<h3 id="fixed">Fixed</h3>
 <ul>
-<li>Improvement: Forcing the export mechanism to assign <code>geolocator</code> to <code>window</code> even if it's used via an <code>import</code> or <code>require</code> statement. i.e. this happens when used within babel/webpack bundled code or from within an electron app. See issues <a href="https://github.com/onury/geolocator/issues/42">#42</a> and <a href="https://github.com/onury/geolocator/issues/48">#48</a>.</li>
+<li>Changed default Geo-IP provider to <a href="http://geobytes.com">GeoBytes</a>. <em>(FreeGeoIP service is <a href="https://github.com/apilayer/freegeoip#readme.">shut down</a>)</em>. Fixes issue <a href="https://github.com/onury/geolocator/issues/53">#53</a>.</li>
+</ul>
+<h3 id="added">Added</h3>
+<ul>
+<li>Geo IP source: IPStack (requires a free API key). 
+<em>Note that this is a <a href="https://github.com/onury/geolocator/blob/master/src/geo-ip-sources/ipstack.js">separate file</a>, you can include in your HTML. Or you can use a <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">different provider</a> if you like.</em></li>
+</ul>
+<h2 id="-2-1-1-https-github-com-onury-geolocator-compare-v2-1-0-v2-1-1-2017-03-11-"><a href="https://github.com/onury/geolocator/compare/v2.1.0...v2.1.1">2.1.1</a> (2017-03-11)</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li>Support for hybrid or sandboxed environments (such as Electron). Now, forcing the export mechanism to assign <code>geolocator</code> to <code>window</code> even if it's used via an <code>import</code> or <code>require</code> statement. i.e. this happens when used within babel/webpack bundled code or from within an electron app. See issues <a href="https://github.com/onury/geolocator/issues/42">#42</a> and <a href="https://github.com/onury/geolocator/issues/48">#48</a>.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
 <li>Minor revision, clean up.</li>
 </ul>
-<h3 id="v2-1-0-2016-09-30-">v2.1.0 (2016-09-30)</h3>
+<h2 id="-2-1-0-https-github-com-onury-geolocator-compare-v2-0-0-v2-1-0-2016-09-30-"><a href="https://github.com/onury/geolocator/compare/v2.0.0...v2.1.0">2.1.0</a> (2016-09-30)</h2>
+<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
+<h3 id="added">Added</h3>
 <ul>
-<li>Feature: Get static Google Maps (image) via <code>.getStaticMap()</code> method. <a href="https://github.com/onury/geolocator/issues/34">#34</a>. <em>Make sure you have enabled Google Static Maps API in Google Developers console.</em></li>
-<li>Feature: Ability to style Google Maps. Either set global styles via <code>geolocator.config()</code> or corresponding methods such as <code>.createMap()</code> or <code>.getStaticMap()</code>.</li>
-<li>Revision: Improved desired accuracy logic. Added <code>maximumWait:Number</code> and <code>onProgress:Function</code> options for <code>.locate()</code> method.</li>
-<li>Fix: Changed Geo-IP provider to <a href="https://freegeoip.net">FreeGeoIP</a>. (Wikimedia has shutdown the geo service.) Fixes issue <a href="https://github.com/onury/geolocator/issues/36">#36</a>.</li>
-<li>Fix: Respecting countries with states, other than US. Fixes <a href="https://github.com/onury/geolocator/pull/37">#37</a>.</li>
+<li>Ability to get static Google Maps (image) via <code>.getStaticMap()</code> method. <a href="https://github.com/onury/geolocator/issues/34">#34</a>. <em>Make sure you have enabled Google Static Maps API in Google Developers console.</em></li>
+<li>Ability to style Google Maps. Either set global styles via <code>geolocator.config()</code> or corresponding methods such as <code>.createMap()</code> or <code>.getStaticMap()</code>.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Improved desired accuracy logic. Added <code>maximumWait:Number</code> and <code>onProgress:Function</code> options for <code>.locate()</code> method.</li>
 <li>Minor revisions, updated dev-dependencies.</li>
 </ul>
-<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
-<h3 id="v2-0-0-2016-06-25-">v2.0.0 (2016-06-25)</h3>
+<h3 id="fixed">Fixed</h3>
 <ul>
-<li>Improvement: Better Geolocation accuracy. Fixes issue <a href="https://github.com/onury/geolocator/issues/28">#28</a>.</li>
+<li>Changed Geo-IP provider to <a href="https://freegeoip.net">FreeGeoIP</a>. (Wikimedia has shutdown the geo service.) Fixes issue <a href="https://github.com/onury/geolocator/issues/36">#36</a>.</li>
+<li>Respecting countries with states, other than US. Fixes <a href="https://github.com/onury/geolocator/pull/37">#37</a>.</li>
+</ul>
+<h2 id="-2-0-0-https-github-com-onury-geolocator-compare-v1-2-9-v2-0-0-2016-06-25-"><a href="https://github.com/onury/geolocator/compare/v1.2.9...v2.0.0">2.0.0</a> (2016-06-25)</h2>
+<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
+<h3 id="added">Added</h3>
+<ul>
 <li>Feature: Watch geographic position.</li>
 <li>Feature: Locate by mobile information.</li>
 <li>Feature: Get timezone information. Fixes issue <a href="https://github.com/onury/geolocator/issues/13">#13</a>.</li>
@@ -28,60 +52,77 @@
 <li>Feature: Fetched location includes country flag image (SVG) URL.</li>
 <li>Feature: Language support (depends on the service provider). Fixes issue <a href="https://github.com/onury/geolocator/issues/20">#20</a>.</li>
 <li>Feature: Universal module (CommonJS/Node/AMD..). Fixes issue <a href="https://github.com/onury/geolocator/issues/16">#16</a>.</li>
-<li>Revision: Google Maps is no longer loaded by default. Depends on called methods or options.</li>
-<li>Revision: Now, we only support a single Geo-IP source (Wikimedia). Can be set/changed via <code>setGeoIPSource()</code> method.</li>
-<li>Revision: Fix issue <a href="https://github.com/onury/geolocator/issues/32">#32</a>.</li>
-<li><p>Improvement: Support multiple calls. Fixes issue <a href="https://github.com/onury/geolocator/issues/24">#24</a>.</p>
-</li>
-<li><p><strong>BREAKING CHANGES</strong>:</p>
+<li>Support multiple calls. Fixes issue <a href="https://github.com/onury/geolocator/issues/24">#24</a>.</li>
+</ul>
+<h3 id="changed">Changed</h3>
 <ul>
-<li>Revision: Method signatures changed for <code>.locate()</code> and <code>.locateByIP()</code> methods.</li>
-<li>Revision: Most features make use of Google APIs. So you'll need a (single) Google API key to use them all.
-If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.</li>
-<li>Revision: <code>geolocator.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback. See documented examples.</li>
+<li><strong>BREAKING</strong>: Method signatures changed for <code>.locate()</code> and <code>.locateByIP()</code> methods.</li>
+<li><strong>BREAKING</strong>: Most features make use of Google APIs. So you'll need a (single) Google API key to use them all. If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.</li>
+<li><strong>BREAKING</strong>: <code>geolocator.location</code> property is dropped. You can always access the result, via the second argument of each async method's callback. See documented examples.</li>
+<li>Better Geolocation accuracy. Fixes issue <a href="https://github.com/onury/geolocator/issues/28">#28</a>.</li>
+<li>Google Maps is no longer loaded by default. Depends on called methods or options.</li>
+<li>Now, we only support a single Geo-IP source (Wikimedia). Can be set/changed via <code>setGeoIPSource()</code> method.</li>
 </ul>
-</li>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>An issue with wikimedia IP lookup. Fixes <a href="https://github.com/onury/geolocator/issues/32">#32</a>.</li>
 </ul>
-<p>Please read the <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a>.</p>
 <hr>
-<p><strong>v1.2.9</strong></p>
+<h2 id="-1-2-9-https-github-com-onury-geolocator-compare-v1-2-8-v1-2-9-"><a href="https://github.com/onury/geolocator/compare/v1.2.8...v1.2.9">1.2.9</a></h2>
+<h3 id="added">Added</h3>
 <ul>
-<li>Improvement: Added HTTPS secure connection support for IP geo-sources. <em>(Note: GeoPlugin does not support HTTPS. You should use FreeGeoIP or Wikimedia IP sources instead.)</em>. (Fixes <a href="https://github.com/onury/geolocator/issues/11">Issue #11</a>. PR: @iurisilvio)</li>
+<li>HTTPS secure connection support for IP geo-sources. <em>(Note: GeoPlugin does not support HTTPS. You should use FreeGeoIP or Wikimedia IP sources instead.)</em>. (Fixes <a href="https://github.com/onury/geolocator/issues/11">Issue #11</a>. PR: @iurisilvio)</li>
 </ul>
-<p><strong>v1.2.8</strong></p>
+<h2 id="-1-2-8-https-github-com-onury-geolocator-compare-v1-2-6-v1-2-8-"><a href="https://github.com/onury/geolocator/compare/v1.2.6...v1.2.8">1.2.8</a></h2>
+<h3 id="added">Added</h3>
 <ul>
-<li>Revision: Removed the <code>sensor</code> parameter from Goole Maps loader, since it's not required anymore.</li>
-<li>Revision: Bumped <em>Google Maps</em> version to <code>3.18</code>.</li>
-<li>Revision: Created <a href="https://www.npmjs.com/package/geolocator">NPM package</a>.</li>
-<li>Revision: Created Bower package.</li>
+<li>Created <a href="https://www.npmjs.com/package/geolocator">NPM package</a>.</li>
+<li>Created Bower package.</li>
 </ul>
-<p><strong>v1.2.6</strong></p>
+<h3 id="changed">Changed</h3>
 <ul>
-<li>Revision: The recent <code>Error</code> or <code>PositionError</code> (HTML5) is passed to error callbacks instead of <code>String</code> error message. See updated documentation. Fixes issue <a href="https://github.com/onury/geolocator/issues/7">#7</a>. <em>(This shouldn't be a breaking-change but do test your app if you decide to upgrade.)</em></li>
-<li>Feature: Added new method: <code>isPositionError()</code>.</li>
+<li>Removed the <code>sensor</code> parameter from Goole Maps loader, since it's not required anymore.</li>
+<li>Bumped <em>Google Maps</em> version to <code>3.18</code>.</li>
+</ul>
+<h2 id="-1-2-6-https-github-com-onury-geolocator-compare-v1-2-4-v1-2-6-"><a href="https://github.com/onury/geolocator/compare/v1.2.4...v1.2.6">1.2.6</a></h2>
+<h3 id="added">Added</h3>
+<ul>
+<li>FNew method: <code>isPositionError()</code>.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>The recent <code>Error</code> or <code>PositionError</code> (HTML5) is passed to error callbacks instead of <code>String</code> error message. See updated documentation. Fixes issue <a href="https://github.com/onury/geolocator/issues/7">#7</a>. <em>(This shouldn't be a breaking-change but do test your app if you decide to upgrade.)</em></li>
 <li>Updated example. (Enable/disable HTML5-to-IP fallback.)</li>
 </ul>
-<p><strong>v1.2.4</strong></p>
+<h2 id="-1-2-4-https-github-com-onury-geolocator-compare-v1-2-1-v1-2-4-"><a href="https://github.com/onury/geolocator/compare/v1.2.1...v1.2.4">1.2.4</a></h2>
+<h3 id="changed">Changed</h3>
 <ul>
-<li>Revision: Source scripts are now automatically removed from DOM after result is received.</li>
-<li>Bug-Fix: <code>errorCallback</code> would not be invoked if IP geo-source service is not available. Fixes issue <a href="https://github.com/onury/geolocator/issues/6">#6</a>.</li>
-<li>Revision: Changed default IP source to GeoPlugin (index:<code>1</code>); since FreeGeoIP is occasionally down these days.</li>
+<li>Source scripts are now automatically removed from DOM after result is received.</li>
+<li>Changed default IP source to GeoPlugin (index:<code>1</code>); since FreeGeoIP is occasionally down these days.</li>
 </ul>
-<p><strong>v1.2.1</strong></p>
+<h3 id="fixed">Fixed</h3>
 <ul>
-<li>Added <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</li>
+<li><code>errorCallback</code> would not be invoked if IP geo-source service is not available. Fixes issue <a href="https://github.com/onury/geolocator/issues/6">#6</a>.</li>
 </ul>
-<p><strong>v1.2.0</strong></p>
+<h2 id="-1-2-1-https-github-com-onury-geolocator-compare-v1-2-0-v1-2-1-"><a href="https://github.com/onury/geolocator/compare/v1.2.0...v1.2.1">1.2.1</a></h2>
+<h3 id="added">Added</h3>
 <ul>
-<li>Code optimizations.</li>
+<li><a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</li>
+</ul>
+<h2 id="-1-2-0-https-github-com-onury-geolocator-compare-v1-1-0-v1-2-0-"><a href="https://github.com/onury/geolocator/compare/v1.1.0...v1.2.0">1.2.0</a></h2>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Code revisions, optimizations.</li>
 <li>Now loads the latest release version of <em>Google Maps</em> (<code>3.15</code>).</li>
 </ul>
-<p><strong>v1.1.0</strong></p>
+<h2 id="-1-1-0-https-github-com-onury-geolocator-compare-v0-9-5-v1-1-0-"><a href="https://github.com/onury/geolocator/compare/v0.9.5...v1.1.0">1.1.0</a></h2>
+<h3 id="changed">Changed</h3>
 <ul>
 <li>JSLint compliant code.</li>
 <li>Minor code revisions.</li>
 </ul>
-<p><strong>v0.9.5</strong></p>
+<h2 id="0-9-5">0.9.5</h2>
+<h3 id="changed">Changed</h3>
 <ul>
 <li>Google has deprecated <code>google.loader.ClientLocation</code> API. As a result; Google (Loader) is removed from IP-Geo Sources.</li>
 <li>Indexes changed for IP-Geo sources. New Indexes: FreeGeoIP (0), GeoPlugin (1), Wikimedia (2)</li>
