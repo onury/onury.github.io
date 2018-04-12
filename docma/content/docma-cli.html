@@ -1,96 +1,211 @@
 
 <html><head></head><body><h1 id="docma-cli">Docma CLI</h1>
 <hr />
-<p>Instead of programmatically executing the Docma builder, you can directly use the CLI from your console. Although the CLI does not provide all build configurations as command-line options; it still supports all of them via the <code>-c</code> option which you can set the configuration file's path to.</p>
-<h2 id="cli-options">CLI Options</h2>
+<p>Instead of programmatically executing the Docma builder, you can directly use the CLI from your console.  </p>
+<p>Although the CLI does not provide each <a href="?api=docma#Docma~BuildConfiguration">build configuration</a> as a command-line option; it still supports <strong>all</strong> of them via the <strong><code>-c</code></strong> option which you can set the configuration file's path to. (i.e. <code>path/to/docma.json</code>)</p>
+<h2 id="docma--options-"><code>docma [options]</code></h2>
+<hr />
 <table>
-    <tbody><tr>
-        <td colspan="2"><b>Option&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-        <td><b>Parameter</b></td>
-        <td><b>Description</b></td>
-    </tr>
-    <tr>
-        <td><code>-h</code></td>
-        <td><code>--help</code></td>
-        <td></td>
-        <td>Output CLI usage information.</td>
-    </tr>
-    <tr>
-        <td><code>-V</code></td>
-        <td><code>--version</code></td>
-        <td></td>
-        <td>Output the Docma version number.</td>
-    </tr>
-    <tr>
-        <td><code>-c</code></td>
-        <td><code>--config</code></td>
-        <td><code>&lt;path&gt;</code></td>
-        <td>
-            Docma JSON configuration file path.
-            You can define all build options within this file. Any option (below) set via CLI will overwrite the value defined in this file.
-        </td>
-    </tr>
-    <tr>
-        <td><code>-s</code></td>
-        <td><code>--src</code></td>
-        <td><code>&lt;[name:]path&gt;</code></td>
-        <td>Source file path. To define multiple source files, this option can be used more than once. To group/name source files, prefix each source path with <code>name:</code>. e.g. <code>-s a.js -s mylib:b.js -s mylib:c.js -s other:d.js</code></td>
-    </tr>
-    <tr>
-        <td><code>-d</code></td>
-        <td><code>--dest</code></td>
-        <td><code>&lt;path&gt;</code></td>
-        <td>
-            Output destination directory path.
-            <b>CAUTION</b>: This directory will be emptied before the build. Make sure you set this to a correct path.
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2"><code>--web-logs</code></td>
-        <td></td>
-        <td>(Debug) Enable logs in the browser console, for the generated SPA.</td>
-    </tr>
-    <tr>
-        <td><code>-v</code></td>
-        <td><code>--verbose</code></td>
-        <td><code>&lt;path&gt;</code></td>
-        <td>(Debug) Output verbose logs to consoles.</td>
-    </tr>
-    <tr>
-        <td colspan="2"><code>--nomin</code></td>
-        <td></td>
-        <td>(Debug) Disable minification for the generated SPA assets. (e.g. js, css files)</td>
-    </tr>
-    <tr>
-        <td colspan="2"><code>--jd-out</code></td>
-        <td></td>
-        <td>(Debug) Output one or more <code>[name.]jsdoc.json</code> files that include documentation data for each (grouped) javascript source. name is the group name you give when you define the source files. This is useful for investigating the raw JSDoc output.</td>
-    </tr>
-    <tr>
-        <td colspan="2"><code>--debug</code></td>
-        <td></td>
-        <td>Enable all debugging options.<br>Equivalent to: <code>--web-logs -v --nomin --jd-out</code></td>
-    </tr>
-    <tr>
-        <td><code>-q</code></td>
-        <td><code>--quite</code></td>
-        <td></td>
-        <td>(Debug) Disable build logs for the Node console.</td>
-    </tr>
-</tbody></table>
+    <thead>
+        <tr>
+            <th colspan="2">Option&nbsp;/&nbsp;Alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Parameter</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b><code>-h</code></b></td>
+            <td><code>--help</code></td>
+            <td></td>
+            <td>Output CLI usage information.</td>
+        </tr>
+        <tr>
+            <td><b><code>-v</code></b></td>
+            <td><code>--version</code></td>
+            <td></td>
+            <td>Output the Docma version number.</td>
+        </tr>
+        <tr>
+            <td><b><code>-c</code></b></td>
+            <td><code>--config</code></td>
+            <td><code>&lt;path&gt;</code></td>
+            <td>
+                Docma JSON configuration file path.
+                You can define all build options within this file. Any option (below) set via CLI will overwrite the value defined in this file.
+            </td>
+        </tr>
+        <tr>
+            <td><b><code>-s</code></b></td>
+            <td><code>--src</code></td>
+            <td><code>&lt;[name:]path&gt;</code></td>
+            <td>Source file path. To define multiple source files, this option can be used more than once. To group/name source files, prefix each source path with <code>name:</code>. e.g. <code>-s a.js -s mylib:b.js -s mylib:c.js -s other:d.js</code></td>
+        </tr>
+        <tr>
+            <td><b><code>-d</code></b></td>
+            <td><code>--dest</code></td>
+            <td><code>&lt;path&gt;</code></td>
+            <td>
+                Output destination directory path.
+                <b>CAUTION</b>: This directory will be emptied before the build. Make sure you set this to a correct path.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--clean</code></b></td>
+            <td></td>
+            <td>
+                Empty destination directory before building docs.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--web-logs</code></b></td>
+            <td></td>
+            <td>(Debug) Enable logs in the browser console, for the generated SPA.</td>
+        </tr>
+        <tr>
+            <td><b><code>-V</code></b></td>
+            <td><code>--verbose</code></td>
+            <td></td>
+            <td>(Debug) Output verbose logs to consoles.</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--nomin</code></b></td>
+            <td></td>
+            <td>(Debug) Disable minification for the generated SPA assets. (e.g. js, css files)</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--jd-out</code></b></td>
+            <td></td>
+            <td>(Debug) Output one or more <code>[name.]jsdoc.json</code> files that include documentation data for each (grouped) javascript source. name is the group name you give when you define the source files. This is useful for investigating the raw JSDoc output.</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--debug</code></b></td>
+            <td></td>
+            <td>Enable all debugging options.<br>Equivalent to: <code>--web-logs -v --nomin --jd-out</code></td>
+        </tr>
+        <tr>
+            <td><b><code>-q</code></b></td>
+            <td><code>--quite</code></td>
+            <td></td>
+            <td>(Debug) Disable build logs for the Node console.</td>
+        </tr>
+    </tbody>
+</table>
 
+<blockquote>
 <p><em>Note: If no debug options are set in the CLI arguments (such as <code>--debug</code>, <code>-q</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>-v</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</em></p>
+</blockquote>
 <h3 id="examples">Examples</h3>
-<ul>
-<li><p>Build documentation with a Docma configuration (JSON) file:<br>  <code>docma -c path/to/docma.config.json</code>  </p>
-</li>
-<li><p>If a <code>docma.config.json</code> already exists in the current directory, simply:<br>  <code>docma</code>  </p>
-</li>
-<li><p>Output to a directory, other than the one defined in the config file:<br>  <code>docma -c path/to/docma.config.json -d path/to/docs</code>  </p>
-</li>
-<li><p>Re-define source files (ignore the ones defined in the config file):<br>  <code>docma -c path/to/docma.config.json -s path/to/lib-1.js -s path/to/lib-2.js</code>  </p>
-</li>
-<li><p>Define name-grouped source files:<br>  <code>docma -c path/to/docma.config.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js</code></p>
-</li>
-</ul>
+<pre><code class="lang-sh"># Build documentation with a Docma configuration (JSON) file:  
+docma -c path/to/docma.json
+
+# If a `docma.json` already exists in the current directory, simply:  
+docma
+
+# Output to a directory, other than the one defined in the config file:  
+docma -c path/to/docma.json -d path/to/docs
+
+# Re-define source files (ignore the ones defined in the config file):  
+docma -c path/to/docma.json -s path/to/lib-1.js -s path/to/lib-2.js
+
+# Define name-grouped source files:  
+docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js
+</code></pre>
+<h2 id="commands">Commands</h2>
+<hr />
+<h3 id="docma-serve--path---options-"><code>docma serve [path] [options]</code></h3>
+<p>You can run a mock server for testing the generated SPA with this command. This will boot up a simple static-files server. If <code>path</code> is omitted, it will look for a <code>docma.json</code> or <code>.docma.json</code> in the current working directory. If found, the configured destination will be served. If no Docma configuration file is found, current working directory will be served.</p>
+<p>Additionally, you can use the following options:</p>
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">Option&nbsp;/&nbsp;Alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Parameter</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b><code>-h</code></b></td>
+            <td><code>--help</code></td>
+            <td></td>
+            <td>See help for <code>serve</code> command.</td>
+        </tr>
+        <tr>
+            <td><b><code>-p</code></b></td>
+            <td><code>--port</code></td>
+            <td><code>&lt;number&gt;</code></td>
+            <td>Port number to bind the mock-server on. Default: <code>9000</code></td>
+        </tr>
+        <tr>
+            <td><b><code>-q</code></b></td>
+            <td><code>--quite</code></td>
+            <td></td>
+            <td>Disable request logs for the mock-server.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+<pre><code class="lang-sh"># Serve generated SPA at the default port (9000):  
+docma serve path/to/docs
+
+# Serve current working directory:  
+cd path/to/docs &amp;&amp; docma serve
+
+# Serve configured destination directory (this looks for a docma.json):  
+cd path/to/project &amp;&amp; docma serve
+
+# Configure a custom port and serve:  
+docma serve path/to/docs -p 8080
+
+# Serve without request logs:  
+docma serve path/to/docs -q
+</code></pre>
+<p><br></p>
+<h3 id="docma-template-init--path-"><code>docma template init [path]</code></h3>
+<p>Initializes a new Docma template within the given root directory. This generates a skeleton for a template. You should go through the generated files and modify them as you see fit. Check out generated package.json for module configuration.</p>
+<p>Once you complete your template, make sure you publish it to npm. Please test your template thoroughly before you publish.</p>
+<h3 id="docma-template-doctor--path---options-"><code>docma template doctor [path] [options]</code></h3>
+<p>Useful for Docma template authors; diagnoses a given Docma template, looking for structural and configurational issues.</p>
+<p>You can use the following options:</p>
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">Option&nbsp;/&nbsp;Alias&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <th>Parameter</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b><code>-h</code></b></td>
+            <td><code>--help</code></td>
+            <td></td>
+            <td>See help for <code>template doctor</code> command.</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b><code>--first</code></b></td>
+            <td></td>
+            <td>Whether to stop on first fault when diagnosing the template.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+<pre><code class="lang-sh"># Initialize a new Docma template module:  
+docma template init path/to/project
+
+# Initialize a new Docma template module, in current working directory:  
+cd path/to/project &amp;&amp; docma template init
+
+# Diagnose a Docma template module:  
+docma template doctor path/to/project
+
+# Diagnose a template in current working directory:  
+cd path/to/project &amp;&amp; docma template doctor
+
+# Stop immediately at the first fault found:  
+docma template doctor path/to/project --first
+</code></pre>
 </body></html>
