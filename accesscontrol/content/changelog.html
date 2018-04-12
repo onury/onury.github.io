@@ -1,11 +1,12 @@
 
-<html><head></head><body><h2 id="accesscontrol-change-log">AccessControl - Change Log</h2>
-<h3 id="v2-2-1-2018-02-24-">v2.2.1 (2018-02-24)</h3>
+<html><head></head><body><h2 id="accesscontrol---change-log">AccessControl - Change Log</h2>
+<hr />
+<h3 id="v221--2018-02-24-">v2.2.1 (2018-02-24)</h3>
 <ul>
 <li><strong>Fixed</strong> an issue with attribute filtering caused by the core dependency Notation. Now <a href="https://github.com/onury/notation/issues/7">fixed</a> and updated.</li>
 <li><strong>(Dev)</strong> Updated dev-dependencies to latest versions. Removed yarn.</li>
 </ul>
-<h3 id="v2-2-0-2017-11-25-">v2.2.0 (2017-11-25)</h3>
+<h3 id="v220--2017-11-25-">v2.2.0 (2017-11-25)</h3>
 <p><strong>This release greatly improves stability!</strong></p>
 <ul>
 <li><strong>Fixed</strong> an issue where action and possession of a permission query is not pre-normalized. Only   <code>#permission()</code> method was affected.</li>
@@ -20,7 +21,7 @@
 <li><strong>(Dev)</strong> Adapted <code>yarn</code>. Enabled test coverage via <code>jest</code>. Added <code>coveralls</code> support.</li>
 <li><strong>(Dev)</strong> Added moooore tests. Revised code style. Improved coverage.</li>
 </ul>
-<h3 id="v2-0-0-2017-10-05-">v2.0.0 (2017-10-05)</h3>
+<h3 id="v200--2017-10-05-">v2.0.0 (2017-10-05)</h3>
 <ul>
 <li><strong>Breaking-Change</strong>: Cross role inheritance is no more allowed. Fixes <a href="https://github.com/onury/accesscontrol/issues/18">issue #18</a>.</li>
 <li><strong>Breaking-Change</strong>: Grants model cannot be emptied any more by omitting the parameter (e.g. <code>#setGrants()</code>) or passing <code>null</code>, <code>undefined</code>. This will throw. You need to either, explicitly call <code>#reset()</code> or set grants to an empty object (<code>{}</code>) in order to reset/empty grants safely. </li>
@@ -35,23 +36,23 @@
 <li><strong>Revised</strong> <code>AccessControl</code> to throw if any reserved keywords are used (i.e. for role, resource names) such as <code>"$"</code>, <code>"$extend"</code>.</li>
 <li><strong>Added</strong> the ability to parse comma-separated attributes. You can now use this, in addition to string arrays; for defining resource attributes.</li>
 </ul>
-<h3 id="v1-5-4-2017-09-22-">v1.5.4 (2017-09-22)</h3>
+<h3 id="v154--2017-09-22-">v1.5.4 (2017-09-22)</h3>
 <ul>
 <li><strong>Fixed</strong> an issue where the static method <code>AccessControl.filter()</code> does not return the filtered data properly. Fixes <a href="https://github.com/onury/accesscontrol/issues/16">issue #16</a>.</li>
 </ul>
-<h3 id="v1-5-3-2017-08-25-">v1.5.3 (2017-08-25)</h3>
+<h3 id="v153--2017-08-25-">v1.5.3 (2017-08-25)</h3>
 <ul>
 <li><strong>Improvement</strong>: Errors are now thrown with more <a href="https://github.com/onury/accesscontrol/issues/13#issuecomment-324755478">meaningful messages</a>.</li>
 </ul>
-<h3 id="v1-5-2-2017-07-02-">v1.5.2 (2017-07-02)</h3>
+<h3 id="v152--2017-07-02-">v1.5.2 (2017-07-02)</h3>
 <ul>
 <li><strong>Fixed</strong> an issue where the grants were not processed into the inner grants model structure; if an array is passed to <code>AccessControl</code> constructor; instead of using <code>.setGrants()</code>. Fixes <a href="https://github.com/onury/accesscontrol/issues/10">issue #10</a>.</li>
 </ul>
-<h3 id="v1-5-1-2017-05-24-">v1.5.1 (2017-05-24)</h3>
+<h3 id="v151--2017-05-24-">v1.5.1 (2017-05-24)</h3>
 <ul>
 <li><strong>Fixed</strong> TS import issue. Use <code>import { AccessControl } from 'accesscontrol'</code> in TypeScript projects.</li>
 </ul>
-<h3 id="v1-5-0-2017-03-08-">v1.5.0 (2017-03-08)</h3>
+<h3 id="v150--2017-03-08-">v1.5.0 (2017-03-08)</h3>
 <ul>
 <li><strong>Improvement</strong>: Migrated whole code base to TypeScript.</li>
 <li><strong>Added</strong> more strict validation checks. It will now throw on invalid information passed for both grants and permission checks. This helps prevent typos, unintended permission checks, etc...</li>
@@ -60,12 +61,12 @@
 <li><strong>Improvement</strong>: You could grant permissions for multiple roles at once. Now, you can also grant permissions for multiple resources at the same time. This is very handy when you permit <em>all attributes</em> of the resources; e.g. <code>ac.grant(['admin', 'superadmin']).readAny(['account', 'video'], ['*'])</code>. The caveat is that the resources (most probably) have different attributes; so you can either permit all, or only common attributes (e.g. <code>['id', 'name']</code>).</li>
 <li><strong>Improvement</strong>: Extending a role with a non-existent role will now throw.</li>
 </ul>
-<h3 id="v1-0-1-2016-11-09-">v1.0.1 (2016-11-09)</h3>
+<h3 id="v101--2016-11-09-">v1.0.1 (2016-11-09)</h3>
 <ul>
 <li><strong>Fixed</strong> a syntax issue that throws when permission filter is called. Fixes <a href="https://github.com/onury/accesscontrol/issues/1">issue #1</a>.</li>
 <li>(Dev) added filter test.</li>
 </ul>
-<h3 id="v1-0-0-2016-09-10-">v1.0.0 (2016-09-10)</h3>
+<h3 id="v100--2016-09-10-">v1.0.0 (2016-09-10)</h3>
 <ul>
 <li>initial release.</li>
 </ul>

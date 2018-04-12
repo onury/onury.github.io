@@ -1,6 +1,6 @@
 
 <html><head></head><body><h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<hr>
+<hr />
 <blockquote>
 <p><em>This FAQ provides general information about the term "Access Control" but most definitions are specific to AccessControl.js - how the library is implemented.</em></p>
 </blockquote>
@@ -80,7 +80,7 @@ ac.grant('monkey').createOwn('banana');        // resource is defined for the fi
 ac.hasResource('banana');                      // true
 ac.can('monkey').createOwn('banana').granted   // true
 </code></pre>
-<h3 id="can-i-use-accesscontrol-js-with-a-database-how-">Can I use AccessControl.js with a database? How?</h3>
+<h3 id="can-i-use-accesscontroljs-with-a-database--how-">Can I use AccessControl.js with a database? How?</h3>
 <p>(MySQL,  PostgreSQL, MongoDB, etc..)</p>
 <p>AccessControl.js is not coupled with any kind of database system. Actually it's unrelated. It only grants or denies access to a resource. The rest depends on your application's logic and decisions you (the developer) make.</p>
 <p>Here is a scenario;</p>
@@ -181,7 +181,7 @@ if (permission.granted) {
     console.log('Access Denied!');
 }
 </code></pre>
-<h3 id="what-to-do-when-accesscontrol-js-throws-an-error-">What to do when AccessControl.js throws an error?</h3>
+<h3 id="what-to-do-when-accesscontroljs-throws-an-error-">What to do when AccessControl.js throws an error?</h3>
 <p>Granting permissions for valuable resources and managing access levels for user roles... This is a highly sensitive context; in which mostly, any failure or exception becomes critical. So in any case, an <code>AccessControlError</code> is thrown right away. <strong>No silent errors</strong>!</p>
 <p><strong>In Development:</strong>
 Hard-test your application with all or most possible use cases, in terms of access management and control. If you see any <code>AccessControlError</code> thrown you should definitely fix it immediately. Because this typically indicates that your grants model either has a logical or technical flaw.</p>
