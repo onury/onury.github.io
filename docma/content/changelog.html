@@ -2,6 +2,40 @@
 <html><head></head><body><h1 id="docma-changelog">Docma Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
+<h2 id="210--2018-04-29-"><a href="https://github.com/onury/docma/compare/v2.0.0...v2.1.0">2.1.0</a> (2018-04-29)</h2>
+<hr />
+<h3 id="docma-cli">Docma CLI</h3>
+<blockquote>
+<p>Thanks to <a href="https://github.com/feugy">@feugy</a> for this PR.</p>
+</blockquote>
+<h4 id="added">Added</h4>
+<ul>
+<li><code>serve</code> command now takes <code>conf.app.base</code> parameter into consideration, and will redirect <code>http://localhost:9000/</code> to it.</li>
+</ul>
+<h4 id="fixed">Fixed</h4>
+<ul>
+<li><code>serve</code> command can handle <code>conf.app.dest</code> relative path, and resolves them against current working directory. </li>
+<li>A file name issue that produces <code>cannot find module</code> error in case-sensitive systems. Fixes <a href="https://github.com/onury/docma/issues/38">#38</a>.</li>
+</ul>
+<h4 id="changed">Changed</h4>
+<ul>
+<li>Renamed the <code>--quite</code> option to <code>--quiet</code>. Alias <code>-q</code> remains the same.</li>
+</ul>
+<h3 id="default-template---zebra-v210">Default Template - Zebra <code>v2.1.0</code></h3>
+<h4 id="added">Added</h4>
+<ul>
+<li>Partial support for TypeScript-style type notation. e.g. <code>Promise&lt;Number&gt;</code> or <code>Number[]</code>, etc...</li>
+</ul>
+<h4 id="fixed">Fixed</h4>
+<ul>
+<li>An issue where deeper levels of tree nodes were not properly aligned, when <code>sidebar.outline</code> is set to <code>"tree"</code>.</li>
+<li>An issue where some symbol names were unnecessarily scroll-animated on hover. Firefox was affected.</li>
+<li>An issue where multiple return types were listed out of style.</li>
+</ul>
+<h4 id="changed">Changed</h4>
+<ul>
+<li>When <code>sidebar.itemsOverflow</code> is set to <code>"crop"</code> (default); symbol names are faded-out on their edges, instead of using ellipsis (which behaves differently on browsers).</li>
+</ul>
 <h2 id="200--2018-04-12-"><a href="https://github.com/onury/docma/compare/v1.5.3...v2.0.0">2.0.0</a> (2018-04-12)</h2>
 <hr />
 <blockquote>
@@ -234,7 +268,7 @@
 <h3 id="docma-cli">Docma CLI</h3>
 <h4 id="changed">Changed</h4>
 <ul>
-<li>Respecting debug option in config file. If no debug options are set in the command-line arguments (such as <code>--debug</code>, <code>--quite</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>--verbose</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</li>
+<li>Respecting debug option in config file. If no debug options are set in the command-line arguments (such as <code>--debug</code>, <code>--quiet</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>--verbose</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</li>
 </ul>
 <h3 id="docma-web-core">Docma Web Core</h3>
 <h4 id="fixed">Fixed</h4>

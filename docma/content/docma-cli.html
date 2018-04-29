@@ -32,7 +32,7 @@
             <td><code>&lt;path&gt;</code></td>
             <td>
                 Docma JSON configuration file path.
-                You can define all build options within this file. Any option (below) set via CLI will overwrite the value defined in this file.
+                You can define all build options within this file. Any option (below) set via CLI will override the value defined in this file.
             </td>
         </tr>
         <tr>
@@ -84,7 +84,7 @@
         </tr>
         <tr>
             <td><b><code>-q</code></b></td>
-            <td><code>--quite</code></td>
+            <td><code>--quiet</code></td>
             <td></td>
             <td>(Debug) Disable build logs for the Node console.</td>
         </tr>
@@ -138,7 +138,7 @@ docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js
         </tr>
         <tr>
             <td><b><code>-q</code></b></td>
-            <td><code>--quite</code></td>
+            <td><code>--quiet</code></td>
             <td></td>
             <td>Disable request logs for the mock-server.</td>
         </tr>

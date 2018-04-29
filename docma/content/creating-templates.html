@@ -253,7 +253,7 @@ docma.once('ready', function () {
 </code></pre>
 <p>The <code>ready</code> event will only be fired once, right after the initial load. To execute some code after each content or page is rendered, you should use the <code>render</code> event instead.</p>
 <pre><code class="lang-js">// run this in any js file in the browser
-docma.on('render', currentRoute =&gt; {
+docma.on('render', function (currentRoute) {
     if (!currentRoute) {
         console.log('Page not found!');
         return;
