@@ -1,0 +1,73 @@
+
+<html><head></head><body><h1 id="jsonc">jsonc</h1>
+<hr />
+<p><a href="https://travis-ci.org/onury/jsonc"><img src="https://img.shields.io/travis/onury/jsonc.svg?branch=master&amp;style=flat-square" alt="build-status" style="max-width: 100%;"></a>
+<a href="https://coveralls.io/github/onury/jsonc?branch=master"><img src="https://coveralls.io/repos/github/onury/jsonc/badge.svg?branch=master&amp;style=flat-square" alt="coverage-status" style="max-width: 100%;"></a>
+<a href="https://www.npmjs.com/package/jsonc"><img src="http://img.shields.io/npm/v/jsonc.svg?style=flat-square" alt="npm" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/jsonc"><img src="https://img.shields.io/github/release/onury/jsonc.svg?style=flat-square" alt="release" style="max-width: 100%;"></a>
+<a href="https://david-dm.org/onury/jsonc"><img src="https://david-dm.org/onury/jsonc.svg?style=flat-square" alt="dependencies" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/jsonc/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/jsonc.svg?style=flat-square" alt="license" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/jsonc/graphs/punch-card"><img src="https://img.shields.io/maintenance/yes/2018.svg?style=flat-square" alt="maintained" style="max-width: 100%;"></a>  </p>
+<blockquote>
+<p>© 2018, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
+</blockquote>
+<p>Everything you need in JSON land.</p>
+<p><code>npm i jsonc</code></p>
+<h2 id="features">Features</h2>
+<hr />
+<ul>
+<li>Parse JSON with comments.</li>
+<li>Stringify objects with circular references.</li>
+<li>Safely parse / stringify without try/catch blocks.</li>
+<li>Read and auto-parse JSON files gracefully, sync or async (with promises).</li>
+<li>Auto-stringify and write JSON files gracefully, sync or async (with promises).</li>
+<li>Strips UTF-8 BOM.</li>
+<li>Log objects as JSON (without worrying about errors).</li>
+<li>Uglify/beautify JSON strings.</li>
+<li>More helpful JSON errors.</li>
+<li>Friendly API.</li>
+<li>TypeScript support.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<hr />
+<p>See the concise <a href="https://onury.io/jsonc/api">API reference</a>.</p>
+<pre><code class="lang-js">const jsonc = require('jsonc');
+// or
+import { jsonc } from 'jsonc';
+</code></pre>
+<p>This is safe for JSON with comments:</p>
+<pre><code class="lang-js">jsonc.parse('// comment\n{"data": /* comment */ "value"}\n'); // » { data: 'value' }
+</code></pre>
+<p>And this is safe for circular references:</p>
+<pre><code class="lang-js">const obj = { x: 1 };
+obj.y = obj; // circular
+jsonc.stringify(obj); // » { x: 1, y: '[Circular]' }
+</code></pre>
+<p>But this is seriously safe:</p>
+<pre><code class="lang-js">// safe version of every method
+const jsonc = require('jsonc').safe;
+// or
+import { safe as jsonc } from 'jsonc';
+
+const [err, result] = jsonc.parse('[invalid JSON}');
+if (err) {
+    console.log(`Failed to parse JSON: ${err.message}`);
+} else {
+    console.log(result);
+}
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<hr />
+<p>See the concise <a href="https://onury.io/jsonc/api">API reference</a>.</p>
+<h2 id="change-log">Change Log</h2>
+<hr />
+<ul>
+<li><strong>v1.0.0</strong> (2018-10-18)<ul>
+<li>Initial release.</li>
+</ul>
+</li>
+</ul>
+<h2 id="license">License</h2>
+<hr />
+<p>MIT.</p>
+</body></html>
