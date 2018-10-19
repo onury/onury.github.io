@@ -3,6 +3,8 @@ alfred-video-downloader:
     npm: false
 custom-error-test:
     npm: false
+json-more:
+    hidden: true
 ocpp:
     hidden: true
 onury.github.io:
