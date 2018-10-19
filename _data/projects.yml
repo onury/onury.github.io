@@ -3,9 +3,13 @@ alfred-video-downloader:
     npm: false
 custom-error-test:
     npm: false
+grunt-docma:
+    hidden: true
 json-more:
     hidden: true
 ocpp:
+    hidden: true
+oscp:
     hidden: true
 onury.github.io:
     npm: false
