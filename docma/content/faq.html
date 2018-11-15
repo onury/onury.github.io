@@ -1,0 +1,154 @@
+
+<html><head></head><body><h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<hr />
+<img align="right" width="150" height="150" src="https://onury.io/docma/img/docma-faq.png" style="max-width: 100%;">
+
+<details>
+<summary>
+<b>How do I group the docs generated from multiple JS file under the same route / page?</b>
+</summary>
+
+
+<div class="details-content"><p>Simply define a name for that group of files by using an object. Example <code>docma.json</code> for build configuration: </p><pre><code class="language-json">{ 
+    "src": { 
+        "my-lib": [
+            "./dir/**/*.js", 
+            "./another.js",
+            "!./exclude/*.js"
+        ]
+    },
+    "app": {
+        "routing": "query"
+    },
+    "dest": "./docs"
+}</code></pre><p>The route for <code>my-lib</code> documentation will be <code>/?api=my-lib</code>.</p></div>
+
+
+</details>
+
+
+<details>
+<summary>
+<b>Should I group my JS files under the route name `"api"`?</b>
+</summary>
+
+
+<div class="details-content"><p>No. <code>"api"</code> is the default group/route name and it's a reserved word. Any ungrouped JS files will be grouped under <code>"api"</code>. e.g. <code>{ src: "lib/**/*.js" }</code> is available at the route <code>/?api</code> (if routing method is <code>"query"</code>) or <code>/api</code> (if routing method is <code>"path"</code>).</p></div>
+</details>
+
+
+<details>
+<summary>
+<b>How can I document my <code>README.md</code> and rename its route?</b>
+</summary>
+
+
+<div class="details-content"><p>You simply define an object within the <code>src</code> option.</p><pre><code class="language-json">{
+    "src": [
+        { "guide": "./README.md" }
+    ],
+    "dest": "./docs"
+}</code></pre><p>The route for <code>README</code> content will be <code>/?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>/guide</code> (if routing method is <code>"path"</code>). See <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+
+
+</details>
+
+
+<details>
+<summary>
+<b>Can I include additional static files within my documentation output?</b>
+</summary>
+
+
+<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>.</p></div>
+</details>
+
+
+<details>
+<summary>
+<b>How can I change the initial (default) page of the generated web app?</b>
+</summary>
+
+
+<div class="details-content"><p>You change the entrance by setting the <code>app.entrance</code> option. Use <code>content:</code> prefix if the source is a markdown or HTML file; or <code>api:</code> prefix if the source is JS file(s).</p><pre><code class="language-json">{
+    "src": [
+        { "guide": "./README.md" }
+    ],
+    "app": {
+        "entrance": "content:guide"
+    },
+    "dest": "./docs"
+}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>/?content=guide</code>. See <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+
+
+</details>
+
+
+<details>
+<summary>
+<b>How can I test the built documentation (web app)?</b>
+</summary>
+
+
+<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="https://onury.io/docma/?content=docma-cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
+</details>
+
+
+<details>
+<summary>
+<b>How can I debug the build process, documentation output and the web app?</b>
+</summary>
+
+
+<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/?content=docma-cli"><code>--debug</code> option</a> enabled. <code>docma --debug</code> will build with all debugging features enabled. </p><p>The build process will output detailed logs to the console, the web application will output web logs, scripts running the app will not be minified and also, Docma will output raw JSDoc documentation data in JSON format; for each grouped JS files parsed.</p></div>
+
+</details>
+
+
+<details>
+<summary>
+<b>Is there any example build configuration?</b>
+</summary>
+
+
+<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
+
+</details>
+
+
+<details>
+<summary>
+<b>Documentation is built but I get <code>ENOENT: no such file or directory</code> error.</b>
+</summary>
+
+
+<div class="details-content"><p>This is typically due to incorrect or missing application base definition. For example, try adding <code>"base": "/"</code> for <code>app</code> in your build configuration.</p></div>
+</details>
+
+
+<details>
+<summary>
+<b>Sidebar outline is displayed incorrectly. (Zebra template)</b>
+</summary>
+
+
+<div class="details-content"><p>This is typically a user / documenting issue. (And it's a good thing to see it visually with the sidebar outline).</p><p>First of all, run CLI with debug option enabled (i.e. <code>docma --debug</code>) to output parsed JSDoc data as JSON files and inspect how they your symbols/docs are parsed.</p><p>Generally this kind of issue is resolved by either using <code>@memberof</code> or <code>@memberof!</code> tags (notice the bang suffix) or instead; organizing via specifying the full name via <code>@name</code> tag. (<em>Note that when you do, you'll also need to specify the type. e.g. <code>@function</code> if it's a method.</em>)</p><p>Another reason for this could be that you are missing some symbols in your documentation. JavaScript files are generally grouped under a route name by specifying a group name in the <code>src</code> of the build configuration. Or if no group is specified, they'll be merged under the default group. If any level of a symbol is not defined in your documentation, you will get a broken tree. e.g. <code>UndocumentedNamespace.DocumentedObject</code>.</p><p>See <a href="https://github.com/onury/docma/issues/58#issuecomment-438111228">this thread</a> for more details.</p></div>
+
+
+
+
+</details>
+
+
+<details>
+<summary>
+<b>Can I create my own template(s)?</b>
+</summary>
+
+
+<div class="details-content"><p>Yes. See <a href="https://onury.io/docma/?content=creating-templates">this section</a> on creating/publishing custom templates.</p></div>
+</details>
+
+
+
+</body></html>

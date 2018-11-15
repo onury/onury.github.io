@@ -95,7 +95,7 @@
 <p><em>Note: If no debug options are set in the CLI arguments (such as <code>--debug</code>, <code>-q</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>-v</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</em></p>
 </blockquote>
 <h3 id="examples">Examples</h3>
-<pre><code class="lang-sh"># Build documentation with a Docma configuration (JSON) file:  
+<pre><code class="language-sh"># Build documentation with a Docma configuration (JSON) file:  
 docma -c path/to/docma.json
 
 # If a `docma.json` already exists in the current directory, simply:  
@@ -108,8 +108,7 @@ docma -c path/to/docma.json -d path/to/docs
 docma -c path/to/docma.json -s path/to/lib-1.js -s path/to/lib-2.js
 
 # Define name-grouped source files:  
-docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js
-</code></pre>
+docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js</code></pre>
 <h2 id="commands">Commands</h2>
 <hr />
 <h3 id="docma-serve--path---options-"><code>docma serve [path] [options]</code></h3>
@@ -146,7 +145,7 @@ docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js
 </table>
 
 <h3 id="examples">Examples</h3>
-<pre><code class="lang-sh"># Serve generated SPA at the default port (9000):  
+<pre><code class="language-sh"># Serve generated SPA at the default port (9000):  
 docma serve path/to/docs
 
 # Serve current working directory:  
@@ -159,9 +158,9 @@ cd path/to/project &amp;&amp; docma serve
 docma serve path/to/docs -p 8080
 
 # Serve without request logs:  
-docma serve path/to/docs -q
-</code></pre>
-<p><br></p>
+docma serve path/to/docs -q</code></pre>
+<br>
+
 <h3 id="docma-template-init--path-"><code>docma template init [path]</code></h3>
 <p>Initializes a new Docma template within the given root directory. This generates a skeleton for a template. You should go through the generated files and modify them as you see fit. Check out generated package.json for module configuration.</p>
 <p>Once you complete your template, make sure you publish it to npm. Please test your template thoroughly before you publish.</p>
@@ -192,7 +191,7 @@ docma serve path/to/docs -q
 </table>
 
 <h3 id="examples">Examples</h3>
-<pre><code class="lang-sh"># Initialize a new Docma template module:  
+<pre><code class="language-sh"># Initialize a new Docma template module:  
 docma template init path/to/project
 
 # Initialize a new Docma template module, in current working directory:  
@@ -205,6 +204,5 @@ docma template doctor path/to/project
 cd path/to/project &amp;&amp; docma template doctor
 
 # Stop immediately at the first fault found:  
-docma template doctor path/to/project --first
-</code></pre>
+docma template doctor path/to/project --first</code></pre>
 </body></html>

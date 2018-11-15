@@ -147,16 +147,14 @@
 
 <h3 id="creating-custom-filters">Creating Custom Filters</h3>
 <p>You can also create your own custom filters using either the <code>dust</code> object or shorthand methods defined by <a href="?api=docma-web#docma.addFilter">Docma Web</a>.</p>
-<pre><code class="lang-js">// filter that adds parenthesis if the symbol is a method.
+<pre><code class="language-js">// filter that adds parenthesis if the symbol is a method.
 docma.addFilter('$parenths', function (symbol) {
     return docma.utils.isMethod(symbol)
         ? symbol.longname + '()'
         : symbol.longname;
-});
-</code></pre>
+});</code></pre>
 <h3 id="example-usage-in-partials">Example Usage in Partials</h3>
 <pre><code>{#documentation}
     &lt;h3&gt;{.|$parenths}&lt;/h3&gt;
     &lt;p&gt;{description|s}&lt;/p&gt;
-{/documentation}
-</code></pre></body></html>
+{/documentation}</code></pre></body></html>

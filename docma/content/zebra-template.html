@@ -16,7 +16,7 @@
 <hr />
 <ol>
 <li>Make sure you have the latest <a href="https://github.com/onury/docma">Docma</a> installed.</li>
-<li>Although Zebra is installed together with Docma, you can still install/update this template globally via <strong>npm</strong>: <code>npm i docma-template-zebra -g</code></li>
+<li>Although Zebra is installed together with Docma, you can still install/update this template via <strong>npm</strong>: <code>npm i docma-template-zebra -D</code></li>
 <li>Set <code>template.path</code> to <code>"default"</code> or <code>"zebra"</code> or omit it in your build configuration (docma.json).</li>
 <li>Configure and set <code>template.options</code> as described below.</li>
 </ol>
@@ -281,7 +281,7 @@
             <td><code><b>iconClass</b></code></td>
             <td><code>String</code></td>
             <td>
-                One of FontAwsome (v5) Free icon CSS classes. e.g. <code>"fab fa-github"</code>. You can combine this with a class that define the size of the icon such as <code>"fab fa-github fa-w-16"</code>. See <a target="_blank" href="https://fontawesome.com/how-to-use/svg-with-js">this</a> on how to use FontAwsome v5 icons for details. Default: <code>undefined</code>
+                One of FontAwsome (v5) Free icon CSS classes. e.g. <code>"fab fa-github"</code>. You can combine this with a class that define the size of the icon such as <code>"fab fa-github fa-w-16"</code>. See <a target="_blank" rel="noopener noreferrer" href="https://fontawesome.com/how-to-use/svg-with-js">this</a> on how to use FontAwsome v5 icons for details. Default: <code>undefined</code>
             </td>
         </tr>
         <tr>
@@ -304,7 +304,7 @@
 <h2 id="usage-with-docma">Usage with Docma</h2>
 <hr />
 <p>Template options are defined within the <a href="?api=docma#Docma~BuildConfiguration">build configuration</a>. i.e. in a <code>docma.json</code> file.</p>
-<pre><code class="lang-js">{
+<pre><code class="language-js">{
     "template": {
         // Docma Template to be used. 
         // Either a path, module name or "default"
@@ -382,21 +382,18 @@
     },
     // other build configuration options
     // src, dest, app, jsdoc, markdown, debug, etc...
-}
-</code></pre>
+}</code></pre>
 <p>Then you can build your documentation with these customized template options.</p>
-<pre><code class="lang-js">Docma.create()
+<pre><code class="language-js">Docma.create()
     .build('path/to/docma.json')
     .then(() =&gt; {
         console.log('Documentation is built successfully.');
     })
     .catch(err =&gt; {
         console.log(err);
-    });
-</code></pre>
+    });</code></pre>
 <p>...or build via CLI:</p>
-<pre><code class="lang-sh">docma -c path/to/docma.json
-</code></pre>
+<pre><code class="language-sh">docma -c path/to/docma.json</code></pre>
 <h2 id="changelog">Changelog</h2>
 <hr />
 <p>See <a href="https://github.com/onury/docma/blob/master/templates/zebra/CHANGELOG.md"><strong>CHANGELOG</strong></a>.<br><em>Note: If you're upgrading from Zebra v1.x to v2.x, there are some <a href="https://github.com/onury/docma/blob/master/templates/zebra/CHANGELOG.md"><strong>breaking changes</strong></a>.</em></p>
