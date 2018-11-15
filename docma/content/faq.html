@@ -1,7 +1,7 @@
 
 <html><head></head><body><h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 <hr />
-<img align="right" width="150" height="150" src="https://onury.io/docma/img/docma-faq.png" style="max-width: 100%;">
+<img align="right" width="120" height="120" src="https://onury.io/docma/img/docma-faq.png" style="max-width: 100%;">
 
 <details>
 <summary>
@@ -61,6 +61,25 @@
 
 
 <div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>.</p></div>
+</details>
+
+
+<details>
+<summary>
+<b>Can I force Docma to parse markdown or HTML files with non-standard (or no) extensions?</b>
+</summary>
+
+
+<div class="details-content"><p>Yes. For files with markdown content, append <code>:md</code> or <code>:markdown</code> suffix. For HTML files, append <code>:htm</code> or <code>:html</code>. </p><pre><code class="language-js">{ 
+    "src": { 
+        "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ /?content=license
+        "article": "file.partial:html",     // force-parsed to HTML. SPA route @ /?content=article
+        "my-lib": "./src/**/*.js"           // JS, API files. SPA route @ /?api=my-lib
+    },
+    "dest": "./docs"
+}</code></pre><p>For forcing JSDoc on JavaScript files without a proper extension you can use <code>:js</code> or <code>:jsx</code> but this is not recommended. Use <code>jsdoc.includePattern</code> of your build configuration instead.</p></div>
+
+
 </details>
 
 
