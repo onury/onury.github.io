@@ -2,7 +2,7 @@
 <html><head></head><body><h1 id="docma-changelog">Docma Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
-<h2 id="300--2018-11-11-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (2018-11-11)</h2>
+<h2 id="300--unreleased-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (UNRELEASED)</h2>
 <hr />
 <h4 id="changed">Changed</h4>
 <ul>
@@ -19,9 +19,14 @@
 <li>An issue where documentation build would fail due to a symbol name being a non-string value. Fixes <a href="https://github.com/onury/docma/issues/54">#54</a>.</li>
 <li>An issue where the web app would throw <code>Uncaught TypeError</code> when invalid JSDoc type specified for <code>@returns</code>. Fixes <a href="https://github.com/onury/docma/issues/55">#55</a>.</li>
 <li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with generated documentation links.</li>
+<li>An issue where Docma would not set default <code>app.base</code> path to <code>/</code> as expected. Fixes <a href="https://github.com/onury/docma/issues/59">#59</a>.</li>
 </ul>
 <h3 id="default-template---zebra-v220">Default Template - Zebra <code>v2.2.0</code></h3>
 <p><em>This version of Zebra template still supports Docma <code>2.0.0</code> and later.</em></p>
+<h4 id="added">Added</h4>
+<ul>
+<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags).</li>
+</ul>
 <h4 id="changed">Changed</h4>
 <ul>
 <li>Improved support for constants.</li>

@@ -29,7 +29,7 @@
 
 <details>
 <summary>
-<b>Should I group my JS files under the route name `"api"`?</b>
+<b>Should I group my JS files under the route name <code>"api"</code>?</b>
 </summary>
 
 
@@ -105,7 +105,7 @@
 
 <details>
 <summary>
-<b>How can I test the built documentation (web app)?</b>
+<b>How can I test the generated documentation (web app)?</b>
 </summary>
 
 
@@ -115,13 +115,58 @@
 
 <details>
 <summary>
+<b>How to configure <code>docma.json</code> so that it is served the same way on both remote (e.g. GitHub Pages) and local?</b>
+</summary>
+
+
+<div class="details-content"><p>Generally users tend to set the documentation destination within their local repo; such as a <code>/docs</code> directory in the project's root. And run <code>docma serve</code> to test it. That's all right if <code>app.base</code> is set to <code>/</code>. </p><p>But this kind of structure might not work on some remote environments. For example, if you're using GitHub Pages for multiple documentations, you will need to create a separate directory for each documentation. i.e. <code>&lt;GHP-root&gt;/library</code>. So in this case; for the SPA to work; you need to set the <code>app.base</code> to <code>/library</code>.</p><p><em>Setting a base path means; what ever the root your server starts in; it should have that path of directories in it.</em></p><p>Here is one way / suggestion to get the same experience for both remote (GitHub Pages) and local;</p><p><b>Example local directory structure:</b></p><pre><code class="language-sh">🗂                          # developer root dir
+├── 🗂 docs                 # GitHub Pages local repo
+│   ├── 🗂 library-1        # docs generated for library-1
+│   ├── 🗂 library-2        # docs generated for library-2
+├── 🗂 library-1            # library-1 local repo
+├── 🗂 library-2            # library-2 local repo
+├── 🗂 ...</code></pre><p><b>Example <code>docma.json</code> for this structure:</b><br><em>Configuration for library-1...</em></p><pre><code class="language-js">{
+    "src": ["*.md", "./src/*.js"],
+    "dest": "../docs/library-1",    // «— note that we're going one level up
+    "app": {
+        "base": "/library-1"        // «— bec. in GHP our docs will be placed in &lt;root&gt;/library-1
+    }
+}</code></pre><p>Run <code>docma serve</code> from within <code>/library-1</code> (local repo dir) to test locally.</p></div>
+
+
+
+
+
+
+
+
+</details>
+
+
+<details>
+<summary>
+<b>How can I hide/remove some of the content in the output generated from a markdown file?</b>
+</summary>
+
+
+<div class="details-content"><p>If you're using the same markdown file on both GitHub repo and your Docma generated documentation; you can wrap that content with <code>&lt;div class="docma-ignore"&gt;&lt;/div&gt;</code> to hide it in Docma generated output. If you want the content to be removed entirely, use the class name <code>docma-remove</code> instead. <em>(Feature available since Docma v3.0.0).</em></p></div>
+</details>
+
+
+<details>
+<summary>
 <b>How can I debug the build process, documentation output and the web app?</b>
 </summary>
 
 
-<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/?content=docma-cli"><code>--debug</code> option</a> enabled. <code>docma --debug</code> will build with all debugging features enabled. </p><p>The build process will output detailed logs to the console, the web application will output web logs, scripts running the app will not be minified and also, Docma will output raw JSDoc documentation data in JSON format; for each grouped JS files parsed.</p></div>
-
+<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/?content=docma-cli"><code>docma --debug</code></a> (or set <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
+<li>The build process will output detailed logs to the console, </li>
+<li>The web application will output web logs, </li>
+<li>Scripts running the app will not be minified,</li>
+<li>Docma will output raw JSDoc documentation data in JSON format; for each grouped JS files parsed.</li></ul></div>
 </details>
+
+
 
 
 <details>
@@ -147,7 +192,7 @@
 
 <details>
 <summary>
-<b>Sidebar outline is displayed incorrectly. (Zebra template)</b>
+<b>Symbols in sidebar outline is displayed incorrectly. (Zebra template)</b>
 </summary>
 
 
