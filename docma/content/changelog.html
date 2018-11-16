@@ -6,12 +6,13 @@
 <hr />
 <h4 id="changed">Changed</h4>
 <ul>
-<li><strong>BREAKING</strong>: Dropped support for Node.js versions 6 &amp; 7. Requires Node.js v8 and later. This change is due to updates to the core dependencies <code>fs-extra</code> and <code>jsdom</code>.</li>
+<li><strong>BREAKING</strong>: Dropped support for Node.js versions 6 &amp; 7. Requires Node.js v8 and later. This change is due to updates to the core dependencies such as <code>fs-extra</code> and <code>jsdom</code>.</li>
 </ul>
 <h4 id="added">Added</h4>
 <ul>
 <li>Ability to force parser type on defined files/paths; by appending a suffix. For Markdown, append <code>:md</code> or <code>:markdown</code>. For HTML, append <code>:htm</code> or <code>html</code>. For example, <code>LICENSE:md</code> will force-parse <code>LICENSE</code> file to markdown. <code>file.partial:html</code> will force-parse <code>file.partial</code> to HTML. For forcing JSDoc on JavaScript files without a proper extension you can use <code>:js</code> or <code>:jsx</code> but this is not recommended. Use <code>jsdoc.includePattern</code> of your build configuration instead.</li>
-<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled F.A.Q. from your markdown files. See <a href="https://onury.io/docma/?content=faq">Docma F.A.Q.</a> for an example.</li>
+<li>Support for favicon. Set <code>app.favicon</code> to your ICO file's local path.</li>
+<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. See <a href="https://onury.io/docma/?content=faq">Docma F.A.Q.</a> for an example.</li>
 <li>Ability to hide or remove specific, partial content from Docma output. For example if you want some <strong>part</strong> of your README to be visible in GitHub repo but not in your Docma generated documentation; you can wrap that content with <code>&lt;div class="docma-ignore"&gt;&lt;/div&gt;</code>. If you want the content to be removed entirely, use the class name <code>docma-remove</code> instead.</li>
 </ul>
 <h4 id="fixed">Fixed</h4>
@@ -30,6 +31,10 @@
 <h4 id="changed">Changed</h4>
 <ul>
 <li>Improved support for constants.</li>
+</ul>
+<h4 id="fixed">Fixed</h4>
+<ul>
+<li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with parsed documentation links.</li>
 </ul>
 <h2 id="210--2018-04-29-"><a href="https://github.com/onury/docma/compare/v2.0.0...v2.1.0">2.1.0</a> (2018-04-29)</h2>
 <hr />
