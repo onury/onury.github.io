@@ -48,7 +48,7 @@
         { "guide": "./README.md" }
     ],
     "dest": "./docs"
-}</code></pre><p>The route for <code>README</code> content will be <code>?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>guide/</code> (if routing method is <code>"path"</code>). See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>The route for <code>README</code> content will be <code>?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>guide/</code> (if routing method is <code>"path"</code>). See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
 
 
 </details>
@@ -88,7 +88,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>.</p></div>
+<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="api/#Docma~BuildConfiguration">build configuration</a>.</p></div>
 </details>
 
 
@@ -125,7 +125,7 @@
         "entrance": "content:guide"
     },
     "dest": "./docs"
-}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>?content=guide</code>. See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>?content=guide</code>. See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
 
 
 </details>
@@ -137,7 +137,7 @@
 </summary>
 
 
-<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="https://onury.io/docma/cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
+<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
 </details>
 
 
@@ -250,7 +250,7 @@
 </summary>
 
 
-<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/cli"><code>docma --debug</code></a> (or set <a href="https://onury.io/docma/api/#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
+<div class="details-content"><p>Simply build your documentation with <a href="cli"><code>docma --debug</code></a> (or set <a href="api/#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
 <li>The build process will output detailed logs to the console, </li>
 <li>The web application will output web logs, </li>
 <li>Scripts running the app will not be minified,</li>
@@ -266,7 +266,7 @@
 </summary>
 
 
-<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
+<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="api/#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
 
 </details>
 
@@ -301,7 +301,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. See <a href="https://onury.io/docma/creating-templates">this section</a> on creating/publishing custom templates.</p></div>
+<div class="details-content"><p>Yes. See <a href="creating-templates">this section</a> on creating/publishing custom templates.</p></div>
 </details>
 
 
