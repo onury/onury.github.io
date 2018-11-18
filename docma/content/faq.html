@@ -82,6 +82,117 @@
 </details>
 
 
+<details id="linking">
+<summary>
+<b>How does linking work in JSDoc comments and Markdown files?</b>
+</summary>
+
+
+<div class="details-content"><p>For links to get parsed, you should use the JSDoc <a href="http://usejsdoc.org/tags-inline-link.html"><code>@link</code></a> tag in JSDoc comments. Links in markdown work no differently. But you should take some rules into consideration.</p><ul>
+<li><strong>Absolute</strong>: If the link reference has a leading <code>/</code>, it's an absolute path. e.g. <code>/absolute</code></li>
+<li><strong>Relative</strong>: If it has a <code>/</code> but it's either in the middle or at the end, it's a relative path. e.g. <code>relative/</code> or <code>deep/relative</code>.</li>
+<li><strong>Symbol Bookmark</strong>: In <em>JSDoc comments</em>, if it has no <code>/</code>, then it's considered a symbol name path and parsed as a bookmark. e.g. <code>name</code> parsed to <code>#name</code>.</li>
+<li><strong>API or Symbol Link</strong>: In both JSDoc and Markdown; if you're linking a symbol served from a different route, you should always include the full route path with the <code>api</code> keyword. For example; <ul>
+<li><code>api/</code> or <code>api/mylib</code> or <code>api/mylib/#MyClass</code> (when routing method is <code>path</code>)</li>
+<li><code>?api</code> or <code>?api=mylib</code> or <code>?api=mylib#MyClass</code> (when routing method is <code>query</code>)</li>
+</ul>
+</li>
+<li><strong>Bookmark</strong>: You can still use regular bookmarks such as <code>#bookmark</code>.</li>
+<li><strong>Content Link</strong>: Similar to relative link description above;<ul>
+<li><code>guide/</code> (when routing method is <code>path</code>)</li>
+<li><code>?content=guide</code> (when routing method is <code>query</code>)</li>
+</ul>
+</li>
+</ul><h4 id="linking-in-jsdoc-comments">Linking in JSDoc Comments</h4><p>In JSDoc, links are typically formated as <code>{@link pathOrURL|label}</code>. For the same route/page, you can simply use the namepath of the symbol to link to it as a bookmark. When linking to a symbol or bookmark on another route; the reference of the link should be considered depending on the <a href="api/#Docma.RoutingMethod">routing method</a> set in your build configuration. </p><p>For example, we want to reference our symbol: <code>MyClass</code></p><table>
+<thead>
+    <tr>
+        <th>Linking On/From</th>
+        <th>Routing Method</th>
+        <th>route/group name: <code>mylib</code></th>
+        <th>no group name</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>Same page</td>
+        <td>doesn't matter</td>
+        <td><code>{@link #MyClass|MyClass}</code></td>
+        <td><code>{@link #MyClass|MyClass}</code></td>
+    </tr>
+    <tr>
+        <td>Different page</td>
+        <td><code>query</code></td>
+        <td><code>{@link ?api=mylib#MyClass|MyClass}</code></td>
+        <td><code>{@link ?api#MyClass|MyClass}</code></td>
+    </tr>
+    <tr>
+        <td>Different page</td>
+        <td><code>path</code></td>
+        <td><code>{@link api/mylib/#MyClass|MyClass}</code></td>
+        <td><code>{@link api/#MyClass|MyClass}</code></td>
+    </tr>
+</tbody>
+</table><blockquote>
+<p>Note that when <a href="api/#Docma.RoutingMethod">routing method</a> is <strong><code>path</code></strong> and linking from a different page, the link reference is not preceded with a slash. A leading slash would make the link absolute, rather than relative; which wouldn't work with the application base path (if set).</p>
+</blockquote><p><strong>More JSDoc Examples:</strong></p><pre><code class="language-js">/**
+ *  {@link /absolute|Absolute path}         «—— navigates from domain root
+ *  {@link relative/|Relative path}         «—— app.base is taken into account
+ *  {@link MyClass|Symbol bookmark}         «—— symbol bookmark (parsed to #MyClass)
+ *  {@link api/#MyClass|Symbol link}        «—— MyClass in default API route
+ *  {@link api/mylib|`mylib`}               «—— mylib API route. Relative link
+ *  {@link api/mylib#MyClass|`mylib`}       «—— MyClass in mylib API route. Relative link
+ *  {@link ?api=mylib#MyClass|`mylib`}      «—— Same when routing method is `query` instead of `path`
+ *  {@link #bookmark|Bookmark}              «—— regular bookmark, similar to symbol link
+ */</code></pre><h4 id="linking-in-markdown-files">Linking in Markdown Files</h4><p><strong>Examples in Markdown:</strong></p><pre><code class="language-md">[Absolute path](/absolute)
+[Relative path](relative)
+[Same Relative path](relative/)
+[`MyClass` in default API route](api/#MyClass)
+[`mylib` API route](api/mylib)
+[`MyClass` in `mylib` API route](api/mylib#MyClass)
+[Same when routing method is `query`](?api=mylib#MyClass) 
+[Regular bookmark](#bookmark)</code></pre><h4 id="external-links">External Links</h4><table>
+<thead>
+    <tr>
+        <th>Link</th>
+        <th>Usage</th>
+        <th>&nbsp;</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><code>https://domain.com</code></td>
+    <td><code class="nowrap">{@link https://domain.com|External}</code></td>
+    <td><b>OK</b></td>
+</tr>
+<tr>
+    <td><code>//domain.com</code></td>
+    <td><code class="nowrap">{@link //domain.com|External}</code></td>
+    <td><b>OK</b></td>
+</tr>
+<tr>
+    <td><strike><code>domain.com</code></strike></td>
+    <td><code class="nowrap">{@link domain.com|External}</code></td>
+    <td><b>NOT OK</b>. This will break the link as it would be considered a symbol name path.</td>
+</tr>
+</tbody>
+</table></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</details>
+
+
 <details id="assets">
 <summary>
 <b>Can I include additional static files within my documentation output?</b>
@@ -137,7 +248,7 @@
 </summary>
 
 
-<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
+<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="cli/#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
 </details>
 
 
@@ -150,85 +261,6 @@
 <div class="details-content"><p>Some directory structures might not work on some remote environments. For example, if you're using GitHub Pages for multiple documentations, you will need to create a separate directory for each documentation. i.e. <code>&lt;GHP-root&gt;/library</code>. So in this case; for the SPA to work; you need to set the <code>app.base</code> to <code>/library</code>.</p><blockquote>
 <p>When testing locally, it's recommended that you run <code>docma serve</code> from your project root (where <code>docma.json</code> resides); as is, without any target path. It will always adjust to your <code>docma.json</code>.</p>
 </blockquote><p>If your <code>base</code> should be different in your local vs remote/host; set the <code>base</code> for your remote host in your <code>docma.json</code> and run <code>docma serve --base &lt;for-local&gt;</code>. This will override the <code>base</code> while you're testing.</p></div>
-
-
-</details>
-
-
-<details id="linking">
-<summary>
-<b>How does Docma parse links in my JSDoc comments?</b>
-</summary>
-
-
-<div class="details-content"><p>For links to get parsed, you should use the JSDoc <a href="http://usejsdoc.org/tags-inline-link.html"><code>@link</code></a> tag. </p><h4 id="linking-to-a-symbol-in-your-docs">Linking to a symbol in your docs</h4><p>The reference (href) of the link should be considered depending on the routing method set in your build configuration. For example, we want to reference our symbol: <code>MyClass</code></p><table>
-<thead>
-    <tr>
-        <th>Linking On/From</th>
-        <th>Routing Method</th>
-        <th>api/group name: <code>mylib</code></th>
-        <th>no api/group name</th>
-    </tr>
-</thead>
-<tbody>
-    <tr>
-        <td>Same page</td>
-        <td>doesn't matter</td>
-        <td><code>{@link #MyClass|MyClass}</code></td>
-        <td><code>{@link #MyClass|MyClass}</code></td>
-    </tr>
-    <tr>
-        <td>Different page</td>
-        <td><code>query</code></td>
-        <td><code>{@link ?api=mylib#MyClass|MyClass}</code></td>
-        <td><code>{@link ?api#MyClass|MyClass}</code></td>
-    </tr>
-    <tr>
-        <td>Different page</td>
-        <td><code>path</code></td>
-        <td><code>{@link api/mylib/#MyClass|MyClass}</code></td>
-        <td><code>{@link api/#MyClass|MyClass}</code></td>
-    </tr>
-</tbody>
-</table><blockquote>
-<p>Note that when routing method is <code>path</code> and linking from a different page, the link reference is not preceded with a slash. A leading slash would make the link absolute, rather than relative; which wouldn't work with the application base path (if set).</p>
-</blockquote><h4 id="linking-to-another-path">Linking to another path</h4><p>If the link reference is preceded with a <code>/</code>, it's an absolute path. Otherwise, it's relative.</p><pre><code class="language-js">/**
- *  See {@link examples|Related Examples}.                  «—— relative path (app.base is taken into account)
- *  Tired of reading docs? {@link /blog|Take a break!}      «—— absolute path
- */</code></pre><h4 id="linking-to-an-external-site">Linking to an external site</h4><table>
-<thead>
-    <tr>
-        <th>Link</th>
-        <th>Usage</th>
-        <th>&nbsp;</th>
-    </tr>
-</thead>
-<tbody>
-<tr>
-    <td><code>https://domain.com</code></td>
-    <td><code class="nowrap">{@link https://domain.com|External}</code></td>
-    <td><b>OK</b></td>
-</tr>
-<tr>
-    <td><code>//domain.com</code></td>
-    <td><code class="nowrap">{@link //domain.com|External}</code></td>
-    <td><b>OK</b></td>
-</tr>
-<tr>
-    <td><strike><code>domain.com</code></strike></td>
-    <td><code class="nowrap">{@link domain.com|External}</code></td>
-    <td><b>NOT OK</b>. This will break the link as it would be considered a symbol name path.</td>
-</tr>
-</tbody>
-</table></div>
-
-
-
-
-
-
-
-
 
 
 </details>
@@ -250,7 +282,7 @@
 </summary>
 
 
-<div class="details-content"><p>Simply build your documentation with <a href="cli"><code>docma --debug</code></a> (or set <a href="api/#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
+<div class="details-content"><p>Simply build your documentation with <a href="cli/"><code>docma --debug</code></a> (or set <a href="api/#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
 <li>The build process will output detailed logs to the console, </li>
 <li>The web application will output web logs, </li>
 <li>Scripts running the app will not be minified,</li>
@@ -301,7 +333,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. See <a href="creating-templates">this section</a> on creating/publishing custom templates.</p></div>
+<div class="details-content"><p>Yes. See <a href="creating-templates/">this section</a> on creating/publishing custom templates.</p></div>
 </details>
 
 
