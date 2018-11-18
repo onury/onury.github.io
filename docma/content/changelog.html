@@ -12,12 +12,12 @@
 </ul>
 <h4 id="added">Added</h4>
 <ul>
-<li>Ability to force parser type on defined files/paths; by appending a suffix. For Markdown, append <code>:md</code> or <code>:markdown</code>. For HTML, append <code>:htm</code> or <code>html</code>. For example, <code>LICENSE:md</code> will force-parse <code>LICENSE</code> file to markdown. <code>file.partial:html</code> will force-parse <code>file.partial</code> to HTML. For forcing JSDoc on JavaScript files without a proper extension you can use <code>:js</code> or <code>:jsx</code> but this is not recommended. Use <code>jsdoc.includePattern</code> of your build configuration instead.</li>
+<li>Ability to force parser type on defined files/paths; by appending a suffix. For Markdown, append <code>:md</code> or <code>:markdown</code>. For HTML, append <code>:htm</code> or <code>html</code>. For example, <code>LICENSE:md</code> will force-parse <code>LICENSE</code> file to markdown. <code>file.partial:html</code> will force-parse <code>file.partial</code> to HTML. </li>
 <li>Ability to create deeper paths for named groups/routes. e.g. <code>mylib/latest</code></li>
 <li>Support for favicon. Set <code>app.favicon</code> to your ICO file's local path.</li>
-<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. If a bookmark (id) is passed in the location hash, that item will auto-expand. See <a href="https://onury.io/docma/faq">Docma F.A.Q.</a> for an example. <em>Note that Edge <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/">does not support</a> details/summary tags yet. All other modern browsers has support.</em></li>
+<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. If a bookmark (id) is passed in the location hash, that item will auto-expand. See <a href="https://onury.io/docma/faq">Docma F.A.Q.</a> for an example. <em>Note that Edge <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/">does not support</a> details/summary tags yet. All other modern browsers have support.</em></li>
 <li>Ability to hide or remove specific, partial content from Docma output. For example if you want some <strong>part</strong> of your README to be visible in GitHub repo but not in your Docma generated documentation... See <a href="https://onury.io/docma/faq#hide-remove">this</a> for details.</li>
-<li>Added new CLI option (<code>-b</code> or <code>--base</code>) to override/set the base path from command line.</li>
+<li>New CLI option (<code>-b</code> or <code>--base</code>) for <code>docma serve</code> command to override/set the base path.</li>
 </ul>
 <h4 id="fixed">Fixed</h4>
 <ul>
@@ -36,7 +36,7 @@
 </ul>
 <h4 id="changed">Changed</h4>
 <ul>
-<li>Improved support for constants.</li>
+<li>Improved support for constant symbols.</li>
 </ul>
 <h4 id="fixed">Fixed</h4>
 <ul>

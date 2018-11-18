@@ -21,7 +21,7 @@
         "routing": "query"
     },
     "dest": "./docs"
-}</code></pre><p>The route for <code>my-lib</code> documentation will be <code>/?api=my-lib</code>.</p></div>
+}</code></pre><p>The route for <code>my-lib</code> docs will be <code>?api=my-lib</code> when <a href="api/#Docma.RoutingMethod">routing method</a> is <code>"query"</code>, and <code>api/my-lib</code> when it's set to <code>"path"</code>.</p></div>
 
 
 </details>
@@ -48,7 +48,7 @@
         { "guide": "./README.md" }
     ],
     "dest": "./docs"
-}</code></pre><p>The route for <code>README</code> content will be <code>?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>guide/</code> (if routing method is <code>"path"</code>). See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>The route for <code>README</code> content will be <code>?content=guide</code> when <a href="api/#Docma.RoutingMethod">routing method</a> is <code>"query"</code>, and <code>guide/</code> when it's set to <code>"path"</code>. See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
 
 
 </details>
@@ -73,8 +73,8 @@
         "routing": "path"
     },
     "dest": "./docs"
-}</code></pre><p>This will also work for <code>"query"</code> routing method. e.g. <code>?api=web/utils</code>  </p><blockquote>
-<p>Note that you should NOT use <strong><code>"api"</code></strong> or <strong><code>"api/.."</code></strong> when naming your groups. For JS files, <strong><code>"api"</code></strong> is the default root path.</p>
+}</code></pre><p>This is useful when <a href="api/#Docma.RoutingMethod">routing method</a> is set to <code>"path"</code>. But it also works for <code>"query"</code> routing method. e.g. <code>?api=web/utils</code>  <br><br></p><blockquote>
+<p>Note that you should NOT use <strong><code>"api"</code></strong> or <strong><code>"api/.."</code></strong> when naming your groups. For JS files, <strong><code>"api"</code></strong> is already used as the default root path. For example, docs generated from JS files grouped with name <code>"web"</code> is available at route <code>api/web</code>.</p>
 </blockquote></div>
 
 
@@ -199,7 +199,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="api/#Docma~BuildConfiguration">build configuration</a>.</p></div>
+<div class="details-content"><p>Yes. You can define static asset files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="api/#Docma~BuildConfiguration">build configuration</a>, and link to them in your docs. Defined assets will get copied over to the output directory.</p></div>
 </details>
 
 
@@ -209,7 +209,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. For files with markdown content, append <code>:md</code> or <code>:markdown</code> suffix. For HTML files, append <code>:htm</code> or <code>:html</code>. </p><pre><code class="language-js">{ 
+<div class="details-content"><p>Yes. For files with markdown content, append <strong><code>:md</code></strong> or <strong><code>:markdown</code></strong> suffix at the end of the file path. For HTML files, append <strong><code>:htm</code></strong> or <strong><code>:html</code></strong>. </p><pre><code class="language-js">{ 
     "src": { 
         "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ ?content=license (query) or license/ (path routing)
         "article": "file.partial:html",     // force-parsed to HTML. SPA route @ ?content=article (query) or article/ (path routing)
@@ -228,7 +228,7 @@
 </summary>
 
 
-<div class="details-content"><p>You change the entrance by setting the <code>app.entrance</code> option. Use <code>content:</code> prefix if the source is a markdown or HTML file; or <code>api:</code> prefix if the source is JS file(s).</p><pre><code class="language-json">{
+<div class="details-content"><p>You change the entrance by setting the <strong><code>app.entrance</code></strong> option. Use <strong><code>content:</code></strong> prefix if the source is a markdown or HTML file; or <strong><code>api:</code></strong> prefix if the source is JS file(s).</p><pre><code class="language-json">{
     "src": [
         { "guide": "./README.md" }
     ],
@@ -236,7 +236,7 @@
         "entrance": "content:guide"
     },
     "dest": "./docs"
-}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>?content=guide</code>. See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>?content=guide</code> (or at <code>guide/</code> if routing method is <code>"path"</code>). See <a href="api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
 
 
 </details>
@@ -248,7 +248,7 @@
 </summary>
 
 
-<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="cli/#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
+<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="cli/#docma-serve--path---options-"><strong><code>docma serve</code></strong> command</a> to serve your documentation locally for testing.</p></div>
 </details>
 
 
@@ -272,7 +272,10 @@
 </summary>
 
 
-<div class="details-content"><p>If you're using the same markdown file on both GitHub repo and your Docma generated documentation; you can wrap that content with <code>&lt;div class="docma-ignore"&gt;&lt;/div&gt;</code> to hide it in Docma generated output. If you want the content to be removed entirely, use the class name <code>docma-remove</code> instead. <em>(Feature available since Docma v3.0.0).</em></p></div>
+<div class="details-content"><p>If you're using the same markdown file on both GitHub repo and your Docma generated documentation; you can wrap that content with an HTML element having <strong><code>docma-ignore</code></strong> for class name. This will hide it in Docma generated output. If you want the content to be removed entirely, use the class name <strong><code>docma-remove</code></strong> instead. <em>(Feature available since Docma v3.0.0).</em></p><pre><code class="language-html">&lt;div class="docma-ignore"&gt;
+    This is hidden in Docma generated web app, but visible in GitHub repo.
+&lt;/div&gt;</code></pre></div>
+
 </details>
 
 
@@ -298,7 +301,7 @@
 </summary>
 
 
-<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="api/#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
+<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<strong><code>src</code></strong>) and the destination directory (<strong><code>dest</code></strong>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="api/#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
 
 </details>
 
@@ -309,7 +312,7 @@
 </summary>
 
 
-<div class="details-content"><p>This is typically due to incorrect or missing application base definition. For example, try setting <code>app.base</code> to a meaningful path for your host environment, in your build configuration.</p></div>
+<div class="details-content"><p>This is typically due to incorrect or missing application base definition. For example, try setting <strong><code>app.base</code></strong> to a meaningful path for your host environment, in your build configuration.</p></div>
 </details>
 
 
@@ -319,7 +322,7 @@
 </summary>
 
 
-<div class="details-content"><p>This is typically a user / documenting issue. (And it's a good thing to see it visually with the sidebar outline).</p><p>First of all, run CLI with debug option enabled (i.e. <code>docma --debug</code>) to output parsed JSDoc data as JSON files and inspect how they your symbols/docs are parsed.</p><p>Generally this kind of issue is resolved by either using <code>@memberof</code> or <code>@memberof!</code> tags (notice the bang suffix) or instead; organizing via specifying the full name via <code>@name</code> tag. (<em>Note that when you do, you'll also need to specify the type. e.g. <code>@function</code> if it's a method.</em>)</p><p>Another reason for this could be that you are missing some symbols in your documentation. JavaScript files are generally grouped under a route name by specifying a group name in the <code>src</code> of the build configuration. Or if no group is specified, they'll be merged under the default group. If any level of a symbol is not defined in your documentation, you will get a broken tree. e.g. <code>UndocumentedNamespace.DocumentedObject</code>.</p><p>See <a href="https://github.com/onury/docma/issues/58#issuecomment-438111228">this thread</a> for more details.</p></div>
+<div class="details-content"><p>This is typically a user / documenting issue. (And it's a good thing to see it visually with the sidebar outline).</p><p>First of all, run CLI with debug option enabled (i.e. <strong><code>docma --debug</code></strong>) to output parsed JSDoc data as JSON files and inspect how they your symbols/docs are parsed.</p><p>Generally this kind of issue is resolved by either using <strong><code>@memberof</code></strong> or <strong><code>@memberof!</code></strong> tags (notice the bang suffix) or instead; organizing via specifying the full name via <strong><code>@name</code></strong> tag. (<em>Note that when you do, you'll also need to specify the type. e.g. <code>@function</code> if it's a method.</em>)</p><p>Another reason for this could be that you are missing some symbols in your documentation. JavaScript files are generally grouped under a route name by specifying a group name in the <code>src</code> of the build configuration. Or if no group is specified, they'll be merged under the default group. If any level of a symbol is not defined in your documentation, you will get a broken tree. e.g. <code>UndocumentedNamespace.DocumentedObject</code>.</p><p>See <a href="https://github.com/onury/docma/issues/58#issuecomment-438111228">this thread</a> for more details.</p></div>
 
 
 
