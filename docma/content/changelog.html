@@ -9,6 +9,7 @@
 <li><strong>BREAKING</strong>: Dropped support for Node.js versions 6 &amp; 7. Requires Node.js v8 and later. This change is due to updates to the core dependencies such as <code>fs-extra</code>, <code>jsdoc-x</code> and <code>jsdom</code>.</li>
 <li>Improved path/query routing.</li>
 <li><strong>BREAKING</strong>: Linking logic has <a href="https://onury.io/docma/faq/#linking">some changes</a>.</li>
+<li>(Zebra template) Improved support for constant symbols.</li>
 </ul>
 <h4 id="added">Added</h4>
 <ul>
@@ -18,29 +19,17 @@
 <li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. If a bookmark (id) is passed in the location hash, that item will auto-expand. See <a href="https://onury.io/docma/faq">Docma F.A.Q.</a> for an example. <em>Note that Edge <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/">does not support</a> details/summary tags yet. All other modern browsers have support.</em></li>
 <li>Ability to hide or remove specific, partial content from Docma output. For example if you want some <strong>part</strong> of your README to be visible in GitHub repo but not in your Docma generated documentation... See <a href="https://onury.io/docma/faq#hide-remove">this</a> for details.</li>
 <li>New CLI option (<code>-b</code> or <code>--base</code>) for <code>docma serve</code> command to override/set the base path.</li>
+<li>(Zebra Template) Added support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags).</li>
 </ul>
 <h4 id="fixed">Fixed</h4>
 <ul>
 <li>An issue where documentation build would fail due to a symbol name being a non-string value. Fixes <a href="https://github.com/onury/docma/issues/54">#54</a>.</li>
 <li>An issue where the web app would throw <code>Uncaught TypeError</code> when invalid JSDoc type specified for <code>@returns</code>. Fixes <a href="https://github.com/onury/docma/issues/55">#55</a>.</li>
-<li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with generated documentation links.</li>
+<li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with generated documentation links. (This is also fixed for Zebra template.)</li>
 <li>An issue where <code>base</code> tag would not be added to the head of main document.</li>
 <li>An issue where Docma would not set default <code>app.base</code> path to <code>/</code> as expected. Fixes <a href="https://github.com/onury/docma/issues/59">#59</a>.</li>
 <li>An issue where symbol link would be parsed as absolute path rather than relative. Fixes <a href="https://github.com/onury/docma/issues/50">#50</a>.</li>
-</ul>
-<h3 id="default-template---zebra-v220">Default Template - Zebra <code>v2.2.0</code></h3>
-<p><em>This version of Zebra template still supports Docma <code>2.0.0</code> and later.</em></p>
-<h4 id="added">Added</h4>
-<ul>
-<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags).</li>
-</ul>
-<h4 id="changed">Changed</h4>
-<ul>
-<li>Improved support for constant symbols.</li>
-</ul>
-<h4 id="fixed">Fixed</h4>
-<ul>
-<li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with parsed documentation links.</li>
+<li>(Zebra template) Fixed an issue where tags such as <code>@constant</code> and <code>@module</code> would cause an <code>Uncaught TypeError</code>. Fixes <a href="https://github.com/onury/docma/issues/50">#41</a> and <a href="https://github.com/onury/docma/issues/45">#45</a>.</li>
 </ul>
 <h2 id="210--2018-04-29-"><a href="https://github.com/onury/docma/compare/v2.0.0...v2.1.0">2.1.0</a> (2018-04-29)</h2>
 <hr />

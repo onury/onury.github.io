@@ -9,7 +9,7 @@
 </summary>
 
 
-<div class="details-content"><p>Simply define a name for that group of files by using an object. Example <code>docma.json</code> for build configuration: </p><pre><code class="language-json">{ 
+<div class="details-content"><p>Simply define a name for that group of files by using an object. Example <code>docma.json</code> for build configuration: </p><pre><code class="json">{ 
     "src": { 
         "my-lib": [
             "./dir/**/*.js", 
@@ -43,7 +43,7 @@
 </summary>
 
 
-<div class="details-content"><p>You simply define an object within the <code>src</code> option.</p><pre><code class="language-json">{
+<div class="details-content"><p>You simply define an object within the <code>src</code> option.</p><pre><code class="json">{
     "src": [
         { "guide": "./README.md" }
     ],
@@ -60,7 +60,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. You can use forward slash <code>/</code> in your group names which will be reflected in corresponding route names. </p><pre><code class="language-json">{
+<div class="details-content"><p>Yes. You can use forward slash <code>/</code> in your group names which will be reflected in corresponding route names. </p><pre><code class="json">{
     "src": [
         ".src/core/*.js",                           // route @ api/
         { 
@@ -134,7 +134,7 @@
 </tbody>
 </table><blockquote>
 <p>Note that when <a href="api/#Docma.RoutingMethod">routing method</a> is <strong><code>path</code></strong> and linking from a different page, the link reference is not preceded with a slash. A leading slash would make the link absolute, rather than relative; which wouldn't work with the application base path (if set).</p>
-</blockquote><p><strong>More JSDoc Examples:</strong></p><pre><code class="language-js">/**
+</blockquote><p><strong>More JSDoc Examples:</strong></p><pre><code class="js">/**
  *  {@link /absolute|Absolute path}         «—— navigates from domain root
  *  {@link relative/|Relative path}         «—— app.base is taken into account
  *  {@link MyClass|Symbol bookmark}         «—— symbol bookmark (parsed to #MyClass)
@@ -143,7 +143,7 @@
  *  {@link api/mylib#MyClass|`mylib`}       «—— MyClass in mylib API route. Relative link
  *  {@link ?api=mylib#MyClass|`mylib`}      «—— Same when routing method is `query` instead of `path`
  *  {@link #bookmark|Bookmark}              «—— regular bookmark, similar to symbol link
- */</code></pre><h4 id="linking-in-markdown-files">Linking in Markdown Files</h4><p><strong>Examples in Markdown:</strong></p><pre><code class="language-md">[Absolute path](/absolute)
+ */</code></pre><h4 id="linking-in-markdown-files">Linking in Markdown Files</h4><p><strong>Examples in Markdown:</strong></p><pre><code class="md">[Absolute path](/absolute)
 [Relative path](relative)
 [Same Relative path](relative/)
 [`MyClass` in default API route](api/#MyClass)
@@ -209,7 +209,7 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. For files with markdown content, append <strong><code>:md</code></strong> or <strong><code>:markdown</code></strong> suffix at the end of the file path. For HTML files, append <strong><code>:htm</code></strong> or <strong><code>:html</code></strong>. </p><pre><code class="language-js">{ 
+<div class="details-content"><p>Yes. For files with markdown content, append <strong><code>:md</code></strong> or <strong><code>:markdown</code></strong> suffix at the end of the file path. For HTML files, append <strong><code>:htm</code></strong> or <strong><code>:html</code></strong>. </p><pre><code class="js">{ 
     "src": { 
         "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ ?content=license (query) or license/ (path routing)
         "article": "file.partial:html",     // force-parsed to HTML. SPA route @ ?content=article (query) or article/ (path routing)
@@ -228,7 +228,7 @@
 </summary>
 
 
-<div class="details-content"><p>You change the entrance by setting the <strong><code>app.entrance</code></strong> option. Use <strong><code>content:</code></strong> prefix if the source is a markdown or HTML file; or <strong><code>api:</code></strong> prefix if the source is JS file(s).</p><pre><code class="language-json">{
+<div class="details-content"><p>You change the entrance by setting the <strong><code>app.entrance</code></strong> option. Use <strong><code>content:</code></strong> prefix if the source is a markdown or HTML file; or <strong><code>api:</code></strong> prefix if the source is JS file(s).</p><pre><code class="json">{
     "src": [
         { "guide": "./README.md" }
     ],
@@ -272,7 +272,7 @@
 </summary>
 
 
-<div class="details-content"><p>If you're using the same markdown file on both GitHub repo and your Docma generated documentation; you can wrap that content with an HTML element having <strong><code>docma-ignore</code></strong> for class name. This will hide it in Docma generated output. If you want the content to be removed entirely, use the class name <strong><code>docma-remove</code></strong> instead. <em>(Feature available since Docma v3.0.0).</em></p><pre><code class="language-html">&lt;div class="docma-ignore"&gt;
+<div class="details-content"><p>If you're using the same markdown file on both GitHub repo and your Docma generated documentation; you can wrap that content with an HTML element having <strong><code>docma-ignore</code></strong> for class name. This will hide it in Docma generated output. If you want the content to be removed entirely, use the class name <strong><code>docma-remove</code></strong> instead. <em>(Feature available since Docma v3.0.0).</em></p><pre><code class="html">&lt;div class="docma-ignore"&gt;
     This is hidden in Docma generated web app, but visible in GitHub repo.
 &lt;/div&gt;</code></pre></div>
 

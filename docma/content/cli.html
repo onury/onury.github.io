@@ -95,7 +95,7 @@
 <p><em>Note: If no debug options are set in the CLI arguments (such as <code>--debug</code>, <code>-q</code>, <code>--nomin</code>, <code>--jd-out</code>, <code>-v</code>, <code>--web-logs</code>); the bitwise debug value from the config file is used, if set.</em></p>
 </blockquote>
 <h3 id="examples">Examples</h3>
-<pre><code class="language-sh"># Build documentation with a Docma configuration (JSON) file:  
+<pre><code class="sh"># Build documentation with a Docma configuration (JSON) file:  
 docma -c path/to/docma.json
 
 # If a `docma.json` already exists in the current directory, simply:  
@@ -155,7 +155,7 @@ It will auto-adjust to your <strong><code>docma.json</code></strong> configurati
 </table>
 
 <h3 id="examples">Examples</h3>
-<pre><code class="language-sh"># Serve generated SPA at the default port (9000):  
+<pre><code class="sh"># Serve generated SPA at the default port (9000):  
 docma serve  # omitting target path if current working dir has a docma.json
 
 # Configure a custom port and serve:  
@@ -198,7 +198,7 @@ docma serve path/to/dir</code></pre>
 </table>
 
 <h3 id="examples">Examples</h3>
-<pre><code class="language-sh"># Initialize a new Docma template module:  
+<pre><code class="sh"># Initialize a new Docma template module:  
 docma template init path/to/project
 
 # Initialize a new Docma template module, in current working directory:  

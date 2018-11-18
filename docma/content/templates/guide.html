@@ -32,7 +32,7 @@
 <h2 id="template-structure">Template Structure</h2>
 <hr />
 <p>Docma templates are node modules with a <code>template</code> directory at the root and a package.json. Below shows the simplest structure for a Docma template module.</p>
-<pre><code class="language-html">🗂 &lt;root&gt;                              Required
+<pre><code class="html">🗂 &lt;root&gt;                              Required
    ├── 📃 package.json                    ✔︎     Node.js package definition.
    ├── 📃 index.js                              Optional main file for the Node module.
    ├── 🗂 template/                       ✔︎     Directory that contains web application files.
@@ -59,7 +59,7 @@
 </blockquote>
 <p>All other fields are optional within package.json.</p>
 <p>Below is a simple example for a package.json. <em>(In this case, template is named "Unicorn" and authored by "John Doe".)</em></p>
-<pre><code class="language-json">{
+<pre><code class="json">{
   "name": "docma-template-unicorn",
   "version": "1.0.0",
   "description": "Unicorn - Docma Template",
@@ -121,7 +121,7 @@
 </table>
 
 <p>To include template-specific configuration, add the following to your <code>package.json</code>:</p>
-<pre><code class="language-json">{
+<pre><code class="json">{
     ...
     "docmaTemplate": {
         "mainHTML": "main.html",
@@ -137,7 +137,7 @@
 <h3 id="hooking-into-build-process">Hooking into Build Process</h3>
 <p>Template configuration does not include any build configuration. If you need to hook into the documentation build process, you can include a main JS file in your template module.</p>
 <p>— Add the following to your <code>package.json</code>:</p>
-<pre><code class="language-json">{
+<pre><code class="json">{
     ...
     "main": "index.js",
     "files": [
@@ -148,7 +148,7 @@
     ...
 }</code></pre>
 <p>— Add an <strong><code>index.js</code></strong> file (can be any name) as the module entry point:</p>
-<pre><code class="language-js">'use strict';
+<pre><code class="js">'use strict';
 
 module.exports = (template, modules) =&gt; {
 
@@ -185,17 +185,17 @@ module.exports = (template, modules) =&gt; {
 };</code></pre>
 <h3 id="initializing-a-template-with-docma-cli">Initializing a Template with Docma CLI</h3>
 <p>You can also use <a href="cli#docma-template-init--path-">Docma CLI</a> to initialize a new Docma template project. This will generate most files required to author a template; including a main JS file for your module; as shown above in the example.</p>
-<pre><code class="language-sh">cd path/to/new-template
+<pre><code class="sh">cd path/to/new-template
 docma template init</code></pre>
 <p>After or while you're developing your template module, you can use the command below to diagnose your template.</p>
-<pre><code class="language-sh">docma template doctor</code></pre>
+<pre><code class="sh">docma template doctor</code></pre>
 <h2 id="templated-web-app">Templated Web App</h2>
 <hr />
 <h3 id="html">HTML</h3>
 <p><code>&lt;root&gt;/template/index.html</code> is the default entry point of the generated web application. It should not include any Dust templates, but can of course, include other custom HTML.</p>
 <p>It should also include a <code>&lt;div id="docma-main"&gt;&lt;/div&gt;</code> which all the Dust templates will be compiled into. If you don't define this element, it will be created and dynamically appended to the body of the document.</p>
 <p>Example main file (<code>index.html</code> is the default file name):</p>
-<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+<pre><code class="html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
         &lt;meta charset="utf-8"&gt;
@@ -218,7 +218,7 @@ docma template init</code></pre>
 <h4 id="api-documentation-partial">API Documentation Partial</h4>
 <p>You should include a (documentation) partial and name it <code>docma-api.html</code>. This partial is required and, will be compiled and loaded into your main HTML (i.e. <code>index.html</code>), when navigated. All JSDoc generated documentation data should be displayed within this partial. JSDoc data is accessible via <code>docma.documentation</code> (array). Since <code>docma</code> is global, within a partial you can iterate documentation symbols/items by <code>{#documentation}..{/documentation}</code>.</p>
 <p>A simple example for <code>docma-api.html</code> partial:</p>
-<pre><code class="language-html">{&gt;"menu"/}
+<pre><code class="html">{&gt;"menu"/}
 {#documentation}
     &lt;h4 id="{.|$id}"&gt;{longname}&lt;/h4&gt;
     &lt;p&gt;{description}&lt;/p&gt;
@@ -229,7 +229,7 @@ docma template init</code></pre>
 <p>Content partial should include a <code>&lt;div id="docma-content"&gt;&lt;/div&gt;</code> in itself. Docma will load the target content into this element.</p>
 <p>This partial will also be compiled and loaded into in your main HTML, when navigated; so all styles and scripts of the main file will still be available.</p>
 <p>A simple example for <code>docma-content.html</code> partial:</p>
-<pre><code class="language-html">{&gt;"menu"/}
+<pre><code class="html">{&gt;"menu"/}
 &lt;div id="docma-content"&gt;&lt;/div&gt;
 {&gt;"footer"/}</code></pre>
 <h3 id="docmaweb-core">DocmaWeb Core</h3>
@@ -239,13 +239,13 @@ docma template init</code></pre>
 <p>You have full control over the main HTML file so you can include any Javascript files in it. <code>DocmaWeb</code> core will always be prepended before your scripts; so that you can safely access the global <code>docma</code> object.</p>
 <h3 id="initializing-the-web-app">Initializing the Web App</h3>
 <p>In order to make sure you execute some script after Docma is ready:</p>
-<pre><code class="language-js">// run this in any js file in the browser
+<pre><code class="js">// run this in any js file in the browser
 docma.once('ready', function () {
     // initialize your code here
     // this runs only once
 });</code></pre>
 <p>The <code>ready</code> event will only be fired once, right after the initial load. To execute some code after each content or page is rendered, you should use the <code>render</code> event instead.</p>
-<pre><code class="language-js">// run this in any js file in the browser
+<pre><code class="js">// run this in any js file in the browser
 docma.on('render', function (currentRoute) {
     if (!currentRoute) {
         console.log('Page not found!');

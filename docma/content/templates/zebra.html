@@ -304,7 +304,7 @@
 <h2 id="usage-with-docma">Usage with Docma</h2>
 <hr />
 <p>Template options are defined within the <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>. i.e. in a <code>docma.json</code> file.</p>
-<pre><code class="language-js">{
+<pre><code class="js">{
     "template": {
         // Docma Template to be used. 
         // Either a path, module name or "default"
@@ -384,7 +384,7 @@
     // src, dest, app, jsdoc, markdown, debug, etc...
 }</code></pre>
 <p>Then you can build your documentation with these customized template options.</p>
-<pre><code class="language-js">Docma.create()
+<pre><code class="js">Docma.create()
     .build('path/to/docma.json')
     .then(() =&gt; {
         console.log('Documentation is built successfully.');
@@ -393,7 +393,7 @@
         console.log(err);
     });</code></pre>
 <p>...or build via CLI:</p>
-<pre><code class="language-sh">docma -c path/to/docma.json</code></pre>
+<pre><code class="sh">docma -c path/to/docma.json</code></pre>
 <h2 id="changelog">Changelog</h2>
 <hr />
 <p>See <a href="https://github.com/onury/docma/blob/master/templates/zebra/CHANGELOG.md"><strong>CHANGELOG</strong></a>.<br><em>Note: If you're upgrading from Zebra v1.x to v2.x, there are some <a href="https://github.com/onury/docma/blob/master/templates/zebra/CHANGELOG.md"><strong>breaking changes</strong></a>.</em></p>
