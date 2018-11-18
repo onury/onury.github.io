@@ -211,8 +211,8 @@
 
 <div class="details-content"><p>Yes. For files with markdown content, append <strong><code>:md</code></strong> or <strong><code>:markdown</code></strong> suffix at the end of the file path. For HTML files, append <strong><code>:htm</code></strong> or <strong><code>:html</code></strong>. </p><pre><code class="js">{ 
     "src": { 
-        "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ ?content=license (query) or license/ (path routing)
-        "article": "file.partial:html",     // force-parsed to HTML. SPA route @ ?content=article (query) or article/ (path routing)
+        "license": "./LICENSE:md",          // force-parsed as Markdown. SPA route @ ?content=license (query) or license/ (path routing)
+        "article": "file.partial:html",     // force-parsed as HTML. SPA route @ ?content=article (query) or article/ (path routing)
         "my-lib": "./src/**/*.js"           // JS, API files. SPA route @ ?api=my-lib (query) or api/my-lib/ (path routing)
     },
     "dest": "./docs"
