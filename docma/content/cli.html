@@ -2,7 +2,7 @@
 <html><head></head><body><h1 id="docma-cli">Docma CLI</h1>
 <hr />
 <p>Instead of programmatically executing the Docma builder, you can directly use the CLI from your console.  </p>
-<p>Although the CLI does not provide each <a href="?api=docma#Docma~BuildConfiguration">build configuration</a> as a command-line option; it still supports <strong>all</strong> of them via the <strong><code>-c</code></strong> option which you can set the configuration file's path to. (i.e. <code>path/to/docma.json</code>)</p>
+<p>Although the CLI does not provide each <a href="api/#Docma~BuildConfiguration">build configuration</a> as a command-line option; it still supports <strong>all</strong> of them via the <strong><code>-c</code></strong> option which you can set the configuration file's path to. (i.e. <code>path/to/docma.json</code>)</p>
 <h2 id="docma--options-"><code>docma [options]</code></h2>
 <hr />
 <table>
@@ -113,6 +113,10 @@ docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js<
 <hr />
 <h3 id="docma-serve--path---options-"><code>docma serve [path] [options]</code></h3>
 <p>You can run a mock server for testing the generated SPA with this command. This will boot up a simple static-files server. If <code>path</code> is omitted, it will look for a <code>docma.json</code> or <code>.docma.json</code> in the current working directory. If found, the configured destination will be served. If no Docma configuration file is found, current working directory will be served.</p>
+<blockquote>
+<p>Run <strong><code>docma serve</code></strong> from your project root, without any target path. 
+It will auto-adjust to your <strong><code>docma.json</code></strong> configuration.</p>
+</blockquote>
 <p>Additionally, you can use the following options:</p>
 <table>
     <thead>
@@ -136,6 +140,12 @@ docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js<
             <td>Port number to bind the mock-server on. Default: <code>9000</code></td>
         </tr>
         <tr>
+            <td><b><code>-b</code></b></td>
+            <td><code>--base</code></td>
+            <td><code>&lt;string&gt;</code></td>
+            <td>Base path for the SPA. Default: <code>/</code></td>
+        </tr>
+        <tr>
             <td><b><code>-q</code></b></td>
             <td><code>--quiet</code></td>
             <td></td>
@@ -146,19 +156,16 @@ docma -c path/to/docma.json -s mylib:path/to/lib-1.js -s mylib:path/to/lib-2.js<
 
 <h3 id="examples">Examples</h3>
 <pre><code class="language-sh"># Serve generated SPA at the default port (9000):  
-docma serve path/to/docs
-
-# Serve current working directory:  
-cd path/to/docs &amp;&amp; docma serve
-
-# Serve configured destination directory (this looks for a docma.json):  
-cd path/to/project &amp;&amp; docma serve
+docma serve  # omitting target path if current working dir has a docma.json
 
 # Configure a custom port and serve:  
-docma serve path/to/docs -p 8080
+docma serve -p 8080
 
 # Serve without request logs:  
-docma serve path/to/docs -q</code></pre>
+docma serve -q
+
+# Setting a target path to be served.  
+docma serve path/to/dir</code></pre>
 <br>
 
 <h3 id="docma-template-init--path-"><code>docma template init [path]</code></h3>

@@ -3,7 +3,7 @@
 <hr />
 <img align="right" width="120" height="120" src="https://onury.io/docma/img/docma-faq.png" style="max-width: 100%;">
 
-<details id="group-js-files">
+<details id="grouping">
 <summary>
 <b>How do I group the docs generated from multiple JS file under the same route / page?</b>
 </summary>
@@ -37,7 +37,7 @@
 </details>
 
 
-<details id="rename-route">
+<details id="renaming-a-route">
 <summary>
 <b>How can I document my <code>README.md</code> and rename its route?</b>
 </summary>
@@ -48,7 +48,35 @@
         { "guide": "./README.md" }
     ],
     "dest": "./docs"
-}</code></pre><p>The route for <code>README</code> content will be <code>/?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>/guide</code> (if routing method is <code>"path"</code>). See <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>The route for <code>README</code> content will be <code>?content=guide</code> (if routing method is <code>"query"</code> (default)) or <code>guide/</code> (if routing method is <code>"path"</code>). See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+
+
+</details>
+
+
+<details id="deep-routes">
+<summary>
+<b>Can I create deeper paths/routes for my grouped JS API docs?</b>
+</summary>
+
+
+<div class="details-content"><p>Yes. You can use forward slash <code>/</code> in your group names which will be reflected in corresponding route names. </p><pre><code class="language-json">{
+    "src": [
+        ".src/core/*.js",                           // route @ api/
+        { 
+            "web": "./src/web/**.js",               // route @ api/web/
+            "web/utils": "./src/web/utils/*.js",    // route @ api/web/utils/
+            "other/deep/path": "./other/**/*.js",   // route @ api/other/deep/path
+        }
+    ],
+    "app": {
+        "routing": "path"
+    },
+    "dest": "./docs"
+}</code></pre><p>This will also work for <code>"query"</code> routing method. e.g. <code>?api=web/utils</code>  </p><blockquote>
+<p>Note that you should NOT use <strong><code>"api"</code></strong> or <strong><code>"api/.."</code></strong> when naming your groups. For JS files, <strong><code>"api"</code></strong> is the default root path.</p>
+</blockquote></div>
+
 
 
 </details>
@@ -60,11 +88,11 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>.</p></div>
+<div class="details-content"><p>Yes. You can can use/link to files such as images, ZIPs, PDFs, etc via the <strong><code>assets</code></strong> option in your <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>.</p></div>
 </details>
 
 
-<details id="force-parse">
+<details id="force-parsing">
 <summary>
 <b>Can I force Docma to parse markdown or HTML files with non-standard (or no) extensions?</b>
 </summary>
@@ -72,9 +100,9 @@
 
 <div class="details-content"><p>Yes. For files with markdown content, append <code>:md</code> or <code>:markdown</code> suffix. For HTML files, append <code>:htm</code> or <code>:html</code>. </p><pre><code class="language-js">{ 
     "src": { 
-        "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ /?content=license
-        "article": "file.partial:html",     // force-parsed to HTML. SPA route @ /?content=article
-        "my-lib": "./src/**/*.js"           // JS, API files. SPA route @ /?api=my-lib
+        "license": "./LICENSE:md",          // force-parsed to Markdown. SPA route @ ?content=license (query) or license/ (path routing)
+        "article": "file.partial:html",     // force-parsed to HTML. SPA route @ ?content=article (query) or article/ (path routing)
+        "my-lib": "./src/**/*.js"           // JS, API files. SPA route @ ?api=my-lib (query) or api/my-lib/ (path routing)
     },
     "dest": "./docs"
 }</code></pre><p>For forcing JSDoc on JavaScript files without a proper extension you can use <code>:js</code> or <code>:jsx</code> but this is not recommended. Use <code>jsdoc.includePattern</code> of your build configuration instead.</p></div>
@@ -83,7 +111,7 @@
 </details>
 
 
-<details id="entrance">
+<details id="app-entrance">
 <summary>
 <b>How can I change the initial (default) page of the generated web app?</b>
 </summary>
@@ -97,19 +125,19 @@
         "entrance": "content:guide"
     },
     "dest": "./docs"
-}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>/?content=guide</code>. See <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
+}</code></pre><p>Now, the route for <code>README</code> content will be available both at <code>/</code> and <code>?content=guide</code>. See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a> for more details.</p></div>
 
 
 </details>
 
 
-<details id="serve">
+<details id="serve-command">
 <summary>
 <b>How can I test the generated documentation (web app)?</b>
 </summary>
 
 
-<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="https://onury.io/docma/?content=docma-cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
+<div class="details-content"><p>Since Docma generates a static SPA, you can use any static files server to test it. For your convenience, Docma includes a simple server. Use <a href="https://onury.io/docma/cli#docma-serve--path---options-"><code>docma serve</code> command</a> to serve your documentation locally for testing.</p></div>
 </details>
 
 
@@ -119,19 +147,82 @@
 </summary>
 
 
-<div class="details-content"><p>Generally users tend to set the documentation destination within their local repo; such as a <code>/docs</code> directory in the project's root. And run <code>docma serve</code> to test it. That's all right if <code>app.base</code> is set to <code>/</code>. </p><p>But this kind of structure might not work on some remote environments. For example, if you're using GitHub Pages for multiple documentations, you will need to create a separate directory for each documentation. i.e. <code>&lt;GHP-root&gt;/library</code>. So in this case; for the SPA to work; you need to set the <code>app.base</code> to <code>/library</code>.</p><p><em>Setting a base path means; what ever the root your server starts in; it should have that path of directories in it.</em></p><p>Here is one way / suggestion to get the same experience for both remote (GitHub Pages) and local;</p><p><b>Example local directory structure:</b></p><pre><code class="language-sh">🗂                          # developer root dir
-├── 🗂 docs                 # GitHub Pages local repo
-│   ├── 🗂 library-1        # docs generated for library-1
-│   ├── 🗂 library-2        # docs generated for library-2
-├── 🗂 library-1            # library-1 local repo
-├── 🗂 library-2            # library-2 local repo
-├── 🗂 ...</code></pre><p><b>Example <code>docma.json</code> for this structure:</b><br><em>Configuration for library-1...</em></p><pre><code class="language-js">{
-    "src": ["*.md", "./src/*.js"],
-    "dest": "../docs/library-1",    // «— note that we're going one level up
-    "app": {
-        "base": "/library-1"        // «— bec. in GHP our docs will be placed in &lt;root&gt;/library-1
-    }
-}</code></pre><p>Run <code>docma serve</code> from within <code>/library-1</code> (local repo dir) to test locally.</p></div>
+<div class="details-content"><p>Some directory structures might not work on some remote environments. For example, if you're using GitHub Pages for multiple documentations, you will need to create a separate directory for each documentation. i.e. <code>&lt;GHP-root&gt;/library</code>. So in this case; for the SPA to work; you need to set the <code>app.base</code> to <code>/library</code>.</p><blockquote>
+<p>When testing locally, it's recommended that you run <code>docma serve</code> from your project root (where <code>docma.json</code> resides); as is, without any target path. It will always adjust to your <code>docma.json</code>.</p>
+</blockquote><p>If your <code>base</code> should be different in your local vs remote/host; set the <code>base</code> for your remote host in your <code>docma.json</code> and run <code>docma serve --base &lt;for-local&gt;</code>. This will override the <code>base</code> while you're testing.</p></div>
+
+
+</details>
+
+
+<details id="linking">
+<summary>
+<b>How does Docma parse links in my JSDoc comments?</b>
+</summary>
+
+
+<div class="details-content"><p>For links to get parsed, you should use the JSDoc <a href="http://usejsdoc.org/tags-inline-link.html"><code>@link</code></a> tag. </p><h4 id="linking-to-a-symbol-in-your-docs">Linking to a symbol in your docs</h4><p>The reference (href) of the link should be considered depending on the routing method set in your build configuration. For example, we want to reference our symbol: <code>MyClass</code></p><table>
+<thead>
+    <tr>
+        <th>Linking On/From</th>
+        <th>Routing Method</th>
+        <th>api/group name: <code>mylib</code></th>
+        <th>no api/group name</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>Same page</td>
+        <td>doesn't matter</td>
+        <td><code>{@link #MyClass|MyClass}</code></td>
+        <td><code>{@link #MyClass|MyClass}</code></td>
+    </tr>
+    <tr>
+        <td>Different page</td>
+        <td><code>query</code></td>
+        <td><code>{@link ?api=mylib#MyClass|MyClass}</code></td>
+        <td><code>{@link ?api#MyClass|MyClass}</code></td>
+    </tr>
+    <tr>
+        <td>Different page</td>
+        <td><code>path</code></td>
+        <td><code>{@link api/mylib/#MyClass|MyClass}</code></td>
+        <td><code>{@link api/#MyClass|MyClass}</code></td>
+    </tr>
+</tbody>
+</table><blockquote>
+<p>Note that when routing method is <code>path</code> and linking from a different page, the link reference is not preceded with a slash. A leading slash would make the link absolute, rather than relative; which wouldn't work with the application base path (if set).</p>
+</blockquote><h4 id="linking-to-another-path">Linking to another path</h4><p>If the link reference is preceded with a <code>/</code>, it's an absolute path. Otherwise, it's relative.</p><pre><code class="language-js">/**
+ *  See {@link examples|Related Examples}.                  «—— relative path (app.base is taken into account)
+ *  Tired of reading docs? {@link /blog|Take a break!}      «—— absolute path
+ */</code></pre><h4 id="linking-to-an-external-site">Linking to an external site</h4><table>
+<thead>
+    <tr>
+        <th>Link</th>
+        <th>Usage</th>
+        <th>&nbsp;</th>
+    </tr>
+</thead>
+<tbody>
+<tr>
+    <td><code>https://domain.com</code></td>
+    <td><code class="nowrap">{@link https://domain.com|External}</code></td>
+    <td><b>OK</b></td>
+</tr>
+<tr>
+    <td><code>//domain.com</code></td>
+    <td><code class="nowrap">{@link //domain.com|External}</code></td>
+    <td><b>OK</b></td>
+</tr>
+<tr>
+    <td><strike><code>domain.com</code></strike></td>
+    <td><code class="nowrap">{@link domain.com|External}</code></td>
+    <td><b>NOT OK</b>. This will break the link as it would be considered a symbol name path.</td>
+</tr>
+</tbody>
+</table></div>
+
+
 
 
 
@@ -159,7 +250,7 @@
 </summary>
 
 
-<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/?content=docma-cli"><code>docma --debug</code></a> (or set <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
+<div class="details-content"><p>Simply build your documentation with <a href="https://onury.io/docma/cli"><code>docma --debug</code></a> (or set <a href="https://onury.io/docma/api/#Docma~BuildConfiguration"><code>buildConfig.debug</code></a> to <code>true</code>) which will enable all the following features:</p><ul>
 <li>The build process will output detailed logs to the console, </li>
 <li>The web application will output web logs, </li>
 <li>Scripts running the app will not be minified,</li>
@@ -175,7 +266,7 @@
 </summary>
 
 
-<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
+<div class="details-content"><p>Docma is very configurable but you're only required to define very few options such as the source files (<code>src</code>) and the destination directory (<code>dest</code>) for a simple build.</p><p>For detailed examples, you can see Docma's own <a href="https://github.com/onury/docma/blob/master/docma.json">configuration file</a> used to document Docma. And you can read the detailed documentation for <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>, which also includes an example.</p></div>
 
 </details>
 
@@ -186,7 +277,7 @@
 </summary>
 
 
-<div class="details-content"><p>This is typically due to incorrect or missing application base definition. For example, try adding <code>"base": "/"</code> for <code>app</code> in your build configuration.</p></div>
+<div class="details-content"><p>This is typically due to incorrect or missing application base definition. For example, try setting <code>app.base</code> to a meaningful path for your host environment, in your build configuration.</p></div>
 </details>
 
 
@@ -210,9 +301,12 @@
 </summary>
 
 
-<div class="details-content"><p>Yes. See <a href="https://onury.io/docma/?content=creating-templates">this section</a> on creating/publishing custom templates.</p></div>
+<div class="details-content"><p>Yes. See <a href="https://onury.io/docma/creating-templates">this section</a> on creating/publishing custom templates.</p></div>
 </details>
 
 
-
+<hr>
+<blockquote>
+<p>Your question is not answered here? See <a href="https://github.com/onury/docma/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+">issues here</a>. Or open a <a href="https://github.com/onury/docma/issues/new">new issue</a>.</p>
+</blockquote>
 </body></html>

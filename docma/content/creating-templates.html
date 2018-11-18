@@ -1,7 +1,7 @@
 
 <html><head></head><body><h1 id="creating-docma-templates">Creating Docma Templates</h1>
 <hr />
-<p>Docma parses <a href="http://usejsdoc.org">JSDoc</a> comments into a Javascript object and builds a SPA (Single Page Application) from the given template. The documentation data is then passed to this styled template within the <a href="https://onury.io/docma/?api=docma-web"><code>DocmaWeb</code></a> instance which is globally available as <strong><code>docma</code></strong> object. </p>
+<p>Docma parses <a href="http://usejsdoc.org">JSDoc</a> comments into a Javascript object and builds a SPA (Single Page Application) from the given template. The documentation data is then passed to this styled template within the <a href="https://onury.io/docma/api/web"><code>DocmaWeb</code></a> instance which is globally available as <strong><code>docma</code></strong> object. </p>
 <p><a href="https://daringfireball.net/projects/markdown">Markdown</a> files are converted to HTML files and created in the same destination directory. The generated application essentially consists of web files that mainly make use of <a href="http://www.dustjs.com">Dust.js</a> internally. </p>
 <h3 id="table-of-contents-">Table of Contents:</h3>
 <ul>
@@ -15,8 +15,12 @@
 </li>
 <li><a href="#templated-web-app">Templated Web App</a><ul>
 <li><a href="#html">HTML</a></li>
-<li><a href="#partials">Partials</a></li>
-<li><a href="#docma-web-core">Docma-Web Core</a></li>
+<li><a href="#partials">Partials</a><ul>
+<li><a href="#api-documentation-partial">API Documentation Partial</a></li>
+<li><a href="#content-partial">Content Partial</a></li>
+</ul>
+</li>
+<li><a href="#docmaweb-core">DocmaWeb Core</a></li>
 <li><a href="#custom-scripts">Custom Scripts</a></li>
 <li><a href="#initializing-the-web-app">Initializing the Web App</a></li>
 <li><a href="#css">CSS</a></li>
@@ -180,7 +184,7 @@ module.exports = (template, modules) =&gt; {
     });
 };</code></pre>
 <h3 id="initializing-a-template-with-docma-cli">Initializing a Template with Docma CLI</h3>
-<p>You can also use <a href="?content=docma-cli#docma-template-init--path-">Docma CLI</a> to initialize a new Docma template project. This will generate most files required to author a template; including a main JS file for your module; as shown above in the example.</p>
+<p>You can also use <a href="cli#docma-template-init--path-">Docma CLI</a> to initialize a new Docma template project. This will generate most files required to author a template; including a main JS file for your module; as shown above in the example.</p>
 <pre><code class="language-sh">cd path/to/new-template
 docma template init</code></pre>
 <p>After or while you're developing your template module, you can use the command below to diagnose your template.</p>
@@ -203,7 +207,7 @@ docma template init</code></pre>
 &lt;/html&gt;</code></pre>
 <p>An empty body would also be valid but we want the footer to come after <em>docma-main</em> element. So it's explicitly defined.</p>
 <blockquote>
-<p><em>Note that <strong>title</strong> of the document is not set. Since this is a template, title will be defined at build time and <code>&lt;title&gt;</code> element will be automatically added to the output document. See <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a>.</em></p>
+<p><em>Note that <strong>title</strong> of the document is not set. Since this is a template, title will be defined at build time and <code>&lt;title&gt;</code> element will be automatically added to the output document. See <a href="api/#Docma~BuildConfiguration">Build Configuration</a>.</em></p>
 </blockquote>
 <h3 id="partials">Partials</h3>
 <p>Put all <a href="http://www.dustjs.com">Dust.js</a> partials in <code>&lt;root&gt;/template/partials</code> directory.</p>
@@ -230,7 +234,7 @@ docma template init</code></pre>
 {&gt;"footer"/}</code></pre>
 <h3 id="docmaweb-core">DocmaWeb Core</h3>
 <p>When you build the documentation with your template, a <code>docma-web.js</code> will be generated (and linked in your main HTML); which is the core engine for the documentation web app. This will include everything the app needs such as the documentation data, compiled partials, dustjs engine, etc... (Note that the size of this script depends especially on the generated documentation data.)</p>
-<p>See <a href="?api=docma-web">Docma Web API</a>.</p>
+<p>See <a href="api/web/">Docma Web API</a>.</p>
 <h3 id="custom-scripts">Custom Scripts</h3>
 <p>You have full control over the main HTML file so you can include any Javascript files in it. <code>DocmaWeb</code> core will always be prepended before your scripts; so that you can safely access the global <code>docma</code> object.</p>
 <h3 id="initializing-the-web-app">Initializing the Web App</h3>
@@ -261,5 +265,5 @@ docma.on('render', function (currentRoute) {
 <p>You can include any custom files anywhere under <code>&lt;root&gt;/template</code> directory. They will be copied over into the output directory. If you need to include a file in the template but don't want it to be in the generated output; define it within the <code>ignore</code> option.</p>
 <h2 id="example-template">Example Template</h2>
 <hr />
-<p>Docma includes a built-in default template. For an example, you can take a look at its <a href="https://github.com/onury/docma/tree/master/templates/zebra">repository</a> or read the details on how to build documentation with the default template, <a href="?content=zebra-template"><strong>Zebra</strong></a>.</p>
+<p>Docma includes a built-in default template. For an example, you can take a look at its <a href="https://github.com/onury/docma/tree/master/templates/zebra">repository</a> or read the details on how to build documentation with the default template, <a href="zebra-template"><strong>Zebra</strong></a>.</p>
 </body></html>

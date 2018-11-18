@@ -2,25 +2,30 @@
 <html><head></head><body><h1 id="docma-changelog">Docma Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
-<h2 id="300--unreleased-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (UNRELEASED)</h2>
+<h2 id="300--2018-11-18-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (2018-11-18)</h2>
 <hr />
 <h4 id="changed">Changed</h4>
 <ul>
-<li><strong>BREAKING</strong>: Dropped support for Node.js versions 6 &amp; 7. Requires Node.js v8 and later. This change is due to updates to the core dependencies such as <code>fs-extra</code> and <code>jsdom</code>.</li>
+<li><strong>BREAKING</strong>: Dropped support for Node.js versions 6 &amp; 7. Requires Node.js v8 and later. This change is due to updates to the core dependencies such as <code>fs-extra</code>, <code>jsdoc-x</code> and <code>jsdom</code>.</li>
+<li>Improved path/query routing &amp; linking.</li>
 </ul>
 <h4 id="added">Added</h4>
 <ul>
 <li>Ability to force parser type on defined files/paths; by appending a suffix. For Markdown, append <code>:md</code> or <code>:markdown</code>. For HTML, append <code>:htm</code> or <code>html</code>. For example, <code>LICENSE:md</code> will force-parse <code>LICENSE</code> file to markdown. <code>file.partial:html</code> will force-parse <code>file.partial</code> to HTML. For forcing JSDoc on JavaScript files without a proper extension you can use <code>:js</code> or <code>:jsx</code> but this is not recommended. Use <code>jsdoc.includePattern</code> of your build configuration instead.</li>
+<li>Ability to create deeper paths for named groups/routes. e.g. <code>mylib/latest</code></li>
 <li>Support for favicon. Set <code>app.favicon</code> to your ICO file's local path.</li>
-<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. If a bookmark (id) is passed in the location hash, that item will auto-expand. See <a href="https://onury.io/docma/?content=faq">Docma F.A.Q.</a> for an example. <em>Note that Edge <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/">does not support</a> details/summary tags yet. All other modern browsers has support.</em></li>
-<li>Ability to hide or remove specific, partial content from Docma output. For example if you want some <strong>part</strong> of your README to be visible in GitHub repo but not in your Docma generated documentation... See <a href="https://onury.io/docma/?content=faq#hide-remove">this</a> for details.</li>
+<li>Support for collapsable markdown (i.e. with <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags). This is great for generating styled collapsable lists (such as F.A.Q.) from your markdown files. If a bookmark (id) is passed in the location hash, that item will auto-expand. See <a href="https://onury.io/docma/faq">Docma F.A.Q.</a> for an example. <em>Note that Edge <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/">does not support</a> details/summary tags yet. All other modern browsers has support.</em></li>
+<li>Ability to hide or remove specific, partial content from Docma output. For example if you want some <strong>part</strong> of your README to be visible in GitHub repo but not in your Docma generated documentation... See <a href="https://onury.io/docma/faq#hide-remove">this</a> for details.</li>
+<li>Added new CLI option (<code>-b</code> or <code>--base</code>) to override/set the base path from command line.</li>
 </ul>
 <h4 id="fixed">Fixed</h4>
 <ul>
 <li>An issue where documentation build would fail due to a symbol name being a non-string value. Fixes <a href="https://github.com/onury/docma/issues/54">#54</a>.</li>
 <li>An issue where the web app would throw <code>Uncaught TypeError</code> when invalid JSDoc type specified for <code>@returns</code>. Fixes <a href="https://github.com/onury/docma/issues/55">#55</a>.</li>
 <li>Fixed <a href="https://www.owasp.org/index.php/Reverse_Tabnabbing">"Reverse Tabnabbing" vulnerability</a> with generated documentation links.</li>
+<li>An issue where <code>base</code> tag would not be added to the head of main document.</li>
 <li>An issue where Docma would not set default <code>app.base</code> path to <code>/</code> as expected. Fixes <a href="https://github.com/onury/docma/issues/59">#59</a>.</li>
+<li>An issue where symbol link would be parsed as absolute path rather than relative. Fixes <a href="https://github.com/onury/docma/issues/50">#50</a>.</li>
 </ul>
 <h3 id="default-template---zebra-v220">Default Template - Zebra <code>v2.2.0</code></h3>
 <p><em>This version of Zebra template still supports Docma <code>2.0.0</code> and later.</em></p>
@@ -79,8 +84,8 @@
 <h4 id="added">Added</h4>
 <ul>
 <li>Support for documenting code with <strong>ES2015</strong> syntax. (JSDoc and jsdoc-x dep. update.) Fixes <a href="https://github.com/onury/docma/issues/18">#18</a> and <a href="https://github.com/onury/docma/issues/21">#21</a>.</li>
-<li><code>assets</code> build configuration which provides ability to copy defined asset files/directories to build directory; so you can use/link to non-source, static asset files (such as images, PDFs, etc). See <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>. Fixes <a href="https://github.com/onury/docma/issues/29">#29</a>.</li>
-<li>Pre-build and post-build process support for Docma templates. See <a href="https://onury.io/docma/?content=creating-templates">Docma Templates documentation</a>.</li>
+<li><code>assets</code> build configuration which provides ability to copy defined asset files/directories to build directory; so you can use/link to non-source, static asset files (such as images, PDFs, etc). See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>. Fixes <a href="https://github.com/onury/docma/issues/29">#29</a>.</li>
+<li>Pre-build and post-build process support for Docma templates. See <a href="https://onury.io/docma/creating-templates">Docma Templates documentation</a>.</li>
 <li><code>markdown.xhtml</code> option for build configuration.</li>
 <li>Docma version compatibility check for Docma templates.</li>
 <li><code>clean</code> option that specifies whether to empty destination directory before the build. Default is <code>false</code>.</li>
@@ -97,7 +102,7 @@
 <h4 id="changed">Changed</h4>
 <ul>
 <li><strong>BREAKING</strong>: Due to several upgrades (such as <code>jsdom</code>), Docma v2+ requires Node.js v6 or newer.</li>
-<li>Greatly improved the symbol sorting logic (<a href="https://github.com/onury/jsdoc-x">jsdoc-x</a>). You can now sort by <code>scope</code>, by <code>access</code> type, by <code>kind</code>, <code>grouped</code> or <code>alphabetic</code> (default). See <code>jsdoc.sort</code> option in <a href="https://onury.io/docma/?api=docma#Docma~BuildConfiguration">build configuration</a>.</li>
+<li>Greatly improved the symbol sorting logic (<a href="https://github.com/onury/jsdoc-x">jsdoc-x</a>). You can now sort by <code>scope</code>, by <code>access</code> type, by <code>kind</code>, <code>grouped</code> or <code>alphabetic</code> (default). See <code>jsdoc.sort</code> option in <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>.</li>
 <li>The destination directory is not auto-cleaned anymore before the build. Use <code>clean</code> option for the old behavior. Fixes <a href="https://github.com/onury/docma/issues/34">#34</a>.</li>
 <li>Improved markdown parser. Both <code>&lt;h1 /&gt;</code> and <code>&lt;h2 /&gt;</code> tags are now followed with a <code>&lt;hr/&gt;</code>, like on GitHub.</li>
 <li>Updated core dependencies to their latest versions.</li>
@@ -107,7 +112,7 @@
 <h4 id="removed">Removed</h4>
 <ul>
 <li><strong>For template authors only</strong>: <ul>
-<li><strong>BREAKING</strong>: <code>docma.template.json</code> file that defines the template build and configuration options is dropped in favor of template module main (JS) file or <code>package.json</code>. There are several other improvements. See updated documentation on <a href="http://onury.io/docma/?content=creating-templates">Creating Docma Templates</a>.</li>
+<li><strong>BREAKING</strong>: <code>docma.template.json</code> file that defines the template build and configuration options is dropped in favor of template module main (JS) file or <code>package.json</code>. There are several other improvements. See updated documentation on <a href="http://onury.io/docma/creating-templates">Creating Docma Templates</a>.</li>
 <li><strong>BREAKING</strong>: <code>compile</code> property of template configuration is removed. Now, scripts or less/sass files of the template should be pre-compiled. This is logical and speeds up the documentation build process of Docma.</li>
 </ul>
 </li>
@@ -126,7 +131,7 @@
 <li>CLI will now auto-check for a <code>docma.json</code> (or <code>.docma.json</code>) file in the current working directory if <code>-c</code> option is omitted.</li>
 <li>Options <code>-v</code> (lowercase) and <code>-V</code> (uppercase) are swapped. <code>-v</code> gets the Docma version now (alias <code>--version</code>). And <code>-V</code> is <code>--verbose</code>.</li>
 </ul>
-<p>See <a href="https://onury.io/docma/?content=docma-cli">CLI documentation</a> for detailed information on updated CLI.</p>
+<p>See <a href="https://onury.io/docma/cli">CLI documentation</a> for detailed information on updated CLI.</p>
 <h3 id="docma-web-core">Docma Web Core</h3>
 <h4 id="added">Added</h4>
 <ul>
@@ -153,7 +158,7 @@
 <h3 id="docma-template-api">Docma Template API</h3>
 <h4 id="changed">Changed</h4>
 <ul>
-<li>Docma templates are now node modules. This is the initial Template API. See updated documentation on <a href="http://onury.io/docma/?content=creating-templates">Creating Docma Templates</a>.</li>
+<li>Docma templates are now node modules. This is the initial Template API. See updated documentation on <a href="http://onury.io/docma/creating-templates">Creating Docma Templates</a>.</li>
 </ul>
 <h3 id="default-template---zebra-v200">Default Template - Zebra <code>v2.0.0</code></h3>
 <h4 id="added">Added</h4>
@@ -262,7 +267,7 @@
 <h3 id="default-template">Default Template</h3>
 <h4 id="added">Added</h4>
 <ul>
-<li>Template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/?content=default-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
+<li>Template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/zebra-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
 <li>Template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
 <li><code>static</code> badge for static members, <code>deprecated</code> badge for deprecated symbols.</li>
 </ul>
@@ -460,7 +465,7 @@
 <h3 id="docma-web-core">Docma Web Core</h3>
 <h4 id="added">Added</h4>
 <ul>
-<li>Client-side routing support for the SPA with paths (e.g. <code>/api</code>) or query-strings (e.g. <code>?content=api</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
+<li>Client-side routing support for the SPA with paths (e.g. <code>/api/mylib</code>) or query-strings (e.g. <code>?api=mylib</code>). Configured via <code>.app.routing:String</code> option. Set to <code>"path"</code> or <code>"query"</code>. Uses page.js internally.</li>
 <li>Implemented <code>EventEmitter</code>.</li>
 <li>New methods to <code>docma.utils</code> such as <code>getCodeName(symbol)</code>, <code>getFullName(symbol)</code>, etc...</li>
 </ul>

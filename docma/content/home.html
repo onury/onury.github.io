@@ -77,7 +77,7 @@
                     <li>Build a cool <b>SPA</b> (Single Page Application) from parsed files.</li>
                     <li>Generate multiple/separate API documentations by <b>grouping</b> JS files.</li>
                     <li>Path or Query-string based app routing.</li>
-                    <li>Non-opinionated engine, <b>built-in template</b> with <a href="?content=zebra-template">cool opinions</a>. 😎 </li>
+                    <li>Non-opinionated engine, <b>built-in template</b> with <a href="zebra-template">cool opinions</a>. 😎 </li>
                     <li>Supports custom templates, comes with template authoring tools.</li>
                     <li>Works great with <b>GitHub Pages</b>, Amazon <b>S3</b>, Nginx, Apache, etc...</li>
                     <li>Build via <b>API</b> or <b>CLI</b>.</li>
@@ -108,14 +108,14 @@
                     <pre><code>docma -c path/to/docma.json</code></pre>
                     <p>You can even serve the docs locally and test.</p>
                     <pre><code>docma serve path/to/docs</code></pre>
-                    <p>See <a href="?content=docma-cli">Docma <b>CLI</b> Reference</a>, <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a> and <a href="?content=faq">Docma F.A.Q.</a> for more information.</p>
+                    <p>See <a href="cli">Docma <b>CLI</b> Reference</a>, <a href="api/#Docma~BuildConfiguration">Build Configuration</a> and <a href="faq">Docma F.A.Q.</a> for more information.</p>
                 </div>
 
                 <div class="space-bottom-md">
                     <h3 class="no-space-top">Building Documentation via API</h3>
                     <p>If you need to build documentation from within your code, use the API.</p>
                     <pre><code>const Docma = require('docma');</code></pre>
-                    <p>Either by passing a <a href="?api=docma#Docma~BuildConfiguration">configuration</a> object.</p>
+                    <p>Either by passing a <a href="api/#Docma~BuildConfiguration">configuration</a> object.</p>
                     <pre><code>const config = {
     src: [
         './code/**/*.js',
@@ -128,13 +128,13 @@ Docma.create()
     .catch(error => {
         console.log(error);
     });</code></pre>
-                    <p>Or by reading <a href="?api=docma#Docma~BuildConfiguration">configuration</a> from a JSON file.</p>
+                    <p>Or by reading <a href="api/#Docma~BuildConfiguration">configuration</a> from a JSON file.</p>
                     <pre><code>Docma.create()
     .build('./path/to/docma.json')
     .catch(error => {
         console.log(error);
     });</code></pre>
-                    <p>See <a href="?api=docma">Docma <b>API</b> Reference</a>, <a href="?api=docma#Docma~BuildConfiguration">Build Configuration</a> and <a href="?content=faq">Docma F.A.Q.</a> for more information.</p>
+                    <p>See <a href="api">Docma <b>API</b> Reference</a>, <a href="api/#Docma~BuildConfiguration">Build Configuration</a> and <a href="faq">Docma F.A.Q.</a> for more information.</p>
                 </div>
             </div>
 
@@ -142,13 +142,13 @@ Docma.create()
                 <div class="well space-bottom-lg">
                     <h3 class="no-space-top">Docma Templates</h3>
                     <div class="clearfix">
-                        <a href="?content=zebra-template"><img class="zebra-logo snap-left" src="img/zebra-logo.png" /></a>
+                        <a href="zebra-template"><img class="zebra-logo snap-left" src="img/zebra-logo.png" /></a>
                         <p>
-                            Docma includes a built-in template: <b><a href="?content=zebra-template">Zebra</a></b>, with a side-bar symbols menu, search and navigation features; and a beautiful layout.
+                            Docma includes a built-in template: <b><a href="zebra-template">Zebra</a></b>, with a side-bar symbols menu, search and navigation features; and a beautiful layout.
                             Actually you're viewing it right now ;}
                         </p>
                         <p>
-                            You can also build your own template! See <a href="?content=creating-templates">Creating Docma Templates</a>.
+                            You can also build your own template! See <a href="creating-templates">Creating Docma Templates</a>.
                         </p>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ Docma.create()
     </div>
     <br />
     <div class="footer">
-        Built with <a href="https://github.com/onury/docma" target="_blank" rel="noopener noreferrer">Docma</a> &nbsp;•&nbsp;
+        Built with &#9829; by <a href="https://github.com/onury/docma" target="_blank" rel="noopener noreferrer">Docma</a> &nbsp;•&nbsp;
         Contribute on <a href="https://github.com/onury/docma" target="_blank" rel="noopener noreferrer">Github</a> &nbsp;•&nbsp;
         <a href="https://github.com/onury" target="_blank" rel="noopener noreferrer">Other Projects</a>
     </div>
