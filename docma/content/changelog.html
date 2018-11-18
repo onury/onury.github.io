@@ -2,7 +2,7 @@
 <html><head></head><body><h1 id="docma-changelog">Docma Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
-<h2 id="300--2018-11-18-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (2018-11-18)</h2>
+<h2 id="300--unreleased-"><a href="https://github.com/onury/docma/compare/v2.1.0...v3.0.0">3.0.0</a> (UNRELEASED)</h2>
 <hr />
 <h4 id="changed">Changed</h4>
 <ul>
@@ -86,7 +86,7 @@
 <ul>
 <li>Support for documenting code with <strong>ES2015</strong> syntax. (JSDoc and jsdoc-x dep. update.) Fixes <a href="https://github.com/onury/docma/issues/18">#18</a> and <a href="https://github.com/onury/docma/issues/21">#21</a>.</li>
 <li><code>assets</code> build configuration which provides ability to copy defined asset files/directories to build directory; so you can use/link to non-source, static asset files (such as images, PDFs, etc). See <a href="https://onury.io/docma/api/#Docma~BuildConfiguration">build configuration</a>. Fixes <a href="https://github.com/onury/docma/issues/29">#29</a>.</li>
-<li>Pre-build and post-build process support for Docma templates. See <a href="https://onury.io/docma/creating-templates">Docma Templates documentation</a>.</li>
+<li>Pre-build and post-build process support for Docma templates. See <a href="https://onury.io/docma/templates/guide">Docma Templates documentation</a>.</li>
 <li><code>markdown.xhtml</code> option for build configuration.</li>
 <li>Docma version compatibility check for Docma templates.</li>
 <li><code>clean</code> option that specifies whether to empty destination directory before the build. Default is <code>false</code>.</li>
@@ -113,7 +113,7 @@
 <h4 id="removed">Removed</h4>
 <ul>
 <li><strong>For template authors only</strong>: <ul>
-<li><strong>BREAKING</strong>: <code>docma.template.json</code> file that defines the template build and configuration options is dropped in favor of template module main (JS) file or <code>package.json</code>. There are several other improvements. See updated documentation on <a href="http://onury.io/docma/creating-templates">Creating Docma Templates</a>.</li>
+<li><strong>BREAKING</strong>: <code>docma.template.json</code> file that defines the template build and configuration options is dropped in favor of template module main (JS) file or <code>package.json</code>. There are several other improvements. See updated documentation on <a href="http://onury.io/docma/templates/guide">Creating Docma Templates</a>.</li>
 <li><strong>BREAKING</strong>: <code>compile</code> property of template configuration is removed. Now, scripts or less/sass files of the template should be pre-compiled. This is logical and speeds up the documentation build process of Docma.</li>
 </ul>
 </li>
@@ -159,7 +159,7 @@
 <h3 id="docma-template-api">Docma Template API</h3>
 <h4 id="changed">Changed</h4>
 <ul>
-<li>Docma templates are now node modules. This is the initial Template API. See updated documentation on <a href="http://onury.io/docma/creating-templates">Creating Docma Templates</a>.</li>
+<li>Docma templates are now node modules. This is the initial Template API. See updated documentation on <a href="http://onury.io/docma/templates/guide">Creating Docma Templates</a>.</li>
 </ul>
 <h3 id="default-template---zebra-v200">Default Template - Zebra <code>v2.0.0</code></h3>
 <h4 id="added">Added</h4>
@@ -268,7 +268,7 @@
 <h3 id="default-template">Default Template</h3>
 <h4 id="added">Added</h4>
 <ul>
-<li>Template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/zebra-template">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
+<li>Template option <code>outline</code>, which determines the outline style of the sidebar symbols list. (<code>"flat"</code> or <code>"tree"</code>). See <a href="https://onury.github.io/docma/templates/zebra">documentation</a> and <a href="https://onury.github.io/accesscontrol/?api=ac">this example</a> for <code>outline</code> set to <code>"tree"</code>.</li>
 <li>Template option <code>symbolMeta</code> which specifies whether to add meta information at the end of each symbol documentation such as code file name and line number. Default is <code>false</code>.</li>
 <li><code>static</code> badge for static members, <code>deprecated</code> badge for deprecated symbols.</li>
 </ul>
