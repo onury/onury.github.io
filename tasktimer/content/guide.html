@@ -1,49 +1,100 @@
 
-<html><head></head><body><h1 id="tasktimer">TaskTimer</h1>
+<html><head></head><body><h1 align="center">
+    <a href="https://github.com/onury/tasktimer"><img width="300" height="300" src="https://raw.github.com/onury/tasktimer/master/tasktimer-logo.png" alt="TaskTimer" style="max-width: 100%;"></a>
+</h1>
 <hr />
-<blockquote>
-<p>© 2016, Onur Yıldırım (@onury). MIT License.</p>
-</blockquote>
-<p>A timer utility for running periodic tasks on the given interval ticks.
-This is useful when you want to run or schedule multiple tasks (on a single timer instance).</p>
-<p>Universal module. Works in both Node and Browser. Less than <strong>3KB</strong> (minified, gzipped).</p>
-<h2 id="installation">Installation</h2>
-<pre><code class="lang-sh">npm i tasktimer --save            # npm
-bower install tasktimer --save    # Bower
-</code></pre>
-<h2 id="how-it-works">How it works</h2>
+<p align="center">
+    <a href="https://travis-ci.org/onury/tasktimer"><img src="https://img.shields.io/travis/onury/tasktimer.svg?branch=master&amp;style=flat-square" alt="Build Status" style="max-width: 100%;"></a>
+    <a href="https://coveralls.io/github/onury/tasktimer?branch=master"><img src="https://img.shields.io/coveralls/github/onury/tasktimer/master.svg?style=flat-square" alt="Coverage Status" style="max-width: 100%;"></a>
+    <a href="https://david-dm.org/onury/tasktimer"><img src="https://david-dm.org/onury/tasktimer.svg?style=flat-square" alt="Dependencies" style="max-width: 100%;"></a>
+    <a href="https://snyk.io/test/github/onury/tasktimer"><img src="https://snyk.io/test/github/onury/tasktimer/badge.svg?style=flat-square" alt="Known Vulnerabilities" style="max-width: 100%;"></a>
+    <a href="https://github.com/onury/tasktimer/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2018.svg?style=flat-square" alt="Maintained" style="max-width: 100%;"></a>
+    <br>
+    <a href="https://www.npmjs.com/package/tasktimer"><img src="http://img.shields.io/npm/v/tasktimer.svg?style=flat-square" alt="npm" style="max-width: 100%;"></a>
+    <a href="https://github.com/onury/tasktimer"><img src="https://img.shields.io/github/release/onury/tasktimer.svg?style=flat-square" alt="Release" style="max-width: 100%;"></a>
+    <a href="https://github.com/onury/tasktimer/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/tasktimer.svg?style=flat-square" alt="License" style="max-width: 100%;"></a>
+    <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/written%20in-%20TypeScript%20-6575ff.svg?style=flat-square" alt="TypeScript" style="max-width: 100%;"></a>
+    <a href="https://onury.io/tasktimer/api"><img src="https://img.shields.io/badge/documentation-click_to_read-c27cf4.svg?documentation=click_to_read&amp;style=flat-square" alt="Documentation" style="max-width: 100%;"></a>
+    <br>
+    <sub>© 2019, Onur Yıldırım (<b><a href="https://github.com/onury">@onury</a></b>).</sub>
+</p>
+<br>
+
+<p>An accurate timer utility for running periodic tasks on the given interval ticks or dates.</p>
+<h2 id="why-tasktimer-">Why <code>TaskTimer</code>?</h2>
+<hr />
+<p>Because of the single-threaded, asynchronous <a href="https://johnresig.com/blog/how-javascript-timers-work/">nature of JavaScript</a>, each execution takes a piece of CPU time, and the time they have to wait will vary, depending on the load. This creates a latency and cumulative difference in asynchronous timers; that gradually increase the inacuraccy. <code>TaskTimer</code> claims to be the best timer that overcomes this problem as much as possible.</p>
+<p>Secondly, I needed a task manager that can handle multiple tasks on different intervals, with a single timer instance.</p>
+<h2 id="features">Features</h2>
+<hr />
 <ul>
-<li>When you create a timer; you set a <strong>time</strong>-interval, to be used as base resolution (tick) for the tasks.</li>
-<li>Then add task(s) to be executed on <strong>tick</strong>-intervals and (optionally) define number of <strong>total runs</strong>.</li>
-<li>Event listeners can be added to be invoked on each <code>tick</code>, <code>task</code>, etc...</li>
-<li>Remove or reset individual tasks at anytime.</li>
-<li>Or start, pause, resume or stop the timer. Effects all tasks.</li>
+<li><strong>Precission &amp; Accuracy</strong>: With the <code>precision</code> option (enabled by default);<ul>
+<li>The delay between each tick is <strong>auto-adjusted</strong> when it's off due to task/CPU loads or <a href="https://en.wikipedia.org/wiki/Clock_drift">clock drifts</a>.</li>
+<li>In Node.js, <code>TaskTimer</code> also makes use of <code>process.hrtime()</code> <strong>high-resolution real-time</strong>. The time is relative to an arbitrary time in the past (not related to the time of day) and therefore not subject to clock drifts.</li>
+<li>The timer may hit a synchronous / blocking task; or detect significant time drift (longer than the base interval) due to JS event queue, which cannot be recovered by simply adjusting the next delay. In this case, right from the next tick onward; it will auto-recover as much as possible by running "immediate" tasks until it reaches the proper time vs tick/run balance.</li>
 </ul>
+</li>
+<li>Run or schedule <strong>multiple tasks</strong> (on a single timer instance).</li>
+<li>Ability to run <strong>sync</strong> or <strong>async</strong> tasks that return a promise (or use callbacks).</li>
+<li>Ability to <strong>balance task-loads</strong> via distributing executions by tick intervals.</li>
+<li>Ability to <strong>limit total runs</strong> of a task.</li>
+<li><strong>Stateful tasks</strong>: i.e. ability to auto-stop when all tasks complete.</li>
+<li><code>TaskTimer</code> is also an <strong><code>EventEmitter</code></strong>.</li>
+<li><strong>Universal</strong> module. Works in both Node and Browser. </li>
+<li>Small size (less than 6kB minified, gzipped).</li>
+<li>Completely <strong>re-written</strong> in <strong>TypeScript</strong>. (version 2.0.0+)</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<hr />
+<pre><code class="sh">npm i tasktimer</code></pre>
 <h2 id="usage">Usage</h2>
+<hr />
 <p>In Node/CommonJS environments:</p>
-<pre><code class="lang-js">var TaskTimer = require('tasktimer');
-</code></pre>
-<p>via script tag in the browser:</p>
-<pre><code class="lang-html">&lt;script src="tasktimer.min.js"&gt;&lt;/script&gt;
-</code></pre>
-<h3 id="example">Example</h3>
-<pre><code class="lang-js">// Timer with 1000ms (1 second) base interval resolution.
-var timer = new TaskTimer(1000)
+<pre><code class="js">const { TaskTimer } = require('tasktimer');</code></pre>
+<p>With transpilers (TypeScript, Babel):</p>
+<pre><code class="js">import { TaskTimer } from 'tasktimer';</code></pre>
+<p>In (Modern) Browsers:</p>
+<pre><code class="html">&lt;script src="js/tasktimer.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    const { TaskTimer } = tasktimer;
+&lt;/script&gt;</code></pre>
+<h3 id="simplest-example">Simplest Example</h3>
+<pre><code class="js">const timer = new TaskTimer(1000);
+timer.add(task =&gt; console.log(`Current runs: ${task.currentRuns}`)).start();</code></pre>
+<h3 id="regular-timer--without-task-management-">Regular Timer (without Task Management)</h3>
+<pre><code class="js">const timer = new TaskTimer(5000);
+timer.on('tick', () =&gt; console.log(`Tick count: ${timer.tickCount}`));
+timer.start();</code></pre>
+<h3 id="detailed-example">Detailed Example</h3>
+<pre><code class="js">// Timer with 1000ms (1 second) base interval resolution.
+const timer = new TaskTimer(1000);
 // interval can be updated anytime by setting the `timer.interval` property.
 
-// Add task(s) based on tick intervals.
-timer.addTask({
-    name: 'job1',       // unique name of the task
-    tickInterval: 5,    // run every 5 ticks (5 x interval = 5000 ms)
-    totalRuns: 10,      // run 10 times only. (set to 0 for unlimited times)
-    callback: function (task) {
-        // code to be executed on each run
-        console.log(task.name + ' task has run ' + task.currentRuns + ' times.');
+// Add multiple tasks (at once) based on tick intervals.
+timer.add([
+    {
+        id: 'task-1',       // unique ID of the task
+        tickInterval: 5,    // run every 5 ticks (5 x interval = 5000 ms)
+        totalRuns: 10,      // run 10 times only. (set to 0 for unlimited times)
+        callback(task) {
+            // code to be executed on each run
+            console.log(`${task.id} task has run ${task.currentRuns} times.`);
+        }
+    },
+    {
+        id: 'task-2',       // unique ID of the task
+        tickDelay: 1,       // 1 tick delay before first run
+        tickInterval: 10,   // run every 10 ticks (10 x interval = 10000 ms)
+        totalRuns: 2,       // run 2 times only. (set to 0 for unlimited times)
+        callback(task) {
+            // code to be executed on each run
+            console.log(`${task.id} task has run ${task.currentRuns} times.`);
+        }
     }
-});
+]);
 
-// Execute some code on each tick... (every 1 second)
-timer.on('tick', function () {
+// You can also execute some code on each tick... (every 1000 ms)
+timer.on('tick', () =&gt; {
     console.log('tick count: ' + timer.tickCount);
     console.log('elapsed time: ' + timer.time.elapsed + ' ms.');
     // stop timer (and all tasks) after 1 hour
@@ -51,10 +102,38 @@ timer.on('tick', function () {
 });
 
 // Start the timer
-timer.start();
-</code></pre>
+timer.start();</code></pre>
+<h2 id="how-it-works">How it works</h2>
+<hr />
+<ul>
+<li>When you create a timer; you set a <strong>time</strong>-interval (e.g. <code>1000</code> milliseconds), to be used as <strong>base</strong> resolution (tick) for the tasks.</li>
+<li>Then add task(s) to be executed on <strong>tick</strong>-intervals.<br><em>(e.g. task1 runs on every 10th tick, task2 runs on every 30th)</em></li>
+<li>You can optionally define:<ul>
+<li>The number of <strong>total runs</strong>, </li>
+<li>An initial <strong>delay</strong>,</li>
+<li>Start/end <strong>dates</strong> for each task...</li>
+</ul>
+</li>
+<li>In addition to task callbacks; event listeners can be added to execute some other code on each <code>tick</code> (base interval) or <code>task</code> run, etc...</li>
+<li>You can add, remove, reset, disable individual tasks at any time, without having to stop or re-create the timer.</li>
+<li>Pause and resume the timer at any time; which effects all current tasks.</li>
+</ul>
 <h3 id="documentation">Documentation</h3>
-<p>See API documentation and examples <a href="http://onury.github.io/tasktimer/?api=tasktimer">here</a>.</p>
+<p>See <a href="https://onury.io/tasktimer/api"><strong>API reference</strong></a> and examples <a href="https://onury.io/tasktimer/api">here</a>.</p>
+<h2 id="changelog">Changelog</h2>
+<hr />
+<p>See <a href="CHANGELOG.md">CHANGELOG.md</a>.<br><em>If you're migrating from TaskTimer v1 to v2+, there are various <strong>breaking changes</strong>!..</em></p>
+<h2 id="contributing">Contributing</h2>
+<hr />
+<p>Clone original project:</p>
+<pre><code class="sh">git clone https://github.com/onury/tasktimer.git</code></pre>
+<p>Install dependencies:</p>
+<pre><code class="sh">npm install</code></pre>
+<p>Add tests into <a href="test/node">test/node</a> and <a href="test/browser">test/browser</a> and run:</p>
+<pre><code class="sh">npm run test!   # builds and runs tests
+npm test        # runs tests without building</code></pre>
+<p>Use included <code>tslint.json</code> and <code>editorconfig</code> for style and linting.<br>Travis build should pass, coverage should not degrade.</p>
 <h2 id="license">License</h2>
-<p>MIT.</p>
+<hr />
+<p><a href="LICENSE">MIT</a>.</p>
 </body></html>
