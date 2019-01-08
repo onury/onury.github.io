@@ -2,7 +2,7 @@
 <html><head></head><body><h1 id="tasktimer-changelog"><code>TaskTimer</code> Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
-<h2 id="200--2019-01-07-">2.0.0 (2019-01-07)</h2>
+<h2 id="200--2019-01-08-">2.0.0 (2019-01-08)</h2>
 <hr />
 <p>This release includes various <strong>breaking changes</strong>. Please see the <a href="https://onury.io/tasktimer/api">API reference</a>. Also note that this version is completely re-written in TypeScript.</p>
 <h3 id="changed">Changed</h3>
@@ -13,7 +13,6 @@
 <li><strong>Breaking</strong>: The task ID is optional (auto-generated when omitted) when task is created via <code>#add()</code>. But <code>callback</code> is now required.</li>
 <li><strong>Breaking</strong>: <code>TaskTimer#removeTask()</code> renamed to <code>TaskTimer#remove()</code>.</li>
 <li><strong>Breaking</strong>: <code>TaskTimer#getTask()</code> renamed to <code>TaskTimer#get()</code>.</li>
-<li><strong>Breaking</strong>: <code>TaskTimer.Event</code> enumeration is renamed to <code>TaskTimer.EventType</code>.</li>
 <li><strong>Breaking</strong>: <code>TaskTimer.State</code> enumeration type is changed to <code>string</code>. (meaning enum values are also changed.)</li>
 </ul>
 <h3 id="added">Added</h3>
@@ -24,9 +23,9 @@
 <li>Task option: <code>enabled: boolean</code> indicating whether the task is currently enabled. This essentially gives you a manual control over execution. The task will always bypass the callback while this is set to <code>false</code>.</li>
 <li>Task option: <code>tickDelay: number</code> to specify a number of ticks to allow before running the task for the first time.</li>
 <li>Task option: <code>removeOnCompleted: number</code> indicating whether to remove the task (to free up memory) when task has completed its executions (runs). For this to take affect, the task should have <code>totalRuns</code> and/or <code>stopDate</code> configured. Default: <code>false</code></li>
-<li>Event: <code>TaskTimer.EventType.TASK_COMPLETED</code> (<code>"taskCompleted"</code>) Emitted when a task has completed all of its executions (runs) or reached its stopping date/time (if set). Note that this event will only be fired if the tasks has a <code>totalRuns</code> limit or a <code>stopDate</code> value set.</li>
-<li>Event: <code>TaskTimer.EventType.COMPLETED</code> (<code>"completed"</code>) Emitted when <em>all</em> tasks have completed all of their executions (runs) or reached their stopping date/time (if set). Note that this event will only be fired if <em>each</em> task either have a <code>totalRuns</code> limit or a <code>stopDate</code> value set, or both.</li>
-<li>Event: <code>TaskTimer.EventType.TASK_ERROR</code> (<code>"taskError"</code>) Catches and emits errors produced (if any) on a task execution.</li>
+<li>Event: <code>TaskTimer.Event.TASK_COMPLETED</code> (<code>"taskCompleted"</code>) Emitted when a task has completed all of its executions (runs) or reached its stopping date/time (if set). Note that this event will only be fired if the tasks has a <code>totalRuns</code> limit or a <code>stopDate</code> value set.</li>
+<li>Event: <code>TaskTimer.Event.COMPLETED</code> (<code>"completed"</code>) Emitted when <em>all</em> tasks have completed all of their executions (runs) or reached their stopping date/time (if set). Note that this event will only be fired if <em>each</em> task either have a <code>totalRuns</code> limit or a <code>stopDate</code> value set, or both.</li>
+<li>Event: <code>TaskTimer.Event.TASK_ERROR</code> (<code>"taskError"</code>) Catches and emits errors produced (if any) on a task execution.</li>
 <li><code>Task#time</code> getter that returns an object <code>{ started, stopped, elapsed }</code> defining the life-time of a task.</li>
 <li><code>TaskTimer#runCount: boolean</code> indicating the total number of timer runs, including resumed runs.</li>
 <li><code>TaskTimer#taskRunCount: boolean</code> indicating the total number of all task executions (runs).</li>
