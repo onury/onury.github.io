@@ -1,19 +1,27 @@
 
-<html><head></head><body><p align="center"><img width="340" height="275" src="https://raw.github.com/onury/geolocator/master/geolocator-logo.png"><br><br></p>
+<html><head></head><body><h1 align="center">
+    <a href="https://github.com/onury/geolocator">
+        <img width="340" height="275" src="https://raw.github.com/onury/geolocator/master/geolocator-logo.png" style="max-width: 100%;">
+    </a>
+</h1>
+<hr />
 
-<p><a href="https://cdnjs.com/libraries/geolocator"><img src="https://img.shields.io/cdnjs/v/geolocator.svg" alt="CDNJS"></a>
-<a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/bower/v/geolocator.svg" alt="bower"></a>
-<a href="https://www.npmjs.com/package/geolocator"><img src="http://img.shields.io/npm/v/geolocator.svg" alt="npm"></a>
-<a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/github/release/onury/geolocator.svg" alt="release"></a>
-<a href="https://david-dm.org/onury/geolocator"><img src="https://david-dm.org/onury/geolocator.svg" alt="dependencies"></a>
-<a href="https://github.com/onury/geolocator/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/geolocator.svg" alt="license"></a>
-<a href="https://github.com/onury/geolocator/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2018.svg" alt="maintained"></a>  </p>
-<blockquote>
-<p>© 2018, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>)
-MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/master/DISCLAIMER">Disclaimer</a> and <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</p>
-</blockquote>
-<p>Geolocator.js is a utility for getting geo-location information, geocoding, address look-ups, distance &amp; durations, timezone information and more...</p>
+<p align="center">
+<a href="https://cdnjs.com/libraries/geolocator"><img src="https://img.shields.io/cdnjs/v/geolocator.svg?style=flat-square" alt="CDNJS" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/bower/v/geolocator.svg?style=flat-square" alt="bower" style="max-width: 100%;"></a>
+<a href="https://www.npmjs.com/package/geolocator"><img src="http://img.shields.io/npm/v/geolocator.svg?style=flat-square" alt="npm" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/geolocator"><img src="https://img.shields.io/github/release/onury/geolocator.svg?style=flat-square" alt="release" style="max-width: 100%;"></a>
+<a href="https://david-dm.org/onury/geolocator"><img src="https://david-dm.org/onury/geolocator.svg?style=flat-square" alt="release" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/geolocator/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/geolocator.svg?style=flat-square" alt="license" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/geolocator/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2019.svg?style=flat-square" alt="maintained" style="max-width: 100%;"></a>
+<br>
+<sub>© 2019, Onur Yıldırım (<b><a href="https://github.com/onury">@onury</a></b>). Please see the <a href="https://github.com/onury/geolocator/blob/master/DISCLAIMER">Disclaimer</a> and <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</sub>
+</p>
+<br>
+
+<p><strong>Geolocator</strong>.js is a utility for getting geo-location information, geocoding, address look-ups, distance &amp; durations, timezone information and more...</p>
 <h2 id="features">Features</h2>
+<hr />
 <ul>
 <li>HTML5 geolocation (by user permission) with <strong>improved accuracy</strong>.</li>
 <li>Location by IP</li>
@@ -39,17 +47,19 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
 <li>Browser Support: IE 9+, Chrome, Safari, Firefox, Opera...</li>
 </ul>
 <p>See a <a href="https://onury.github.io/geolocator/?content=examples"><strong>Live Demo</strong></a>.</p>
-<h2 id="get-geolocator-js">Get Geolocator.js</h2>
-<p>Link or download via <a href="https://cdnjs.com/libraries/geolocator"><strong>CDNJS</strong></a>.  </p>
-<p>Download full source code from <a href="https://github.com/onury/geolocator/releases">GitHub releases</a>.  </p>
-<p>Install via <strong>Bower</strong>:</p>
-<pre><code>bower install geolocator
-</code></pre><p>Install via <strong>NPM</strong>:</p>
-<pre><code>npm install geolocator
-</code></pre><h2 id="usage-">Usage:</h2>
+<h2 id="get-geolocatorjs">Get Geolocator.js</h2>
+<hr />
+<ul>
+<li>Link or download via <a href="https://cdnjs.com/libraries/geolocator"><strong>CDNJS</strong></a>.</li>
+<li>Download full source code from <a href="https://github.com/onury/geolocator/releases">GitHub releases</a>.</li>
+<li>Install via <strong>Bower</strong>: <code>bower install geolocator</code></li>
+<li>Install via <strong>NPM</strong>: <code>npm install geolocator</code></li>
+</ul>
+<h2 id="usage-">Usage:</h2>
+<hr />
 <p>Example below, will attempt to get user's geo-location via HTML5 Geolocation and if user rejects, it will fallback to IP based geo-location.</p>
 <p>Inside the <code>&lt;head&gt;</code> of your HTML:</p>
-<pre><code class="lang-html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
+<pre><code class="html">&lt;script type="text/javascript" src="geolocator.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript"&gt;
 
     geolocator.config({
@@ -71,7 +81,7 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
             addressLookup: true,    // requires Google API key if true
             timezone: true,         // requires Google API key if true
             map: "map-canvas",      // interactive map element id (or options object)
-            staticMap: true         // map image URL (boolean or options object)
+            staticMap: true         // get a static map image URL (boolean or options object)
         };
         geolocator.locate(options, function (err, location) {
             if (err) return console.log(err);
@@ -79,28 +89,43 @@ MIT License. Please see the <a href="https://github.com/onury/geolocator/blob/ma
         });
     };
 
-&lt;/script&gt;
-</code></pre>
+&lt;/script&gt;</code></pre>
 <p>If you've enabled <code>map</code> option; include the following, inside the <code>&lt;body&gt;</code> of your HTML:</p>
-<pre><code class="lang-html">&lt;div id="map-canvas" style="width:600px;height:400px"&gt;&lt;/div&gt;
-</code></pre>
+<pre><code class="html">&lt;div id="map-canvas" style="width:600px;height:400px"&gt;&lt;/div&gt;</code></pre>
 <p>Read <a href="https://onury.github.io/geolocator/?api=geolocator"><strong>API documentation</strong></a> for lots of other features and examples.</p>
 <h2 id="important-notes">Important Notes</h2>
+<hr />
 <ul>
 <li>Since Geolocation API is an HTML5 feature, make sure your <code>doctype</code> is HTML5 (e.g. <code>&lt;!DOCTYPE html&gt;</code>).</li>
 <li>Make sure you're calling Geolocation APIs (such as <code>geolocator.locate()</code> and <code>geolocator.watch()</code>) from a secure origin (i.e. an <strong>HTTPS</strong> page). In Chrome 50+, Geolocation API is <a href="https://developers.google.com/web/updates/2016/04/geolocation-on-secure-contexts-only?hl=en">removed</a> from <strong>unsecured origins</strong>. Other browsers are expected to follow.</li>
 <li>Although some calls might work without a key, it is generally required by most Google APIs (such as Time Zone API). To get a free (or premium) key, <a href="https://developers.google.com/maps/documentation/javascript">click here</a>. After getting a key, you can enable multiple APIs for it. Make sure you <a href="https://console.developers.google.com">enable</a> all the APIs supported by Geolocator. <em>(If you don't have a key, you can still use Geolocator like the previous versions, but with limited features.)</em></li>
-<li>Geolocator now uses a single Geo-IP provider (Nekudo, based on the Maxmind GeoLite2 Database) for locating by IP. You can use <code>geolcoator.setGeoIPSource()</code> method to set a <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">different Geo-IP source</a>, but see the <a href="#caveats">Caveats</a> section before you do so.</li>
+<li>Geolocator now uses a single Geo-IP provider (<a href="https://www.geojs.io">GeoJS</a> for locating by IP. You can use <code>geolcoator.setGeoIPSource()</code> method to set a <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">different Geo-IP source</a>, but see the <a href="#caveats">Caveats</a> section before you do so.</li>
+<li><strong>Most importantly</strong>; please use this library for anonymous usage data only. And <strong>get consent</strong> from your users that you're collecting their <strong>personal data</strong> and present your reasons.</li>
 </ul>
 <h2 id="caveats">Caveats</h2>
+<hr />
 <ul>
-<li><strong><a href="https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content">Mixed Content</a> Restriction</strong>: There are <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">alternative Geo-IP services</a> to be used with this library. But most of these services do not provide a free API over HTTPS (SSL/TLS). You need to subscribe for a premium API key to use HTTPS. The caveat is; HTML5 Geolocation API is restricted to HTTPS and when you enable the <code>fallbackToIP</code> option, some browsers (such as Chrome and Firefox) will not allow mixed content. It will <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content/How_to_fix_website_with_mixed_content">block</a> HTTP content when the page is served over HTTPS.</li>
+<li><p><strong><a href="https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content">Mixed Content</a> Restriction</strong>:</p>
+<p>  There are <a href="https://github.com/onury/geolocator/tree/master/src/geo-ip-sources">alternative Geo-IP services</a> to be used with this library. But most of these services do not provide a free API over HTTPS (SSL/TLS). You need to subscribe for a premium API key to use HTTPS. The caveat is; HTML5 Geolocation API is restricted to HTTPS and when you enable the <code>fallbackToIP</code> option, some browsers (such as Chrome and Firefox) will not allow mixed content. It will <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content/How_to_fix_website_with_mixed_content">block</a> HTTP content when the page is served over HTTPS.</p>
+<p>  Currently, Geolocator will use <a href="https://www.geojs.io">GeoJS</a> by default which is free and supports HTTPS. <strong>Please use this service responsibly</strong>. For example, do NOT call <code>locate()</code> or <code>.locatebyIP()</code> on every user/request but only on site entrance. Their location or IP will not change suddenly unless they can teleport!.. </p>
+<p>  Also, <a href="https://www.geojs.io"><strong>support GeoJS</strong></a> if you can so we can continue using this nice free service. If you know other free Geo-IP services over HTTPS, let me know and we can add/use them as alternatives.</p>
+</li>
+<li><p><strong>Isomorphic Applications / SSR Support</strong>:</p>
+<p>  This library currently only works on client-side (browser). Any kind of server-side functionality (including Server Side Rendering) is not yet oficially supported.</p>
+<p>  There is a <a href="https://github.com/onury/geolocator/issues/55">discussion</a> about at least preventing it from throwing on server; or maybe adding support for some (if not all) methods to work on server. If you're interested and willing to contribute;</p>
+<ul>
+<li>Continue discussion on <a href="https://github.com/onury/geolocator/issues/55">this thread</a>,</li>
+<li>PRs are welcome since I need help improving and maintaining this library.</li>
 </ul>
-<p>Currently, Geolocator will use <a href="https://github.com/nekudo/shiny_geoip">nekudo/shiny_geoip</a> by default which seems to support HTTPS. If you know other free Geo-IP services over HTTPS, let me know and we add/use them as alternatives.</p>
+</li>
+</ul>
 <h2 id="under-the-hood">Under the Hood</h2>
+<hr />
 <p>Geolocator v2 is written in ES2015 (ES6), compiled with <a href="https://github.com/babel/babel">Babel</a>, bundled with <a href="https://github.com/webpack/webpack">Webpack</a> and documented with <a href="https://github.com/onury/docma">Docma</a>.</p>
 <h2 id="change-log">Change Log</h2>
+<hr />
 <p>See version changes <a href="https://onury.github.io/geolocator/?content=changelog">here</a>.</p>
 <h2 id="license">License</h2>
+<hr />
 <p>MIT. See the <a href="https://github.com/onury/geolocator/blob/master/DISCLAIMER">Disclaimer</a> and <a href="https://github.com/onury/geolocator/blob/master/LICENSE">License</a>.</p>
 </body></html>
