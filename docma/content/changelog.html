@@ -2,6 +2,25 @@
 <html><head></head><body><h1 id="docma-changelog">Docma Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
+<h2 id="322--2019-01-08-"><a href="https://github.com/onury/docma/compare/v3.1.0...v3.2.2">3.2.2</a> (2019-01-08)</h2>
+<hr />
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>An issue where enumeration value would be incorrectly displayed as <code>undefined</code> in docs parsed from ES5 code.</li>
+<li>An issue where <code>jsdoc.predicate</code> (or <code>jsdoc.filter</code>) option would not be taken into account.</li>
+<li>An issue where favicon would not be copied over to the output dir.</li>
+<li>(Zebra Template) An issue where some special characters within the location hash would cause an error.</li>
+<li><code>Invalid assignment</code> error due to ES2015 syntax.</li>
+</ul>
+<h3 id="added">Added</h3>
+<ul>
+<li>Support for handling notation with multiple sub-types. e.g. <code>Map&lt;String, Object&gt;</code>. (PR <a href="https://github.com/onury/docma/pull/65">#65</a> by <a href="https://github.com/MaienM">@MaienM</a>)</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Improved / cleaner symbol names and long names. This also fixes a JSDoc bug that unnecessarily and incorrectly wraps the last level of the notation in quotes and brackets.</li>
+<li>Updated dependencies to their latest versions.</li>
+</ul>
 <h2 id="310--2018-12-04-"><a href="https://github.com/onury/docma/compare/v3.0.0...v3.1.0">3.1.0</a> (2018-12-04)</h2>
 <hr />
 <h3 id="fixed">Fixed</h3>
