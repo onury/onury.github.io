@@ -2,7 +2,7 @@
 <html><head></head><body><h1 id="tasktimer-changelog"><code>TaskTimer</code> Changelog</h1>
 <hr />
 <p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
-<h2 id="200--2019-01-08-">2.0.0 (2019-01-08)</h2>
+<h2 id="201--2019-01-21-">2.0.1 (2019-01-21)</h2>
 <hr />
 <p>This release includes various <strong>breaking changes</strong>. Please see the <a href="https://onury.io/tasktimer/api">API reference</a>. Also note that this version is completely re-written in TypeScript.</p>
 <h3 id="changed">Changed</h3>
@@ -34,6 +34,7 @@
 <h3 id="fixed">Fixed</h3>
 <ul>
 <li>An issue where default task options would not be set in some cases. Fixes issue <a href="https://github.com/onury/tasktimer/issues/5">#5</a>.</li>
+<li>An issue where webpack would mock or polyfill Node globals unnecessarily. (v2.0.1 patch)</li>
 </ul>
 <h3 id="removed">Removed</h3>
 <ul>
