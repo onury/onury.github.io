@@ -12,7 +12,7 @@
 <blockquote>
 <p>© 2019, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
-<p>Tiny logger with styles and levels for Node/TypeScript.</p>
+<p><strong>Tiny logger</strong> with styles and levels for Node/TypeScript.  </p>
 <p><code>npm i tilo</code></p>
 <h2 id="usage">Usage</h2>
 <hr />
@@ -25,6 +25,7 @@ import { Tilo } from 'tilo';
 // Usage:
 const tilo = new Tilo({ level: 'debug' });
 tilo.info('Output colorful logs with date/time and level info.');</code></pre>
+<p>Read the concise <a href="https://onury.io/tilo/api"><strong>API reference</strong></a>. </p>
 <h3 id="formatted-output">Formatted Output</h3>
 <p>You can provide a custom function that returns a formatted string.</p>
 <pre><code class="js">tilo.format = (info, chalk) =&gt; {
