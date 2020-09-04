@@ -1,67 +1,267 @@
 
-<html><head></head><body><h2 id="notation-js">Notation.js</h2>
-<p>for Node and Browser.</p>
-<p><a href="https://www.npmjs.com/package/notation"><img src="http://img.shields.io/npm/v/notation.svg" alt="npm"></a>
-<a href="https://github.com/onury/notation"><img src="https://img.shields.io/github/release/onury/notation.svg" alt="release"></a>
-<a href="https://david-dm.org/onury/notation"><img src="https://david-dm.org/onury/notation.svg" alt="dependencies"></a>
-<a href="https://github.com/onury/notation/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/notation.svg" alt="license"></a>
-<a href="https://github.com/onury/notation/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2017.svg" alt="maintained"></a>  </p>
+<html><head></head><body><h1 id="notationjs">Notation.js</h1>
+<hr />
+<p><a href="https://travis-ci.org/onury/notation"><img src="https://img.shields.io/travis/onury/notation.svg?branch=master&amp;style=flat-square" alt="build-status" style="max-width: 100%;"></a>
+<a href="https://coveralls.io/github/onury/notation?branch=master"><img src="https://img.shields.io/coveralls/github/onury/notation/master.svg?&amp;style=flat-square" alt="coverage-status" style="max-width: 100%;"></a>
+<a href="https://www.npmjs.com/package/notation"><img src="http://img.shields.io/npm/v/notation.svg?style=flat-square" alt="npm" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/notation"><img src="https://img.shields.io/github/release/onury/notation.svg?style=flat-square" alt="release" style="max-width: 100%;"></a>
+<a href="https://david-dm.org/onury/notation"><img src="https://david-dm.org/onury/notation.svg?style=flat-square" alt="dependencies" style="max-width: 100%;"></a>
+<a href="https://snyk.io/test/github/onury/notation"><img src="https://snyk.io/test/github/onury/notation/badge.svg?style=flat-square" alt="vulnerabilities" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/notation/blob/master/LICENSE"><img src="http://img.shields.io/npm/l/notation.svg?style=flat-square" alt="license" style="max-width: 100%;"></a>
+<a href="https://github.com/onury/notation/graphs/commit-activity"><img src="https://img.shields.io/maintenance/yes/2020.svg?style=flat-square" alt="maintained" style="max-width: 100%;"></a>
+<a href="https://onury.io/notation/api"><img src="https://img.shields.io/badge/docs-click_to_read-c27cf4.svg?docs=click_to_read&amp;style=flat-square" alt="documentation" style="max-width: 100%;"></a></p>
 <blockquote>
-<p>© 2017, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
+<p>© 2020, Onur Yıldırım (<a href="https://github.com/onury">@onury</a>). MIT License.</p>
 </blockquote>
-<p>Utility for modifying / processing the contents of Javascript objects by parsing object notation strings or globs.</p>
-<p>Note that this library will only deal with enumerable properties of the source object; so it should be used to manipulate data objects. It will not deal with preserving the prototype-chain of the given object.</p>
+<p>Utility for modifying / processing the contents of JavaScript objects and arrays, via object or bracket notation strings or globs. (Node and Browser)</p>
+<pre><code class="js">Notation.create({ x: 1 }).set('some.prop', true).filter(['*.prop']).value // { some: { prop: true } }</code></pre>
+<blockquote>
+<p><em>Note that this library should be used to manipulate <strong>data objects</strong> with enumerable properties. It will NOT deal with preserving the prototype-chain of the given object or objects with circular references.</em></p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents</h2>
+<hr />
+<ul>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#notation">Notation</a></li>
+<li><a href="#glob-notation">Glob Notation</a></li>
+<li><a href="#filtering-data-with-glob-patterns">Filtering Data with Glob patterns</a></li>
+<li><a href="#object-and-bracket-notation-syntax">Object and Bracket Notation Syntax</a></li>
+<li><a href="#globs-and-data-integrity">Globs and Data Integrity</a></li>
+<li><a href="#source-object-mutation">Source Object Mutation</a></li>
+<li><a href="https://onury.io/notation/api">API Reference</a></li>
+</ul>
 <h2 id="usage">Usage</h2>
+<hr />
 <p>Install via <strong>NPM</strong>:</p>
-<pre><code class="lang-sh">npm i notation --save
-</code></pre>
-<pre><code class="lang-js">var Notation = require('notation');
-
-var obj = { car: { brand: "Dodge", model: "Charger" }, dog: { breed: "Akita" } };
-var notation = new Notation(obj);
-notation.get('car.model');      // "Charger"
-notation
+<pre><code class="sh">npm i notation</code></pre>
+<p>In Node/CommonJS environments:</p>
+<pre><code class="js">const { Notation } = require('notation');</code></pre>
+<p>With transpilers (TypeScript, Babel):</p>
+<pre><code class="js">import { Notation } from 'notation';</code></pre>
+<p>In (Modern) Browsers:</p>
+<pre><code class="html">&lt;script src="js/notation.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    const { Notation } = notation;
+&lt;/script&gt;</code></pre>
+<h2 id="notation">Notation</h2>
+<hr />
+<p><code>Notation</code> is a class for modifying or inspecting the contents (property keys and values) of a data object or array.</p>
+<p>When <strong>reading or inspecting</strong> an <strong>enumerable</strong> property value such as <code>obj.very.deep.prop</code>; with pure JS, you would have to do several checks:</p>
+<pre><code class="js">if (obj 
+        &amp;&amp; obj.hasOwnProperty('very') 
+        &amp;&amp; obj.very.hasOwnProperty('deep')  
+        &amp;&amp; obj.very.deep.hasOwnProperty('prop')
+    ) {
+    return obj.very.deep.prop === undefined ? defaultValue : obj.very.deep.prop;
+}</code></pre>
+<p>With <code>Notation</code>, you could do this:</p>
+<pre><code class="js">const notate = Notation.create;
+return notate(obj).get('very.deep.prop', defaultValue);</code></pre>
+<p>You can also <strong>inspect &amp; get</strong> the value:</p>
+<pre><code class="js">console.log(notate(obj).inspectGet('very.deep.prop'));
+// {
+//     notation: 'very.deep.prop',
+//     has: true,
+//     value: 'some value',
+//     type: 'string',
+//     level: 3,
+//     lastNote: 'prop'
+// }</code></pre>
+<p>To <strong>modify</strong> or <strong>build</strong> a data object:</p>
+<pre><code class="js">const notate = Notation.create;
+const obj = { car: { brand: "Dodge", model: "Charger" }, dog: { breed: "Akita" } };
+notate(obj)                          // initialize. equivalent to `new Notation(obj)`
     .set('car.color', 'red')         // { car: { brand: "Dodge", model: "Charger", color: "red" }, dog: { breed: "Akita" } }
     .remove('car.model')             // { car: { brand: "Dodge", color: "red" }, dog: { breed: "Akita" } }
-    .filter(['*', '!car'])           // { dog: { breed: "Akita" } }
+    .filter(['*', '!car'])           // { dog: { breed: "Akita" } } // equivalent to .filter(['dog'])
     .flatten()                       // { "dog.breed": "Akita" }
     .expand()                        // { dog: { breed: "Akita" } }
     .merge({ 'dog.color': 'white' }) // { dog: { breed: "Akita", color: "white" } }
     .copyFrom(other, 'boat.name')    // { dog: { breed: "Akita", color: "white" }, boat: { name: "Mojo" } }
     .rename('boat.name', 'dog.name') // { dog: { breed: "Akita", color: "white", name: "Mojo" } }
-    .value;                          // source object
-</code></pre>
-<h2 id="documentation">Documentation</h2>
-<p>You can read the full <a href="http://onury.github.io/notation/?api=notation"><strong>API reference</strong> here</a>.</p>
-<h2 id="change-log">Change-Log</h2>
-<p><strong>1.2.0</strong> (2017-09-28)  </p>
+    .value;                          // result object ^</code></pre>
+<p>See <a href="https://onury.io/notation/api">API Reference</a> for more...</p>
+<h2 id="glob-notation">Glob Notation</h2>
+<hr />
+<p>With a glob-notation, you can use wildcard stars <code>*</code> and bang <code>!</code> prefix. A wildcard star will include all the properties at that level and a bang prefix negates that notation for exclusion.</p>
 <ul>
-<li>Completely re-wrote <code>Notation.Glob.union()</code> static method.<ul>
-<li>Fixed the array mutation issue. Fixes <a href="https://github.com/onury/notation/issues/2">issue #2</a>.</li>
-<li>Fixed an issue where a glob with wildcard is not properly union'ed. Fixes <a href="https://github.com/onury/notation/issues/3">issue #3</a>. </li>
-<li><code>sort</code> (<code>boolean</code>) argument is removed (the output is now always sorted.)</li>
-<li>Union output is now properly normalized, duplicates and redundant globs are removed, etc...</li>
+<li>Only <strong><code>Notation#filter()</code></strong> method accepts glob notations. Regular notations (without any wildcard <code>*</code> or <code>!</code> prefix) should be used with all other members of the <strong><code>Notation</code></strong> class.</li>
+<li>For raw Glob operations, you can use the <strong><code>Notation.Glob</code></strong> class.</li>
+</ul>
+<h3 id="normalizing-a-glob-notation-list">Normalizing a glob notation list</h3>
+<p>Removes duplicates, redundant items and logically sorts the array:</p>
+<pre><code class="js">const { Notation } = require('notation');
+
+const globs = ['*', '!id', 'name', 'car.model', '!car.*', 'id', 'name', 'age'];
+console.log(Notation.Glob.normalize(globs));
+// ——» ['*', '!car.*', '!id', 'car.model']</code></pre>
+<p>In the normalized result <code>['*', '!car.*', '!id', 'car.model']</code>:</p>
+<ul>
+<li><code>id</code> is removed and <code>!id</code> (negated version) is kept. (In normalization, negated always wins over the positive, if both are same).</li>
+<li>Duplicate glob, <code>name</code> is removed. The remaining <code>name</code> is also removed bec. <code>*</code> renders it redundant; which covers all possible notations.</li>
+<li>(In non-restrictive mode) <code>car.model</code> is kept (although <code>*</code> matches it) bec. it's explicitly defined while we have a negated glob that also matches it: <code>!car.*</code>.</li>
+</ul>
+<pre><code class="js">console.log(Notation.Glob.normalize(globs, { restrictive: true }));
+// ——» ['*', '!car.*', '!id']</code></pre>
+<ul>
+<li>In restrictive mode, negated removes every match.</li>
+</ul>
+<blockquote>
+<p><em><strong>Note</strong>: <code>Notation#filter()</code> and <code>Notation.Glob.union()</code> methods automtically pre-normalize the given glob list(s).</em></p>
+</blockquote>
+<h3 id="union-of-two-glob-notation-lists">Union of two glob notation lists</h3>
+<p>Unites two glob arrays optimistically and sorts the result array logically:</p>
+<pre><code class="js">const globsA = ['*', '!car.model', 'car.brand', '!*.age'];
+const globsB = ['car.model', 'user.age', 'user.name'];
+const union = Notation.Glob.union(globsA, globsB); 
+console.log(union);
+// ——» ['*', '!*.age', 'user.age']</code></pre>
+<p>In the united result <code>['*', '!*.age', 'user.age']</code>:</p>
+<ul>
+<li>(negated) <code>!car.model</code> of <code>globsA</code> is removed because <code>globsB</code> has the exact positive version of it. (In union, positive wins over the negated, if both are same.) </li>
+<li>But then, <code>car.model</code> is redundant and removed bec. we have <code>*</code> wildcard, which covers all possible non-negated notations. </li>
+<li>Same applies to other redundant globs except <code>user.age</code> bec. we have a <code>!*.age</code> in <code>globsA</code>, which matches <code>user.age</code>. So both are kept in the final array.</li>
+</ul>
+<h2 id="filtering-data-with-glob-patterns">Filtering Data with Glob patterns</h2>
+<hr />
+<p>When filtering a data object with a globs array; properties that are explicitly defined with globs or implied with wildcards, will be included. Any matching negated-pattern will be excluded. The resulting object is created from scratch without mutating the original.</p>
+<pre><code class="js">const data = {
+    car: {
+        brand: 'Ford',
+        model: 'Mustang',
+        age: 52
+    },
+    user: {
+        name: 'John',
+        age: 40
+    }
+};
+const globs = ['*', '!*.age', 'user.age'];
+const filtered = Notation.create(data).filter(globs).value;
+console.log(filtered);
+// ——»
+// {
+//     car: {
+//         brand: 'Ford',
+//         model: 'Mustang'
+//     },
+//     user: {
+//         name: 'John',
+//         age: 40
+//     }
+// }</code></pre>
+<p>In <strong>non</strong>-restrictive mode; even though we have the <code>!*.age</code> negated glob; <code>user.age</code> is still included in the result because it's explicitly defined. </p>
+<p>But you can also do <strong>restrictive</strong> filtering. Let's take the same example:</p>
+<pre><code class="js">const globs = ['*', '!*.age', 'user.age'];
+const filtered = Notation.create(data).filter(globs, { restrictive: true }).value;
+console.log(filtered);
+// ——»
+// {
+//     car: {
+//         brand: 'Ford',
+//         model: 'Mustang'
+//     },
+//     user: {
+//         name: 'John'
+//     }
+// }</code></pre>
+<p>Note that in restrictive mode, <code>user.age</code> is removed this time; due to <code>!*.age</code> pattern.</p>
+<h2 id="object-and-bracket-notation-syntax">Object and Bracket Notation Syntax</h2>
+<hr />
+<p>Each note (level) of a notation is validated against <strong>EcmaScript variable syntax</strong>, array index notation and object bracket notation.</p>
+<h3 id="property-keys">Property Keys</h3>
+<ul>
+<li><code>x[y]</code>, <code>x.1</code>, <code>x.y-z</code>, <code>x.@</code> are <strong>incorrect</strong> and will never match. </li>
+<li><code>x["y"]</code>, <code>x['1']</code>, <code>x["y-z"]</code>, <code>x['@']</code> are <strong>correct</strong> object bracket notations. </li>
+</ul>
+<h3 id="array-indexes">Array Indexes</h3>
+<ul>
+<li><code>[0].x</code> indicates <code>x</code> property of the first item of the <strong>root array</strong>.</li>
+<li><code>x[1]</code> indicates second item of <code>x</code> property of the <strong>root object</strong>.</li>
+</ul>
+<h3 id="wildcards">Wildcards</h3>
+<ul>
+<li><code>*</code> is valid <strong>wildcard</strong> for <strong>glob</strong> notation. Indicates all properties of an object.</li>
+<li><code>[*]</code> is valid <strong>wildcard</strong> for <strong>glob</strong> notation. Indicates all items of an array.</li>
+<li><code>x[*]</code> is valid <strong>wildcard</strong> for <strong>glob</strong> notation. Indicates all items of <code>x</code> property which should be an array.</li>
+<li><code>x['*']</code> just indicates a property/key (star), not a wildcard. Valid <strong>regular</strong> notation.</li>
+<li><code>x.*</code> is valid <strong>wildcard</strong> for <strong>glob</strong> notation.</li>
+<li><code>x</code>, <code>x.*</code> and <code>x.*.*</code> (and so on) are all <strong>equivalent globs</strong>. All normalize to <code>x</code>.</li>
+<li><strong>Negated</strong> versions are <strong>NOT</strong> equivalent. <ul>
+<li><code>!x</code> indicates removal of <code>x</code>.</li>
+<li><code>!x.*</code> only indicates removal of all first-level properties of <code>x</code> but not itself (empty object).</li>
+<li><code>!x.*.*</code> only indicates removal of all second-level properties of <code>x</code>; but not itself and its first-level properties (<code>x.*</code>).</li>
+<li>Same rule applies for bracket notation or mixed notations. <ul>
+<li><code>[0]</code> = <code>[0][*]</code> but <code>![0]</code> ≠ <code>![0][*]</code></li>
+<li><code>x</code> = <code>x[*]</code> but <code>!x</code> ≠ <code>!x[*]</code></li>
+<li><code>[*]</code> = <code>[*].*</code> but <code>![*]</code> ≠ <code>![*].*</code></li>
 </ul>
 </li>
-<li>Fixed an issue where negated wildcards would be filtered incorrectly in some edge cases (e.g. <code>!*.*.*</code>).</li>
-<li>Added <code>Notation.Glob.normalize(array)</code> static method.</li>
-<li>Added <code>Notation.Glob.toRegExp(glob)</code> static method.</li>
-<li>Aded <code>Notation.countNotes(notation)</code> convenience method.</li>
-<li>Improved glob validation.</li>
-<li>Minor revisions, clean-up.</li>
-<li>(dev) Removed dev-dependencies (Grunt and plugins) in favor of NPM scripts. Updated other dev-dependencies. Added more, comprehensive tests.</li>
 </ul>
-<p><strong>1.1.0</strong> (2016-09-27)  </p>
+</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Below, we filter to; </p>
 <ul>
-<li>Added <code>Notation#expand()</code> method (alias <code>Notation#aggregate()</code>).</li>
-<li>Refactored <code>Notation#getFlat()</code> to <code>Notation#flatten()</code>. Returns instance (chainable) instead of source.</li>
-<li><code>Notation#separate()</code> returns instance (chainable) instead of source.</li>
-<li>Minor revisions.</li>
+<li>keep all properties of the source object,</li>
+<li>remove the second item of <code>colors</code> property (which is an array),</li>
+<li>and empty <code>my-colors</code> property (which is an object).<pre><code class="js">const source = {
+  name: 'Jack',
+  colors: ['blue', 'green', 'red'],
+  'my-colors': { '1': 'yellow' }     // non-standard name "my-colors"
+};
+const globs = ['*', '!colors[1]', '!["my-colors"].*'];
+console.log(Notation.create(source).filter(globs).value);
+// —» 
+// {
+//     name: 'Jack',
+//     colors: ['blue', 'red'],
+//     'my-colors': {}
+// }</code></pre>
+In the example above, <code>colors</code> item at index 1 is emptied.</li>
 </ul>
-<p><strong>v1.0.0</strong> (2016-04-10)  </p>
-<ul>
-<li>initial release.</li>
-</ul>
+<h2 id="globs-and-data-integrity">Globs and Data Integrity</h2>
+<hr />
+<h3 id="glob-list-integrity">Glob List Integrity</h3>
+<p>In a glob list, you cannot have both object and array notations for <strong>root level</strong>. The root level implies the source type which is either an object or array; never both.</p>
+<p>For example, <code>['[*]', '!x.y']</code> will throw because when you filter a source array with this glob list; <code>!x.y</code> will never match since the root <code>x</code> indicates an object property (e.g. <code>source.x</code>).</p>
+<h3 id="glob-vs-data--value--integrity">Glob vs Data (Value) Integrity</h3>
+<p>Each glob you use should conform with the given source object.</p>
+<p>For example:</p>
+<pre><code class="js">const obj = { x: { y: 1 } };
+const globs = ['*', '!x.*'];
+console.log(Notation.create(obj).filter(globs).value);
+// ——» { x: {} }</code></pre>
+<p>Here, we used <code>!x.*</code> negated glob to remove all the properties of <code>x</code> but not itself. So the result object has an <code>x</code> property with an empty object as its value. All good.</p>
+<p>But in the source object; if the actual value of <code>x</code> is not an object, using the same glob list would throw:</p>
+<pre><code class="js">const obj = { x: 1 }; // x is number
+const globs = ['*', '!x.*'];
+console.log(Notation.create(obj).filter(globs).value);
+// ——» ERROR</code></pre>
+<p>This kind of type mismatch is critical so it will throw. The value <code>1</code> is a <code>Number</code> not an object, so it cannot be emptied with <code>!x.*</code>. (But we could have removed it instead, with glob <code>!x</code>.)</p>
+<h2 id="source-object-mutation">Source Object Mutation</h2>
+<hr />
+<p>The source object or array will be mutated by default (except the <code>#filter()</code> method). To prevent mutation; you can call <code>#clone()</code> method before calling any method that modifies the object. The source object will be cloned deeply.</p>
+<pre><code class="js">const notate = Notation.create;
+
+const mutated = notate(source1).set('newProp', true).value;
+console.log(source1.newProp); // ——» true
+
+const cloned = notate(source2).clone().set('newProp', true).value;
+console.log('newProp' in source2); // ——» false
+console.log(cloned.newProp); // ——» true</code></pre>
+<blockquote>
+<p><em>Note that <code>Notation</code> expects a data object (or array) with enumerable properties. In addition to plain objects and arrays; supported cloneable property/value types are primitives (such as <code>String</code>, <code>Number</code>, <code>Boolean</code>, <code>Symbol</code>, <code>null</code> and <code>undefined</code>) and built-in types (such as <code>Date</code> and <code>RegExp</code>).</em> </p>
+<p><em>Enumerable properties with types other than these (such as methods, special objects, custom class instances, etc) will be copied by reference. Non-enumerable properties will not be cloned.</em></p>
+<p><em>If you still need full clone support, you can use a library like lodash. e.g. `Notation.create(</em>.cloneDeep(source))`_</p>
+</blockquote>
+<h2 id="documentation">Documentation</h2>
+<hr />
+<p>You can read the full <a href="https://onury.io/notation/api"><strong>API reference</strong> here</a>.</p>
+<h2 id="change-log">Change-Log</h2>
+<hr />
+<p>Read the <a href="https://github.com/onury/notation/blob/master/CHANGELOG.md">CHANGELOG</a> especially if you're migrating from version <code>1.x.x</code> to version <code>2.0.0</code> and above.</p>
 <h2 id="license">License</h2>
+<hr />
 <p><a href="https://github.com/onury/notation/blob/master/LICENSE"><strong>MIT</strong></a>.</p>
 </body></html>

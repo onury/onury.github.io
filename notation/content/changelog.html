@@ -1,0 +1,122 @@
+
+<html><head></head><body><h1 id="notation-changelog">Notation Changelog</h1>
+<hr />
+<p>All notable changes to this project will be documented in this file. The format is based on <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> and this project adheres to <a href="http://semver.org">Semantic Versioning</a>.</p>
+<h2 id="200--unreleased-">2.0.0 [Unreleased]</h2>
+<hr />
+<p>This is a big major release with lots of <strong>improvements</strong> and some <strong>breaking changes</strong>. Please read the changes below and re-run your application tests after you upgrade to v2.</p>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Array index notation</strong> and <strong>object bracket notation</strong> support. This brings ability to manipulate arrays with indexes and objects with non-standard property names (keys). See documentation for more info.</li>
+<li><strong><code>strict: boolean</code></strong> class option that specifies whether to throw when a notation path does not exist on the source. (Note that <code>#inspectGet()</code> and <code>#inspectRemove()</code> methods are exceptions). It's recommended to set this to <code>true</code> and prevent silent failures if you're working with sensitive data. Regardless of <code>strict</code> option, it will always throw on invalid notation syntax or other crucial failures.</li>
+<li><strong><code>restrictive: boolean</code></strong> option for <code>Notation</code><strong><code>#filter()</code></strong> instance method that specifies whether negated items strictly remove <em>every match</em>. Note that, regardless of this option; if any item has an exact negated version; non-negated is always removed. Default is <code>false</code>. This option is also available for <strong><code>.normalize()</code></strong> and <strong><code>.union()</code></strong> static methods of <code>Notation.Glob</code> class. For example; <code>['*', 'name', 'car.model', '!car.*']</code> will normalize to <code>['*', '!car.*', 'car.model']</code>. In <code>restrictive</code> mode, it will normalize to <code>['*', '!car']</code>.</li>
+<li><code>Notation</code><strong><code>.join()</code></strong> static method for joining given notes into a notation string.</li>
+<li><code>Notation</code><strong><code>.split()</code></strong> static method for splitting given regular notation into a notes array.</li>
+<li><code>Notation.Glob</code><strong><code>.split()</code></strong> static method for splitting given glob notation into a notes array.</li>
+<li><code>Notation.Glob</code><strong><code>#intersect()</code></strong> instance method for checking whether current glob has any intersection  with the given glob/notation.</li>
+<li><code>Notation.Glob</code><strong><code>#covers()</code></strong> instance method for checking whether given glob covers another specific glob.</li>
+<li>Ability to "insert" array item at given index via <code>Notation#set()</code> method; instead of overwriting only.</li>
+<li>100% full test <strong>coverage</strong>.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><strong>Breaking</strong> » (For browser) dropped support for IE 10 and below. </li>
+<li><strong>Breaking</strong> » (For Node) dropped support for Node v8 and below (might still work though). </li>
+<li><strong>Breaking</strong> » <code>Notation</code> is a <strong>named export</strong> now. (Meaning require or import within curly brackets. e.g. <code>const { Notation } = require('notation')</code>) </li>
+<li><strong>Breaking</strong> » Now that <strong>bracket-notation</strong> support is added, there will be some changed behaviour. Notation that has an array value is now also notated with a bracket-index for each item, instead of only the key (array name) itself. e.g. <code>prop1.prop2[3]</code></li>
+<li><strong>Breaking</strong> » Improved notation and glob validation. Now we strictly validate each note of a notation against <strong>EcmaScript variable syntax</strong>, array index notation and object bracket notation. For example:<ul>
+<li><code>x[y]</code>, <code>x.1</code>, <code>x.y-z</code>, <code>x.@</code> are incorrect and will never match. </li>
+<li><code>x["y"]</code>, <code>x['1']</code>, <code>x["y-z"]</code>, <code>x["@"]</code> are correct. </li>
+<li><code>x.*</code> is valid (wildcard) for glob notation but invalid (object property) as regular notation.</li>
+<li><code>x[*]</code> is valid (wildcard) for glob notation but invalid (array index) as regular notation.</li>
+<li><code>x['*']</code> just indicates a property/key (star), not a wildcard. Valid regular notation.</li>
+</ul>
+</li>
+<li>When an element is removed from an array; that item will be <strong>emptied</strong> and indices will be <strong>preserved</strong> (and will NOT shift). e.g.<pre><code class="js">  Notation.create([0, 1, 2]).remove('[1]').value
+  // will return [0, (empty), 2]</code></pre>
+  The empty item can be treated as <code>undefined</code> in the sparse array result above. Set <code>preserveIndices</code> option to <code>false</code> to change this behavior.<pre><code class="js">  const options = { preserveIndices: false };
+  Notation.create([0, 1, 2], options).remove('[1]').value
+  // will return [0, 2]</code></pre>
+</li>
+<li><strong>Breaking</strong> » Changed/improved <strong>normalization</strong> and <strong>union</strong> logic. Also now, introducing (linear) intersections within normalization and (cross) intersections within union. An <strong>intersection</strong> glob is only produced when needed. For example; previously, <code>['!*.y', 'x']</code> would normalize as is but this had side-effects when union'ed with another glob list. Now it normalizes to <code>['x', '!x.y']</code>. Notice that in this example, intersection glob <code>'!x.y'</code> is added and <code>'!*.y'</code> is removed. See documentation for more.</li>
+<li><strong>Breaking</strong> » All levels of <strong>negated globs</strong> are now respected. For example; when an object is filtered with <code>['*', '!x.*']</code>, the <code>x</code> property would be completely removed. Now, <code>x</code> will be emptied instead (i.e. <code>{}</code>) due to explicit trailing wildcard star. To completely remove the <code>x</code> property; filtering globs should be <code>['*', '!x']</code>.</li>
+<li>Passing <code>undefined</code> as the source object will now throw. This prevents accidental empty initialization. To initialize a <code>Notation</code> instance with a new empty object, just omit the argument or explicitly define it. e.g. <code>new Notation()</code> or <code>new Notation({})</code>.</li>
+<li><strong>Breaking</strong> » <code>#inspectGet()</code> method of <code>Notation</code> class is renamed to <code>#inspectGet()</code> for compatibility with Node.js version 10+. See <a href="https://nodejs.org/api/deprecations.html#deprecations_dep0079_custom_inspection_function_on_objects_via_inspect">DEP0079</a>.</li>
+<li>Improved collection deep cloning.</li>
+<li>Updated globs comparison/sort logic.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li><strong>Breaking</strong> » Instance method <code>Notation#eachKey()</code> (alias of <code>#each()</code>) is removed. Now that bracket (and array) notation support is added, this name is misleading. (Now, "each" indicates each key and/or index.)</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>In some cases, when an empty string or invalid notation is passed, it would silently fail.</li>
+<li>An issue with <code>Notation.Glob.normalize()</code> where it would throw <code>RangeError: Maximum call stack size exceeded</code> when a glob list had both object and array notations for root level.</li>
+<li>An issue with <code>Notatin.Glob.union()</code> where less restrictive <code>globA</code> would be removed incorrectly when <code>globB</code> had multiple trailing wildcards and both globs were negated.</li>
+<li>An issue with <code>Notation.Glob.normalize()</code> where some redundant non-negated globs were not removed.</li>
+<li>When <code>Notation</code> throws an error, <code>error instanceof Notation.Error</code> would return <code>false</code>. Fixed.</li>
+</ul>
+<p><em>Thanks to <a href="https://github.com/marcinkumorek">@marcinkumorek</a> and <a href="https://github.com/BenoitRanque">@BenoitRanque</a> for their help.</em></p>
+<h2 id="136--2018-02-24-">1.3.6 (2018-02-24)</h2>
+<hr />
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>An issue with <code>Notation.Glob.toRegExp()</code> method that would cause some globs to be cleared out incorrectly when <code>.normalize()</code>d. e.g. <code>"!password"</code> would match <code>"!password_reset"</code> and get removed the later. Fixes <a href="https://github.com/onury/notation/issues/7">#7</a>.</li>
+</ul>
+<h2 id="135--2017-10-04-">1.3.5 (2017-10-04)</h2>
+<hr />
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Redundant, negated globs are also removed when normalized. Fixes <a href="https://github.com/onury/notation/issues/5">#5</a>.</li>
+<li>Minor revisions.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Shifted index issue with <code>Notation.Glob.normalize(array)</code>.</li>
+<li><code>countNotes()</code> method.</li>
+</ul>
+<h2 id="130--2017-09-30-">1.3.0 (2017-09-30)</h2>
+<hr />
+<h3 id="added">Added</h3>
+<ul>
+<li><code>Notation.Glob.normalize(array)</code> static method.</li>
+<li><code>Notation.Glob.toRegExp(glob)</code> static method.</li>
+<li><code>Notation.countNotes(notation)</code> convenience method.</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Completely re-wrote <code>Notation.Glob.union()</code> static method. <code>sort</code> (<code>boolean</code>) argument is removed (the output is now always sorted.)</li>
+<li>Union output is now properly normalized, duplicates and redundant globs are removed, etc...</li>
+<li>Improved glob validation.</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Array mutation issue. Fixes <a href="https://github.com/onury/notation/issues/2">#2</a>.</li>
+<li>An issue where a glob with wildcard is not properly union'ed. Fixes [#3(<a href="https://github.com/onury/notation/issues/3">https://github.com/onury/notation/issues/3</a>). </li>
+<li>An issue where negated wildcards would be filtered incorrectly in some edge cases (e.g. <code>!*.*.*</code>).</li>
+<li>Import typo that prevents Travis builds succeed.</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>(dev) Removed dev-dependencies (Grunt and plugins) in favor of NPM scripts. Updated other dev-dependencies. Added more, comprehensive tests.</li>
+</ul>
+<h2 id="110--2016-09-27-">1.1.0 (2016-09-27)</h2>
+<hr />
+<h3 id="added">Added</h3>
+<ul>
+<li><code>Notation#expand()</code> method (alias <code>Notation#aggregate()</code>).</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Refactored <code>Notation#getFlat()</code> to <code>Notation#flatten()</code>. Returns instance (chainable) instead of source.</li>
+<li><code>Notation#separate()</code> returns instance (chainable) instead of source.</li>
+<li>Minor revisions.</li>
+</ul>
+<h2 id="100--2016-04-10-">1.0.0 (2016-04-10)</h2>
+<hr />
+<h3 id="added">Added</h3>
+<ul>
+<li>initial release.</li>
+</ul>
+</body></html>
