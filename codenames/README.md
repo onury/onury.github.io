@@ -1,103 +1,194 @@
 # Codenames TR
 
-Türkçe Codenames için iki cihazlı PWA. Board = iPad, Anlatıcı = iPhone.
+A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Spymaster = iPhone held privately.
 
-## Hızlı bakış
+## Overview
 
-- Tek HTML, no build, no backend
-- WebRTC peer-to-peer — iki QR taraması ile eşleme, sonra tamamen offline
-- 4×4 ve 5×5 board seçeneği
-- Kullanılan kelimeler localStorage’da tutulur, oyunlar tekrarsız
-- Ölüm kartı / hedef tamamlanması otomatik tespit
+- Single HTML file — no build step, no backend, no dependencies to install
+- WebRTC peer-to-peer sync — two QR scans to pair, then fully offline during gameplay
+- 4×4 and 5×5 board modes
+- Word pool tracking via localStorage — no repeated words across games (~18 non-repeating games with the default 451-word Turkish list)
+- Auto-detects death card, win conditions, and turn changes
+- Undo support (configurable steps)
+- UI language: TR / EN. Game word language: TR only for now
+- PWA — installable to iPad and iPhone home screen
 
-## Dosyalar
+## Files
 
-- `index.html` — uygulama
-- `words.js` — Türkçe kelime havuzu (~450 kelime)
-- `sw.js` — service worker (offline cache)
-- `manifest.json` — PWA manifest
+|File           |Purpose                              |
+|---------------|-------------------------------------|
+|`index.html`   |Entire application                   |
+|`words.js`     |Turkish word pool (~451 unique words)|
+|`sw.js`        |Service worker for offline caching   |
+|`manifest.json`|PWA manifest                         |
 
-## Kurulum
+## Hosting (HTTPS required)
 
-iOS Safari’nin kameraya erişebilmesi için **HTTPS** gerekiyor. Üç kolay seçenek:
+iOS Safari requires HTTPS for camera access (QR scanning).
 
-### Seçenek A: GitHub Pages
+**GitHub Pages**
 
-1. Yeni repo aç, dosyaları push et
-1. Settings → Pages → main branch
-1. `https://<username>.github.io/<repo>/` adresinden aç
+1. Push files to a repo
+1. Settings → Pages → main branch → Save
+1. Open `https://<username>.github.io/<repo>/`
 
-### Seçenek B: Cloudflare Pages / Netlify drop
+**Cloudflare Pages / Netlify**
 
-1. cloudflare.com/products/pages veya app.netlify.com → “drag & drop”
-1. Klasörü sürükle bırak
-1. Verilen HTTPS URL’i aç
+1. Go to pages.cloudflare.com or app.netlify.com
+1. Drag and drop the project folder
+1. Use the provided HTTPS URL
 
-### Seçenek C: Lokal test (Mac’te)
+**Local with tunnel (for testing)**
 
-```
-cd codenames
+```bash
 python3 -m http.server 8000
+npx localtunnel --port 8000   # or: ngrok http 8000
 ```
 
-Sonra Mac’te `http://localhost:8000` ile bak. iPad’den kameraya erişmek için yine de HTTPS gerek — `ngrok http 8000` veya benzeri.
+Plain `http://localhost:8000` works in desktop browsers but camera won’t work on iOS without HTTPS.
 
-## iPad / iPhone’da kurulum
+## Installing as a PWA
 
-Her iki cihazda da:
+On both devices:
 
-1. Safari’de URL’i aç
-1. Paylaş ikonu → “Ana Ekrana Ekle”
-1. Açılan ikondan başlat (fullscreen, app gibi)
+1. Open the URL in Safari
+1. Share icon → “Add to Home Screen”
+1. Launch from the home screen icon — runs fullscreen like a native app
 
-## Oyun başlatma
+## Starting a Game
 
-1. **iPad’de** “Board (iPad)” seç
-1. **iPhone’da** “Anlatıcı (iPhone)” seç
-1. iPad’de “Eşle” → “QR Oluştur” → QR ekrana gelir
-1. iPhone’da “Eşle” → “QR Taramayı Başlat” → iPad’deki QR’a tut
-1. iPhone’da cevap QR’ı oluşur
-1. iPad’de “Cevap QR Tara” → iPhone’daki QR’a tut
-1. Bağlandı! Artık otomatik senkron.
+1. **iPad** — tap “Board (iPad)”
+1. **iPhone** — tap “Spymaster (iPhone)”
+1. **iPad** → Pair → Generate QR → QR appears on screen
+1. **iPhone** → Pair → scan iPad’s QR → answer QR is generated
+1. **iPad** → Scan Answer QR → scan iPhone’s QR
+1. Both show **Connected** — live sync is active
 
-İlk eşleme bir defalık. Bağlantı sırasında sayfa kapanırsa eşlemeyi tekrarlamak gerekir.
+Pairing is required once per session. If either device closes the page, re-pair.
 
-## Oynama
+## Gameplay
 
-- **Board (iPad)**: kelime tahtası, iki takım görür
-- **Anlatıcı (iPhone)**: renkli harita, sadece anlatıcılar görür
-- **Karta dokun (iPad)**: anlatıcıya sorulur, renk gelir, kart açılır
-- **Karta uzun bas (iPad)**: manuel renk seçimi (bağlantı yoksa fallback)
-- **Karta dokun (iPhone)**: o kartı board’da açar (anlatıcı yanlışlık fark ederse)
-- **Yeni Oyun (iPad)**: yeni board oluşur, anlatıcıya gönderilir
-- **Ölüm kartı**: oyun otomatik biter
+|Action                                  |Result                                                 |
+|----------------------------------------|-------------------------------------------------------|
+|Tap a card (Board, connected)           |Requests color from Spymaster; card opens automatically|
+|Long-press a card (Board, not connected)|Manual color picker                                    |
+|Tap a card (Spymaster)                  |Sends reveal to Board (useful if board tap timed out)  |
+|Topbar ↩ button                         |Undo last reveal — dimmed when no steps remain         |
+|New Game (Board)                        |Rolls a fresh board, syncs to Spymaster                |
 
-## Kurallar (MVP)
+## Rules
 
-- 5×5: 9 kırmızı, 8 mavi, 7 sarı, 1 ölüm. Kırmızı başlar (9 hedefi).
-- 4×4: 6 kırmızı, 5 mavi, 4 sarı, 1 ölüm. Kırmızı başlar.
-- Yanlış renk açılırsa sıra karşı takıma geçer.
-- Ölüm kartı → açan takım kaybeder.
-- Bir takımın tüm kelimeleri bulunduğunda o takım kazanır.
+**5×5 (Classic):** 9 red, 8 blue, 7 neutral, 1 death. Red starts.
+**4×4 (Quick):** 6 red, 5 blue, 4 neutral, 1 death. Red starts.
 
-## Bilinen sınırlar (v1’de iyileştirilebilir)
+- Opening your own team’s card → continue your turn
+- Opening the other team’s card or a neutral → turn passes
+- Opening the death card → your team loses immediately
+- First team to reveal all their cards wins
 
-- “Sıra” tamamen otomatik — ipucu sayısı vermek/turu manuel bitirmek yok
-- Eşleme her oturum açılışında tekrar gerekir (oturum saklanmıyor)
-- Kelime havuzu küçük, ~18 oyun tekrarsız
-- QR sıkıştırma `CompressionStream` gerektirir (iOS 16.4+); eski sürümlerde QR çok büyük olabilir, o zaman metni elle yapıştırma fallback’i var
+## Settings
 
-## Geliştirme notları
+Open via the ⚙ button on the Board screen.
 
-WebRTC SDP’sini QR’a sığdırmak için `CompressionStream` (deflate-raw) + base64 kullanıyoruz. Tarayıcıda bu yoksa raw JSON’a düşüyor — bu durumda QR çok büyük olabilir, alternatif olarak metni manuel kopyala-yapıştır UI’da var.
+|Setting        |Description                                               |
+|---------------|----------------------------------------------------------|
+|UI Language    |TR / EN — saved to localStorage                           |
+|Board Size     |5×5 or 4×4 — takes effect on next New Game                |
+|Undo Steps     |Max undo history depth (0 = off, default 2)               |
+|Reset Word Pool|Clears used-word history; all words become available again|
 
-İki cihaz farklı ağlardaysa STUN sunucusu (Google’ınki) ICE candidate’ları çözer. Tamamen yerel ağda STUN bile gerekmiyor.
+**Advanced section** (collapsed by default):
 
-İletişim mesaj tipleri:
+|Button       |What it does                                               |
+|-------------|-----------------------------------------------------------|
+|Cache Reset  |Unregisters service worker, clears all caches, reloads page|
+|Debug Console|Loads Eruda on-device DevTools (requires internet for CDN) |
 
-- `board_state` — board → spy (full state sync)
-- `request_state` — spy → board (yeniden sync iste)
-- `request_reveal {idx}` — board → spy (bu kartın rengi ne?)
-- `reveal {idx, color}` — spy → board (cevap)
-- `reveal_done {idx, color}` — board → spy (manuel açıldı bildir)
-- `new_game {board, turn, size}` — board → spy
+## URL Parameters
+
+|Parameter|Effect                                                                  |
+|---------|------------------------------------------------------------------------|
+|`?reset` |Same as Cache Reset — clears SW and all caches, then reloads            |
+|`?debug` |Loads Eruda DevTools on page load (useful when Settings isn’t reachable)|
+
+## Technical Notes
+
+**QR pairing:** WebRTC SDP is large. To fit in a QR code, we compress with `CompressionStream` (deflate-raw) + base64 (requires iOS 16.4+). Older devices fall back to raw JSON — QR may be too dense to scan, but a manual copy-paste textarea is always available as fallback.
+
+**Connection keepalive:** Once paired, a ping is sent every 15 seconds over the data channel to prevent WebRTC from going idle. iOS releases the connection when either app goes to background; a disconnect dialog appears with a one-tap “Reconnect” button.
+
+**WakeLock:** When connected, the app requests `navigator.wakeLock` to keep both screens on. iOS releases WakeLock when the tab goes to background; it is automatically reacquired when the tab becomes visible again.
+
+**STUN:** Uses Google’s STUN server (`stun.l.google.com:19302`) for NAT traversal. On the same LAN, STUN isn’t needed and the connection resolves locally.
+
+**Message types (board ↔ spymaster):**
+
+- `board_state` — board → spy: full state sync on connect
+- `request_state` — spy → board: request re-sync
+- `request_reveal {idx}` — board → spy: what color is this card?
+- `reveal {idx, color}` — spy → board: here’s the color
+- `reveal_done {idx, color}` — board → spy: card was manually revealed
+- `new_game {board, turn, size}` — board → spy: new board rolled
+- `ping` / `pong` — keepalive heartbeat (every 15s)
+
+**Font:** To change the typeface, edit the `<link id="google-font-link">` tag in `index.html` and update the `font-family` in the CSS. Example URLs are commented in the HTML:
+
+```
+Be Vietnam Pro  (default)
+Outfit
+DM Sans
+Nunito
+Figtree
+```
+
+-----
+
+## Changelog
+
+### v1.4.0
+
+- **Undo** — configurable undo history (Settings → Undo Steps, default 2). Topbar ↩ button dims when no steps remain. Undo button also appears in game-over modal, allowing death-card mistakes to be undone.
+- Font swap instructions added to HTML as comments
+
+### v1.3.1
+
+- Settings → Advanced section (collapsed by default): Cache Reset and Debug Console buttons
+- Cache Reset replaces the `?reset` URL trick with a one-tap button
+
+### v1.3.0
+
+- UI language (TR / EN) fully implemented — all interface strings translated; selection persisted to localStorage
+- UI language selector added inside Settings modal (accessible during gameplay)
+- Language highlight bug fixed — active button now correctly reflects saved preference on load
+
+### v1.2.0
+
+- **Be Vietnam Pro** font via Google Fonts
+- Color dots removed from board cards entirely
+- Board grid layout fix — last row no longer clips
+- Spymaster grid cells are square
+- Starting team banner on Spymaster screen
+- Disconnect modal — shows when WebRTC connection drops, with one-tap Reconnect
+- ICE gathering timeout increased to 8s
+- UI language selector on home screen (TR active, EN stub)
+- Version number displayed on home screen
+
+### v1.1.x (keepalive + WakeLock)
+
+- Ping/pong keepalive every 15s to prevent WebRTC idle disconnect
+- `navigator.wakeLock` acquired on connect, reacquired on tab visibility change
+- `reset()` now correctly stops ping timer and releases WakeLock
+
+### v1.0.0 (initial)
+
+- WebRTC peer-to-peer pairing via QR code (two-scan flow)
+- Board (iPad) + Spymaster (iPhone) mode split
+- 5×5 / 4×4 board size selection
+- Turkish word pool with used-word tracking (localStorage)
+- Auto game-over on death card, red/blue win
+- Long-press manual color picker (fallback when not connected)
+- Service worker for offline caching
+- PWA manifest for home screen installation
+- `?reset` and `?debug` URL parameters
+- SDP compression with CompressionStream + base64
+- Multi-CDN fallback loader for QR libraries (qrcode@1.4.4, jsQR@1.4.0)
