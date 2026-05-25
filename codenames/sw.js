@@ -1,17 +1,20 @@
 // Codenames TR - Service Worker
 // Cache app shell so it works offline after first load
-const CACHE = 'codenames-v1';
+const CACHE = 'codenames-v2';
 const ASSETS = [
   './',
   './index.html',
   './words.js',
-  'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js',
-  'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
+  './lib/qrcode.min.js',
+  './lib/jsQR.min.js',
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})).then(() => self.skipWaiting())
+    caches.open(CACHE).then(c =>
+      // add one by one, ignore failures (lib files may not be local)
+      Promise.all(ASSETS.map(a => c.add(a).catch(() => null)))
+    ).then(() => self.skipWaiting())
   );
 });
 

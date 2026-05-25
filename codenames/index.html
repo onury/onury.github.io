@@ -10,15 +10,82 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%231a1a1a'/><text x='90' y='115' font-size='100' text-anchor='middle' fill='%23d4a574'>C</text></svg>">
 <link rel="manifest" href="manifest.json">
 
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="words.js"></script>
 <script>
+  // Library loader: try local first, then multiple CDNs.
+  // This handles Brave Shields, adblockers, and offline use after first load.
+  function loadScript(urls) {
+    return new Promise((resolve, reject) => {
+      let i = 0;
+      const tryNext = () => {
+        if (i >= urls.length) {
+          reject(new Error('Tüm kaynaklar başarısız: ' + urls.join(', ')));
+          return;
+        }
+        const url = urls[i++];
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = () => { console.log('Loaded:', url); resolve(url); };
+        s.onerror = () => { console.warn('Failed:', url); s.remove(); tryNext(); };
+        document.head.appendChild(s);
+      };
+      tryNext();
+    });
+  }
+
+  window.LIBS_READY = Promise.all([
+    loadScript([
+      'lib/qrcode.min.js',
+      'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
+      'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js',
+    ]),
+    loadScript([
+      'lib/jsQR.min.js',
+      'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js',
+      'https://unpkg.com/jsqr@1.4.0/dist/jsQR.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js',
+    ]),
+  ]).then(() => {
+    window.LIBS_OK = true;
+    console.log('All libs loaded. QRCode:', typeof QRCode, 'jsQR:', typeof jsQR);
+  }).catch(err => {
+    window.LIBS_OK = false;
+    window.LIBS_ERR = err;
+    console.error('Library load failed:', err);
+  });
+</script>
+<script>
+  // ?reset → clear service worker & caches and reload
+  if (/[?&]reset\b/.test(location.search)) {
+    (async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) await r.unregister();
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const k of keys) await caches.delete(k);
+        }
+        alert('Cache temizlendi. Sayfayı yeniden açabilirsin.');
+      } catch(e) { alert('Reset hatası: ' + e.message); }
+      location.href = location.pathname;
+    })();
+  }
   // Register service worker for offline support
-  if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator && !/[?&]reset\b/.test(location.search)) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     });
+  }
+  // Debug mode: append ?debug to URL to load on-device console (Eruda)
+  if (/[?&]debug\b/.test(location.search)) {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+    s.onload = () => { try { eruda.init(); console.log('Eruda console loaded'); } catch(e){} };
+    s.onerror = () => alert('Eruda yüklenemedi (Brave Shields açık olabilir)');
+    document.head.appendChild(s);
   }
 </script>
 
@@ -1120,17 +1187,43 @@ const QR = {
   scannerActive: false,
   
   async drawTo(canvasId, text) {
+    // wait for libs
+    await window.LIBS_READY;
     const canvas = document.getElementById(canvasId);
-    await new Promise((resolve, reject) => {
-      QRCode.toCanvas(canvas, text, {
-        errorCorrectionLevel: 'L',
-        margin: 1,
-        width: 280,
-      }, (err) => err ? reject(err) : resolve());
-    });
+    if (!canvas) throw new Error('Canvas bulunamadı: ' + canvasId);
+    if (typeof QRCode === 'undefined') {
+      throw new Error('QRCode kütüphanesi yüklenemedi. Brave Shields veya adblock CDN\'leri bloklamış olabilir. Adres çubuğundaki kalkan ikonuna basıp bu site için kapatmayı dene.');
+    }
+    console.log('QR drawing:', canvasId, 'text length:', text.length);
+    // Try with progressively lower error correction if data is large
+    const levels = ['M', 'L'];
+    let lastErr = null;
+    for (const ec of levels) {
+      try {
+        await new Promise((resolve, reject) => {
+          QRCode.toCanvas(canvas, text, {
+            errorCorrectionLevel: ec,
+            margin: 2,
+            width: 320,
+            color: { dark: '#000000', light: '#ffffff' },
+          }, (err) => err ? reject(err) : resolve());
+        });
+        console.log('QR drawn successfully with EC level:', ec);
+        return;
+      } catch (e) {
+        console.warn('QR failed at EC=' + ec + ':', e.message);
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('QR oluşturulamadı (veri çok büyük olabilir)');
   },
   
   async startScan(videoId, onResult) {
+    await window.LIBS_READY;
+    if (typeof jsQR === 'undefined') {
+      alert('jsQR kütüphanesi yüklenemedi. Brave Shields veya adblock CDN\'leri bloklamış olabilir. Kalkan ikonundan bu site için kapat.');
+      return;
+    }
     const video = document.getElementById(videoId);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -1403,15 +1496,20 @@ const App = {
           status.textContent = 'Bağlantı hazırlanıyor...';
           const offer = await Peer.createOffer();
           document.getElementById('offer-text').value = offer;
+          document.getElementById('pair-step-1').style.display = 'block';
+          let qrOk = false;
           try {
             await QR.drawTo('qr-canvas', offer);
+            qrOk = true;
           } catch(e) {
-            status.textContent = 'QR çok büyük olabilir — metni manuel paylaş.';
+            console.error('QR draw failed:', e);
+            status.innerHTML = '⚠ QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Anlatıcı\'ya gönder (yapıştırabilir).';
           }
-          document.getElementById('pair-step-1').style.display = 'block';
           document.getElementById('pair-next-btn').textContent = 'Cevap QR Tara';
           this.pairStep = 1;
-          status.textContent = 'QR hazır. Anlatıcı taradıktan sonra "Cevap QR Tara"';
+          if (qrOk) {
+            status.textContent = 'QR hazır. Anlatıcı taradıktan sonra "Cevap QR Tara"';
+          }
         } else if (this.pairStep === 1) {
           // scan answer
           document.getElementById('pair-step-1').style.display = 'none';
@@ -1455,16 +1553,19 @@ const App = {
             try {
               const answer = await Peer.acceptOffer(data);
               document.getElementById('answer-text').value = answer;
-              try {
-                await QR.drawTo('qr-canvas-2', answer);
-              } catch(e) {
-                status.textContent = 'Cevap çok büyük, metni elden paylaş.';
-              }
               document.getElementById('pair-step-2').style.display = 'none';
               document.getElementById('pair-step-3').style.display = 'block';
               document.getElementById('pair-next-btn').textContent = 'Tamam';
               this.pairStep = 3;
-              status.textContent = 'Cevap QR hazır. Board tarasın.';
+              let qrOk = false;
+              try {
+                await QR.drawTo('qr-canvas-2', answer);
+                qrOk = true;
+              } catch(e) {
+                console.error('Answer QR draw failed:', e);
+                status.innerHTML = '⚠ Cevap QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Board\'a gönder.';
+              }
+              if (qrOk) status.textContent = 'Cevap QR hazır. Board tarasın.';
             } catch(e) {
               status.textContent = 'Hata: ' + e.message;
             }
@@ -1477,14 +1578,19 @@ const App = {
           status.textContent = 'Cevap hazırlanıyor...';
           const answer = await Peer.acceptOffer(text);
           document.getElementById('answer-text').value = answer;
-          try {
-            await QR.drawTo('qr-canvas-2', answer);
-          } catch(e) {}
           document.getElementById('pair-step-2').style.display = 'none';
           document.getElementById('pair-step-3').style.display = 'block';
           document.getElementById('pair-next-btn').textContent = 'Tamam';
           this.pairStep = 3;
-          status.textContent = 'Cevap hazır. Board tarasın.';
+          let qrOk = false;
+          try {
+            await QR.drawTo('qr-canvas-2', answer);
+            qrOk = true;
+          } catch(e) {
+            console.error('Answer QR draw failed:', e);
+            status.innerHTML = '⚠ Cevap QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Board\'a gönder.';
+          }
+          if (qrOk) status.textContent = 'Cevap hazır. Board tarasın.';
         } else if (this.pairStep === 3) {
           this.closeModal('pair-modal');
         }
