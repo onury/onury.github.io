@@ -11,7 +11,14 @@
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<!-- FONT: Değiştirmek için aşağıdaki satırı düzenle -->
+<link id="google-font-link" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<!-- Örnekler:
+  Outfit:     https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap
+  DM Sans:    https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap
+  Nunito:     https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap
+  Figtree:    https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap
+-->
 
 <script src="words.js"></script>
 <script>
@@ -125,7 +132,7 @@
     overflow: hidden;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'Be Vietnam Pro', 'Georgia', sans-serif;
+    font-family: 'Be Vietnam Pro', 'Outfit', 'DM Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     user-select: none;
     -webkit-user-select: none;
@@ -267,6 +274,7 @@
     border-radius: 2px;
   }
   .iconbtn:active { background: var(--bg-card); }
+  .iconbtn:disabled { opacity: 0.3; cursor: not-allowed; }
   .iconbtn.primary {
     border-color: var(--accent);
     color: var(--accent);
@@ -612,7 +620,7 @@
   <!-- Mode select -->
   <div id="mode-screen" class="screen active">
     <h1>Codenames</h1>
-    <div class="version-tag">v1.3.1</div>
+    <div class="version-tag">v1.4.0</div>
     <div class="subtitle" id="mode-subtitle">— türkçe —</div>
     
     <div>
@@ -649,6 +657,7 @@
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
+        <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo">↩</button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.openSettings()">⚙</button>
@@ -751,6 +760,14 @@
         <option value="5" id="opt-5x5">5×5 (klasik)</option>
         <option value="4" id="opt-4x4">4×4 (hızlı)</option>
       </select>
+      <label id="lbl-undo-steps">Undo Adımı</label>
+      <select id="undo-steps-select">
+        <option value="0">0 (kapalı)</option>
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+      </select>
       <label id="lbl-word-pool">Kullanılan Kelime Havuzu</label>
       <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
       <div class="btn-row">
@@ -792,8 +809,11 @@
       <h2 id="gameover-title">Oyun Bitti</h2>
       <p id="gameover-msg"></p>
       <div class="btn-row">
-        <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()">Yeni Oyun</button>
-        <button class="iconbtn" onclick="App.closeModal('gameover-modal')">Kapat</button>
+        <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn">Yeni Oyun</button>
+        <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn">Kapat</button>
+      </div>
+      <div style="text-align:center; margin-top:12px;">
+        <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1px;cursor:pointer;text-decoration:underline;padding:4px 8px;">↩ undo</button>
       </div>
     </div>
   </div>
@@ -856,6 +876,9 @@ const I18n = {
       death_title: '☠ Ölüm Kartı', win_title: '★ Tebrikler',
       pool_reset: 'Kelime havuzu sıfırlandı',
       new_game_started: 'Yeni oyun başladı',
+      size_changed: 'Yeni boyut sonraki oyunda etkili',
+      undo_steps_label: 'Undo Adımı',
+      undo_steps_off: '0 (kapalı)',
       spy_no_board: 'Board hazır değil — Yeni Oyun bekleniyor',
       color_pick_title: 'Renk Seç',
       color_red: 'Kırmızı', color_blue: 'Mavi', color_yellow: 'Sarı', color_black: 'Ölüm',
@@ -888,6 +911,9 @@ const I18n = {
       death_title: '☠ Death Card', win_title: '★ Congratulations',
       pool_reset: 'Word pool reset',
       new_game_started: 'New game started',
+      size_changed: 'New size takes effect next game',
+      undo_steps_label: 'Undo Steps',
+      undo_steps_off: '0 (off)',
       spy_no_board: 'Board not ready — waiting for New Game',
       color_pick_title: 'Pick Color',
       color_red: 'Red', color_blue: 'Blue', color_yellow: 'Yellow', color_black: 'Death',
@@ -1016,10 +1042,10 @@ const I18n = {
 // State
 // ============================================================
 const State = {
-  mode: null,             // 'board' | 'spy'
-  size: 5,                // 4 or 5
-  board: [],              // array of {word, color, revealed}
-  turn: 'red',            // 'red' | 'blue'
+  mode: null,
+  size: 5,
+  board: [],
+  turn: 'red',
   scoreRed: 0,
   scoreBlue: 0,
   redTarget: 9,
@@ -1030,7 +1056,9 @@ const State = {
   longPressTimer: null,
   longPressTriggered: false,
   longPressIdx: null,
-  uiLang: 'tr',           // 'tr' only for now
+  uiLang: 'tr',
+  undoSteps: 2,      // max undo steps (configurable in settings)
+  undoStack: [],     // [{board, turn, scoreRed, scoreBlue, gameOver}]
 };
 
 // ============================================================
@@ -1040,9 +1068,8 @@ const Store = {
   load() {
     try {
       State.usedWords = JSON.parse(localStorage.getItem('codenames_used_words') || '[]');
-      const mode = localStorage.getItem('codenames_last_mode');
-      const size = parseInt(localStorage.getItem('codenames_size') || '5');
-      State.size = (size === 4 || size === 5) ? size : 5;
+      State.size = parseInt(localStorage.getItem('codenames_size') || '5');
+      State.undoSteps = parseInt(localStorage.getItem('codenames_undo_steps') || '2');
       // try to load game in progress
       const saved = localStorage.getItem('codenames_game');
       if (saved) {
@@ -1140,11 +1167,21 @@ const Game = {
     if (State.gameOver) return;
     const card = State.board[idx];
     if (!card || card.revealed) return;
-    
-    card.revealed = true;
+
+    // save undo snapshot before mutating
+    if (State.undoSteps > 0) {
+      State.undoStack.push({
+        board: JSON.parse(JSON.stringify(State.board)),
+        turn: State.turn,
+        scoreRed: State.scoreRed,
+        scoreBlue: State.scoreBlue,
+        gameOver: false,
+      });
+      if (State.undoStack.length > State.undoSteps) State.undoStack.shift();
+    }
     // if color provided, override (manual mode); else use board color
     if (color) card.color = color;
-    
+    card.revealed = true;
     // score
     if (card.color === 'red') State.scoreRed++;
     else if (card.color === 'blue') State.scoreBlue++;
@@ -1180,6 +1217,18 @@ const Game = {
     if (State.gameOver) return;
     State.turn = State.turn === 'red' ? 'blue' : 'red';
     Store.saveGame();
+  },
+
+  undo() {
+    if (!State.undoStack.length) return false;
+    const snap = State.undoStack.pop();
+    State.board = snap.board;
+    State.turn = snap.turn;
+    State.scoreRed = snap.scoreRed;
+    State.scoreBlue = snap.scoreBlue;
+    State.gameOver = snap.gameOver;
+    Store.saveGame();
+    return true;
   },
 };
 
@@ -1628,7 +1677,6 @@ const App = {
   init() {
     window.SEED_WORDS = [...new Set(window.SEED_WORDS)];
     Store.load();
-    // load saved UI lang
     const savedLang = localStorage.getItem('codenames_ui_lang') || 'tr';
     State.uiLang = savedLang;
     Peer.onMessage = (msg) => this.handlePeerMessage(msg);
@@ -1637,10 +1685,7 @@ const App = {
         Peer._acquireWakeLock();
       }
     });
-    I18n.applyAll();
-    // mark active lang button
-    const activeBtn = document.getElementById('ui-lang-' + savedLang);
-    if (activeBtn) { activeBtn.classList.add('active'); }
+    I18n.applyAll(); // sets active class on lang buttons via toggle
   },
   
   setUiLang(lang) {
@@ -1666,12 +1711,11 @@ const App = {
   startBoard() {
     State.mode = 'board';
     Store.saveMode('board');
-    if (!State.board.length) {
-      Game.rollNewBoard();
-    }
+    if (!State.board.length) Game.rollNewBoard();
     UI.showScreen('board-screen');
     UI.renderBoard();
     UI.updateConnStatus();
+    this.updateUndoBtn();
   },
   
   startSpymaster() {
@@ -1713,6 +1757,7 @@ const App = {
     Game.revealCard(idx, color);
     Peer.send({ type: 'reveal_done', idx, color });
     UI.renderBoard();
+    this.updateUndoBtn();
   },
   
   openColorPicker(idx) {
@@ -1763,11 +1808,11 @@ const App = {
         }
       }
     } else if (msg.type === 'reveal') {
-      // board receives color from spymaster
       if (State.mode === 'board') {
         State.pendingRevealIdx = null;
         Game.revealCard(msg.idx, msg.color);
         UI.renderBoard();
+        App.updateUndoBtn();
       }
     } else if (msg.type === 'reveal_done') {
       // spymaster gets confirmation of manual reveal
@@ -1802,8 +1847,10 @@ const App = {
   newGame() {
     this.closeModal('newgame-modal');
     this.closeModal('gameover-modal');
+    State.undoStack = [];
     Game.rollNewBoard();
     UI.renderBoard();
+    this.updateUndoBtn();
     Peer.send({ type: 'new_game', board: State.board, turn: State.turn, size: State.size });
     UI.showBanner(I18n.t('new_game_started'));
   },
@@ -1819,15 +1866,23 @@ const App = {
   // === Settings ===
   openSettings() {
     document.getElementById('board-size').value = String(State.size);
+    document.getElementById('undo-steps-select').value = String(State.undoSteps);
     const used = State.usedWords.length;
     const total = window.SEED_WORDS.length;
     document.getElementById('word-stats').textContent = `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+    I18n.applyAll();
     document.getElementById('settings-modal').classList.add('active');
-    
+
     document.getElementById('board-size').onchange = (e) => {
       State.size = parseInt(e.target.value);
       Store.saveSize();
-      UI.showBanner('Yeni boyut sonraki oyunda etkili olacak');
+      UI.showBanner(I18n.t('size_changed'));
+    };
+    document.getElementById('undo-steps-select').onchange = (e) => {
+      State.undoSteps = parseInt(e.target.value);
+      localStorage.setItem('codenames_undo_steps', String(State.undoSteps));
+      State.undoStack = []; // reset stack on change
+      this.updateUndoBtn();
     };
   },
   
@@ -1983,6 +2038,28 @@ const App = {
     }
   },
   
+  doUndo(fromGameover = false) {
+    if (!State.undoStack.length) return;
+    const ok = Game.undo();
+    if (!ok) return;
+    if (fromGameover) this.closeModal('gameover-modal');
+    if (State.mode === 'board') UI.renderBoard();
+    if (State.mode === 'spy') UI.renderSpyBoard();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    this.updateUndoBtn();
+  },
+
+  updateUndoBtn() {
+    const btn = document.getElementById('undo-btn');
+    if (!btn) return;
+    const hasUndo = State.undoSteps > 0 && State.undoStack.length > 0;
+    btn.disabled = !hasUndo;
+    btn.style.opacity = hasUndo ? '1' : '0.3';
+    // gameover modal undo btn
+    const goBtn = document.getElementById('gameover-undo-btn');
+    if (goBtn) goBtn.style.display = State.undoSteps > 0 ? '' : 'none';
+  },
+
   showBanner: (...args) => UI.showBanner(...args),
 
   toggleAdvanced() {
