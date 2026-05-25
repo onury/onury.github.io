@@ -622,22 +622,21 @@
   <!-- Mode select -->
   <div id="mode-screen" class="screen active">
     <h1>Codenames</h1>
-    <div class="version-tag">v1.4.1</div>
-    <div class="subtitle" id="mode-subtitle">— türkçe —</div>
-    
-    <div>
-      <div class="lang-section-label" id="lbl-ui-lang">Arayüz Dili</div>
-      <div class="lang-row" style="justify-content:center">
-        <button class="lang-btn active" id="ui-lang-tr" onclick="App.setUiLang('tr')">TR</button>
-        <button class="lang-btn" id="ui-lang-en" onclick="App.setUiLang('en')">EN</button>
-      </div>
-    </div>
 
-    <div>
-      <div class="lang-section-label" id="lbl-game-lang">Oyun Dili</div>
-      <div class="lang-row" style="justify-content:center">
-        <button class="lang-btn active" id="game-lang-tr">TR</button>
-        <button class="lang-btn disabled" title="Yakında" onclick="App.showBanner(I18n.t('soon'))">EN</button>
+    <div style="display:flex; gap:50px; justify-content:center; align-items:flex-start; flex-wrap:wrap;">
+      <div>
+        <div class="lang-section-label" id="lbl-ui-lang">UI Language</div>
+        <div class="lang-row" style="justify-content:center">
+          <button class="lang-btn active" id="ui-lang-tr" onclick="App.setUiLang('tr')">TR</button>
+          <button class="lang-btn" id="ui-lang-en" onclick="App.setUiLang('en')">EN</button>
+        </div>
+      </div>
+      <div>
+        <div class="lang-section-label" id="lbl-game-lang">Game Language</div>
+        <div class="lang-row" style="justify-content:center">
+          <button class="lang-btn active" id="game-lang-tr">TR</button>
+          <button class="lang-btn disabled" title="Coming soon" onclick="App.showBanner(I18n.t('soon'))">EN</button>
+        </div>
       </div>
     </div>
 
@@ -649,6 +648,7 @@
       <span id="btn-spy-label">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint">renkli harita · sadece anlatıcılar</span>
     </button>
+    <div class="version-tag" style="margin-top:50px;">v1.4.2</div>
   </div>
 
   <!-- Board screen -->
@@ -751,20 +751,23 @@
   <!-- Settings modal -->
   <div id="settings-modal" class="modal-bg">
     <div class="modal">
-      <h2 id="settings-title">Ayarlar</h2>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
+        <h2 id="settings-title" style="margin:0;">Ayarlar</h2>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.4.2</span>
+      </div>
       <label id="lbl-ui-lang-settings">Arayüz Dili</label>
-      <div class="option-row">
+      <div class="option-row" style="margin-bottom:25px;">
         <button class="option-chip active" id="settings-lang-tr" onclick="App.setUiLang('tr')">TR</button>
         <button class="option-chip" id="settings-lang-en" onclick="App.setUiLang('en')">EN</button>
       </div>
-      <label id="lbl-board-size">Board Boyutu</label>
-      <select id="board-size">
+      <label id="lbl-board-size" style="margin-top:0;">Board Boyutu</label>
+      <select id="board-size" style="margin-bottom:25px;">
         <option value="5" id="opt-5x5">5×5 (klasik)</option>
         <option value="4" id="opt-4x4">4×4 (hızlı)</option>
       </select>
       <label id="lbl-undo-steps">Undo Adımı</label>
-      <select id="undo-steps-select">
-        <option value="0">0 (kapalı)</option>
+      <select id="undo-steps-select" style="margin-bottom:25px;">
+        <option value="0" id="opt-undo-0">0 (kapalı)</option>
         <option value="1">1</option>
         <option value="2" selected>2</option>
         <option value="3">3</option>
@@ -772,12 +775,12 @@
       </select>
       <label id="lbl-word-pool">Kullanılan Kelime Havuzu</label>
       <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
-      <div class="btn-row">
+      <div class="btn-row" style="margin-bottom:25px;">
         <button class="iconbtn danger" id="btn-reset-pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
       </div>
 
       <!-- Advanced -->
-      <div style="margin-top:16px;">
+      <div style="margin-bottom:16px;">
         <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
           <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced">Advanced</span>
         </button>
@@ -787,7 +790,7 @@
         </div>
       </div>
 
-      <div class="btn-row" style="margin-top:16px;">
+      <div class="btn-row">
         <button class="iconbtn" id="btn-close-settings" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
@@ -941,9 +944,6 @@ const I18n = {
     const L = I18n.t;
     const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
 
-    // mode screen
-    const sub = document.getElementById('mode-subtitle');
-    if (sub) sub.textContent = L('subtitle');
     const uiLbl = document.getElementById('lbl-ui-lang');
     if (uiLbl) uiLbl.textContent = L('ui_lang_label');
     const gLbl = document.getElementById('lbl-game-lang');
@@ -956,8 +956,6 @@ const I18n = {
     if (bs) bs.textContent = L('btn_spy');
     const bsh = document.getElementById('btn-spy-hint');
     if (bsh) bsh.textContent = L('btn_spy_hint');
-
-    // topbars
     const bte = document.getElementById('board-title-el');
     if (bte) bte.textContent = L('board_title');
     const ste = document.getElementById('spy-title-el');
@@ -968,25 +966,19 @@ const I18n = {
     if (spb) spb.textContent = L('pair');
     const ngb = document.getElementById('newgame-topbtn');
     if (ngb) ngb.textContent = L('new_game');
-
-    // status / help
-    if (typeof UI !== 'undefined') {
-      UI.updateStatus();
-      UI.updateSpyStatus();
-      UI.updateConnStatus();
-    }
+    if (typeof UI !== 'undefined') { UI.updateStatus(); UI.updateSpyStatus(); UI.updateConnStatus(); }
     const hb = document.getElementById('help-board');
     if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on') ? L('help_board_conn') : L('help_board_noconn');
     const hs = document.getElementById('spy-help');
     if (hs) hs.textContent = L('help_spy');
-
-    // settings modal
     const st = document.getElementById('settings-title');
     if (st) st.textContent = L('settings_title');
-    const uiLangSettings = document.getElementById('lbl-ui-lang-settings');
-    if (uiLangSettings) uiLangSettings.textContent = L('ui_lang_label');
+    const uls = document.getElementById('lbl-ui-lang-settings');
+    if (uls) uls.textContent = L('ui_lang_label');
     const bsl = document.getElementById('lbl-board-size');
     if (bsl) bsl.textContent = L('board_size_label');
+    const usl = document.getElementById('lbl-undo-steps');
+    if (usl) usl.textContent = L('undo_steps_label');
     const wpl = document.getElementById('lbl-word-pool');
     if (wpl) wpl.textContent = L('word_pool_label');
     const rp = document.getElementById('btn-reset-pool');
@@ -997,44 +989,30 @@ const I18n = {
     if (o5) o5.textContent = L('opt_5x5');
     const o4 = document.getElementById('opt-4x4');
     if (o4) o4.textContent = L('opt_4x4');
-
-    // settings lang chips
+    const ou0 = document.getElementById('opt-undo-0');
+    if (ou0) ou0.textContent = L('undo_steps_off');
     ['tr','en'].forEach(l => {
-      const chip = document.getElementById('settings-lang-' + l);
-      if (chip) chip.classList.toggle('active', l === lang);
+      document.getElementById('settings-lang-' + l)?.classList.toggle('active', l === lang);
+      document.getElementById('ui-lang-' + l)?.classList.toggle('active', l === lang);
     });
-    // mode screen lang buttons
-    ['tr','en'].forEach(l => {
-      const btn = document.getElementById('ui-lang-' + l);
-      if (btn) btn.classList.toggle('active', l === lang);
-    });
-
-    // color picker modal
     const cmt = document.getElementById('color-modal-title');
     if (cmt) cmt.textContent = L('color_pick_title');
     const cr = document.getElementById('cmbtn-red');    if (cr) cr.textContent = L('color_red');
-    const cb = document.getElementById('cmbtn-blue');   if (cb) cb.textContent = L('color_blue');
+    const cb2 = document.getElementById('cmbtn-blue');  if (cb2) cb2.textContent = L('color_blue');
     const cy = document.getElementById('cmbtn-yellow'); if (cy) cy.textContent = L('color_yellow');
     const ck = document.getElementById('cmbtn-black');  if (ck) ck.textContent = L('color_black');
     const cc = document.getElementById('cmbtn-cancel'); if (cc) cc.textContent = L('cancel');
-
-    // newgame modal
     const ngt = document.getElementById('newgame-modal-title');
     if (ngt) ngt.textContent = L('newgame_title');
     const ngm = document.getElementById('newgame-modal-msg');
     if (ngm) ngm.textContent = L('newgame_msg');
     const ngc = document.getElementById('newgame-confirm-btn');
     if (ngc) ngc.textContent = L('new_game');
-    // newgame modal cancel (uses class)
     document.querySelectorAll('.cmbtn-cancel').forEach(el => el.textContent = L('cancel'));
-
-    // gameover modal
     const goNewBtn = document.getElementById('gameover-newgame-btn');
     if (goNewBtn) goNewBtn.textContent = L('new_game');
     const goCloseBtn = document.getElementById('gameover-close-btn');
     if (goCloseBtn) goCloseBtn.textContent = L('close');
-
-    // pair modal cancel
     const pairCancel = document.querySelector('#pair-modal .iconbtn:not(.primary)');
     if (pairCancel) pairCancel.textContent = L('cancel');
   },
