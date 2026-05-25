@@ -19,6 +19,7 @@
   Nunito:     https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap
   Figtree:    https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap
 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
 
 <script src="words.js"></script>
 <script>
@@ -574,7 +575,8 @@
     flex-shrink: 0;
   }
 
-  textarea.qr-text-fallback {
+  .ti { font-size: 16px; line-height: 1; vertical-align: middle; }
+  .iconbtn .ti { font-size: 15px; }
     width: 100%;
     height: 80px;
     background: var(--bg);
@@ -620,7 +622,7 @@
   <!-- Mode select -->
   <div id="mode-screen" class="screen active">
     <h1>Codenames</h1>
-    <div class="version-tag">v1.4.0</div>
+    <div class="version-tag">v1.4.1</div>
     <div class="subtitle" id="mode-subtitle">— türkçe —</div>
     
     <div>
@@ -657,10 +659,10 @@
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
-        <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo">↩</button>
+        <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn">Yeni Oyun</button>
-        <button class="iconbtn" onclick="App.openSettings()">⚙</button>
+        <button class="iconbtn" onclick="App.openSettings()" id="settings-btn"><i class="ti ti-settings"></i></button>
       </div>
     </div>
     <div class="status">
@@ -777,9 +779,9 @@
       <!-- Advanced -->
       <div style="margin-top:16px;">
         <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
-          <span id="advanced-arrow">▶</span> <span id="lbl-advanced">Advanced</span>
+          <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced">Advanced</span>
         </button>
-        <div id="advanced-section" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:4px;display:none;flex-direction:column;gap:8px;">
+        <div id="advanced-section" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:4px;flex-direction:column;gap:8px;">
           <button class="iconbtn danger" onclick="App.cacheReset()" id="btn-cache-reset">Cache Reset</button>
           <button class="iconbtn" onclick="App.loadDebug()" id="btn-debug">Debug Console</button>
         </div>
@@ -813,7 +815,9 @@
         <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn">Kapat</button>
       </div>
       <div style="text-align:center; margin-top:12px;">
-        <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1px;cursor:pointer;text-decoration:underline;padding:4px 8px;">↩ undo</button>
+        <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:12px;letter-spacing:1px;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:5px;">
+          <i class="ti ti-arrow-back-up"></i> undo
+        </button>
       </div>
     </div>
   </div>
@@ -1024,13 +1028,10 @@ const I18n = {
     document.querySelectorAll('.cmbtn-cancel').forEach(el => el.textContent = L('cancel'));
 
     // gameover modal
-    const gov = document.getElementById('gameover-modal');
-    if (gov) {
-      const newBtn = gov.querySelector('.iconbtn.primary');
-      if (newBtn) newBtn.textContent = L('new_game');
-      const closeBtn = gov.querySelector('.iconbtn:not(.primary)');
-      if (closeBtn) closeBtn.textContent = L('close');
-    }
+    const goNewBtn = document.getElementById('gameover-newgame-btn');
+    if (goNewBtn) goNewBtn.textContent = L('new_game');
+    const goCloseBtn = document.getElementById('gameover-close-btn');
+    if (goCloseBtn) goCloseBtn.textContent = L('close');
 
     // pair modal cancel
     const pairCancel = document.querySelector('#pair-modal .iconbtn:not(.primary)');
@@ -1865,23 +1866,28 @@ const App = {
   
   // === Settings ===
   openSettings() {
-    document.getElementById('board-size').value = String(State.size);
-    document.getElementById('undo-steps-select').value = String(State.undoSteps);
+    const sizeEl = document.getElementById('board-size');
+    const undoEl = document.getElementById('undo-steps-select');
+    if (sizeEl) sizeEl.value = String(State.size);
+    if (undoEl) undoEl.value = String(State.undoSteps);
     const used = State.usedWords.length;
     const total = window.SEED_WORDS.length;
-    document.getElementById('word-stats').textContent = `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+    const ws = document.getElementById('word-stats');
+    if (ws) ws.textContent = State.uiLang === 'en'
+      ? `${used} / ${total} words used (${total - used} remaining)`
+      : `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
     I18n.applyAll();
     document.getElementById('settings-modal').classList.add('active');
 
-    document.getElementById('board-size').onchange = (e) => {
+    if (sizeEl) sizeEl.onchange = (e) => {
       State.size = parseInt(e.target.value);
       Store.saveSize();
       UI.showBanner(I18n.t('size_changed'));
     };
-    document.getElementById('undo-steps-select').onchange = (e) => {
+    if (undoEl) undoEl.onchange = (e) => {
       State.undoSteps = parseInt(e.target.value);
       localStorage.setItem('codenames_undo_steps', String(State.undoSteps));
-      State.undoStack = []; // reset stack on change
+      State.undoStack = [];
       this.updateUndoBtn();
     };
   },
@@ -2067,7 +2073,7 @@ const App = {
     const arrow = document.getElementById('advanced-arrow');
     const open = sec.style.display === 'flex';
     sec.style.display = open ? 'none' : 'flex';
-    arrow.textContent = open ? '▶' : '▼';
+    arrow.className = open ? 'ti ti-chevron-right' : 'ti ti-chevron-down';
   },
 
   async cacheReset() {
