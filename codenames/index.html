@@ -628,8 +628,8 @@
       <div>
         <div class="lang-section-label" id="lbl-ui-lang" data-i18n="ui_lang_label">UI Language</div>
         <div class="lang-row" style="justify-content:center">
-          <button class="lang-btn active" id="ui-lang-tr" onclick="App.setUiLang('tr')">TR</button>
-          <button class="lang-btn" id="ui-lang-en" onclick="App.setUiLang('en')">EN</button>
+          <button class="lang-btn active" id="ui-lang-tr">TR</button>
+          <button class="lang-btn" id="ui-lang-en">EN</button>
         </div>
       </div>
       <div>
@@ -649,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.2</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.4</div>
   </div>
 
   <!-- Board screen -->
@@ -754,12 +754,12 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.2</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.4</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
-        <button class="option-chip active" id="settings-lang-tr" onclick="App.setUiLang('tr')">TR</button>
-        <button class="option-chip" id="settings-lang-en" onclick="App.setUiLang('en')">EN</button>
+        <button class="option-chip active" id="settings-lang-tr">TR</button>
+        <button class="option-chip" id="settings-lang-en">EN</button>
       </div>
       <label id="lbl-board-size" data-i18n="board_size_label">Board Boyutu</label>
       <select id="board-size">
@@ -948,21 +948,23 @@ const I18n = {
       const key = el.getAttribute('data-i18n');
       el.textContent = I18n.t(key);
     });
-    // active state on lang buttons
+    // active state on lang buttons — use classList directly, no toggle to avoid side effects
     ['tr','en'].forEach(l => {
-      document.getElementById('settings-lang-' + l)?.classList.toggle('active', l === lang);
-      document.getElementById('ui-lang-' + l)?.classList.toggle('active', l === lang);
+      const s = document.getElementById('settings-lang-' + l);
+      const m = document.getElementById('ui-lang-' + l);
+      if (s) { s.classList.toggle('active', l === lang); }
+      if (m) { m.classList.toggle('active', l === lang); }
     });
-    // dynamic UI updates
-    if (typeof UI !== 'undefined') {
-      UI.updateStatus();
-      UI.updateSpyStatus();
-      UI.updateConnStatus();
-    }
     // help text (depends on connection state)
     const hb = document.getElementById('help-board');
     if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on')
       ? I18n.t('help_board_conn') : I18n.t('help_board_noconn');
+    // turn indicator
+    if (typeof State !== 'undefined' && typeof UI !== 'undefined') {
+      UI.updateStatus();
+      UI.updateSpyStatus();
+      UI.updateConnStatus();
+    }
   },
 };
 
@@ -1257,10 +1259,14 @@ const Peer = {
       const s = this.pc.connectionState;
       if (s === 'connected') {
         this.state = 'on';
+        if (State.mode === 'board' && State.board.length) UI.renderBoard();
       } else if (s === 'disconnected' || s === 'failed' || s === 'closed') {
         const wasOn = this.state === 'on';
         this.state = 'off';
-        if (wasOn) App.onDisconnect();
+        if (wasOn) {
+          if (State.mode === 'board' && State.board.length) UI.renderBoard();
+          App.onDisconnect();
+        }
       }
       UI.updateConnStatus();
     };
@@ -1487,8 +1493,6 @@ const UI = {
       const el = document.getElementById(id);
       if (el) { el.className = `conn-status ${cls}`; el.textContent = txt; }
     });
-    // Re-render board when connection state changes (dots visibility)
-    if (State.mode === 'board' && State.board.length) UI.renderBoard();
   },
   
   showBanner(text, duration = 2500) {
@@ -1609,13 +1613,18 @@ const App = {
         Peer._acquireWakeLock();
       }
     });
-    I18n.applyAll(); // sets active class on lang buttons via toggle
+    // Bind ALL lang buttons at init — they're always in DOM
+    ['tr','en'].forEach(l => {
+      document.getElementById('ui-lang-' + l)?.addEventListener('click', () => App.setUiLang(l));
+      document.getElementById('settings-lang-' + l)?.addEventListener('click', () => App.setUiLang(l));
+    });
+    I18n.applyAll();
   },
   
   setUiLang(lang) {
+    console.log('[i18n] setUiLang:', lang, '| caller:', new Error().stack.split('\n')[2].trim());
     State.uiLang = lang;
     localStorage.setItem('codenames_ui_lang', lang);
-    console.log('[i18n] setUiLang:', lang, '| sample:', I18n.t('board_size_label'), '| data-i18n count:', document.querySelectorAll('[data-i18n]').length);
     I18n.applyAll();
     // word-stats needs manual update (dynamic content)
     const ws = document.getElementById('word-stats');
