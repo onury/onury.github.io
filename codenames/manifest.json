@@ -1,0 +1,17 @@
+{
+  "name": "Codenames TR",
+  "short_name": "Codenames",
+  "description": "Türkçe Codenames oyunu - offline iki cihaz",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%231a1a1a'/><text x='256' y='340' font-size='280' text-anchor='middle' fill='%23d4a574' font-family='Georgia,serif'>C</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
