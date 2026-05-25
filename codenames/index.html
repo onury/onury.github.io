@@ -455,7 +455,7 @@
     background: var(--bg-elev);
     border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 24px;
+    padding: 24px 24px 40px 24px;
     max-width: 480px;
     width: 100%;
     max-height: 90vh;
@@ -470,7 +470,8 @@
     font-weight: normal;
   }
   .modal p { color: var(--ink-dim); margin: 0 0 16px 0; font-size: 14px; line-height: 1.5; }
-  .modal label { display: block; margin: 12px 0 6px 0; font-size: 12px; letter-spacing: 1px; color: var(--ink-dim); text-transform: uppercase; }
+  .modal label { display: block; margin: 25px 0 6px 0; font-size: 12px; letter-spacing: 1px; color: var(--ink-dim); text-transform: uppercase; }
+  .modal label:first-of-type { margin-top: 0; }
   .modal select, .modal input[type=text] {
     width: 100%;
     background: var(--bg);
@@ -648,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.0</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.1</div>
   </div>
 
   <!-- Board screen -->
@@ -753,20 +754,20 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.0</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.1</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
         <button class="option-chip active" id="settings-lang-tr" onclick="App.setUiLang('tr')">TR</button>
         <button class="option-chip" id="settings-lang-en" onclick="App.setUiLang('en')">EN</button>
       </div>
-      <label id="lbl-board-size" data-i18n="board_size_label" style="margin-top:0;">Board Boyutu</label>
-      <select id="board-size" style="margin-bottom:25px;">
+      <label id="lbl-board-size" data-i18n="board_size_label">Board Boyutu</label>
+      <select id="board-size">
         <option value="5" id="opt-5x5" data-i18n="opt_5x5">5×5 (klasik)</option>
         <option value="4" id="opt-4x4" data-i18n="opt_4x4">4×4 (hızlı)</option>
       </select>
       <label id="lbl-undo-steps" data-i18n="undo_steps_label">Undo Adımı</label>
-      <select id="undo-steps-select" style="margin-bottom:25px;">
+      <select id="undo-steps-select">
         <option value="0" id="opt-undo-0" data-i18n="undo_steps_off">0 (kapalı)</option>
         <option value="1">1</option>
         <option value="2" selected>2</option>
@@ -775,7 +776,7 @@
       </select>
       <label id="lbl-word-pool" data-i18n="word_pool_label">Kullanılan Kelime Havuzu</label>
       <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
-      <div class="btn-row" style="margin-bottom:25px;">
+      <div class="btn-row">
         <button class="iconbtn danger" id="btn-reset-pool" data-i18n="reset_pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
       </div>
 
@@ -790,7 +791,7 @@
         </div>
       </div>
 
-      <div class="btn-row" style="margin-top:4px; margin-bottom:50px;">
+      <div class="btn-row" style="margin-top:16px;">
         <button class="iconbtn" id="btn-close-settings" data-i18n="close" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
