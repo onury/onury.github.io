@@ -649,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.5</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.6</div>
   </div>
 
   <!-- Board screen -->
@@ -754,7 +754,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.5</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.6</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -783,11 +783,11 @@
       <!-- Advanced -->
       <div style="margin-top:25px; margin-bottom:16px;">
         <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
-          <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced">Advanced</span>
+          <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced" data-i18n="advanced">Advanced</span>
         </button>
         <div id="advanced-section" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:4px;flex-direction:column;gap:8px;">
-          <button class="iconbtn danger" onclick="App.cacheReset()" id="btn-cache-reset">Cache Reset</button>
-          <button class="iconbtn" onclick="App.loadDebug()" id="btn-debug">Debug Console</button>
+          <button class="iconbtn danger" onclick="App.cacheReset()" id="btn-cache-reset" data-i18n="cache_reset">Cache Reset</button>
+          <button class="iconbtn" onclick="App.loadDebug()" id="btn-debug" data-i18n="debug_console">Debug Console</button>
         </div>
       </div>
 
@@ -899,6 +899,7 @@ const I18n = {
       reconnect: 'Tekrar Bağlan',
       pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
       soon: 'yakında',
+      advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
     },
     en: {
       conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
@@ -934,6 +935,7 @@ const I18n = {
       reconnect: 'Reconnect',
       pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
       soon: 'coming soon',
+      advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
     },
   },
   t(key) {
