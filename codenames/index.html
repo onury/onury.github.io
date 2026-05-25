@@ -625,14 +625,14 @@
 
     <div style="display:flex; gap:50px; justify-content:center; align-items:flex-start; flex-wrap:wrap;">
       <div>
-        <div class="lang-section-label" id="lbl-ui-lang">UI Language</div>
+        <div class="lang-section-label" id="lbl-ui-lang" data-i18n="ui_lang_label">UI Language</div>
         <div class="lang-row" style="justify-content:center">
           <button class="lang-btn active" id="ui-lang-tr" onclick="App.setUiLang('tr')">TR</button>
           <button class="lang-btn" id="ui-lang-en" onclick="App.setUiLang('en')">EN</button>
         </div>
       </div>
       <div>
-        <div class="lang-section-label" id="lbl-game-lang">Game Language</div>
+        <div class="lang-section-label" id="lbl-game-lang" data-i18n="game_lang_label">Game Language</div>
         <div class="lang-row" style="justify-content:center">
           <button class="lang-btn active" id="game-lang-tr">TR</button>
           <button class="lang-btn disabled" title="Coming soon" onclick="App.showBanner(I18n.t('soon'))">EN</button>
@@ -641,27 +641,27 @@
     </div>
 
     <button class="mode-btn" onclick="App.startBoard()">
-      <span id="btn-board-label">Board (iPad)</span>
-      <span class="hint" id="btn-board-hint">kelime tahtası · oyuncular bakar</span>
+      <span id="btn-board-label" data-i18n="btn_board">Board (iPad)</span>
+      <span class="hint" id="btn-board-hint" data-i18n="btn_board_hint">kelime tahtası · oyuncular bakar</span>
     </button>
     <button class="mode-btn" onclick="App.startSpymaster()">
-      <span id="btn-spy-label">Anlatıcı (iPhone)</span>
-      <span class="hint" id="btn-spy-hint">renkli harita · sadece anlatıcılar</span>
+      <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
+      <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.4.2</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.0</div>
   </div>
 
   <!-- Board screen -->
   <div id="board-screen" class="screen">
     <div class="topbar">
       <div class="left">
-        <span class="title" id="board-title-el">Board</span>
+        <span class="title" id="board-title-el" data-i18n="board_title">Board</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
-        <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn">Eşle</button>
-        <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn">Yeni Oyun</button>
+        <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
+        <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.openSettings()" id="settings-btn"><i class="ti ti-settings"></i></button>
       </div>
     </div>
@@ -682,11 +682,11 @@
   <div id="spy-screen" class="screen">
     <div class="topbar">
       <div class="left">
-        <span class="title" id="spy-title">Anlatıcı</span>
+        <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
-        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn">Eşle</button>
+        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
       </div>
     </div>
     <div class="status">
@@ -700,7 +700,7 @@
     <div class="board-wrap">
       <div id="spy-grid" class="grid spymaster size-5"></div>
     </div>
-    <div class="help-text" id="spy-help">Eşleme için → "Eşle"</div>
+    <div class="help-text" id="spy-help" data-i18n="help_spy">Eşleme için → "Eşle"</div>
   </div>
 
   <!-- Pairing modal -->
@@ -742,7 +742,7 @@
       <div id="pair-status" style="margin-top:8px; font-size:12px; color: var(--ink-dim);"></div>
 
       <div class="btn-row">
-        <button class="iconbtn" onclick="App.closeModal('pair-modal')">İptal</button>
+        <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pair-modal')">İptal</button>
         <button class="iconbtn primary" id="pair-next-btn" onclick="App.pairNext()">İleri</button>
       </div>
     </div>
@@ -752,31 +752,31 @@
   <div id="settings-modal" class="modal-bg">
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
-        <h2 id="settings-title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.4.2</span>
+        <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.0</span>
       </div>
-      <label id="lbl-ui-lang-settings">Arayüz Dili</label>
+      <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
         <button class="option-chip active" id="settings-lang-tr" onclick="App.setUiLang('tr')">TR</button>
         <button class="option-chip" id="settings-lang-en" onclick="App.setUiLang('en')">EN</button>
       </div>
-      <label id="lbl-board-size" style="margin-top:0;">Board Boyutu</label>
+      <label id="lbl-board-size" data-i18n="board_size_label" style="margin-top:0;">Board Boyutu</label>
       <select id="board-size" style="margin-bottom:25px;">
-        <option value="5" id="opt-5x5">5×5 (klasik)</option>
-        <option value="4" id="opt-4x4">4×4 (hızlı)</option>
+        <option value="5" id="opt-5x5" data-i18n="opt_5x5">5×5 (klasik)</option>
+        <option value="4" id="opt-4x4" data-i18n="opt_4x4">4×4 (hızlı)</option>
       </select>
-      <label id="lbl-undo-steps">Undo Adımı</label>
+      <label id="lbl-undo-steps" data-i18n="undo_steps_label">Undo Adımı</label>
       <select id="undo-steps-select" style="margin-bottom:25px;">
-        <option value="0" id="opt-undo-0">0 (kapalı)</option>
+        <option value="0" id="opt-undo-0" data-i18n="undo_steps_off">0 (kapalı)</option>
         <option value="1">1</option>
         <option value="2" selected>2</option>
         <option value="3">3</option>
         <option value="5">5</option>
       </select>
-      <label id="lbl-word-pool">Kullanılan Kelime Havuzu</label>
+      <label id="lbl-word-pool" data-i18n="word_pool_label">Kullanılan Kelime Havuzu</label>
       <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
       <div class="btn-row" style="margin-bottom:25px;">
-        <button class="iconbtn danger" id="btn-reset-pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
+        <button class="iconbtn danger" id="btn-reset-pool" data-i18n="reset_pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
       </div>
 
       <!-- Advanced -->
@@ -790,8 +790,8 @@
         </div>
       </div>
 
-      <div class="btn-row">
-        <button class="iconbtn" id="btn-close-settings" onclick="App.closeModal('settings-modal')">Kapat</button>
+      <div class="btn-row" style="margin-top:4px; margin-bottom:50px;">
+        <button class="iconbtn" id="btn-close-settings" data-i18n="close" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
   </div>
@@ -799,11 +799,11 @@
   <!-- New game confirm -->
   <div id="newgame-modal" class="modal-bg">
     <div class="modal">
-      <h2 id="newgame-modal-title">Yeni Oyun</h2>
-      <p id="newgame-modal-msg">Mevcut oyunu bitirip yeni board oluşturulsun mu?</p>
+      <h2 id="newgame-modal-title" data-i18n="newgame_title">Yeni Oyun</h2>
+      <p id="newgame-modal-msg" data-i18n="newgame_msg">Mevcut oyunu bitirip yeni board oluşturulsun mu?</p>
       <div class="btn-row">
-        <button class="iconbtn cmbtn-cancel" onclick="App.closeModal('newgame-modal')">İptal</button>
-        <button class="iconbtn primary" onclick="App.newGame()" id="newgame-confirm-btn">Yeni Oyun</button>
+        <button class="iconbtn cmbtn-cancel" data-i18n="cancel" onclick="App.closeModal('newgame-modal')">İptal</button>
+        <button class="iconbtn primary" onclick="App.newGame()" id="newgame-confirm-btn" data-i18n="new_game">Yeni Oyun</button>
       </div>
     </div>
   </div>
@@ -814,8 +814,8 @@
       <h2 id="gameover-title">Oyun Bitti</h2>
       <p id="gameover-msg"></p>
       <div class="btn-row">
-        <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn">Yeni Oyun</button>
-        <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn">Kapat</button>
+        <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn" data-i18n="new_game">Yeni Oyun</button>
+        <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn" data-i18n="close">Kapat</button>
       </div>
       <div style="text-align:center; margin-top:12px;">
         <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:12px;letter-spacing:1px;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:5px;">
@@ -828,16 +828,16 @@
   <!-- Color picker (long press) -->
   <div id="color-modal" class="modal-bg">
     <div class="modal">
-      <h2 id="color-modal-title">Renk Seç</h2>
+      <h2 id="color-modal-title" data-i18n="color_pick_title">Renk Seç</h2>
       <p id="color-modal-word" style="color:var(--accent); font-size:20px; letter-spacing:2px;"></p>
       <div class="btn-row">
-        <button class="iconbtn" style="background:var(--red); color:#fff; border-color:var(--red)" onclick="App.manualReveal('red')" id="cmbtn-red">Kırmızı</button>
-        <button class="iconbtn" style="background:var(--blue); color:#fff; border-color:var(--blue)" onclick="App.manualReveal('blue')" id="cmbtn-blue">Mavi</button>
-        <button class="iconbtn" style="background:var(--yellow); color:#000; border-color:var(--yellow)" onclick="App.manualReveal('yellow')" id="cmbtn-yellow">Sarı</button>
-        <button class="iconbtn" style="background:#000; color:var(--accent); border-color:#555" onclick="App.manualReveal('black')" id="cmbtn-black">Ölüm</button>
+        <button class="iconbtn" style="background:var(--red); color:#fff; border-color:var(--red)" onclick="App.manualReveal('red')" id="cmbtn-red" data-i18n="color_red">Kırmızı</button>
+        <button class="iconbtn" style="background:var(--blue); color:#fff; border-color:var(--blue)" onclick="App.manualReveal('blue')" id="cmbtn-blue" data-i18n="color_blue">Mavi</button>
+        <button class="iconbtn" style="background:var(--yellow); color:#000; border-color:var(--yellow)" onclick="App.manualReveal('yellow')" id="cmbtn-yellow" data-i18n="color_yellow">Sarı</button>
+        <button class="iconbtn" style="background:#000; color:var(--accent); border-color:#555" onclick="App.manualReveal('black')" id="cmbtn-black" data-i18n="color_black">Ölüm</button>
       </div>
       <div class="btn-row">
-        <button class="iconbtn" onclick="App.closeModal('color-modal')" id="cmbtn-cancel">İptal</button>
+        <button class="iconbtn" onclick="App.closeModal('color-modal')" id="cmbtn-cancel" data-i18n="cancel">İptal</button>
       </div>
     </div>
   </div>
@@ -845,11 +845,11 @@
   <!-- Disconnect modal -->
   <div id="disconnect-modal" class="modal-bg">
     <div class="modal">
-      <h2 id="disc-title">Bağlantı Kesildi</h2>
-      <p id="disc-msg">Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.</p>
+      <h2 id="disc-title" data-i18n="disc_title">Bağlantı Kesildi</h2>
+      <p id="disc-msg" data-i18n="disc_msg">Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.</p>
       <div class="btn-row">
-        <button class="iconbtn primary" id="disc-reconnect-btn" onclick="App.closeModal('disconnect-modal'); App.openPair()">Tekrar Bağlan</button>
-        <button class="iconbtn" id="disc-dismiss-btn" onclick="App.closeModal('disconnect-modal')">Kapat</button>
+        <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.closeModal('disconnect-modal'); App.openPair()">Tekrar Bağlan</button>
+        <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.closeModal('disconnect-modal')">Kapat</button>
       </div>
     </div>
   </div>
@@ -866,8 +866,8 @@ const I18n = {
   strings: {
     tr: {
       conn_off: 'Bağlı değil', conn_connecting: 'Bağlanıyor...', conn_on: 'Bağlı',
-      turn_red: 'Kırmızı Sıra', turn_blue: 'Mavi Sıra', turn_over: 'Oyun Bitti',
-      starts_red: '🔴 Kırmızı Başlıyor', starts_blue: '🔵 Mavi Başlıyor',
+      turn_red: 'SIRA KIRMIZIDA', turn_blue: 'SIRA MAVİDE', turn_over: 'OYUN BİTTİ',
+      starts_red: 'Kırmızı Başlıyor', starts_blue: 'Mavi Başlıyor',
       new_game: 'Yeni Oyun', pair: 'Eşle', settings: '⚙',
       board_title: 'Board', spy_title: 'Anlatıcı',
       help_board_conn: 'Karta dokun → anlatıcı rengi seçer · Uzun bas → manuel',
@@ -901,8 +901,8 @@ const I18n = {
     },
     en: {
       conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
-      turn_red: 'Red\'s Turn', turn_blue: 'Blue\'s Turn', turn_over: 'Game Over',
-      starts_red: '🔴 Red Starts', starts_blue: '🔵 Blue Starts',
+      turn_red: 'RED\'S TURN', turn_blue: 'BLUE\'S TURN', turn_over: 'GAME OVER',
+      starts_red: 'Red Starts', starts_blue: 'Blue Starts',
       new_game: 'New Game', pair: 'Pair', settings: '⚙',
       board_title: 'Board', spy_title: 'Spymaster',
       help_board_conn: 'Tap card → spymaster picks color · Long press → manual',
@@ -941,80 +941,27 @@ const I18n = {
     return dict[key] || key;
   },
   applyAll() {
-    const L = I18n.t;
     const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
-
-    const uiLbl = document.getElementById('lbl-ui-lang');
-    if (uiLbl) uiLbl.textContent = L('ui_lang_label');
-    const gLbl = document.getElementById('lbl-game-lang');
-    if (gLbl) gLbl.textContent = L('game_lang_label');
-    const bb = document.getElementById('btn-board-label');
-    if (bb) bb.textContent = L('btn_board');
-    const bbh = document.getElementById('btn-board-hint');
-    if (bbh) bbh.textContent = L('btn_board_hint');
-    const bs = document.getElementById('btn-spy-label');
-    if (bs) bs.textContent = L('btn_spy');
-    const bsh = document.getElementById('btn-spy-hint');
-    if (bsh) bsh.textContent = L('btn_spy_hint');
-    const bte = document.getElementById('board-title-el');
-    if (bte) bte.textContent = L('board_title');
-    const ste = document.getElementById('spy-title-el');
-    if (ste) ste.textContent = L('spy_title');
-    const bpb = document.getElementById('board-pair-btn');
-    if (bpb) bpb.textContent = L('pair');
-    const spb = document.getElementById('spy-pair-btn');
-    if (spb) spb.textContent = L('pair');
-    const ngb = document.getElementById('newgame-topbtn');
-    if (ngb) ngb.textContent = L('new_game');
-    if (typeof UI !== 'undefined') { UI.updateStatus(); UI.updateSpyStatus(); UI.updateConnStatus(); }
-    const hb = document.getElementById('help-board');
-    if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on') ? L('help_board_conn') : L('help_board_noconn');
-    const hs = document.getElementById('spy-help');
-    if (hs) hs.textContent = L('help_spy');
-    const st = document.getElementById('settings-title');
-    if (st) st.textContent = L('settings_title');
-    const uls = document.getElementById('lbl-ui-lang-settings');
-    if (uls) uls.textContent = L('ui_lang_label');
-    const bsl = document.getElementById('lbl-board-size');
-    if (bsl) bsl.textContent = L('board_size_label');
-    const usl = document.getElementById('lbl-undo-steps');
-    if (usl) usl.textContent = L('undo_steps_label');
-    const wpl = document.getElementById('lbl-word-pool');
-    if (wpl) wpl.textContent = L('word_pool_label');
-    const rp = document.getElementById('btn-reset-pool');
-    if (rp) rp.textContent = L('reset_pool');
-    const cs = document.getElementById('btn-close-settings');
-    if (cs) cs.textContent = L('close');
-    const o5 = document.getElementById('opt-5x5');
-    if (o5) o5.textContent = L('opt_5x5');
-    const o4 = document.getElementById('opt-4x4');
-    if (o4) o4.textContent = L('opt_4x4');
-    const ou0 = document.getElementById('opt-undo-0');
-    if (ou0) ou0.textContent = L('undo_steps_off');
+    // data-i18n: translate all marked elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = I18n.t(key);
+    });
+    // active state on lang buttons
     ['tr','en'].forEach(l => {
       document.getElementById('settings-lang-' + l)?.classList.toggle('active', l === lang);
       document.getElementById('ui-lang-' + l)?.classList.toggle('active', l === lang);
     });
-    const cmt = document.getElementById('color-modal-title');
-    if (cmt) cmt.textContent = L('color_pick_title');
-    const cr = document.getElementById('cmbtn-red');    if (cr) cr.textContent = L('color_red');
-    const cb2 = document.getElementById('cmbtn-blue');  if (cb2) cb2.textContent = L('color_blue');
-    const cy = document.getElementById('cmbtn-yellow'); if (cy) cy.textContent = L('color_yellow');
-    const ck = document.getElementById('cmbtn-black');  if (ck) ck.textContent = L('color_black');
-    const cc = document.getElementById('cmbtn-cancel'); if (cc) cc.textContent = L('cancel');
-    const ngt = document.getElementById('newgame-modal-title');
-    if (ngt) ngt.textContent = L('newgame_title');
-    const ngm = document.getElementById('newgame-modal-msg');
-    if (ngm) ngm.textContent = L('newgame_msg');
-    const ngc = document.getElementById('newgame-confirm-btn');
-    if (ngc) ngc.textContent = L('new_game');
-    document.querySelectorAll('.cmbtn-cancel').forEach(el => el.textContent = L('cancel'));
-    const goNewBtn = document.getElementById('gameover-newgame-btn');
-    if (goNewBtn) goNewBtn.textContent = L('new_game');
-    const goCloseBtn = document.getElementById('gameover-close-btn');
-    if (goCloseBtn) goCloseBtn.textContent = L('close');
-    const pairCancel = document.querySelector('#pair-modal .iconbtn:not(.primary)');
-    if (pairCancel) pairCancel.textContent = L('cancel');
+    // dynamic UI updates
+    if (typeof UI !== 'undefined') {
+      UI.updateStatus();
+      UI.updateSpyStatus();
+      UI.updateConnStatus();
+    }
+    // help text (depends on connection state)
+    const hb = document.getElementById('help-board');
+    if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on')
+      ? I18n.t('help_board_conn') : I18n.t('help_board_noconn');
   },
 };
 
@@ -1474,12 +1421,8 @@ const UI = {
     // Starting team badge
     const badge = document.getElementById('starting-team-badge');
     if (State.board.length) {
-      const t = State.turn; // turn reflects starting team at game start, or current turn
-      const T = State.uiLang === 'tr';
-      const label = t === 'red'
-        ? (T ? '🔴 Kırmızı Başlıyor' : '🔴 Red Starts')
-        : (T ? '🔵 Mavi Başlıyor' : '🔵 Blue Starts');
-      badge.textContent = label;
+      const t = State.turn;
+      badge.textContent = I18n.t(t === 'red' ? 'starts_red' : 'starts_blue');
       badge.className = `starting-team-badge ${t}`;
       badge.style.display = 'flex';
     } else {
