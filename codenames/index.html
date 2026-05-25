@@ -612,7 +612,7 @@
   <!-- Mode select -->
   <div id="mode-screen" class="screen active">
     <h1>Codenames</h1>
-    <div class="version-tag">v1.2.0</div>
+    <div class="version-tag">v1.3.1</div>
     <div class="subtitle" id="mode-subtitle">— türkçe —</div>
     
     <div>
@@ -741,15 +741,34 @@
   <div id="settings-modal" class="modal-bg">
     <div class="modal">
       <h2 id="settings-title">Ayarlar</h2>
+      <label id="lbl-ui-lang-settings">Arayüz Dili</label>
+      <div class="option-row">
+        <button class="option-chip active" id="settings-lang-tr" onclick="App.setUiLang('tr')">TR</button>
+        <button class="option-chip" id="settings-lang-en" onclick="App.setUiLang('en')">EN</button>
+      </div>
       <label id="lbl-board-size">Board Boyutu</label>
       <select id="board-size">
-        <option value="5">5×5 (klasik)</option>
-        <option value="4">4×4 (hızlı)</option>
+        <option value="5" id="opt-5x5">5×5 (klasik)</option>
+        <option value="4" id="opt-4x4">4×4 (hızlı)</option>
       </select>
       <label id="lbl-word-pool">Kullanılan Kelime Havuzu</label>
       <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
       <div class="btn-row">
         <button class="iconbtn danger" id="btn-reset-pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
+      </div>
+
+      <!-- Advanced -->
+      <div style="margin-top:16px;">
+        <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
+          <span id="advanced-arrow">▶</span> <span id="lbl-advanced">Advanced</span>
+        </button>
+        <div id="advanced-section" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:4px;display:none;flex-direction:column;gap:8px;">
+          <button class="iconbtn danger" onclick="App.cacheReset()" id="btn-cache-reset">Cache Reset</button>
+          <button class="iconbtn" onclick="App.loadDebug()" id="btn-debug">Debug Console</button>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:16px;">
         <button class="iconbtn" id="btn-close-settings" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
@@ -843,6 +862,7 @@ const I18n = {
       cancel: 'İptal', close: 'Kapat', confirm: 'Yeni Oyun',
       settings_title: 'Ayarlar', board_size_label: 'Board Boyutu',
       word_pool_label: 'Kelime Havuzu', reset_pool: 'Havuzu Sıfırla',
+      opt_5x5: '5×5 (klasik)', opt_4x4: '4×4 (hızlı)',
       newgame_title: 'Yeni Oyun', newgame_msg: 'Mevcut oyunu bitirip yeni board oluşturulsun mu?',
       disc_title: 'Bağlantı Kesildi', disc_msg: 'Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.',
       reconnect: 'Tekrar Bağlan',
@@ -874,6 +894,7 @@ const I18n = {
       cancel: 'Cancel', close: 'Close', confirm: 'New Game',
       settings_title: 'Settings', board_size_label: 'Board Size',
       word_pool_label: 'Word Pool', reset_pool: 'Reset Pool',
+      opt_5x5: '5×5 (classic)', opt_4x4: '4×4 (quick)',
       newgame_title: 'New Game', newgame_msg: 'End current game and start a new board?',
       disc_title: 'Connection Lost', disc_msg: 'Lost connection with spymaster. Re-pairing required.',
       reconnect: 'Reconnect',
@@ -887,6 +908,8 @@ const I18n = {
   },
   applyAll() {
     const L = this.t.bind(this);
+    const lang = State ? State.uiLang : 'tr';
+
     // mode screen
     const sub = document.getElementById('mode-subtitle');
     if (sub) sub.textContent = L('subtitle');
@@ -902,30 +925,35 @@ const I18n = {
     if (bs) bs.textContent = L('btn_spy');
     const bsh = document.getElementById('btn-spy-hint');
     if (bsh) bsh.textContent = L('btn_spy_hint');
+
     // topbars
-    ['board_title','spy_title'].forEach((k,i) => {
-      const id = ['board-title-el','spy-title-el'][i];
-      const el = document.getElementById(id);
-      if (el) el.textContent = L(k);
-    });
+    const bte = document.getElementById('board-title-el');
+    if (bte) bte.textContent = L('board_title');
+    const ste = document.getElementById('spy-title-el');
+    if (ste) ste.textContent = L('spy_title');
     const bpb = document.getElementById('board-pair-btn');
     if (bpb) bpb.textContent = L('pair');
     const spb = document.getElementById('spy-pair-btn');
     if (spb) spb.textContent = L('pair');
     const ngb = document.getElementById('newgame-topbtn');
     if (ngb) ngb.textContent = L('new_game');
-    // status
-    UI.updateStatus && UI.updateStatus();
-    UI.updateSpyStatus && UI.updateSpyStatus();
-    UI.updateConnStatus && UI.updateConnStatus();
-    // help text
+
+    // status / help
+    if (typeof UI !== 'undefined') {
+      UI.updateStatus();
+      UI.updateSpyStatus();
+      UI.updateConnStatus();
+    }
     const hb = document.getElementById('help-board');
-    if (hb) hb.textContent = Peer.state === 'on' ? L('help_board_conn') : L('help_board_noconn');
+    if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on') ? L('help_board_conn') : L('help_board_noconn');
     const hs = document.getElementById('spy-help');
     if (hs) hs.textContent = L('help_spy');
-    // settings
+
+    // settings modal
     const st = document.getElementById('settings-title');
     if (st) st.textContent = L('settings_title');
+    const uiLangSettings = document.getElementById('lbl-ui-lang-settings');
+    if (uiLangSettings) uiLangSettings.textContent = L('ui_lang_label');
     const bsl = document.getElementById('lbl-board-size');
     if (bsl) bsl.textContent = L('board_size_label');
     const wpl = document.getElementById('lbl-word-pool');
@@ -934,18 +962,53 @@ const I18n = {
     if (rp) rp.textContent = L('reset_pool');
     const cs = document.getElementById('btn-close-settings');
     if (cs) cs.textContent = L('close');
-    // modals
+    const o5 = document.getElementById('opt-5x5');
+    if (o5) o5.textContent = L('opt_5x5');
+    const o4 = document.getElementById('opt-4x4');
+    if (o4) o4.textContent = L('opt_4x4');
+
+    // settings lang chips
+    ['tr','en'].forEach(l => {
+      const chip = document.getElementById('settings-lang-' + l);
+      if (chip) chip.classList.toggle('active', l === lang);
+    });
+    // mode screen lang buttons
+    ['tr','en'].forEach(l => {
+      const btn = document.getElementById('ui-lang-' + l);
+      if (btn) btn.classList.toggle('active', l === lang);
+    });
+
+    // color picker modal
+    const cmt = document.getElementById('color-modal-title');
+    if (cmt) cmt.textContent = L('color_pick_title');
+    const cr = document.getElementById('cmbtn-red');    if (cr) cr.textContent = L('color_red');
+    const cb = document.getElementById('cmbtn-blue');   if (cb) cb.textContent = L('color_blue');
+    const cy = document.getElementById('cmbtn-yellow'); if (cy) cy.textContent = L('color_yellow');
+    const ck = document.getElementById('cmbtn-black');  if (ck) ck.textContent = L('color_black');
+    const cc = document.getElementById('cmbtn-cancel'); if (cc) cc.textContent = L('cancel');
+
+    // newgame modal
     const ngt = document.getElementById('newgame-modal-title');
     if (ngt) ngt.textContent = L('newgame_title');
     const ngm = document.getElementById('newgame-modal-msg');
     if (ngm) ngm.textContent = L('newgame_msg');
-    const cmt = document.getElementById('color-modal-title');
-    if (cmt) cmt.textContent = L('color_pick_title');
-    document.getElementById('cmbtn-red') && (document.getElementById('cmbtn-red').textContent = L('color_red'));
-    document.getElementById('cmbtn-blue') && (document.getElementById('cmbtn-blue').textContent = L('color_blue'));
-    document.getElementById('cmbtn-yellow') && (document.getElementById('cmbtn-yellow').textContent = L('color_yellow'));
-    document.getElementById('cmbtn-black') && (document.getElementById('cmbtn-black').textContent = L('color_black'));
+    const ngc = document.getElementById('newgame-confirm-btn');
+    if (ngc) ngc.textContent = L('new_game');
+    // newgame modal cancel (uses class)
     document.querySelectorAll('.cmbtn-cancel').forEach(el => el.textContent = L('cancel'));
+
+    // gameover modal
+    const gov = document.getElementById('gameover-modal');
+    if (gov) {
+      const newBtn = gov.querySelector('.iconbtn.primary');
+      if (newBtn) newBtn.textContent = L('new_game');
+      const closeBtn = gov.querySelector('.iconbtn:not(.primary)');
+      if (closeBtn) closeBtn.textContent = L('close');
+    }
+
+    // pair modal cancel
+    const pairCancel = document.querySelector('#pair-modal .iconbtn:not(.primary)');
+    if (pairCancel) pairCancel.textContent = L('cancel');
   },
 };
 
@@ -1921,6 +1984,42 @@ const App = {
   },
   
   showBanner: (...args) => UI.showBanner(...args),
+
+  toggleAdvanced() {
+    const sec = document.getElementById('advanced-section');
+    const arrow = document.getElementById('advanced-arrow');
+    const open = sec.style.display === 'flex';
+    sec.style.display = open ? 'none' : 'flex';
+    arrow.textContent = open ? '▶' : '▼';
+  },
+
+  async cacheReset() {
+    if (!confirm('Cache ve service worker temizlenecek, sayfa yeniden yüklenecek.')) return;
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) await r.unregister();
+      }
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        for (const k of keys) await caches.delete(k);
+      }
+    } catch(e) { console.error(e); }
+    location.reload();
+  },
+
+  loadDebug() {
+    if (document.getElementById('eruda-script')) {
+      try { eruda.show(); } catch(e) {}
+      return;
+    }
+    const s = document.createElement('script');
+    s.id = 'eruda-script';
+    s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+    s.onload = () => { try { eruda.init(); eruda.show(); } catch(e) { alert('Eruda yüklenemedi'); } };
+    s.onerror = () => alert('Eruda CDN\'e erişilemiyor');
+    document.head.appendChild(s);
+  },
 };
 
 // Init
