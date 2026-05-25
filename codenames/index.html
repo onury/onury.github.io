@@ -933,12 +933,13 @@ const I18n = {
     },
   },
   t(key) {
-    const lang = State ? State.uiLang : 'tr';
-    return (this.strings[lang] || this.strings.tr)[key] || key;
+    const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
+    const dict = I18n.strings[lang] || I18n.strings.tr;
+    return dict[key] || key;
   },
   applyAll() {
-    const L = this.t.bind(this);
-    const lang = State ? State.uiLang : 'tr';
+    const L = I18n.t;
+    const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
 
     // mode screen
     const sub = document.getElementById('mode-subtitle');
@@ -1194,7 +1195,7 @@ const Game = {
     
     if (card.color === 'black') {
       State.gameOver = true;
-      const L = I18n.t.bind(I18n);
+      const L = I18n.t;
       const loser = State.turn === 'red' ? L('color_red') : L('color_blue');
       const winner = State.turn === 'red' ? L('color_blue') : L('color_red');
       App.endGame(`${loser} ${L('gameover_death')} ${winner}${L('gameover_win')}`);
@@ -1533,7 +1534,7 @@ const UI = {
   },
   
   updateStatus() {
-    const L = I18n.t.bind(I18n);
+    const L = I18n.t;
     document.getElementById('score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
     document.getElementById('score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
     const ti = document.getElementById('turn-indicator');
@@ -1544,7 +1545,7 @@ const UI = {
   },
 
   updateSpyStatus() {
-    const L = I18n.t.bind(I18n);
+    const L = I18n.t;
     document.getElementById('spy-score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
     document.getElementById('spy-score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
     const ti = document.getElementById('spy-turn-indicator');
@@ -1700,7 +1701,7 @@ const App = {
   },
 
   onDisconnect() {
-    const L = I18n.t.bind(I18n);
+    const L = I18n.t;
     document.getElementById('disc-title').textContent = L('disc_title');
     document.getElementById('disc-msg').textContent = L('disc_msg');
     document.getElementById('disc-reconnect-btn').textContent = L('reconnect');
@@ -1857,7 +1858,7 @@ const App = {
   },
   
   endGame(msg) {
-    const L = I18n.t.bind(I18n);
+    const L = I18n.t;
     const isDeathCard = State.board.some(c => c.revealed && c.color === 'black');
     document.getElementById('gameover-title').textContent = isDeathCard ? L('death_title') : L('win_title');
     document.getElementById('gameover-msg').textContent = msg;
