@@ -649,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.4</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.5</div>
   </div>
 
   <!-- Board screen -->
@@ -754,7 +754,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.4</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.5</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1622,11 +1622,9 @@ const App = {
   },
   
   setUiLang(lang) {
-    console.log('[i18n] setUiLang:', lang, '| caller:', new Error().stack.split('\n')[2].trim());
     State.uiLang = lang;
     localStorage.setItem('codenames_ui_lang', lang);
     I18n.applyAll();
-    // word-stats needs manual update (dynamic content)
     const ws = document.getElementById('word-stats');
     if (ws && State.usedWords !== undefined) {
       const used = State.usedWords.length, total = window.SEED_WORDS ? window.SEED_WORDS.length : 0;
