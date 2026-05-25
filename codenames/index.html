@@ -649,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.1</div>
+    <div class="version-tag" style="margin-top:50px;">v1.5.2</div>
   </div>
 
   <!-- Board screen -->
@@ -754,7 +754,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.2</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -781,7 +781,7 @@
       </div>
 
       <!-- Advanced -->
-      <div style="margin-bottom:16px;">
+      <div style="margin-top:25px; margin-bottom:16px;">
         <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
           <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced">Advanced</span>
         </button>
@@ -791,7 +791,7 @@
         </div>
       </div>
 
-      <div class="btn-row" style="margin-top:16px;">
+      <div class="btn-row" style="margin-top:8px;">
         <button class="iconbtn" id="btn-close-settings" data-i18n="close" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
@@ -1615,11 +1615,16 @@ const App = {
   setUiLang(lang) {
     State.uiLang = lang;
     localStorage.setItem('codenames_ui_lang', lang);
-    // update active button
-    document.querySelectorAll('[id^="ui-lang-"]').forEach(b => b.classList.remove('active'));
-    const active = document.getElementById('ui-lang-' + lang);
-    if (active) active.classList.add('active');
+    console.log('[i18n] setUiLang:', lang, '| sample:', I18n.t('board_size_label'), '| data-i18n count:', document.querySelectorAll('[data-i18n]').length);
     I18n.applyAll();
+    // word-stats needs manual update (dynamic content)
+    const ws = document.getElementById('word-stats');
+    if (ws && State.usedWords !== undefined) {
+      const used = State.usedWords.length, total = window.SEED_WORDS ? window.SEED_WORDS.length : 0;
+      ws.textContent = lang === 'en'
+        ? `${used} / ${total} words used (${total - used} remaining)`
+        : `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+    }
   },
 
   onDisconnect() {
