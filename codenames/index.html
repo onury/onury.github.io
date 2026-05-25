@@ -36,9 +36,9 @@
   window.LIBS_READY = Promise.all([
     loadScript([
       'lib/qrcode.min.js',
-      'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
-      'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js',
+      'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
+      'https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.min.js',
     ]),
     loadScript([
       'lib/jsQR.min.js',
@@ -198,19 +198,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
+    padding: 6px 12px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
-    min-height: 50px;
+    min-height: 42px;
+    flex-shrink: 0;
   }
   .topbar .left, .topbar .right {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
   }
   .topbar .title {
-    font-size: 13px;
-    letter-spacing: 3px;
+    font-size: 12px;
+    letter-spacing: 2px;
     color: var(--ink-dim);
     text-transform: uppercase;
   }
@@ -218,7 +219,7 @@
     background: transparent;
     border: 1px solid var(--line);
     color: var(--ink);
-    padding: 6px 12px;
+    padding: 5px 10px;
     font-family: inherit;
     font-size: 12px;
     letter-spacing: 1px;
@@ -240,37 +241,38 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    padding: 5px 12px;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
-    font-size: 13px;
+    font-size: 12px;
     letter-spacing: 1px;
+    flex-shrink: 0;
   }
   .score {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
   }
   .score-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
   }
   .score-dot {
-    width: 10px; height: 10px;
+    width: 9px; height: 9px;
     border-radius: 50%;
   }
   .score-dot.red { background: var(--red); }
   .score-dot.blue { background: var(--blue); }
   .turn-indicator {
-    padding: 4px 12px;
+    padding: 3px 10px;
     border-radius: 2px;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: 10px;
   }
   .turn-indicator.red { background: var(--red-soft); color: #ffaaaa; border: 1px solid var(--red); }
   .turn-indicator.blue { background: var(--blue-soft); color: #aaccff; border: 1px solid var(--blue); }
@@ -278,7 +280,8 @@
   /* === Board grid === */
   .board-wrap {
     flex: 1;
-    padding: 8px;
+    min-height: 0;
+    padding: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,11 +289,9 @@
   }
   .grid {
     display: grid;
-    gap: 6px;
+    gap: 5px;
     width: 100%;
     height: 100%;
-    max-width: 100%;
-    max-height: 100%;
   }
   .grid.size-4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
   .grid.size-5 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); }
@@ -303,21 +304,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 2px;
     cursor: pointer;
     overflow: hidden;
+    min-height: 0;
+    min-width: 0;
     transition: transform 0.15s, opacity 0.3s;
   }
   .card .word {
-    font-size: clamp(11px, 2.2vw, 22px);
+    font-size: clamp(10px, 1.8vw, 20px);
     font-weight: bold;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     line-height: 1.1;
     color: var(--ink);
     z-index: 2;
     word-break: break-word;
     text-transform: uppercase;
+    padding-bottom: 14px; /* room for color dots */
   }
   .card.revealed { cursor: default; }
   .card.revealed .word {
@@ -340,16 +344,16 @@
   /* small color buttons */
   .color-btns {
     position: absolute;
-    bottom: 3px;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 4px;
+    gap: 3px;
     z-index: 3;
   }
   .color-btn {
-    width: 14px;
-    height: 14px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     border: 1px solid rgba(0,0,0,0.4);
     cursor: pointer;
@@ -374,7 +378,8 @@
     cursor: pointer;
   }
   .grid.spymaster .card .word {
-    font-size: clamp(10px, 1.8vw, 18px);
+    font-size: clamp(9px, 2.2vw, 16px);
+    padding-bottom: 2px;
   }
   .grid.spymaster .card.color-red { background: var(--red); border-color: #8a3030; }
   .grid.spymaster .card.color-red .word { color: #fff; }
@@ -520,10 +525,11 @@
   .help-text {
     text-align: center;
     color: var(--ink-dim);
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 1px;
-    padding: 6px;
+    padding: 4px;
     font-style: italic;
+    flex-shrink: 0;
   }
 
   textarea.qr-text-fallback {
