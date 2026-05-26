@@ -645,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.7.4</div>
+    <div class="version-tag" style="margin-top:50px;">v1.7.5</div>
   </div>
 
   <!-- Board screen -->
@@ -764,7 +764,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.4</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.5</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1125,13 +1125,18 @@ const Game = {
     State.usedWords = [...State.usedWords, ...words];
     Store.saveUsed();
     
-    // assign colors
+    // assign colors with constraint: no 5+ consecutive same color horizontally or vertically
     const colors = [];
     for (let i = 0; i < red; i++) colors.push('red');
     for (let i = 0; i < blue; i++) colors.push('blue');
     for (let i = 0; i < yellow; i++) colors.push('yellow');
     colors.push('black');
-    shuffle(colors);
+
+    let attempts = 0;
+    do {
+      shuffle(colors);
+      attempts++;
+    } while (!colorLayoutOk(colors, State.size) && attempts < 200);
     
     State.board = words.map((w, i) => ({
       word: w,
@@ -1230,6 +1235,33 @@ function shuffle(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+// Returns true if no color has 5+ consecutive same-color cells
+// horizontally or vertically (max allowed run = 4)
+function colorLayoutOk(colors, size) {
+  const MAX_RUN = 4;
+  // Check rows
+  for (let r = 0; r < size; r++) {
+    let run = 1;
+    for (let c = 1; c < size; c++) {
+      if (colors[r * size + c] === colors[r * size + c - 1]) {
+        run++;
+        if (run > MAX_RUN) return false;
+      } else { run = 1; }
+    }
+  }
+  // Check columns
+  for (let c = 0; c < size; c++) {
+    let run = 1;
+    for (let r = 1; r < size; r++) {
+      if (colors[r * size + c] === colors[(r - 1) * size + c]) {
+        run++;
+        if (run > MAX_RUN) return false;
+      } else { run = 1; }
+    }
+  }
+  return true;
 }
 
 // ============================================================
@@ -2117,10 +2149,9 @@ const App = {
       for (let i = 0; i < blue; i++) colors.push('blue');
       for (let i = 0; i < yellow; i++) colors.push('yellow');
       colors.push('black');
-      for (let i = colors.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [colors[i], colors[j]] = [colors[j], colors[i]];
-      }
+      let attempts = 0;
+      do { shuffle(colors); attempts++; }
+      while (!colorLayoutOk(colors, size) && attempts < 200);
       State.board = colors.map(color => ({ word: '', color, revealed: false }));
       State.turn = 'red';
       State.scoreRed = 0; State.scoreBlue = 0; State.gameOver = false;
