@@ -645,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.6.1</div>
+    <div class="version-tag" style="margin-top:50px;">v1.6.4</div>
   </div>
 
   <!-- Board screen -->
@@ -763,7 +763,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.4</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -800,7 +800,7 @@
         </div>
       </div>
 
-      <div class="btn-row" style="margin-top:8px;">
+      <div class="btn-row" style="margin-top:24px;">
         <button class="iconbtn" id="btn-close-settings" data-i18n="close" onclick="App.closeModal('settings-modal')">Kapat</button>
       </div>
     </div>
@@ -894,7 +894,7 @@ const I18n = {
       new_game: 'Yeni Oyun', pair: 'Eşle', settings: '⚙',
       board_title: 'Board', spy_title: 'Anlatıcı',
       help_board_conn: 'Dokun → renk aç · Uzun bas → kart değiştir',
-      help_board_noconn: 'Uzun bas → renk seç',
+      help_board_noconn: 'Dokun → renk seç · Uzun bas → kart değiştir',
       help_spy: 'Eşleme için → "Eşle"',
       btn_board: 'Board (iPad)', btn_board_hint: 'kelime tahtası · oyuncular bakar',
       btn_spy: 'Anlatıcı (iPhone)', btn_spy_hint: 'renkli harita · sadece anlatıcılar',
@@ -938,7 +938,7 @@ const I18n = {
       new_game: 'New Game', pair: 'Pair', settings: '⚙',
       board_title: 'Board', spy_title: 'Spymaster',
       help_board_conn: 'Tap → reveal · Long press → swap card',
-      help_board_noconn: 'Long press → pick color',
+      help_board_noconn: 'Tap → pick color · Long press → swap card',
       help_spy: 'Tap "Pair" to connect',
       btn_board: 'Board (iPad)', btn_board_hint: 'word grid · players look here',
       btn_spy: 'Spymaster (iPhone)', btn_spy_hint: 'color map · spymasters only',
@@ -1461,17 +1461,26 @@ const UI = {
         el.addEventListener('touchstart', (e) => {
           State.longPressTriggered = false;
           State.longPressIdx = i;
+          const t = e.touches[0];
+          State._lpStartX = t.clientX;
+          State._lpStartY = t.clientY;
           State.longPressTimer = setTimeout(() => {
             State.longPressTriggered = true;
-            // Long press: connected → swap, not connected → color picker
-            if (Peer.state === 'on') {
-              App.openSwap(i);
-            } else {
-              App.openColorPicker(i);
-            }
-          }, 600);
+            App.openSwap(i);
+          }, 700);
         }, { passive: true });
-        ['touchend','touchcancel','touchmove'].forEach(ev => {
+        el.addEventListener('touchmove', (e) => {
+          if (State.longPressTimer) {
+            const t = e.touches[0];
+            const dx = t.clientX - (State._lpStartX || 0);
+            const dy = t.clientY - (State._lpStartY || 0);
+            if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+              clearTimeout(State.longPressTimer);
+              State.longPressTimer = null;
+            }
+          }
+        }, { passive: true });
+        ['touchend','touchcancel'].forEach(ev => {
           el.addEventListener(ev, () => {
             if (State.longPressTimer) { clearTimeout(State.longPressTimer); State.longPressTimer = null; }
           }, { passive: true });
