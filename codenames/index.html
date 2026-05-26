@@ -649,7 +649,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.5.6</div>
+    <div class="version-tag" style="margin-top:50px;">v1.6.0</div>
   </div>
 
   <!-- Board screen -->
@@ -671,7 +671,10 @@
         <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
-      <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" class="turn-indicator" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:2px;">PAS</button>
+        <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      </div>
     </div>
     <div class="board-wrap">
       <div id="grid" class="grid size-5"></div>
@@ -754,7 +757,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.5.6</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.0</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -843,8 +846,18 @@
     </div>
   </div>
 
-  <!-- Disconnect modal -->
-  <div id="disconnect-modal" class="modal-bg">
+  <!-- Swap card modal -->
+  <div id="swap-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="swap-title" data-i18n="swap_title">Kart Değiştir</h2>
+      <p id="swap-word" style="color:var(--accent);font-size:22px;letter-spacing:2px;font-weight:700;margin:8px 0 4px;"></p>
+      <p id="swap-msg" data-i18n="swap_msg" style="margin-bottom:0;">Bu kartın değiştirilmesini istiyor musunuz?</p>
+      <div class="btn-row">
+        <button class="iconbtn primary" id="swap-yes-btn" data-i18n="swap_yes" onclick="App.confirmSwap()">Değiştir</button>
+        <button class="iconbtn" id="swap-no-btn" data-i18n="swap_no" onclick="App.closeModal('swap-modal')">İptal</button>
+      </div>
+    </div>
+  </div>
     <div class="modal">
       <h2 id="disc-title" data-i18n="disc_title">Bağlantı Kesildi</h2>
       <p id="disc-msg" data-i18n="disc_msg">Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.</p>
@@ -900,6 +913,11 @@ const I18n = {
       pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
       soon: 'yakında',
       advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
+      pass: 'PAS',
+      swap_title: 'Kart Değiştir',
+      swap_msg: 'Bu kartın değiştirilmesini istiyor musunuz?',
+      swap_yes: 'Değiştir', swap_no: 'İptal',
+      swap_late: 'Kart değişimi sadece oyun başında yapılabilir.',
     },
     en: {
       conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
@@ -936,6 +954,11 @@ const I18n = {
       pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
       soon: 'coming soon',
       advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
+      pass: 'PASS',
+      swap_title: 'Swap Card',
+      swap_msg: 'Do you want this card to be changed?',
+      swap_yes: 'Change it', swap_no: 'Cancel',
+      swap_late: 'Cards can only be changed at the beginning of the game.',
     },
   },
   t(key) {
@@ -989,8 +1012,11 @@ const State = {
   longPressTriggered: false,
   longPressIdx: null,
   uiLang: 'tr',
-  undoSteps: 2,      // max undo steps (configurable in settings)
-  undoStack: [],     // [{board, turn, scoreRed, scoreBlue, gameOver}]
+  undoSteps: 2,
+  undoStack: [],
+  lastTapIdx: null,
+  lastTapTime: 0,
+  swapIdx: null,
 };
 
 // ============================================================
@@ -1149,6 +1175,20 @@ const Game = {
     if (State.gameOver) return;
     State.turn = State.turn === 'red' ? 'blue' : 'red';
     Store.saveGame();
+  },
+
+  swapCard(idx) {
+    // Pull a fresh word from unused pool
+    const used = new Set(State.board.map(c => c.word));
+    State.usedWords.forEach(w => used.add(w));
+    const pool = window.SEED_WORDS.filter(w => !used.has(w));
+    if (!pool.length) return false;
+    const newWord = pool[Math.floor(Math.random() * pool.length)];
+    State.usedWords.push(State.board[idx].word, newWord);
+    Store.saveUsed();
+    State.board[idx].word = newWord;
+    Store.saveGame();
+    return newWord;
   },
 
   undo() {
@@ -1401,7 +1441,16 @@ const UI = {
       if (!card.revealed) {
         el.addEventListener('click', (e) => {
           if (State.longPressTriggered) { State.longPressTriggered = false; return; }
-          App.boardCardTap(i);
+          const now = Date.now();
+          if (State.lastTapIdx === i && now - State.lastTapTime < 400) {
+            // Double tap
+            State.lastTapIdx = null;
+            App.openSwap(i);
+          } else {
+            State.lastTapIdx = i;
+            State.lastTapTime = now;
+            App.boardCardTap(i);
+          }
         });
         el.addEventListener('touchstart', (e) => {
           State.longPressTriggered = false;
@@ -2001,6 +2050,36 @@ const App = {
     // gameover modal undo btn
     const goBtn = document.getElementById('gameover-undo-btn');
     if (goBtn) goBtn.style.display = State.undoSteps > 0 ? '' : 'none';
+  },
+
+  passTurn() {
+    if (State.gameOver) return;
+    Game.switchTurn();
+    UI.renderBoard();
+    UI.updateStatus();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+  },
+
+  openSwap(idx) {
+    const anyRevealed = State.board.some(c => c.revealed);
+    if (anyRevealed) {
+      UI.showBanner(I18n.t('swap_late'), 3000);
+      return;
+    }
+    State.swapIdx = idx;
+    document.getElementById('swap-word').textContent = State.board[idx].word;
+    document.getElementById('swap-modal').classList.add('active');
+  },
+
+  confirmSwap() {
+    const idx = State.swapIdx;
+    if (idx === null) return;
+    this.closeModal('swap-modal');
+    const newWord = Game.swapCard(idx);
+    if (!newWord) { UI.showBanner('Kelime havuzu boş!'); return; }
+    UI.renderBoard();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    State.swapIdx = null;
   },
 
   showBanner: (...args) => UI.showBanner(...args),
