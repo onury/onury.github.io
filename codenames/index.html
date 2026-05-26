@@ -147,11 +147,8 @@
     width: 100vw;
     padding-top: var(--safe-top);
     padding-bottom: var(--safe-bottom);
-    padding-left: env(safe-area-inset-left, 0px);
-    padding-right: env(safe-area-inset-right, 0px);
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
   }
 
   /* === Screens === */
@@ -256,15 +253,13 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 8px max(25px, env(safe-area-inset-left, 25px));
-    padding-right: max(25px, env(safe-area-inset-right, 25px));
+    padding: 8px 25px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
     min-height: 48px;
     flex-shrink: 0;
     gap: 8px;
     box-sizing: border-box;
-    width: 100%;
   }
   .topbar .left {
     display: flex;
@@ -322,8 +317,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 6px max(25px, env(safe-area-inset-left, 25px));
-    padding-right: max(25px, env(safe-area-inset-right, 25px));
+    padding: 6px 25px;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
     font-size: 12px;
@@ -331,7 +325,6 @@
     flex-shrink: 0;
     position: relative;
     box-sizing: border-box;
-    width: 100%;
   }
   .status .score {
     position: absolute;
@@ -379,10 +372,7 @@
   .board-wrap {
     flex: 1;
     min-height: 0;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    padding-left: max(25px, env(safe-area-inset-left, 25px));
-    padding-right: max(25px, env(safe-area-inset-right, 25px));
+    padding: 25px;
     overflow: hidden;
     box-sizing: border-box;
   }
@@ -709,7 +699,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.8.9</div>
+    <div class="version-tag" style="margin-top:50px;">v1.9.0</div>
   </div>
 
   <!-- Board screen -->
@@ -724,7 +714,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.9</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.0</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -767,7 +757,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.9</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.0</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -833,7 +823,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.9</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.0</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
