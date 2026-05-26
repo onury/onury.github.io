@@ -699,7 +699,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.9.1</div>
+    <div class="version-tag" style="margin-top:50px;">v1.9.2</div>
   </div>
 
   <!-- Board screen -->
@@ -714,7 +714,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.2</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -757,7 +757,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.2</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -823,7 +823,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.2</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1553,6 +1553,12 @@ const UI = {
       if (card.revealed) el.classList.add('revealed', card.color);
       el.innerHTML = `<div class="word">${card.word}</div>`;
       if (!card.revealed) {
+        // Tap → reveal
+        el.addEventListener('click', (e) => {
+          if (State.longPressTriggered) { State.longPressTriggered = false; return; }
+          App.boardCardTap(i);
+        });
+        // Long press → swap
         el.addEventListener('touchstart', (e) => {
           State.longPressTriggered = false;
           State.longPressIdx = i;
@@ -1575,22 +1581,10 @@ const UI = {
             }
           }
         }, { passive: true });
-        el.addEventListener('touchend', (e) => {
-          if (State.longPressTimer) {
-            clearTimeout(State.longPressTimer);
-            State.longPressTimer = null;
-            if (!State.longPressTriggered) {
-              e.preventDefault();
-              State._lastTouchTap = i;
-              App.boardCardTap(i);
-            }
-          }
-          State.longPressTriggered = false;
-        });
-        // Fallback for non-touch (desktop testing)
-        el.addEventListener('click', () => {
-          if (State._lastTouchTap === i) { State._lastTouchTap = null; return; }
-          App.boardCardTap(i);
+        ['touchend','touchcancel'].forEach(ev => {
+          el.addEventListener(ev, () => {
+            if (State.longPressTimer) { clearTimeout(State.longPressTimer); State.longPressTimer = null; }
+          }, { passive: true });
         });
       }
       grid.appendChild(el);
