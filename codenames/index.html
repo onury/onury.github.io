@@ -683,7 +683,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.8.3</div>
+    <div class="version-tag" style="margin-top:50px;">v1.8.6</div>
   </div>
 
   <!-- Board screen -->
@@ -698,7 +698,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.3</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.6</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -736,18 +736,19 @@
         <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
-      <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.3</span>
-        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
-        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
-      </div>
-    </div>
-    <div class="status">
-      <div class="score">
+      <div class="center">
         <div class="score-item"><span class="score-dot red"></span><span id="spy-score-red">0</span></div>
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
-      <div id="spy-turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      <div class="right">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.6</span>
+        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
+        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
+        <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+      </div>
+    </div>
+    <div class="status">
+      <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
     </div>
     <div id="starting-team-badge" class="starting-team-badge red" style="display:none"></div>
     <div class="board-wrap">
@@ -806,7 +807,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.3</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.6</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -869,11 +870,6 @@
       <div class="btn-row">
         <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn" data-i18n="close">Kapat</button>
-      </div>
-      <div style="text-align:center; margin-top:12px;">
-        <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:12px;letter-spacing:1px;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:5px;">
-          <i class="ti ti-arrow-back-up"></i> undo
-        </button>
       </div>
     </div>
   </div>
@@ -1600,15 +1596,19 @@ const UI = {
       const el = document.createElement('div');
       el.className = `card color-${card.color}`;
       if (card.revealed) el.classList.add('revealed');
-      // Show word only when connected
       el.innerHTML = `<div class="word">${connected ? card.word : ''}</div>`;
-      el.addEventListener('click', () => {
-        if (connected && !card.revealed) {
-          Peer.send({ type: 'reveal', idx: i, color: card.color });
-          Game.revealCard(i, card.color);
-          UI.renderSpyBoard();
-        }
-      });
+      if (!connected) {
+        el.style.cursor = 'default';
+        el.style.pointerEvents = 'none';
+      } else {
+        el.addEventListener('click', () => {
+          if (!card.revealed) {
+            Peer.send({ type: 'reveal', idx: i, color: card.color });
+            Game.revealCard(i, card.color);
+            UI.renderSpyBoard();
+          }
+        });
+      }
       grid.appendChild(el);
     });
     this.updateSpyStatus();
@@ -1628,9 +1628,12 @@ const UI = {
   updateSpyStatus() {
     const L = I18n.t;
     const connected = typeof Peer !== 'undefined' && Peer.state === 'on';
-    document.getElementById('spy-score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
-    document.getElementById('spy-score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
+    const redEl = document.getElementById('spy-score-red');
+    const blueEl = document.getElementById('spy-score-blue');
+    if (redEl) redEl.textContent = `${State.scoreRed}/${State.redTarget}`;
+    if (blueEl) blueEl.textContent = `${State.scoreBlue}/${State.blueTarget}`;
     const ti = document.getElementById('spy-turn-indicator');
+    if (!ti) return;
     if (connected) {
       ti.style.display = '';
       ti.className = `turn-indicator ${State.turn}`;
@@ -1891,8 +1894,11 @@ const App = {
       State.redTarget = State.size === 5 ? 9 : 6;
       State.blueTarget = State.size === 5 ? 8 : 5;
       Store.saveGame();
-      if (State.mode === 'spy') UI.renderSpyBoard();
-      else UI.renderBoard();
+      if (State.mode === 'spy') {
+        UI.renderSpyBoard();
+        UI.updateSpyStatus();
+        if (!State.gameOver) App.closeModal('gameover-modal');
+      } else UI.renderBoard();
     } else if (msg.type === 'request_state') {
       // board sends current state
       if (State.mode === 'board') {
@@ -1934,6 +1940,15 @@ const App = {
       State.blueTarget = State.size === 5 ? 8 : 5;
       Store.saveGame();
       if (State.mode === 'spy') UI.renderSpyBoard();
+    } else if (msg.type === 'undo_request') {
+      if (State.mode === 'board' && State.undoStack.length) {
+        const ok = Game.undo();
+        if (ok) {
+          UI.renderBoard();
+          this.updateUndoBtn();
+          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+        }
+      }
     } else if (msg.type === 'request_new_game') {
       // Spy requested a new game — board rolls it
       if (State.mode === 'board') {
@@ -1982,6 +1997,16 @@ const App = {
     if (ws) ws.textContent = State.uiLang === 'en'
       ? `${used} / ${total} words used (${total - used} remaining)`
       : `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+
+    // Hide board-only sections in spy mode
+    const spyMode = State.mode === 'spy';
+    ['lbl-undo-steps','undo-steps-select','lbl-word-pool','word-stats'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = spyMode ? 'none' : '';
+    });
+    const resetPoolRow = document.getElementById('btn-reset-pool')?.closest('.btn-row');
+    if (resetPoolRow) resetPoolRow.style.display = spyMode ? 'none' : '';
+
     I18n.applyAll();
     document.getElementById('settings-modal').classList.add('active');
 
@@ -2151,12 +2176,12 @@ const App = {
   },
   
   doUndo(fromGameover = false) {
+    if (State.mode === 'spy') return; // undo only from board
     if (!State.undoStack.length) return;
     const ok = Game.undo();
     if (!ok) return;
     if (fromGameover) this.closeModal('gameover-modal');
-    if (State.mode === 'board') UI.renderBoard();
-    if (State.mode === 'spy') UI.renderSpyBoard();
+    UI.renderBoard();
     Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
     this.updateUndoBtn();
   },
