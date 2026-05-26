@@ -656,14 +656,13 @@
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.7.5</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
-        <button class="iconbtn" onclick="App.openSettings()" id="settings-btn"><i class="ti ti-settings"></i></button>
+        <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
       </div>
     </div>
-    <div style="height:1px; background:var(--line);"></div>
-    <div style="text-align:center; padding:5px 0 6px; font-size:10px; color:var(--ink-dim); letter-spacing:1px;">v1.7.5</div>
     <div class="status">
       <div class="score">
         <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
@@ -698,13 +697,14 @@
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.7.5</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
       </div>
     </div>
-    <div style="height:1px; background:var(--line);"></div>
-    <div style="text-align:center; padding:5px 0 6px; font-size:10px; color:var(--ink-dim); letter-spacing:1px;">v1.7.5</div>
     <div class="status">
+      <div class="score">
+        <div class="score-item"><span class="score-dot red"></span><span id="spy-score-red">0</span></div>
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div id="spy-turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
