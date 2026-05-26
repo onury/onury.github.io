@@ -258,25 +258,30 @@
     border-bottom: 1px solid var(--line);
     min-height: 48px;
     flex-shrink: 0;
-    gap: 12px;
+    gap: 8px;
+    box-sizing: border-box;
+    width: 100%;
   }
   .topbar .left {
     display: flex;
     gap: 8px;
     align-items: center;
     justify-content: flex-start;
+    min-width: 0;
   }
   .topbar .center {
     display: flex;
     gap: 10px;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
   .topbar .right {
     display: flex;
     gap: 6px;
     align-items: center;
     justify-content: flex-end;
+    min-width: 0;
   }
   .topbar .title {
     font-family: var(--font-display);
@@ -284,6 +289,7 @@
     letter-spacing: 2px;
     color: var(--ink);
     text-transform: uppercase;
+    white-space: nowrap;
   }
   .iconbtn {
     background: transparent;
@@ -319,7 +325,8 @@
     letter-spacing: 1px;
     flex-shrink: 0;
     position: relative;
-    margin-bottom: 0;
+    box-sizing: border-box;
+    width: 100%;
   }
   .status .score {
     position: absolute;
@@ -408,6 +415,7 @@
     text-transform: uppercase;
   }
   .card.revealed { cursor: default; }
+  .card.no-interact { cursor: default !important; pointer-events: none !important; }
   .card.revealed .word {
     opacity: 0.55;
     text-decoration: line-through;
@@ -683,7 +691,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.8.6</div>
+    <div class="version-tag" style="margin-top:50px;">v1.8.7</div>
   </div>
 
   <!-- Board screen -->
@@ -698,7 +706,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.6</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.7</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -741,7 +749,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.6</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.7</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -807,7 +815,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.6</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.7</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -870,6 +878,11 @@
       <div class="btn-row">
         <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn" data-i18n="close">Kapat</button>
+      </div>
+      <div id="gameover-undo-wrap" style="text-align:center; margin-top:12px;">
+        <button id="gameover-undo-btn" onclick="App.doUndo(true)" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:12px;letter-spacing:1px;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:5px;">
+          <i class="ti ti-arrow-back-up"></i> undo
+        </button>
       </div>
     </div>
   </div>
@@ -1598,8 +1611,7 @@ const UI = {
       if (card.revealed) el.classList.add('revealed');
       el.innerHTML = `<div class="word">${connected ? card.word : ''}</div>`;
       if (!connected) {
-        el.style.cursor = 'default';
-        el.style.pointerEvents = 'none';
+        el.classList.add('no-interact');
       } else {
         el.addEventListener('click', () => {
           if (!card.revealed) {
@@ -2188,13 +2200,13 @@ const App = {
 
   updateUndoBtn() {
     const btn = document.getElementById('undo-btn');
-    if (!btn) return;
-    const hasUndo = State.undoSteps > 0 && State.undoStack.length > 0;
-    btn.disabled = !hasUndo;
-    btn.style.opacity = hasUndo ? '1' : '0.3';
-    // gameover modal undo btn
-    const goBtn = document.getElementById('gameover-undo-btn');
-    if (goBtn) goBtn.style.display = State.undoSteps > 0 ? '' : 'none';
+    if (btn) {
+      const hasUndo = State.undoSteps > 0 && State.undoStack.length > 0;
+      btn.disabled = !hasUndo;
+      btn.style.opacity = hasUndo ? '1' : '0.3';
+    }
+    const wrap = document.getElementById('gameover-undo-wrap');
+    if (wrap) wrap.style.display = (State.mode === 'spy' || State.undoSteps === 0) ? 'none' : '';
   },
 
   spyNewMap() {
