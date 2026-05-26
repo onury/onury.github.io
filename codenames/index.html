@@ -3,6 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="screen-orientation" content="landscape">
+<style>
+  @media (orientation: portrait) and (max-width: 900px) {
+    #app { display: none !important; }
+    #rotate-msg {
+      display: flex !important;
+      position: fixed; inset: 0;
+      background: #1a1a1a;
+      color: #d4a574;
+      font-family: 'Coiny', system-ui, sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+      padding: 40px;
+    }
+  }
+  #rotate-msg { display: none; }
+</style>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Codenames">
@@ -668,6 +690,10 @@
 </style>
 </head>
 <body>
+<div id="rotate-msg">
+  <span style="font-size:48px;">⟳</span>
+  <span data-i18n="rotate_msg">Lütfen cihazı yatay çevirin</span>
+</div>
 <div id="app">
 
   <!-- Mode select -->
@@ -699,7 +725,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.9.4</div>
+    <div class="version-tag" style="margin-top:50px;">v1.9.7</div>
   </div>
 
   <!-- Board screen -->
@@ -714,7 +740,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.4</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.7</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -734,6 +760,7 @@
       </div>
       <div style="display:flex; gap:6px; flex-shrink:0;">
         <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.hideDiscBar(); App.openPair()" style="border-color:#c84545; color:#ffaaaa; padding:4px 10px; font-size:11px;">Tekrar Bağlan</button>
+        <button class="iconbtn" id="disc-quick-btn" data-i18n="quick_reconnect" onclick="App.quickReconnect()" style="padding:4px 10px; font-size:11px;">Yenile</button>
         <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.hideDiscBar()" style="padding:4px 10px; font-size:11px;">Kapat</button>
       </div>
     </div>
@@ -755,7 +782,7 @@
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.4</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.7</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -821,7 +848,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.4</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.7</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -976,13 +1003,14 @@ const I18n = {
       opt_5x5: '5×5 (klasik)', opt_4x4: '4×4 (hızlı)',
       newgame_title: 'Yeni Oyun', newgame_msg: 'Mevcut oyunu bitirip yeni board oluşturulsun mu?',
       disc_title: 'Bağlantı Kesildi', disc_msg: 'Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.',
-      reconnect: 'Tekrar Bağlan',
+      reconnect: 'Tekrar Bağlan', quick_reconnect: 'Yenile',
       pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
       soon: 'yakında',
       advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
       new_map: 'Yeni Harita',
       spy_newmap_confirm: 'Kartlar ve harita yenilenecek, mevcut oyun sonlanacak. Emin misiniz?',
       spy_disconnected_msg: 'Bağlantı yok — eşleşince harita görünür',
+      rotate_msg: 'Lütfen cihazı yatay çevirin',
       pass_confirm_red: 'Sıra maviye geçecek. Emin misiniz?',
       pass_confirm_blue: 'Sıra kırmızıya geçecek. Emin misiniz?',
       pass_confirm_yes: 'Evet',
@@ -1022,13 +1050,14 @@ const I18n = {
       opt_5x5: '5×5 (classic)', opt_4x4: '4×4 (quick)',
       newgame_title: 'New Game', newgame_msg: 'End current game and start a new board?',
       disc_title: 'Connection Lost', disc_msg: 'Lost connection with spymaster. Re-pairing required.',
-      reconnect: 'Reconnect',
+      reconnect: 'Reconnect', quick_reconnect: 'Refresh',
       pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
       soon: 'coming soon',
       advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
       new_map: 'New Map',
       spy_newmap_confirm: 'Cards and map will be reset, current game will end. Are you sure?',
       spy_disconnected_msg: 'Not connected — map will appear after pairing',
+      rotate_msg: 'Please rotate your device to landscape',
       pass_confirm_red: 'Turn will pass to blue. Are you sure?',
       pass_confirm_blue: 'Turn will pass to red. Are you sure?',
       pass_confirm_yes: 'Yes',
@@ -1094,6 +1123,7 @@ const State = {
   lastTapIdx: null,
   lastTapTime: 0,
   swapIdx: null,
+  startingTeam: 'red',
 };
 
 // ============================================================
@@ -1119,6 +1149,7 @@ const Store = {
             State.blueTarget = g.blueTarget || 8;
             State.size = g.size || 5;
             State.gameOver = !!g.gameOver;
+            State.startingTeam = g.startingTeam || g.turn || 'red';
           }
         } catch(e){}
       }
@@ -1140,6 +1171,7 @@ const Store = {
       blueTarget: State.blueTarget,
       size: State.size,
       gameOver: State.gameOver,
+      startingTeam: State.startingTeam,
     }));
   },
   saveMode(m) {
@@ -1156,6 +1188,7 @@ const Game = {
     // Random starting team — starter gets one extra card
     const starter = Math.random() < 0.5 ? 'red' : 'blue';
     State.turn = starter;
+    State.startingTeam = starter;
     let red, blue, yellow;
     if (State.size === 5) {
       red = starter === 'red' ? 9 : 8;
@@ -1354,49 +1387,63 @@ const Peer = {
     this.isInitiator = true;
     this.state = 'connecting';
     UI.updateConnStatus();
-    
-    this.pc = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-    });
+    this.pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
     this.channel = this.pc.createDataChannel('game', { ordered: true });
     this._wireChannel(this.channel);
     this._wirePc();
-    
     const offer = await this.pc.createOffer();
     await this.pc.setLocalDescription(offer);
-    
-    // wait for ICE gathering to complete (so SDP is self-contained)
     await this._waitIceComplete();
-    return this._encode(this.pc.localDescription);
+    const encoded = await this._encode(this.pc.localDescription);
+    this._lastOfferStr = encoded;
+    return encoded;
   },
-  
+
   async acceptOffer(offerStr) {
     this.reset();
     this.isInitiator = false;
     this.state = 'connecting';
     UI.updateConnStatus();
-    
-    this.pc = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-    });
-    this.pc.ondatachannel = (e) => {
-      this.channel = e.channel;
-      this._wireChannel(this.channel);
-    };
+    this._lastOfferStr = offerStr;
+    this.pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+    this.pc.ondatachannel = (e) => { this.channel = e.channel; this._wireChannel(this.channel); };
     this._wirePc();
-    
     const offer = await this._decode(offerStr);
     await this.pc.setRemoteDescription(offer);
     const answer = await this.pc.createAnswer();
     await this.pc.setLocalDescription(answer);
     await this._waitIceComplete();
-    return this._encode(this.pc.localDescription);
+    const encoded = await this._encode(this.pc.localDescription);
+    this._lastAnswerStr = encoded;
+    return encoded;
   },
-  
+
   async acceptAnswer(answerStr) {
     if (!this.pc) throw new Error('No pc');
+    this._lastAnswerStr = answerStr;
     const answer = await this._decode(answerStr);
     await this.pc.setRemoteDescription(answer);
+  },
+
+  // Quick reconnect using stored SDP — no new QR needed
+  async quickReconnect() {
+    if (!this._lastOfferStr) return false;
+    try {
+      if (this.isInitiator) {
+        // board: re-create offer with same flow, then re-apply stored answer
+        const offerStr = await this.createOffer();
+        if (this._lastAnswerStr) {
+          await this.acceptAnswer(this._lastAnswerStr);
+          return true;
+        }
+        return false;
+      } else {
+        // spy: re-accept stored offer
+        if (!this._lastOfferStr) return false;
+        const answerStr = await this.acceptOffer(this._lastOfferStr);
+        return answerStr;
+      }
+    } catch(e) { return false; }
   },
   
   _waitIceComplete() {
@@ -1441,7 +1488,7 @@ const Peer = {
       UI.updateConnStatus();
       // initial sync
       if (State.mode === 'board') {
-        this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+        this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
       } else {
         this.send({ type: 'request_state' });
       }
@@ -1605,7 +1652,7 @@ const UI = {
     // Starting team badge
     const badge = document.getElementById('starting-team-badge');
     if (State.board.length) {
-      const t = State.turn;
+      const t = State.startingTeam || State.turn;
       badge.textContent = I18n.t(t === 'red' ? 'starts_red' : 'starts_blue');
       badge.className = `starting-team-badge ${t}`;
       badge.style.display = 'flex';
@@ -1624,16 +1671,8 @@ const UI = {
       el.className = `card color-${card.color}`;
       if (card.revealed) el.classList.add('revealed');
       el.innerHTML = `<div class="word">${connected ? card.word : ''}</div>`;
-      if (connected && !card.revealed) {
-        el.addEventListener('click', () => {
-          Peer.send({ type: 'reveal', idx: i, color: card.color });
-          Game.revealCard(i, card.color);
-          UI.renderSpyBoard();
-        });
-      } else {
-        // Prevent any touch interaction when not connected
-        el.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
-      }
+      // Spy never taps cards — board handles reveals
+      el.addEventListener('touchstart', (e) => { e.preventDefault(); }, { passive: false });
       grid.appendChild(el);
     });
     this.updateSpyStatus();
@@ -1833,11 +1872,21 @@ const App = {
     if (State.mode === 'board') UI.renderBoard();
   },
 
+  async quickReconnect() {
+    this.hideDiscBar();
+    UI.showBanner(I18n.t('conn_connecting'));
+    const result = await Peer.quickReconnect();
+    if (!result) {
+      UI.showBanner('Otomatik bağlantı başarısız — QR ile yeniden eşle');
+      this.openPair();
+    }
+  },
+
   hideDiscBar() {
     const bar = document.getElementById('disc-bar');
     if (bar) bar.style.display = 'none';
   },
-  
+
   startBoard() {
     State.mode = 'board';
     Store.saveMode('board');
@@ -1920,6 +1969,7 @@ const App = {
       State.gameOver = msg.gameOver;
       State.redTarget = State.size === 5 ? 9 : 6;
       State.blueTarget = State.size === 5 ? 8 : 5;
+      if (msg.startingTeam) State.startingTeam = msg.startingTeam;
       Store.saveGame();
       if (State.mode === 'spy') {
         UI.renderSpyBoard();
@@ -1929,7 +1979,7 @@ const App = {
     } else if (msg.type === 'request_state') {
       // board sends current state
       if (State.mode === 'board') {
-        Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+        Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
       }
     } else if (msg.type === 'request_reveal') {
       // spymaster gets request from board; respond with color
@@ -1973,7 +2023,7 @@ const App = {
         if (ok) {
           UI.renderBoard();
           this.updateUndoBtn();
-          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
         }
       }
     } else if (msg.type === 'request_new_game') {
@@ -2210,7 +2260,7 @@ const App = {
     if (!ok) return;
     if (fromGameover) this.closeModal('gameover-modal');
     UI.renderBoard();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
     this.updateUndoBtn();
   },
 
@@ -2258,7 +2308,7 @@ const App = {
     Game.switchTurn();
     UI.renderBoard();
     UI.updateStatus();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
   },
 
   openSwap(idx) {
@@ -2279,7 +2329,7 @@ const App = {
     const newWord = Game.swapCard(idx);
     if (!newWord) { UI.showBanner('Kelime havuzu boş!'); return; }
     UI.renderBoard();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
     State.swapIdx = null;
   },
 
