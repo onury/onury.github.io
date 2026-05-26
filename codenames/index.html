@@ -590,10 +590,6 @@
     margin-top: 8px;
   }
 
-  /* Disconnect overlay */
-  #disconnect-modal .modal { border-color: var(--red); }
-  #disconnect-modal h2 { color: #ffaaaa; }
-  
   /* Settings lang option */
   .option-row {
     display: flex;
@@ -649,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.6.0</div>
+    <div class="version-tag" style="margin-top:50px;">v1.6.1</div>
   </div>
 
   <!-- Board screen -->
@@ -674,6 +670,16 @@
       <div style="display:flex;align-items:center;gap:8px;">
         <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" class="turn-indicator" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:2px;">PAS</button>
         <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      </div>
+    </div>
+    <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
+      <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+        <i class="ti ti-wifi-off" style="color:#ffaaaa; flex-shrink:0; font-size:14px;"></i>
+        <span id="disc-msg" data-i18n="disc_msg" style="color:#ffaaaa; font-size:11px; letter-spacing:0.5px;">Bağlantı kesildi. Tekrar eşleme gerekiyor.</span>
+      </div>
+      <div style="display:flex; gap:6px; flex-shrink:0;">
+        <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.hideDiscBar(); App.openPair()" style="border-color:#c84545; color:#ffaaaa; padding:4px 10px; font-size:11px;">Tekrar Bağlan</button>
+        <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.hideDiscBar()" style="padding:4px 10px; font-size:11px;">Kapat</button>
       </div>
     </div>
     <div class="board-wrap">
@@ -757,7 +763,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.0</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.1</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -846,6 +852,18 @@
     </div>
   </div>
 
+  <!-- Pass confirm modal -->
+  <div id="pass-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="pass-modal-title" data-i18n="pass">PAS</h2>
+      <p id="pass-modal-msg"></p>
+      <div class="btn-row">
+        <button class="iconbtn primary" id="pass-yes-btn" onclick="App.confirmPass()">Evet</button>
+        <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pass-modal')">İptal</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Swap card modal -->
   <div id="swap-modal" class="modal-bg">
     <div class="modal">
@@ -855,15 +873,6 @@
       <div class="btn-row">
         <button class="iconbtn primary" id="swap-yes-btn" data-i18n="swap_yes" onclick="App.confirmSwap()">Değiştir</button>
         <button class="iconbtn" id="swap-no-btn" data-i18n="swap_no" onclick="App.closeModal('swap-modal')">İptal</button>
-      </div>
-    </div>
-  </div>
-    <div class="modal">
-      <h2 id="disc-title" data-i18n="disc_title">Bağlantı Kesildi</h2>
-      <p id="disc-msg" data-i18n="disc_msg">Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.</p>
-      <div class="btn-row">
-        <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.closeModal('disconnect-modal'); App.openPair()">Tekrar Bağlan</button>
-        <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.closeModal('disconnect-modal')">Kapat</button>
       </div>
     </div>
   </div>
@@ -884,8 +893,8 @@ const I18n = {
       starts_red: 'Kırmızı Başlıyor', starts_blue: 'Mavi Başlıyor',
       new_game: 'Yeni Oyun', pair: 'Eşle', settings: '⚙',
       board_title: 'Board', spy_title: 'Anlatıcı',
-      help_board_conn: 'Karta dokun → anlatıcı rengi seçer · Uzun bas → manuel',
-      help_board_noconn: 'Karta uzun bas → renk seç',
+      help_board_conn: 'Dokun → renk aç · Uzun bas → kart değiştir',
+      help_board_noconn: 'Uzun bas → renk seç',
       help_spy: 'Eşleme için → "Eşle"',
       btn_board: 'Board (iPad)', btn_board_hint: 'kelime tahtası · oyuncular bakar',
       btn_spy: 'Anlatıcı (iPhone)', btn_spy_hint: 'renkli harita · sadece anlatıcılar',
@@ -914,6 +923,9 @@ const I18n = {
       soon: 'yakında',
       advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
       pass: 'PAS',
+      pass_confirm_red: 'Sıra maviye geçecek. Emin misiniz?',
+      pass_confirm_blue: 'Sıra kırmızıya geçecek. Emin misiniz?',
+      pass_confirm_yes: 'Evet',
       swap_title: 'Kart Değiştir',
       swap_msg: 'Bu kartın değiştirilmesini istiyor musunuz?',
       swap_yes: 'Değiştir', swap_no: 'İptal',
@@ -925,8 +937,8 @@ const I18n = {
       starts_red: 'Red Starts', starts_blue: 'Blue Starts',
       new_game: 'New Game', pair: 'Pair', settings: '⚙',
       board_title: 'Board', spy_title: 'Spymaster',
-      help_board_conn: 'Tap card → spymaster picks color · Long press → manual',
-      help_board_noconn: 'Long press card → pick color',
+      help_board_conn: 'Tap → reveal · Long press → swap card',
+      help_board_noconn: 'Long press → pick color',
       help_spy: 'Tap "Pair" to connect',
       btn_board: 'Board (iPad)', btn_board_hint: 'word grid · players look here',
       btn_spy: 'Spymaster (iPhone)', btn_spy_hint: 'color map · spymasters only',
@@ -955,6 +967,9 @@ const I18n = {
       soon: 'coming soon',
       advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
       pass: 'PASS',
+      pass_confirm_red: 'Turn will pass to blue. Are you sure?',
+      pass_confirm_blue: 'Turn will pass to red. Are you sure?',
+      pass_confirm_yes: 'Yes',
       swap_title: 'Swap Card',
       swap_msg: 'Do you want this card to be changed?',
       swap_yes: 'Change it', swap_no: 'Cancel',
@@ -1441,23 +1456,19 @@ const UI = {
       if (!card.revealed) {
         el.addEventListener('click', (e) => {
           if (State.longPressTriggered) { State.longPressTriggered = false; return; }
-          const now = Date.now();
-          if (State.lastTapIdx === i && now - State.lastTapTime < 400) {
-            // Double tap
-            State.lastTapIdx = null;
-            App.openSwap(i);
-          } else {
-            State.lastTapIdx = i;
-            State.lastTapTime = now;
-            App.boardCardTap(i);
-          }
+          App.boardCardTap(i);
         });
         el.addEventListener('touchstart', (e) => {
           State.longPressTriggered = false;
           State.longPressIdx = i;
           State.longPressTimer = setTimeout(() => {
             State.longPressTriggered = true;
-            App.openColorPicker(i);
+            // Long press: connected → swap, not connected → color picker
+            if (Peer.state === 'on') {
+              App.openSwap(i);
+            } else {
+              App.openColorPicker(i);
+            }
           }, 600);
         }, { passive: true });
         ['touchend','touchcancel','touchmove'].forEach(ev => {
@@ -1686,13 +1697,17 @@ const App = {
   },
 
   onDisconnect() {
-    const L = I18n.t;
-    document.getElementById('disc-title').textContent = L('disc_title');
-    document.getElementById('disc-msg').textContent = L('disc_msg');
-    document.getElementById('disc-reconnect-btn').textContent = L('reconnect');
-    document.getElementById('disc-dismiss-btn').textContent = L('close');
-    document.getElementById('disconnect-modal').classList.add('active');
+    // Show disconnect bar (board screen only)
+    if (State.mode === 'board') {
+      const bar = document.getElementById('disc-bar');
+      if (bar) bar.style.display = 'flex';
+    }
     if (State.mode === 'board') UI.renderBoard();
+  },
+
+  hideDiscBar() {
+    const bar = document.getElementById('disc-bar');
+    if (bar) bar.style.display = 'none';
   },
   
   startBoard() {
@@ -2054,6 +2069,14 @@ const App = {
 
   passTurn() {
     if (State.gameOver) return;
+    const msg = State.turn === 'red' ? I18n.t('pass_confirm_red') : I18n.t('pass_confirm_blue');
+    document.getElementById('pass-modal-msg').textContent = msg;
+    document.getElementById('pass-yes-btn').textContent = I18n.t('pass_confirm_yes');
+    document.getElementById('pass-modal').classList.add('active');
+  },
+
+  confirmPass() {
+    this.closeModal('pass-modal');
     Game.switchTurn();
     UI.renderBoard();
     UI.updateStatus();
