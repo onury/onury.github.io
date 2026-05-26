@@ -645,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.6.4</div>
+    <div class="version-tag" style="margin-top:50px;">v1.7.2</div>
   </div>
 
   <!-- Board screen -->
@@ -696,6 +696,7 @@
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
+        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
       </div>
     </div>
@@ -763,7 +764,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.6.4</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.2</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -922,7 +923,9 @@ const I18n = {
       pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
       soon: 'yakında',
       advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
-      pass: 'PAS',
+      new_map: 'Yeni Harita',
+      spy_newmap_confirm: 'Kartlar ve harita yenilenecek, mevcut oyun sonlanacak. Emin misiniz?',
+      spy_disconnected_msg: 'Bağlantı yok — eşleşince harita görünür',
       pass_confirm_red: 'Sıra maviye geçecek. Emin misiniz?',
       pass_confirm_blue: 'Sıra kırmızıya geçecek. Emin misiniz?',
       pass_confirm_yes: 'Evet',
@@ -966,7 +969,9 @@ const I18n = {
       pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
       soon: 'coming soon',
       advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
-      pass: 'PASS',
+      new_map: 'New Map',
+      spy_newmap_confirm: 'Cards and map will be reset, current game will end. Are you sure?',
+      spy_disconnected_msg: 'Not connected — map will appear after pairing',
       pass_confirm_red: 'Turn will pass to blue. Are you sure?',
       pass_confirm_blue: 'Turn will pass to red. Are you sure?',
       pass_confirm_yes: 'Yes',
@@ -1495,10 +1500,11 @@ const UI = {
     const grid = document.getElementById('spy-grid');
     grid.className = `grid spymaster size-${State.size}`;
     grid.innerHTML = '';
-    
-    // Starting team badge
+    const connected = Peer.state === 'on';
+
+    // Starting team badge - only when connected
     const badge = document.getElementById('starting-team-badge');
-    if (State.board.length) {
+    if (State.board.length && connected) {
       const t = State.turn;
       badge.textContent = I18n.t(t === 'red' ? 'starts_red' : 'starts_blue');
       badge.className = `starting-team-badge ${t}`;
@@ -1506,23 +1512,27 @@ const UI = {
     } else {
       badge.style.display = 'none';
     }
-    
-    if (!State.board.length) {
-      grid.innerHTML = '<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px;">Board hazır değil — Yeni Oyun bekleniyor</div>';
+
+    if (!connected) {
+      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px; text-align:center; padding:20px;">${I18n.t('spy_disconnected_msg')}</div>`;
       this.updateSpyStatus();
       return;
     }
+
+    if (!State.board.length) {
+      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px;">${I18n.t('spy_no_board')}</div>`;
+      this.updateSpyStatus();
+      return;
+    }
+
     State.board.forEach((card, i) => {
       const el = document.createElement('div');
       el.className = `card color-${card.color}`;
       if (card.revealed) el.classList.add('revealed');
       el.innerHTML = `<div class="word">${card.word}</div>`;
-      // spymaster tap → optionally reveal locally (in case board didn't see)
       el.addEventListener('click', () => {
         if (Peer.state === 'on' && !card.revealed) {
-          // send reveal to board with known color
           Peer.send({ type: 'reveal', idx: i, color: card.color });
-          // also reveal locally
           Game.revealCard(i, card.color);
           UI.renderSpyBoard();
         }
@@ -1564,6 +1574,7 @@ const UI = {
       const el = document.getElementById(id);
       if (el) { el.className = `conn-status ${cls}`; el.textContent = txt; }
     });
+    if (State.mode === 'spy') UI.renderSpyBoard();
   },
   
   showBanner(text, duration = 2500) {
@@ -1843,11 +1854,12 @@ const App = {
       State.blueTarget = State.size === 5 ? 8 : 5;
       Store.saveGame();
       if (State.mode === 'spy') UI.renderSpyBoard();
+    } else if (msg.type === 'request_new_game') {
+      // Spy requested a new game — board rolls it
+      if (State.mode === 'board') {
+        App.newGame();
+      }
     }
-  },
-  
-  // === Game controls ===
-  confirmNewGame() {
     if (!State.board.length || State.gameOver) {
       this.newGame();
     } else {
@@ -2074,6 +2086,42 @@ const App = {
     // gameover modal undo btn
     const goBtn = document.getElementById('gameover-undo-btn');
     if (goBtn) goBtn.style.display = State.undoSteps > 0 ? '' : 'none';
+  },
+
+  spyNewMap() {
+    if (Peer.state === 'on') {
+      // Connected: confirm then tell board to start new game
+      const anyRevealed = State.board.some(c => c.revealed);
+      const msg = anyRevealed ? I18n.t('spy_newmap_confirm') : I18n.t('spy_newmap_confirm');
+      if (!confirm(msg)) return;
+      // Send new_game_request to board
+      Peer.send({ type: 'request_new_game' });
+      UI.showBanner(I18n.t('new_game_started'));
+    } else {
+      // Not connected: just re-roll colors locally for spy's reference
+      // Generate a fresh color assignment with same board size
+      const size = State.size || 5;
+      const total = size * size;
+      const red = size === 5 ? 9 : 6;
+      const blue = size === 5 ? 8 : 5;
+      const yellow = size === 5 ? 7 : 4;
+      const colors = [];
+      for (let i = 0; i < red; i++) colors.push('red');
+      for (let i = 0; i < blue; i++) colors.push('blue');
+      for (let i = 0; i < yellow; i++) colors.push('yellow');
+      colors.push('black');
+      // shuffle
+      for (let i = colors.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [colors[i], colors[j]] = [colors[j], colors[i]];
+      }
+      // Make dummy board with placeholder words (spy only sees colors)
+      State.board = colors.map((color, i) => ({ word: '?', color, revealed: false }));
+      State.turn = 'red';
+      State.scoreRed = 0; State.scoreBlue = 0; State.gameOver = false;
+      State.redTarget = red; State.blueTarget = blue;
+      UI.renderSpyBoard();
+    }
   },
 
   passTurn() {
