@@ -662,6 +662,8 @@
         <button class="iconbtn" onclick="App.openSettings()" id="settings-btn"><i class="ti ti-settings"></i></button>
       </div>
     </div>
+    <div style="height:1px; background:var(--line);"></div>
+    <div style="text-align:center; padding:5px 0 6px; font-size:10px; color:var(--ink-dim); letter-spacing:1px;">v1.7.5</div>
     <div class="status">
       <div class="score">
         <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
@@ -700,9 +702,9 @@
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
       </div>
     </div>
+    <div style="height:1px; background:var(--line);"></div>
+    <div style="text-align:center; padding:5px 0 6px; font-size:10px; color:var(--ink-dim); letter-spacing:1px;">v1.7.5</div>
     <div class="status">
-      <div class="score">
-        <div class="score-item"><span class="score-dot red"></span><span id="spy-score-red">0</span></div>
         <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div id="spy-turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
@@ -1237,28 +1239,31 @@ function shuffle(arr) {
   return arr;
 }
 
-// Returns true if no color has 5+ consecutive same-color cells
-// horizontally or vertically (max allowed run = 4)
+// Returns true if no 4-connected same-color component is larger than 4 cells
 function colorLayoutOk(colors, size) {
-  const MAX_RUN = 4;
-  // Check rows
-  for (let r = 0; r < size; r++) {
-    let run = 1;
-    for (let c = 1; c < size; c++) {
-      if (colors[r * size + c] === colors[r * size + c - 1]) {
-        run++;
-        if (run > MAX_RUN) return false;
-      } else { run = 1; }
-    }
-  }
-  // Check columns
-  for (let c = 0; c < size; c++) {
-    let run = 1;
-    for (let r = 1; r < size; r++) {
-      if (colors[r * size + c] === colors[(r - 1) * size + c]) {
-        run++;
-        if (run > MAX_RUN) return false;
-      } else { run = 1; }
+  const visited = new Array(colors.length).fill(false);
+  for (let start = 0; start < colors.length; start++) {
+    if (visited[start]) continue;
+    // BFS flood-fill from this cell
+    const color = colors[start];
+    const queue = [start];
+    visited[start] = true;
+    let count = 0;
+    while (queue.length) {
+      const idx = queue.shift();
+      count++;
+      if (count > 4) return false;
+      const r = Math.floor(idx / size), c = idx % size;
+      // 4 neighbors: up, down, left, right
+      [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].forEach(([nr,nc]) => {
+        if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+          const ni = nr * size + nc;
+          if (!visited[ni] && colors[ni] === color) {
+            visited[ni] = true;
+            queue.push(ni);
+          }
+        }
+      });
     }
   }
   return true;
