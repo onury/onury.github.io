@@ -645,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.7.2</div>
+    <div class="version-tag" style="margin-top:50px;">v1.7.3</div>
   </div>
 
   <!-- Board screen -->
@@ -764,7 +764,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.2</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.3</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1502,9 +1502,9 @@ const UI = {
     grid.innerHTML = '';
     const connected = Peer.state === 'on';
 
-    // Starting team badge - only when connected
+    // Starting team badge
     const badge = document.getElementById('starting-team-badge');
-    if (State.board.length && connected) {
+    if (State.board.length) {
       const t = State.turn;
       badge.textContent = I18n.t(t === 'red' ? 'starts_red' : 'starts_blue');
       badge.className = `starting-team-badge ${t}`;
@@ -1513,14 +1513,8 @@ const UI = {
       badge.style.display = 'none';
     }
 
-    if (!connected) {
-      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px; text-align:center; padding:20px;">${I18n.t('spy_disconnected_msg')}</div>`;
-      this.updateSpyStatus();
-      return;
-    }
-
     if (!State.board.length) {
-      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px;">${I18n.t('spy_no_board')}</div>`;
+      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px; text-align:center;">${I18n.t('spy_no_board')}</div>`;
       this.updateSpyStatus();
       return;
     }
@@ -1529,9 +1523,10 @@ const UI = {
       const el = document.createElement('div');
       el.className = `card color-${card.color}`;
       if (card.revealed) el.classList.add('revealed');
-      el.innerHTML = `<div class="word">${card.word}</div>`;
+      // Show word only when connected
+      el.innerHTML = `<div class="word">${connected ? card.word : ''}</div>`;
       el.addEventListener('click', () => {
-        if (Peer.state === 'on' && !card.revealed) {
+        if (connected && !card.revealed) {
           Peer.send({ type: 'reveal', idx: i, color: card.color });
           Game.revealCard(i, card.color);
           UI.renderSpyBoard();
@@ -1744,7 +1739,9 @@ const App = {
     State.mode = 'spy';
     Store.saveMode('spy');
     UI.showScreen('spy-screen');
-    UI.renderSpyBoard();
+    // If no board exists yet, auto-generate a color map
+    if (!State.board.length) this.spyNewMap();
+    else UI.renderSpyBoard();
     UI.updateConnStatus();
   },
   
@@ -2090,18 +2087,13 @@ const App = {
 
   spyNewMap() {
     if (Peer.state === 'on') {
-      // Connected: confirm then tell board to start new game
-      const anyRevealed = State.board.some(c => c.revealed);
-      const msg = anyRevealed ? I18n.t('spy_newmap_confirm') : I18n.t('spy_newmap_confirm');
-      if (!confirm(msg)) return;
-      // Send new_game_request to board
+      // Connected: confirm, then board rolls new game + syncs everything
+      if (!confirm(I18n.t('spy_newmap_confirm'))) return;
       Peer.send({ type: 'request_new_game' });
       UI.showBanner(I18n.t('new_game_started'));
     } else {
-      // Not connected: just re-roll colors locally for spy's reference
-      // Generate a fresh color assignment with same board size
+      // Not connected: generate fresh color map locally, no words
       const size = State.size || 5;
-      const total = size * size;
       const red = size === 5 ? 9 : 6;
       const blue = size === 5 ? 8 : 5;
       const yellow = size === 5 ? 7 : 4;
@@ -2110,13 +2102,11 @@ const App = {
       for (let i = 0; i < blue; i++) colors.push('blue');
       for (let i = 0; i < yellow; i++) colors.push('yellow');
       colors.push('black');
-      // shuffle
       for (let i = colors.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [colors[i], colors[j]] = [colors[j], colors[i]];
       }
-      // Make dummy board with placeholder words (spy only sees colors)
-      State.board = colors.map((color, i) => ({ word: '?', color, revealed: false }));
+      State.board = colors.map(color => ({ word: '', color, revealed: false }));
       State.turn = 'red';
       State.scoreRed = 0; State.scoreBlue = 0; State.gameOver = false;
       State.redTarget = red; State.blueTarget = blue;
