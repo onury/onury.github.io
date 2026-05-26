@@ -645,7 +645,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.7.3</div>
+    <div class="version-tag" style="margin-top:50px;">v1.7.4</div>
   </div>
 
   <!-- Board screen -->
@@ -764,7 +764,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.3</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.7.4</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1550,11 +1550,17 @@ const UI = {
 
   updateSpyStatus() {
     const L = I18n.t;
+    const connected = typeof Peer !== 'undefined' && Peer.state === 'on';
     document.getElementById('spy-score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
     document.getElementById('spy-score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
     const ti = document.getElementById('spy-turn-indicator');
-    ti.className = `turn-indicator ${State.turn}`;
-    ti.textContent = State.gameOver ? L('turn_over') : (State.turn === 'red' ? L('turn_red') : L('turn_blue'));
+    if (connected) {
+      ti.style.display = '';
+      ti.className = `turn-indicator ${State.turn}`;
+      ti.textContent = State.gameOver ? L('turn_over') : (State.turn === 'red' ? L('turn_red') : L('turn_blue'));
+    } else {
+      ti.style.display = 'none';
+    }
   },
   
   updateConnStatus() {
@@ -1864,6 +1870,15 @@ const App = {
     }
   },
   
+  // === Game controls ===
+  confirmNewGame() {
+    if (!State.board.length || State.gameOver) {
+      this.newGame();
+    } else {
+      document.getElementById('newgame-modal').classList.add('active');
+    }
+  },
+
   newGame() {
     this.closeModal('newgame-modal');
     this.closeModal('gameover-modal');
