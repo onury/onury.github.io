@@ -1,6 +1,6 @@
 // Codenames TR - Service Worker
 // Cache app shell so it works offline after first load
-const CACHE = 'codenames-v44';
+const CACHE = 'codenames-v45';
 const ASSETS = [
   './',
   './index.html',
