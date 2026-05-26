@@ -250,24 +250,39 @@
 
   /* === Top bar === */
   .topbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
-    padding: 6px 12px;
+    padding: 8px 25px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
-    min-height: 42px;
+    min-height: 48px;
     flex-shrink: 0;
+    gap: 12px;
   }
-  .topbar .left, .topbar .right {
+  .topbar .left {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .topbar .center {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar .right {
     display: flex;
     gap: 6px;
     align-items: center;
+    justify-content: flex-end;
   }
   .topbar .title {
-    font-size: 12px;
+    font-family: var(--font-display);
+    font-size: 16px;
     letter-spacing: 2px;
-    color: var(--ink-dim);
+    color: var(--ink);
     text-transform: uppercase;
   }
   .iconbtn {
@@ -295,18 +310,33 @@
   /* === Status strip === */
   .status {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 5px 12px;
+    padding: 6px 25px;
     background: var(--bg);
     border-bottom: 1px solid var(--line);
     font-size: 12px;
     letter-spacing: 1px;
     flex-shrink: 0;
+    position: relative;
+    margin-bottom: 0;
   }
-  .score {
+  .status .score {
+    position: absolute;
+    left: 25px;
     display: flex;
     gap: 14px;
+    align-items: center;
+  }
+  .status .turn-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status .pass-wrap {
+    position: absolute;
+    right: 25px;
+    display: flex;
     align-items: center;
   }
   .score-item {
@@ -337,7 +367,7 @@
   .board-wrap {
     flex: 1;
     min-height: 0;
-    padding: 4px;
+    padding: 25px;
     overflow: hidden;
   }
   .grid {
@@ -357,8 +387,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    padding: 4px 4px 12px 4px;
+    justify-content: center;
+    padding: 4px;
     cursor: pointer;
     overflow: hidden;
     min-height: 0;
@@ -653,18 +683,22 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.8.1</div>
+    <div class="version-tag" style="margin-top:50px;">v1.8.2</div>
   </div>
 
   <!-- Board screen -->
   <div id="board-screen" class="screen">
     <div class="topbar">
       <div class="left">
-        <span class="title" id="board-title-el" style="font-family:var(--font-display);font-size:18px;letter-spacing:2px;">CODENAMES BOARD</span>
+        <span class="title" id="board-title-el">CODENAMES BOARD</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
+      <div class="center">
+        <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
+        <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
+      </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.2</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -672,13 +706,11 @@
       </div>
     </div>
     <div class="status">
-      <div class="score">
-        <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
-        <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" class="turn-indicator" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:2px;">PAS</button>
+      <div class="turn-center">
         <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      </div>
+      <div class="pass-wrap">
+        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" class="turn-indicator" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:2px;">PAS</button>
       </div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
@@ -705,7 +737,7 @@
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.2</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
       </div>
@@ -774,7 +806,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.2</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
