@@ -278,7 +278,7 @@
     padding: 8px 25px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
-    min-height: 48px;
+    min-height: 56px;
     flex-shrink: 0;
     gap: 8px;
     box-sizing: border-box;
@@ -534,7 +534,7 @@
     padding: 24px 24px 40px 24px;
     max-width: 480px;
     width: 100%;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
   }
   .modal h2 {
@@ -725,7 +725,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v1.9.7</div>
+    <div class="version-tag" style="margin-top:50px;">v2.0.0</div>
   </div>
 
   <!-- Board screen -->
@@ -735,22 +735,22 @@
         <span class="title" id="board-title-el">CODENAMES BOARD</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
-      <div class="center">
-        <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
-        <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
+      <div class="center" style="flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot red" style="width:14px;height:14px;"></span><span id="score-red">0</span></div>
+          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot blue" style="width:14px;height:14px;"></span><span id="score-blue">0</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+          <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1.5px;padding:4px 12px;border-radius:2px;">PAS</button>
+        </div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.7</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.0</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
-      </div>
-    </div>
-    <div class="status">
-      <div class="turn-center" style="display:flex;align-items:center;gap:10px;">
-        <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
-        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1.5px;padding:5px 14px;border-radius:2px;">PAS</button>
       </div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
@@ -767,7 +767,6 @@
     <div class="board-wrap">
       <div id="grid" class="grid size-5"></div>
     </div>
-    <div class="help-text" id="help-board">Karta uzun bas → renk seç</div>
   </div>
 
   <!-- Spymaster screen -->
@@ -777,25 +776,26 @@
         <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
-      <div class="center">
-        <div class="score-item"><span class="score-dot red"></span><span id="spy-score-red">0</span></div>
-        <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
+      <div class="center" style="flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot red" style="width:14px;height:14px;"></span><span id="spy-score-red">0</span></div>
+          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot blue" style="width:14px;height:14px;"></span><span id="spy-score-blue">0</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div id="starting-team-badge" class="starting-team-badge red" style="display:none;font-size:10px;padding:2px 10px;"></div>
+          <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
+        </div>
       </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.9.7</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.0</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
       </div>
     </div>
-    <div class="status">
-      <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
-    </div>
-    <div id="starting-team-badge" class="starting-team-badge red" style="display:none"></div>
     <div class="board-wrap">
       <div id="spy-grid" class="grid spymaster size-5"></div>
     </div>
-    <div class="help-text" id="spy-help" data-i18n="help_spy">Eşleme için → "Eşle"</div>
   </div>
 
   <!-- Pairing modal -->
@@ -812,9 +812,9 @@
       
       <div id="pair-step-2" style="display:none">
         <p><strong>Adım 2 (Anlatıcı):</strong> Board'daki QR'ı tara.</p>
-        <div id="qr-scanner-wrap">
-          <video id="qr-scanner-video" playsinline></video>
-          <div id="qr-scanner-overlay"></div>
+        <div id="qr-scanner-wrap" style="position:relative;width:100%;max-height:50vh;aspect-ratio:1;background:#000;border-radius:4px;overflow:hidden;margin:8px 0;">
+          <video id="qr-scanner-video" playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+          <div id="qr-scanner-overlay" style="position:absolute;inset:15%;border:2px solid var(--accent);border-radius:4px;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);"></div>
         </div>
         <textarea class="qr-text-fallback" id="offer-input" placeholder="Veya QR metnini buraya yapıştır"></textarea>
       </div>
@@ -827,7 +827,7 @@
 
       <div id="pair-step-4" style="display:none">
         <p><strong>Adım 4 (Board):</strong> Anlatıcı'nın cevap QR'ını tara.</p>
-        <div id="qr-scanner-wrap-2" style="position:relative;width:100%;aspect-ratio:1;background:#000;border-radius:4px;overflow:hidden;margin:12px 0;">
+        <div id="qr-scanner-wrap-2" style="position:relative;width:100%;max-height:50vh;aspect-ratio:1;background:#000;border-radius:4px;overflow:hidden;margin:8px 0;">
           <video id="qr-scanner-video-2" playsinline style="width:100%;height:100%;object-fit:cover;"></video>
           <div style="position:absolute;inset:15%;border:2px solid var(--accent);border-radius:4px;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);"></div>
         </div>
@@ -838,6 +838,7 @@
 
       <div class="btn-row">
         <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pair-modal')">İptal</button>
+        <button class="iconbtn" id="pair-quick-btn" data-i18n="quick_reconnect" onclick="App.closeModal('pair-modal'); App.quickReconnect()" style="display:none;">Yenile</button>
         <button class="iconbtn primary" id="pair-next-btn" onclick="App.pairNext()">İleri</button>
       </div>
     </div>
@@ -848,7 +849,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.9.7</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.0</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -2125,6 +2126,9 @@ const App = {
     ['pair-step-1','pair-step-2','pair-step-3','pair-step-4'].forEach(id => {
       document.getElementById(id).style.display = 'none';
     });
+    // Show Yenile button if we have previous SDP
+    const quickBtn = document.getElementById('pair-quick-btn');
+    if (quickBtn) quickBtn.style.display = Peer._lastOfferStr ? '' : 'none';
     document.getElementById('pair-modal').classList.add('active');
     
     if (State.mode === 'board') {
