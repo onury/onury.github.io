@@ -174,7 +174,7 @@
     background-color: var(--bg);
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll;
   }
 
   /* === Screens === */
@@ -454,52 +454,63 @@
 
   .card {
     position: relative;
-    background: var(--bg-card);
-    border: 1px solid var(--line);
+    background: #b8955a;
+    border: none;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 6px;
     cursor: pointer;
     overflow: hidden;
     min-height: 0;
     min-width: 0;
     transition: transform 0.1s, opacity 0.3s;
+    box-shadow:
+      inset 0 1px 3px rgba(255,255,255,0.35),
+      0 3px 8px rgba(0,0,0,0.55),
+      0 1px 2px rgba(0,0,0,0.4);
   }
   .card .word {
+    background: #f0ece2;
+    border-radius: 5px;
+    padding: 3px 6px;
+    width: 100%;
+    box-sizing: border-box;
     font-family: var(--font-display);
     font-size: clamp(11px, 1.9vw, 22px);
     font-weight: 700;
     text-align: center;
     letter-spacing: 0.5px;
-    line-height: 1.1;
-    color: var(--ink);
+    line-height: 1.3;
+    color: #1a1208;
     z-index: 2;
     word-break: break-word;
     text-transform: uppercase;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
   }
   .card.revealed { cursor: default; }
   .card.no-interact { cursor: default !important; pointer-events: none !important; }
   .card.revealed .word {
-    opacity: 0.55;
+    opacity: 0.6;
     text-decoration: line-through;
     text-decoration-thickness: 1.5px;
   }
-  .card.revealed.red { background: var(--red); border-color: #8a3030; }
-  .card.revealed.red .word { color: #fff; opacity: 0.8; }
-  .card.revealed.blue { background: var(--blue); border-color: #2a5688; }
-  .card.revealed.blue .word { color: #fff; opacity: 0.85; }
-  .card.revealed.yellow { background: var(--yellow); border-color: #8a6a3a; }
-  .card.revealed.yellow .word { color: #2a2010; opacity: 0.7; }
-  .card.revealed.black { 
-    background: #0a0a0a; border-color: #000;
-    box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+  .card.revealed { box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+  .card.revealed.red { background: var(--red); }
+  .card.revealed.red .word { color: #fff; background: rgba(0,0,0,0.15); opacity: 0.8; }
+  .card.revealed.blue { background: var(--blue); }
+  .card.revealed.blue .word { color: #fff; background: rgba(0,0,0,0.15); opacity: 0.85; }
+  .card.revealed.yellow { background: var(--yellow); }
+  .card.revealed.yellow .word { color: #2a2010; background: rgba(0,0,0,0.08); opacity: 0.7; }
+  .card.revealed.black {
+    background: #0a0a0a;
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.05), 0 2px 5px rgba(0,0,0,0.4);
   }
-  .card.revealed.black .word { color: #d4a574; opacity: 0.9; }
-  
-  .card.waiting { 
+  .card.revealed.black .word { color: #d4a574; background: rgba(0,0,0,0.3); opacity: 0.9; }
+
+  .card.waiting {
     opacity: 0.6;
     animation: pulse 1s infinite;
   }
@@ -771,7 +782,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.1.5</div>
+    <div class="version-tag" style="margin-top:50px;">v2.1.6</div>
   </div>
 
   <!-- Board screen -->
@@ -788,7 +799,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.5</span>
+          <span class="version-label">v2.1.6</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -829,7 +840,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.5</span>
+          <span class="version-label">v2.1.6</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -894,7 +905,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.1.5</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.1.6</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1925,7 +1936,7 @@ const App = {
       el.style.backgroundImage = `url('${BASE}${key}.jpg')`;
       el.style.backgroundSize = 'cover';
       el.style.backgroundPosition = 'center';
-      el.style.backgroundAttachment = 'fixed';
+      el.style.backgroundAttachment = 'scroll';
     }
   },
 
