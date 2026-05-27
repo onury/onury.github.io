@@ -1,4 +1,4 @@
-# Codenames TR
+# Codenames
 
 A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Spymaster = iPhone held privately.
 
@@ -7,11 +7,14 @@ A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Sp
 - Single HTML file — no build step, no backend, no dependencies to install
 - WebRTC peer-to-peer sync — two QR scans to pair, then fully offline during gameplay
 - 4×4 and 5×5 board modes
-- Word pool tracking via localStorage — no repeated words across games (~31 games with the 777-word Turkish list)
+- Background texture themes (fabric, wood, marble)
+- Configurable display font (14 options)
+- Word pool tracking via localStorage — no repeated words across ~31 games
 - Auto-detects death card, win conditions, and turn changes
 - Pass turn, undo, card swap, and spymaster-side new map features
+- Random starting team — starting team gets one extra card
 - Color layout constraint: no 5+ consecutive same-color cells in any row or column
-- UI language: TR / EN. Game word language: TR only for now
+- UI language: TR / EN
 - PWA — installable to iPad and iPhone home screen
 
 ## Files
@@ -19,9 +22,10 @@ A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Sp
 |File           |Purpose                             |
 |---------------|------------------------------------|
 |`index.html`   |Entire application                  |
-|`words.js`     |Turkish word pool (777 unique words)|
+|`words.js`     |Turkish word pool (775 unique words)|
 |`sw.js`        |Service worker for offline caching  |
 |`manifest.json`|PWA manifest                        |
+|`bg/`          |Background texture images           |
 
 ## Hosting (HTTPS required)
 
@@ -33,17 +37,11 @@ iOS Safari requires HTTPS for camera access (QR scanning).
 1. Settings → Pages → main branch → Save
 1. Open `https://<username>.github.io/<repo>/`
 
-**Cloudflare Pages / Netlify**
-
-1. Go to pages.cloudflare.com or app.netlify.com
-1. Drag and drop the project folder
-1. Use the provided HTTPS URL
-
 **Local with tunnel (for testing)**
 
 ```bash
 python3 -m http.server 8000
-npx localtunnel --port 8000   # or: ngrok http 8000
+ngrok http 8000
 ```
 
 ## Installing as a PWA
@@ -58,173 +56,188 @@ On both devices:
 
 1. **iPad** — tap “Board (iPad)”
 1. **iPhone** — tap “Spymaster (iPhone)”
-1. **iPad** → Pair → Generate QR → QR appears on screen
+1. **iPad** → Pair → Generate QR
 1. **iPhone** → Pair → scan iPad’s QR → answer QR is generated
-1. **iPad** → Scan Answer QR → scan iPhone’s QR
+1. **iPad** → Scan Answer QR
 1. Both show **Connected** — live sync is active
 
 Pairing is required once per session. If either device closes the page, re-pair.
 
 ## Gameplay
 
-|Action                            |Result                                                   |
-|----------------------------------|---------------------------------------------------------|
-|Tap a card (Board, connected)     |Requests color from Spymaster; card opens automatically  |
-|Tap a card (Board, not connected) |Manual color picker                                      |
-|Long-press a card (Board)         |Card swap dialog — only works before any card is revealed|
-|Tap a card (Spymaster, connected) |Sends reveal to Board                                    |
-|PAS / PASS button                 |Confirm dialog → ends current team’s turn                |
-|Topbar ↩ button                   |Undo last reveal — dimmed when no steps remain           |
-|New Game (Board)                  |Rolls a fresh board, syncs to Spymaster                  |
-|New Map (Spymaster, connected)    |Confirm → board rolls new game, full sync                |
-|New Map (Spymaster, not connected)|New color layout generated locally, no words shown       |
+|Action                            |Result                                                 |
+|----------------------------------|-------------------------------------------------------|
+|Tap a card (Board, connected)     |Requests color from Spymaster; card opens automatically|
+|Tap a card (Board, not connected) |Manual color picker                                    |
+|Long-press a card (Board)         |Card swap — only works before any card is revealed     |
+|PASS button                       |Ends current team’s turn immediately                   |
+|Topbar ↩ button                   |Undo last reveal                                       |
+|New Game (Board)                  |Rolls a fresh board, syncs to Spymaster                |
+|New Map (Spymaster, connected)    |Board rolls new game, full sync                        |
+|New Map (Spymaster, not connected)|New color layout generated locally, no words shown     |
 
 ## Spymaster Screen
 
-**Not connected:** Shows color-only map (no words) with starting team badge. Useful for playing without a second device — spymaster reads colors and tracks manually.
+**Not connected:** Color-only map (no words, no labels). Useful for playing without a second device.
 
-**Connected:** Shows color map with words. Turn indicator visible. Tapping a card sends reveal to Board.
+**Connected:** Full color map with words and turn indicator.
 
-When connection drops, a red bar appears below the topbar with a Reconnect button.
+When connection drops, a red bar appears with a Reconnect button.
 
 ## Card Swap
 
-Before any card has been revealed, players can replace a word:
+Before any card has been revealed:
 
-1. Long-press a card (hold ~700ms)
+1. Long-press a card (~700ms)
 1. Confirm in the dialog
-1. Word is replaced with a random unused word from the pool; synced to Spymaster if connected
-
-If any card has already been revealed, long-press shows a warning instead.
+1. Word is replaced with a random unused word; synced to Spymaster if connected
 
 ## Rules
 
-**5×5 (Classic):** 9 red, 8 blue, 7 neutral, 1 death. Red starts.
-**4×4 (Quick):** 6 red, 5 blue, 4 neutral, 1 death. Red starts.
+**5×5 (Classic):** Starting team gets 9 cards, other team gets 8, 7 neutral, 1 death.
+**4×4 (Quick):** Starting team gets 6 cards, other team gets 5, 4 neutral, 1 death.
+
+Starting team is chosen randomly each game.
 
 - Opening your own team’s card → continue your turn
-- Opening the other team’s card or a neutral → turn passes automatically
-- Tap PAS / PASS to end your turn voluntarily (confirm required)
+- Opening the other team’s card or neutral → turn passes automatically
+- PASS to end your turn voluntarily
 - Opening the death card → your team loses immediately
 - First team to reveal all their cards wins
 
 ## Settings
 
-Open via the ⚙ button on the Board screen.
+|Setting        |Description                                |
+|---------------|-------------------------------------------|
+|UI Language    |TR / EN                                    |
+|Board Size     |5×5 or 4×4 — takes effect on next New Game |
+|Display Font   |13 font options, live preview              |
+|Background     |6 texture themes, live preview             |
+|Undo Steps     |Max undo history depth (0 = off, default 2)|
+|Reset Word Pool|Clears used-word history                   |
 
-|Setting        |Description                                               |
-|---------------|----------------------------------------------------------|
-|UI Language    |TR / EN — saved to localStorage                           |
-|Board Size     |5×5 or 4×4 — takes effect on next New Game                |
-|Undo Steps     |Max undo history depth (0 = off, default 2)               |
-|Reset Word Pool|Clears used-word history; all words become available again|
-
-**Advanced section** (collapsed by default):
-
-|Button       |What it does                                               |
-|-------------|-----------------------------------------------------------|
-|Cache Reset  |Unregisters service worker, clears all caches, reloads page|
-|Debug Console|Loads Eruda on-device DevTools (requires internet for CDN) |
+**Advanced:** Cache Reset, Debug Console
 
 ## URL Parameters
 
-|Parameter|Effect                                                      |
-|---------|------------------------------------------------------------|
-|`?reset` |Same as Cache Reset — clears SW and all caches, then reloads|
-|`?debug` |Loads Eruda DevTools on page load                           |
+|Parameter|Effect                                |
+|---------|--------------------------------------|
+|`?reset` |Clears SW and all caches, then reloads|
+|`?debug` |Loads Eruda DevTools on page load     |
 
-## Word Pool (words.js)
+## Word Pool
 
-777 Turkish words, curated by these rules:
+775 Turkish words:
 
-- Concrete nouns only — no abstract-only words
-- Single words only — no phrases or compound words
+- Concrete nouns only
+- Single words only — no phrases or compounds
 - No verbs, pure adjectives, pronouns, or conjunctions
 - Dual-meaning words allowed if one meaning is concrete (e.g. ATEŞ = fire/fever)
 
 ## Technical Notes
 
-**Color layout constraint:** After shuffling, the layout is validated so no color appears 5+ times consecutively in any row or column. Re-shuffled if needed — in practice takes 1–3 attempts, never fails.
+**WebRTC pairing:** SDP compressed with `CompressionStream` (deflate-raw) + base64. Falls back to raw JSON with manual textarea on older devices.
 
-**QR pairing:** WebRTC SDP compressed with `CompressionStream` (deflate-raw) + base64 (iOS 16.4+). Older devices fall back to raw JSON with manual copy-paste textarea.
+**Color layout:** Validated after shuffle — no color appears 5+ times consecutively in any row or column. Re-shuffled if needed (1–3 attempts in practice).
 
-**Connection keepalive:** Ping sent every 15 seconds to prevent WebRTC idle disconnect. Disconnect bar appears with one-tap Reconnect when connection drops.
+**Keepalive:** Ping every 15s to prevent WebRTC idle disconnect.
 
-**WakeLock:** `navigator.wakeLock` keeps both screens on while connected. Reacquired when tab returns to foreground.
+**WakeLock:** `navigator.wakeLock` keeps both screens on. Reacquired on tab foreground.
 
-**STUN:** Uses Google’s STUN server (`stun.l.google.com:19302`) for NAT traversal.
-
-**i18n:** All UI strings use `data-i18n` attributes. `I18n.applyAll()` does a single `querySelectorAll('[data-i18n]')` pass. Lang buttons use `addEventListener` bound once at `init()` — no onclick attributes.
+**STUN:** Google’s `stun.l.google.com:19302`.
 
 **Message types (board ↔ spymaster):**
 
-- `board_state` — board → spy: full state sync
+- `board_state` — full state sync (board, turn, scores, targets, startingTeam)
 - `request_state` — spy → board: request re-sync
-- `request_reveal {idx}` — board → spy: what color is this card?
-- `reveal {idx, color}` — spy → board: here’s the color
-- `reveal_done {idx, color}` — board → spy: card manually revealed
-- `new_game {board, turn, size}` — board → spy: new board rolled
+- `new_game` — board → spy: new board rolled
 - `request_new_game` — spy → board: spy requested new game
-- `ping` / `pong` — keepalive heartbeat (every 15s)
-
-**Font:** Edit `<link id="google-font-link">` in `index.html`. Example URLs commented in HTML (Be Vietnam Pro, Outfit, DM Sans, Nunito, Figtree).
+- `reveal_done {idx, color}` — board → spy: card manually revealed
+- `ping` / `pong` — keepalive heartbeat
 
 -----
 
 ## Changelog
 
-### v1.7.x
+### v2.2.x
 
-- **Color layout constraint** — no 5+ consecutive same-color cells in any row/column; validated after shuffle, re-shuffled if needed
-- **Spymaster without pairing** — color-only map generated on open; New Map button always available; words hidden when disconnected
-- **New Map (Spymaster)** — connected: confirm → board rolls new game + full sync; disconnected: local color re-roll only
-- **Disconnect bar** — red bar below topbar replaces modal; only appears on actual disconnect, not on load
-- **Spy turn indicator** — hidden when disconnected; only starting team badge shown
-- `confirmNewGame` function restored after accidental removal
+- Word list corrections: `LACIVERT→LACİVERT`, `VANILYA→VANİLYA`, `TRİPOD`, `ETİKET`, `ZİNCİR`, `MERMİ`, `PROJEKTÖR`; `ZILLER→ZİL` (singular); duplicate entries removed; 775 words
+- QR pairing UX: status text in accent color, QR Oluştur disabled during generation, Metni Uygula disabled until QR scanned or text pasted
+- Spymaster disconnected: word labels hidden, color-only view
+- Anasayfa: Debug Console and Reset Cache buttons below version
+
+### v2.1.x
+
+- Background texture setting: Yeşil Kumaş (default), Koyu Ahşap, Açık Ahşap, Kahverengi Mermer, Renkli Mermer, Dark
+- Display font setting: 13 options (Paytone One default), live preview, persisted to localStorage
+- Board card redesign: bej/gold base, white label band, inner/outer glow, box-shadow
+- Revealed cards: full red/blue background, dark-toned label; yellow/black with matching tones
+- Service worker: network-first strategy (always fetches latest, falls back to cache offline)
+- Scoreboard sync fix: `redTarget`/`blueTarget` included in `board_state` messages
+- Spymaster local mode: random starting team, correct card counts
+- Modal text size reduced for better fit on small screens
+- Anasayfa Reset Cache and Debug Console shortcuts
+
+### v2.0.x
+
+- Topbar redesign: flex layout (no grid), two-row structure (scores + buttons row 1, turn + pass row 2)
+- Pass button: no confirm dialog, immediate turn switch, styled same height as turn indicator
+- Disconnect icon button in topbar (plug icon); confirmDisconnect with confirm dialog
+- Pair modal auto-closes on both devices when WebRTC channel opens
+- Starting team badge removed from spymaster (turn indicator sufficient)
+- `startingTeam` persisted in save state and synced via `board_state`
+- `redTarget`/`blueTarget` sent in all `board_state` messages
+- Landscape lock for small screens (portrait shows rotate message)
+- WakeLock acquired at app init, not only on connect
+- Cache reset clears game state from localStorage
+- Font selector in Settings with 13 options and live preview
+
+### v1.9.x
+
+- Pass button moved to topbar row 2 (center), no confirm dialog
+- Spymaster card tap completely disabled (no listener added)
+- Starting team badge: uses `State.startingTeam` (fixed, not `State.turn`)
+- Board card tap: touchend-based with long-press timer
+- Scoreboard 2× larger
+
+### v1.7.x – v1.8.x
+
+- Color layout constraint (5+ consecutive same-color blocked)
+- Spymaster without pairing: color-only map, New Map always available
+- Disconnect bar with Reconnect
+- Spy turn indicator hidden when disconnected
 
 ### v1.6.x
 
-- **Pass turn** — PAS/PASS button with confirm dialog; passes turn to other team
-- **Card swap** — long-press unrevealed card to replace word; blocked after first reveal
-- **Long-press behavior** — always opens swap (not color picker); 700ms threshold with 10px movement tolerance
-- **Word pool v2** — expanded from 451 to 777 words; all abstract, compound, multi-word, verb, and pure-adjective entries removed
+- Pass turn (PAS/PASS button)
+- Card swap (long-press)
+- Word pool expanded to 777 words
 
 ### v1.5.x
 
-- **data-i18n system** — all translatable strings use `data-i18n` attributes; `applyAll()` does single querySelectorAll pass
-- TR turn labels: “SIRA KIRMIZIDA / SIRA MAVİDE”
-- Advanced section fully translated (TR/EN)
-- Lang button double-trigger bug fixed — onclick removed, addEventListener bound at init
+- `data-i18n` system, TR/EN UI fully translated
 
 ### v1.4.x
 
-- **Undo** — configurable steps (default 2), topbar ↩ button, undo in game-over modal
-- **Tabler Icons** — line icons throughout
-- Settings → Advanced: Cache Reset and Debug Console
+- Undo (configurable steps, topbar button)
+- Tabler Icons
+- Settings → Advanced (Cache Reset, Debug Console)
 
 ### v1.3.0
 
-- UI language TR / EN fully implemented
-- Language selector in Settings modal
+- UI language TR / EN
 
 ### v1.2.0
 
-- Be Vietnam Pro font
-- Color dots removed from board cards
-- Spymaster square grid, starting team banner
-- Disconnect modal, version on home screen
+- Be Vietnam Pro font, color dots removed, spymaster square grid
 
 ### v1.1.x
 
-- Ping/pong keepalive every 15s
-- `navigator.wakeLock` on connect
+- Ping/pong keepalive, WakeLock
 
 ### v1.0.0
 
-- WebRTC peer-to-peer pairing via QR (two-scan flow)
-- Board (iPad) + Spymaster (iPhone) split
-- 5×5 / 4×4 board size, Turkish word pool
-- Auto game-over, long-press color picker
+- WebRTC pairing via QR (two-scan flow)
+- Board (iPad) + Spymaster (iPhone)
+- 5×5 / 4×4, Turkish word pool
 - Service worker + PWA manifest
-- `?reset` and `?debug` URL parameters
-- SDP compression, multi-CDN fallback for QR libraries
