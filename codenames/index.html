@@ -498,15 +498,21 @@
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
   }
   .card.no-interact { cursor: default !important; pointer-events: none !important; }
-  /* Revealed: zemin aynı bej, etiket renk değişir */
-  .card.revealed { cursor: default; opacity: 0.8; }
+  /* Revealed kartlar */
+  .card.revealed { cursor: default; opacity: 0.88; }
   .card.revealed .word { text-decoration: line-through; text-decoration-thickness: 2px; }
-  .card.revealed.red .word { color: #fff; background: var(--red); }
-  .card.revealed.blue .word { color: #fff; background: var(--blue); }
-  .card.revealed.yellow { background: #9a7535; }
-  .card.revealed.yellow .word { color: #f5e8c0; background: #7a5a20; }
-  .card.revealed.black { background: #2a2018; }
-  .card.revealed.black .word { color: #d4a574; background: #111; }
+  /* Kırmızı: tam kırmızı zemin, etiket koyu kırmızı, font çok koyu kırmızı */
+  .card.revealed.red { background: var(--red); box-shadow: inset 0 2px 6px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.55); }
+  .card.revealed.red .word { background: #7a1a1a; color: #3d0a0a; }
+  /* Mavi: tam mavi zemin, etiket koyu mavi, font çok koyu mavi */
+  .card.revealed.blue { background: var(--blue); box-shadow: inset 0 2px 6px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.55); }
+  .card.revealed.blue .word { background: #1a3a6a; color: #0a1e3d; }
+  /* Sarı: opak koyu sarı zemin, etiket daha koyu sarı */
+  .card.revealed.yellow { background: #9a7535; box-shadow: inset 0 2px 6px rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.3), 0 3px 8px rgba(0,0,0,0.55); }
+  .card.revealed.yellow .word { background: #7a5a20; color: #3d2d0a; }
+  /* Siyah: koyu zemin */
+  .card.revealed.black { background: #1a1410; box-shadow: inset 0 2px 6px rgba(255,255,255,0.05), 0 3px 8px rgba(0,0,0,0.55); }
+  .card.revealed.black .word { background: #0a0806; color: #d4a574; }
 
   .card.waiting {
     opacity: 0.6;
@@ -780,7 +786,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.1.9</div>
+    <div class="version-tag" style="margin-top:50px;">v2.2.0</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;opacity:0.5;padding:4px 8px;">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;opacity:0.5;padding:4px 8px;">Reset Cache</button>
@@ -801,7 +807,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.9</span>
+          <span class="version-label">v2.2.0</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -842,7 +848,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.9</span>
+          <span class="version-label">v2.2.0</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -907,7 +913,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.1.9</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.2.0</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -2216,7 +2222,8 @@ const App = {
         updateBgPreview();
       };
     }
-    const fontFamilies = ['Paytone One','Luckiest Guy','Alatsi','Archivo Black','Paytone One','Lalezar','Bungee','Racing Sans One','Sigmar One','Palanquin Dark','Nova Square','Jersey 25','Wellfleet','Bakbak One'];
+    const fontFamilies = ['Paytone One','Luckiest Guy','Alatsi','Archivo Black','Lalezar','Bungee','Racing Sans One','Sigmar One','Palanquin Dark','Nova Square','Jersey 25','Wellfleet','Bakbak One'];
+    const fontSel = document.getElementById('font-select');
     if (fontSel) {
       if (fontSel.options.length === 0) {
         fontFamilies.forEach(f => {
