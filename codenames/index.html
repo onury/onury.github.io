@@ -726,7 +726,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.0.1</div>
+    <div class="version-tag" style="margin-top:50px;">v2.0.3</div>
   </div>
 
   <!-- Board screen -->
@@ -735,13 +735,14 @@
       <div class="left" style="grid-row:1;">
         <span class="title" id="board-title-el">CODENAMES BOARD</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
+        <button id="disc-icon-btn" onclick="App.confirmDisconnect()" title="Bağlantıyı kes" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
       </div>
       <div class="center" style="grid-row:1;">
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot red" style="width:12px;height:12px;"></span><span id="score-red">0</span></div>
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="score-blue">0</span></div>
       </div>
       <div class="right" style="grid-row:1;">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.3</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -771,22 +772,18 @@
 
   <!-- Spymaster screen -->
   <div id="spy-screen" class="screen">
-    <div class="topbar">
-      <div class="left">
-        <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
-        <span id="spy-conn" class="conn-status off">Bağlı değil</span>
-      </div>
     <div class="topbar" style="grid-template-rows:auto auto;align-items:start;">
       <div class="left" style="grid-row:1;">
         <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
+        <button id="spy-disc-icon-btn" onclick="App.confirmDisconnect()" title="Bağlantıyı kes" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
       </div>
       <div class="center" style="grid-row:1;">
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot red" style="width:12px;height:12px;"></span><span id="spy-score-red">0</span></div>
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right" style="grid-row:1;">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.3</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -797,13 +794,6 @@
         <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;margin-left:4px;">Kırmızı Sıra</div>
       </div>
       <div style="grid-row:2;grid-column:3;"></div>
-    </div>
-      <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
-        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
-        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
-        <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
-      </div>
     </div>
     <div class="board-wrap">
       <div id="spy-grid" class="grid spymaster size-5"></div>
@@ -860,7 +850,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.3</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1500,6 +1490,11 @@ const Peer = {
     ch.onopen = () => {
       this.state = 'on';
       UI.updateConnStatus();
+      // Auto-close pair modal on both sides when connected
+      const modal = document.getElementById('pair-modal');
+      if (modal && modal.classList.contains('active')) {
+        setTimeout(() => App.closeModal('pair-modal'), 800);
+      }
       // initial sync
       if (State.mode === 'board') {
         this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
@@ -1733,6 +1728,11 @@ const UI = {
       const el = document.getElementById(id);
       if (el) { el.className = `conn-status ${cls}`; el.textContent = txt; }
     });
+    // Disconnect icon — show only when connected
+    ['disc-icon-btn','spy-disc-icon-btn'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = Peer.state === 'on' ? 'inline-block' : 'none';
+    });
     if (State.mode === 'spy') UI.renderSpyBoard();
   },
   
@@ -1891,6 +1891,15 @@ const App = {
     // QR flow gerekli.
     this.hideDiscBar();
     this.openPair();
+  },
+
+  confirmDisconnect() {
+    const msg = State.uiLang === 'en'
+      ? 'Disconnect from the other device?'
+      : 'Diğer cihazla bağlantıyı kes?';
+    if (!confirm(msg)) return;
+    Peer.reset();
+    UI.updateConnStatus();
   },
 
   hideDiscBar() {
