@@ -35,7 +35,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- FONT: Değiştirmek için aşağıdaki satırı düzenle -->
 <link id="google-font-link" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link id="google-font-display-link" href="https://fonts.googleapis.com/css2?family=Coiny&display=swap" rel="stylesheet">
+<link id="google-font-display-link" href="https://fonts.googleapis.com/css2?family=Coiny&family=Luckiest+Guy&family=Alatsi&family=Archivo+Black&family=Paytone+One&family=Lalezar&family=Bungee&family=Racing+Sans+One&family=Sigmar+One&family=Palanquin+Dark:wght@700&family=Nova+Square&family=Jersey+25&family=Wellfleet&family=Bakbak+One&display=swap" rel="stylesheet">
 <!-- Örnekler:
   Outfit:     https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap
   DM Sans:    https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap
@@ -276,7 +276,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    padding: 8px 25px;
+    padding: 6px 20px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
     min-height: 48px;
@@ -381,15 +381,34 @@
   .score-dot.red { background: var(--red); }
   .score-dot.blue { background: var(--blue); }
   .turn-indicator {
-    padding: 3px 10px;
-    border-radius: 2px;
+    padding: 5px 14px;
+    border-radius: 3px;
     font-weight: bold;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    font-size: 10px;
+    font-size: 11px;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
   }
   .turn-indicator.red { background: var(--red-soft); color: #ffaaaa; border: 1px solid var(--red); }
   .turn-indicator.blue { background: var(--blue-soft); color: #aaccff; border: 1px solid var(--blue); }
+  #pass-btn {
+    padding: 5px 14px;
+    border-radius: 3px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+  }
+  #pass-btn:active { background: rgba(255,255,255,0.1); }
 
   /* === Board grid === */
   .board-wrap {
@@ -726,32 +745,32 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.0.3</div>
+    <div class="version-tag" style="margin-top:50px;">v2.0.5</div>
   </div>
 
   <!-- Board screen -->
   <div id="board-screen" class="screen">
-    <div class="topbar" style="grid-template-rows:auto auto;align-items:start;">
-      <div class="left" style="grid-row:1;">
+    <div class="topbar" style="grid-template-rows:auto auto;">
+      <div class="left" style="grid-row:1;align-self:center;">
         <span class="title" id="board-title-el">CODENAMES BOARD</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
-        <button id="disc-icon-btn" onclick="App.confirmDisconnect()" title="Bağlantıyı kes" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
+        <button id="disc-icon-btn" onclick="App.confirmDisconnect()" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
       </div>
-      <div class="center" style="grid-row:1;">
+      <div class="center" style="grid-row:1;align-self:center;">
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot red" style="width:12px;height:12px;"></span><span id="score-red">0</span></div>
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="score-blue">0</span></div>
       </div>
-      <div class="right" style="grid-row:1;">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.3</span>
+      <div class="right" style="grid-row:1;align-self:center;">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.5</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
       </div>
       <div style="grid-row:2;grid-column:1;"></div>
-      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:6px;">
+      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:6px;gap:8px;">
         <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
-        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1.5px;padding:4px 12px;border-radius:2px;">PAS</button>
+        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()">PAS</button>
       </div>
       <div style="grid-row:2;grid-column:3;"></div>
     </div>
@@ -772,7 +791,7 @@
 
   <!-- Spymaster screen -->
   <div id="spy-screen" class="screen">
-    <div class="topbar" style="grid-template-rows:auto auto;align-items:start;">
+    <div class="topbar" style="grid-template-rows:auto auto;align-items:center;">
       <div class="left" style="grid-row:1;">
         <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
@@ -783,15 +802,15 @@
         <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="spy-score-blue">0</span></div>
       </div>
       <div class="right" style="grid-row:1;">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.3</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.5</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
       </div>
       <div style="grid-row:2;grid-column:1;"></div>
-      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:6px;">
+      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:5px;gap:8px;">
         <div id="starting-team-badge" class="starting-team-badge red" style="display:none;"></div>
-        <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;margin-left:4px;">Kırmızı Sıra</div>
+        <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
       </div>
       <div style="grid-row:2;grid-column:3;"></div>
     </div>
@@ -850,7 +869,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.3</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.5</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -862,6 +881,9 @@
         <option value="5" id="opt-5x5" data-i18n="opt_5x5">5×5 (klasik)</option>
         <option value="4" id="opt-4x4" data-i18n="opt_4x4">4×4 (hızlı)</option>
       </select>
+      <label id="lbl-font" data-i18n="font_label" style="margin-top:16px;display:block;">Yazı Tipi</label>
+      <select id="font-select"></select>
+      <div id="font-preview" style="font-size:22px;letter-spacing:2px;text-transform:uppercase;margin:8px 0 4px 0;color:var(--accent);min-height:32px;">CODENAMES</div>
       <label id="lbl-undo-steps" data-i18n="undo_steps_label">Undo Adımı</label>
       <select id="undo-steps-select">
         <option value="0" id="opt-undo-0" data-i18n="undo_steps_off">0 (kapalı)</option>
@@ -1000,7 +1022,7 @@ const I18n = {
       color_pick_title: 'Renk Seç',
       color_red: 'Kırmızı', color_blue: 'Mavi', color_yellow: 'Sarı', color_black: 'Ölüm',
       cancel: 'İptal', close: 'Kapat', confirm: 'Yeni Oyun',
-      settings_title: 'Ayarlar', board_size_label: 'Board Boyutu',
+      settings_title: 'Ayarlar', board_size_label: 'Board Boyutu', font_label: 'Yazı Tipi',
       word_pool_label: 'Kelime Havuzu', reset_pool: 'Havuzu Sıfırla',
       opt_5x5: '5×5 (klasik)', opt_4x4: '4×4 (hızlı)',
       newgame_title: 'Yeni Oyun', newgame_msg: 'Mevcut oyunu bitirip yeni board oluşturulsun mu?',
@@ -1048,7 +1070,7 @@ const I18n = {
       color_pick_title: 'Pick Color',
       color_red: 'Red', color_blue: 'Blue', color_yellow: 'Yellow', color_black: 'Death',
       cancel: 'Cancel', close: 'Close', confirm: 'New Game',
-      settings_title: 'Settings', board_size_label: 'Board Size',
+      settings_title: 'Settings', board_size_label: 'Board Size', font_label: 'Display Font',
       word_pool_label: 'Word Pool', reset_pool: 'Reset Pool',
       opt_5x5: '5×5 (classic)', opt_4x4: '4×4 (quick)',
       newgame_title: 'New Game', newgame_msg: 'End current game and start a new board?',
@@ -1128,6 +1150,7 @@ const State = {
   lastTapTime: 0,
   swapIdx: null,
   startingTeam: 'red',
+  displayFont: 'Coiny',
 };
 
 // ============================================================
@@ -1848,6 +1871,9 @@ const App = {
     Store.load();
     const savedLang = localStorage.getItem('codenames_ui_lang') || 'tr';
     State.uiLang = savedLang;
+    const savedFont = localStorage.getItem('codenames_display_font') || 'Coiny';
+    State.displayFont = savedFont;
+    App.applyDisplayFont(savedFont);
     Peer.onMessage = (msg) => this.handlePeerMessage(msg);
     // WakeLock: keep screen awake always (not just when connected)
     Peer._acquireWakeLock();
@@ -1864,6 +1890,10 @@ const App = {
     I18n.applyAll();
   },
   
+  applyDisplayFont(fontName) {
+    document.documentElement.style.setProperty('--font-display', `'${fontName}', system-ui, sans-serif`);
+  },
+
   setUiLang(lang) {
     State.uiLang = lang;
     localStorage.setItem('codenames_ui_lang', lang);
@@ -2089,6 +2119,31 @@ const App = {
     const undoEl = document.getElementById('undo-steps-select');
     if (sizeEl) sizeEl.value = String(State.size);
     if (undoEl) undoEl.value = String(State.undoSteps);
+
+    // Font selector
+    const fontSel = document.getElementById('font-select');
+    const fontFamilies = ['Coiny','Luckiest Guy','Alatsi','Archivo Black','Paytone One','Lalezar','Bungee','Racing Sans One','Sigmar One','Palanquin Dark','Nova Square','Jersey 25','Wellfleet','Bakbak One'];
+    if (fontSel) {
+      if (fontSel.options.length === 0) {
+        fontFamilies.forEach(f => {
+          const o = document.createElement('option');
+          o.value = f; o.textContent = f;
+          fontSel.appendChild(o);
+        });
+      }
+      fontSel.value = State.displayFont;
+      const preview = document.getElementById('font-preview');
+      const updatePreview = () => {
+        if (preview) preview.style.fontFamily = `'${State.displayFont}', system-ui, sans-serif`;
+      };
+      updatePreview();
+      fontSel.onchange = (e) => {
+        State.displayFont = e.target.value;
+        localStorage.setItem('codenames_display_font', State.displayFont);
+        App.applyDisplayFont(State.displayFont);
+        updatePreview();
+      };
+    }
     const used = State.usedWords.length;
     const total = window.SEED_WORDS.length;
     const ws = document.getElementById('word-stats');
