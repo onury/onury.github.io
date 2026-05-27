@@ -181,17 +181,18 @@
   #mode-screen {
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    padding: 40px;
+    gap: 12px;
+    padding: 20px 40px;
     background: radial-gradient(ellipse at top, #2a2520 0%, var(--bg) 60%);
+    overflow-y: auto;
   }
   #mode-screen h1 {
     font-family: var(--font-display);
-    font-size: 48px;
+    font-size: clamp(28px, 5vh, 48px);
     font-weight: 700;
     letter-spacing: 8px;
     color: var(--accent);
-    margin: 0 0 2px 0;
+    margin: 0;
     text-transform: uppercase;
   }
   #mode-screen .version-tag {
@@ -278,7 +279,7 @@
     padding: 8px 25px;
     background: var(--bg-elev);
     border-bottom: 1px solid var(--line);
-    min-height: 56px;
+    min-height: 48px;
     flex-shrink: 0;
     gap: 8px;
     box-sizing: border-box;
@@ -725,33 +726,33 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.0.0</div>
+    <div class="version-tag" style="margin-top:50px;">v2.0.1</div>
   </div>
 
   <!-- Board screen -->
   <div id="board-screen" class="screen">
-    <div class="topbar">
-      <div class="left">
+    <div class="topbar" style="grid-template-rows:auto auto;align-items:start;">
+      <div class="left" style="grid-row:1;">
         <span class="title" id="board-title-el">CODENAMES BOARD</span>
         <span id="board-conn" class="conn-status off">Bağlı değil</span>
       </div>
-      <div class="center" style="flex-direction:column;gap:4px;">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot red" style="width:14px;height:14px;"></span><span id="score-red">0</span></div>
-          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot blue" style="width:14px;height:14px;"></span><span id="score-blue">0</span></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
-          <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1.5px;padding:4px 12px;border-radius:2px;">PAS</button>
-        </div>
+      <div class="center" style="grid-row:1;">
+        <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot red" style="width:12px;height:12px;"></span><span id="score-red">0</span></div>
+        <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="score-blue">0</span></div>
       </div>
-      <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.0</span>
+      <div class="right" style="grid-row:1;">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
         <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
         <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
         <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
       </div>
+      <div style="grid-row:2;grid-column:1;"></div>
+      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:6px;">
+        <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:1.5px;padding:4px 12px;border-radius:2px;">PAS</button>
+      </div>
+      <div style="grid-row:2;grid-column:3;"></div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
       <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
@@ -760,7 +761,6 @@
       </div>
       <div style="display:flex; gap:6px; flex-shrink:0;">
         <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.hideDiscBar(); App.openPair()" style="border-color:#c84545; color:#ffaaaa; padding:4px 10px; font-size:11px;">Tekrar Bağlan</button>
-        <button class="iconbtn" id="disc-quick-btn" data-i18n="quick_reconnect" onclick="App.quickReconnect()" style="padding:4px 10px; font-size:11px;">Yenile</button>
         <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.hideDiscBar()" style="padding:4px 10px; font-size:11px;">Kapat</button>
       </div>
     </div>
@@ -776,18 +776,30 @@
         <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
         <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
-      <div class="center" style="flex-direction:column;gap:4px;">
-        <div style="display:flex;align-items:center;gap:16px;">
-          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot red" style="width:14px;height:14px;"></span><span id="spy-score-red">0</span></div>
-          <div class="score-item" style="font-size:22px;gap:8px;"><span class="score-dot blue" style="width:14px;height:14px;"></span><span id="spy-score-blue">0</span></div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div id="starting-team-badge" class="starting-team-badge red" style="display:none;font-size:10px;padding:2px 10px;"></div>
-          <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
-        </div>
+    <div class="topbar" style="grid-template-rows:auto auto;align-items:start;">
+      <div class="left" style="grid-row:1;">
+        <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
+        <span id="spy-conn" class="conn-status off">Bağlı değil</span>
       </div>
+      <div class="center" style="grid-row:1;">
+        <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot red" style="width:12px;height:12px;"></span><span id="spy-score-red">0</span></div>
+        <div class="score-item" style="font-size:20px;gap:7px;"><span class="score-dot blue" style="width:12px;height:12px;"></span><span id="spy-score-blue">0</span></div>
+      </div>
+      <div class="right" style="grid-row:1;">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
+        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
+        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
+        <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+      </div>
+      <div style="grid-row:2;grid-column:1;"></div>
+      <div class="center" style="grid-row:2;grid-column:2;padding-bottom:6px;">
+        <div id="starting-team-badge" class="starting-team-badge red" style="display:none;"></div>
+        <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;margin-left:4px;">Kırmızı Sıra</div>
+      </div>
+      <div style="grid-row:2;grid-column:3;"></div>
+    </div>
       <div class="right">
-        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.0</span>
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v2.0.1</span>
         <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
         <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
         <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -812,7 +824,7 @@
       
       <div id="pair-step-2" style="display:none">
         <p><strong>Adım 2 (Anlatıcı):</strong> Board'daki QR'ı tara.</p>
-        <div id="qr-scanner-wrap" style="position:relative;width:100%;max-height:50vh;aspect-ratio:1;background:#000;border-radius:4px;overflow:hidden;margin:8px 0;">
+        <div id="qr-scanner-wrap" style="position:relative;width:min(100%,50vh);height:min(100%,50vh);aspect-ratio:1/1;background:#000;border-radius:4px;overflow:hidden;margin:8px auto;">
           <video id="qr-scanner-video" playsinline style="width:100%;height:100%;object-fit:cover;"></video>
           <div id="qr-scanner-overlay" style="position:absolute;inset:15%;border:2px solid var(--accent);border-radius:4px;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);"></div>
         </div>
@@ -838,7 +850,6 @@
 
       <div class="btn-row">
         <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pair-modal')">İptal</button>
-        <button class="iconbtn" id="pair-quick-btn" data-i18n="quick_reconnect" onclick="App.closeModal('pair-modal'); App.quickReconnect()" style="display:none;">Yenile</button>
         <button class="iconbtn primary" id="pair-next-btn" onclick="App.pairNext()">İleri</button>
       </div>
     </div>
@@ -849,7 +860,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.0</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.0.1</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1008,6 +1019,7 @@ const I18n = {
       pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
       soon: 'yakında',
       advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
+      cache_reset_confirm: 'Cache ve service worker temizlenecek, sayfa yeniden yüklenecek.',
       new_map: 'Yeni Harita',
       spy_newmap_confirm: 'Kartlar ve harita yenilenecek, mevcut oyun sonlanacak. Emin misiniz?',
       spy_disconnected_msg: 'Bağlantı yok — eşleşince harita görünür',
@@ -1055,6 +1067,7 @@ const I18n = {
       pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
       soon: 'coming soon',
       advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
+      cache_reset_confirm: 'Cache and service worker will be cleared, page will reload.',
       new_map: 'New Map',
       spy_newmap_confirm: 'Cards and map will be reset, current game will end. Are you sure?',
       spy_disconnected_msg: 'Not connected — map will appear after pairing',
@@ -1874,13 +1887,10 @@ const App = {
   },
 
   async quickReconnect() {
+    // WebRTC SDP'ler tek kullanımlık — otomatik reconnect mümkün değil.
+    // QR flow gerekli.
     this.hideDiscBar();
-    UI.showBanner(I18n.t('conn_connecting'));
-    const result = await Peer.quickReconnect();
-    if (!result) {
-      UI.showBanner('Otomatik bağlantı başarısız — QR ile yeniden eşle');
-      this.openPair();
-    }
+    this.openPair();
   },
 
   hideDiscBar() {
