@@ -582,11 +582,12 @@
     color: var(--accent);
     letter-spacing: 3px;
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: normal;
+    font-family: var(--font-display);
   }
-  .modal p { color: var(--ink-dim); margin: 0 0 16px 0; font-size: 14px; line-height: 1.5; }
-  .modal label { display: block; margin: 25px 0 6px 0; font-size: 12px; letter-spacing: 1px; color: var(--ink-dim); text-transform: uppercase; }
+  .modal p { color: var(--ink-dim); margin: 0 0 16px 0; font-size: 16px; line-height: 1.5; }
+  .modal label { display: block; margin: 25px 0 6px 0; font-size: 13px; letter-spacing: 1px; color: var(--ink-dim); text-transform: uppercase; }
   .modal label:first-of-type { margin-top: 0; }
   .modal select, .modal input[type=text] {
     width: 100%;
@@ -765,7 +766,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;">v2.1.1</div>
+    <div class="version-tag" style="margin-top:50px;">v2.1.3</div>
   </div>
 
   <!-- Board screen -->
@@ -782,7 +783,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.1</span>
+          <span class="version-label">v2.1.3</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -823,7 +824,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.1.1</span>
+          <span class="version-label">v2.1.3</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -889,7 +890,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.1.1</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.1.3</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -968,7 +969,7 @@
   <div id="color-modal" class="modal-bg">
     <div class="modal">
       <h2 id="color-modal-title" data-i18n="color_pick_title">Renk Seç</h2>
-      <p id="color-modal-word" style="color:var(--accent); font-size:20px; letter-spacing:2px;"></p>
+      <p id="color-modal-word" style="color:var(--accent); font-size:24px; letter-spacing:2px; font-family:var(--font-display);"></p>
       <div class="btn-row">
         <button class="iconbtn" style="background:var(--red); color:#fff; border-color:var(--red)" onclick="App.manualReveal('red')" id="cmbtn-red" data-i18n="color_red">Kırmızı</button>
         <button class="iconbtn" style="background:var(--blue); color:#fff; border-color:var(--blue)" onclick="App.manualReveal('blue')" id="cmbtn-blue" data-i18n="color_blue">Mavi</button>
@@ -1540,7 +1541,7 @@ const Peer = {
       }
       // initial sync
       if (State.mode === 'board') {
-        this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+        this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
       } else {
         this.send({ type: 'request_state' });
       }
@@ -2042,8 +2043,8 @@ const App = {
       State.scoreBlue = msg.scoreBlue;
       State.size = msg.size;
       State.gameOver = msg.gameOver;
-      State.redTarget = State.size === 5 ? 9 : 6;
-      State.blueTarget = State.size === 5 ? 8 : 5;
+      State.redTarget = msg.redTarget || (State.size === 5 ? 9 : 6);
+      State.blueTarget = msg.blueTarget || (State.size === 5 ? 8 : 5);
       if (msg.startingTeam) State.startingTeam = msg.startingTeam;
       Store.saveGame();
       if (State.mode === 'spy') {
@@ -2054,7 +2055,7 @@ const App = {
     } else if (msg.type === 'request_state') {
       // board sends current state
       if (State.mode === 'board') {
-        Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+        Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
       }
     } else if (msg.type === 'request_reveal') {
       // spymaster gets request from board; respond with color
@@ -2098,7 +2099,7 @@ const App = {
         if (ok) {
           UI.renderBoard();
           this.updateUndoBtn();
-          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
         }
       }
     } else if (msg.type === 'request_new_game') {
@@ -2366,7 +2367,7 @@ const App = {
     if (!ok) return;
     if (fromGameover) this.closeModal('gameover-modal');
     UI.renderBoard();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
     this.updateUndoBtn();
   },
 
@@ -2390,8 +2391,9 @@ const App = {
     } else {
       // Not connected: generate fresh color map locally, no words
       const size = State.size || 5;
-      const red = size === 5 ? 9 : 6;
-      const blue = size === 5 ? 8 : 5;
+      const starter = Math.random() < 0.5 ? 'red' : 'blue';
+      const red = size === 5 ? (starter === 'red' ? 9 : 8) : (starter === 'red' ? 6 : 5);
+      const blue = size === 5 ? (starter === 'blue' ? 9 : 8) : (starter === 'blue' ? 6 : 5);
       const yellow = size === 5 ? 7 : 4;
       const colors = [];
       for (let i = 0; i < red; i++) colors.push('red');
@@ -2402,7 +2404,8 @@ const App = {
       do { shuffle(colors); attempts++; }
       while (!colorLayoutOk(colors, size) && attempts < 200);
       State.board = colors.map(color => ({ word: '', color, revealed: false }));
-      State.turn = 'red';
+      State.turn = starter;
+      State.startingTeam = starter;
       State.scoreRed = 0; State.scoreBlue = 0; State.gameOver = false;
       State.redTarget = red; State.blueTarget = blue;
       UI.renderSpyBoard();
@@ -2414,7 +2417,7 @@ const App = {
     Game.switchTurn();
     UI.renderBoard();
     UI.updateStatus();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
   },
 
   openSwap(idx) {
@@ -2435,7 +2438,7 @@ const App = {
     const newWord = Game.swapCard(idx);
     if (!newWord) { UI.showBanner('Kelime havuzu boş!'); return; }
     UI.renderBoard();
-    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam });
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
     State.swapIdx = null;
   },
 
