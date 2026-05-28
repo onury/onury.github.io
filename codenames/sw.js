@@ -1,9 +1,10 @@
 // Codenames TR - Service Worker
-const CACHE = 'codenames-v89';
+const CACHE = 'codenames-v90';
 const ASSETS = [
   './',
   './index.html',
   './words.js',
+  './styles.css',
   './lib/qrcode.min.js',
   './lib/jsQR.min.js',
 ];
