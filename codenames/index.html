@@ -150,12 +150,23 @@
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
-  html, body {
+  html {
     margin: 0; padding: 0;
-    height: 100%; height: 100dvh;
-    width: 100%;
+    height: 100%; width: 100%;
     overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: none;
     background: #1a1a1a;
+  }
+  body {
+    margin: 0; padding: 0;
+    height: 100%; width: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     color: var(--ink);
     font-family: 'Be Vietnam Pro', 'Outfit', 'DM Sans', system-ui, sans-serif;
     --font-display: 'Paytone One', system-ui, sans-serif;
@@ -172,11 +183,8 @@
     padding-bottom: var(--safe-bottom);
     display: flex;
     flex-direction: column;
-    background-color: var(--bg);
-    background-size: 110%;
-    background-position: center center;
-    background-repeat: no-repeat;
     box-sizing: border-box;
+    background: transparent;
   }
 
   /* === Screens === */
@@ -839,7 +847,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.7</div>
+    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.8</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -860,7 +868,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.7</span>
+          <span class="version-label">v2.3.8</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -901,7 +909,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.7</span>
+          <span class="version-label">v2.3.8</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -966,7 +974,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.7</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.8</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -2005,9 +2013,7 @@ const App = {
     const savedBg = localStorage.getItem('codenames_bg') || 'wood-dark';
     State.bgTexture = savedBg;
     App.applyBgTexture(savedBg);
-    // iOS PWA: bg bazen ilk açılışta tam kaplamaz, layout yerleşince yenile
-    setTimeout(() => App.applyBgTexture(savedBg), 100);
-    setTimeout(() => App.applyBgTexture(savedBg), 500);
+
     Peer.onMessage = (msg) => this.handlePeerMessage(msg);
     // WakeLock: keep screen awake always (not just when connected)
     Peer._acquireWakeLock();
@@ -2026,15 +2032,15 @@ const App = {
   
   applyBgTexture(key) {
     const BASE = 'https://onury.io/codenames/bg/';
-    const el = document.getElementById('app');
+    const el = document.body;
     if (key === 'dark') {
       el.style.backgroundImage = 'none';
-      el.style.backgroundSize = '';
+      el.style.backgroundColor = '#1a1a1a';
     } else {
       el.style.backgroundImage = `url('${BASE}${key}.jpg')`;
-      el.style.backgroundSize = '110%';
+      el.style.backgroundSize = 'cover';
       el.style.backgroundPosition = 'center center';
-      el.style.backgroundAttachment = 'scroll';
+      el.style.backgroundRepeat = 'no-repeat';
     }
   },
 
