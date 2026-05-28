@@ -162,7 +162,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.13</div>
+    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.14</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -174,6 +174,7 @@
     <div class="topbar">
       <div class="topbar-row1">
         <div class="topbar-left">
+          <button class="iconbtn" id="board-back-btn" onclick="App.goHome()" style="padding:5px 8px;flex-shrink:0;margin-right:22px;"><i class="ti ti-arrow-left" style="font-size:16px;"></i></button>
           <span class="title" id="board-title-el">CODENAMES BOARD</span>
           <span id="board-conn" class="conn-status off">Bağlı değil</span>
           <button id="disc-icon-btn" onclick="App.confirmDisconnect()" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
@@ -183,7 +184,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.13</span>
+          <span class="version-label">v2.3.14</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -215,6 +216,7 @@
     <div class="topbar">
       <div class="topbar-row1">
         <div class="topbar-left">
+          <button class="iconbtn" id="spy-back-btn" onclick="App.goHome()" style="padding:5px 8px;flex-shrink:0;margin-right:22px;"><i class="ti ti-arrow-left" style="font-size:16px;"></i></button>
           <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
           <span id="spy-conn" class="conn-status off">Bağlı değil</span>
           <button id="spy-disc-icon-btn" onclick="App.confirmDisconnect()" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
@@ -224,7 +226,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.13</span>
+          <span class="version-label">v2.3.14</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -289,7 +291,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.13</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.14</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1409,6 +1411,12 @@ const App = {
   hideDiscBar() {
     const bar = document.getElementById('disc-bar');
     if (bar) bar.style.display = 'none';
+  },
+
+  goHome() {
+    Peer.reset();
+    State.mode = null;
+    UI.showScreen('mode-screen');
   },
 
   startBoard() {
