@@ -173,8 +173,11 @@
     flex-direction: column;
     background-color: var(--bg);
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-attachment: scroll;
+    background-origin: border-box;
+    box-sizing: border-box;
   }
 
   /* === Screens === */
@@ -530,11 +533,25 @@
     0%   { transform: perspective(400px) rotateY(90deg); }
     100% { transform: perspective(400px) rotateY(0deg); }
   }
+  @keyframes card-unflip-out {
+    0%   { transform: perspective(400px) rotateY(0deg); }
+    100% { transform: perspective(400px) rotateY(90deg); }
+  }
+  @keyframes card-unflip-in {
+    0%   { transform: perspective(400px) rotateY(-90deg); }
+    100% { transform: perspective(400px) rotateY(0deg); }
+  }
   .card.flipping {
     animation: card-flip-out 0.2s ease-in forwards;
   }
   .card.flip-in {
     animation: card-flip-in 0.2s ease-out forwards;
+  }
+  .card.unflipping {
+    animation: card-unflip-out 0.2s ease-in forwards;
+  }
+  .card.unflip-in {
+    animation: card-unflip-in 0.2s ease-out forwards;
   }
 
 
@@ -823,7 +840,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.2</div>
+    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.3</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -844,7 +861,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.2</span>
+          <span class="version-label">v2.3.3</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -885,7 +902,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.2</span>
+          <span class="version-label">v2.3.3</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -950,7 +967,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.2</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.3</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -1236,8 +1253,9 @@ const State = {
   swapIdx: null,
   startingTeam: 'red',
   displayFont: 'Paytone One',
-  bgTexture: 'fabric-green',
+  bgTexture: 'wood-dark',
   lastRevealedIdx: null,
+  lastUndoIdx: null,
 };
 
 // ============================================================
@@ -1735,6 +1753,19 @@ const UI = {
           State.lastRevealedIdx = null;
         }, 410);
       }
+      // Undo animasyonu: geri alınan kart (unrevealed ama rengi biliyoruz snap'ten)
+      if (!card.revealed && i === State.lastUndoIdx) {
+        // Kart şu an unrevealed - önce revealed gibi göster, sonra kapat
+        el.classList.add('unflipping');
+        setTimeout(() => {
+          el.classList.remove('unflipping');
+          el.classList.add('unflip-in');
+        }, 200);
+        setTimeout(() => {
+          el.classList.remove('unflip-in');
+          State.lastUndoIdx = null;
+        }, 410);
+      }
       el.innerHTML = `<div class="word" style="font-family:'${State.displayFont}',system-ui,sans-serif">${card.word}</div>`;
       if (!card.revealed) {
         // Tap → reveal
@@ -1967,7 +1998,7 @@ const App = {
     const savedFont = localStorage.getItem('codenames_display_font2') || 'Paytone One';
     State.displayFont = savedFont;
     App.applyDisplayFont(savedFont);
-    const savedBg = localStorage.getItem('codenames_bg') || 'fabric-green';
+    const savedBg = localStorage.getItem('codenames_bg') || 'wood-dark';
     State.bgTexture = savedBg;
     App.applyBgTexture(savedBg);
     Peer.onMessage = (msg) => this.handlePeerMessage(msg);
@@ -2498,10 +2529,14 @@ const App = {
   },
   
   doUndo(fromGameover = false) {
-    if (State.mode === 'spy') return; // undo only from board
+    if (State.mode === 'spy') return;
     if (!State.undoStack.length) return;
+    // Hangi kart geri alınacak - snap vs mevcut board karşılaştır
+    const snap = State.undoStack[State.undoStack.length - 1];
+    const undoIdx = State.board.findIndex((c, i) => c.revealed && !snap.board[i].revealed);
     const ok = Game.undo();
     if (!ok) return;
+    State.lastUndoIdx = undoIdx >= 0 ? undoIdx : null;
     if (fromGameover) this.closeModal('gameover-modal');
     UI.renderBoard();
     Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver, startingTeam: State.startingTeam, redTarget: State.redTarget, blueTarget: State.blueTarget });
