@@ -144,6 +144,7 @@
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
+    white-space: nowrap;
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
