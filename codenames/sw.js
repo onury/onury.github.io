@@ -1,5 +1,5 @@
 // Codenames TR - Service Worker
-const CACHE = 'codenames-v78';
+const CACHE = 'codenames-v79';
 const ASSETS = [
   './',
   './index.html',
