@@ -130,7 +130,7 @@
   }
   .mode-btn {
     width: 100%;
-    max-width: 320px;
+    max-width: 420px;
     padding: 20px 32px;
     background: rgba(0,0,0,0.45);
     border: 1px solid rgba(255,255,255,0.15);
@@ -144,7 +144,6 @@
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
-    white-space: nowrap;
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
