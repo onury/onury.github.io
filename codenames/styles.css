@@ -30,7 +30,15 @@
     overflow: hidden;
     overscroll-behavior: none;
     -webkit-overflow-scrolling: none;
+    background: #1a1a1a;
+  }
+  html::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background-color: #1a1a1a;
+    background-image: var(--bg-image, none);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
