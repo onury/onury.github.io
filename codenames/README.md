@@ -1,14 +1,14 @@
 # Codenames
 
-A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Spymaster = iPhone held privately.
+A two-device PWA for playing Codenames. Board = tablet on the table, Spymaster = phone held privately.
 
 ## Overview
 
-- Single HTML file — no build step, no backend, no dependencies to install
+- No build step, no backend, no dependencies to install
 - WebRTC peer-to-peer sync — two QR scans to pair, then fully offline during gameplay
 - 4×4 and 5×5 board modes
 - Background texture themes (fabric, wood, marble)
-- Configurable display font (14 options)
+- Configurable display font
 - Word pool tracking via localStorage — no repeated words across ~31 games
 - Auto-detects death card, win conditions, and turn changes
 - Pass turn, undo, card swap, and spymaster-side new map features
@@ -54,11 +54,11 @@ On both devices:
 
 ## Starting a Game
 
-1. **iPad** — tap “Board (iPad)”
-1. **iPhone** — tap “Spymaster (iPhone)”
-1. **iPad** → Pair → Generate QR
-1. **iPhone** → Pair → scan iPad’s QR → answer QR is generated
-1. **iPad** → Scan Answer QR
+1. **Tablet** — tap “Board (Tablet)”
+1. **Phone** — tap “Spymaster (Phone)”
+1. **Tablet** → Pair → Generate QR
+1. **Phone** → Pair → scan iPad’s QR → answer QR is generated
+1. **Tablet** → Scan Answer QR
 1. Both show **Connected** — live sync is active
 
 Pairing is required once per session. If either device closes the page, re-pair.
