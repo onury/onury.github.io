@@ -32,21 +32,16 @@
     -webkit-overflow-scrolling: none;
     background: #1a1a1a;
   }
-  #bg-layer {
-    position: fixed;
-    inset: 0;
-    background-color: #1a1a1a;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
   body {
     margin: 0; padding: 0;
     position: fixed;
     inset: 0;
     overflow: hidden;
     overscroll-behavior: none;
-    background: transparent;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     color: var(--ink);
     font-family: 'Be Vietnam Pro', 'Outfit', 'DM Sans', system-ui, sans-serif;
     --font-display: 'Paytone One', system-ui, sans-serif;
