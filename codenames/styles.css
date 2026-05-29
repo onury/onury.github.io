@@ -35,7 +35,8 @@
   body {
     margin: 0; padding: 0;
     position: fixed;
-    inset: 0;
+    top: 0; left: 0; right: 0;
+    bottom: calc(-1 * env(safe-area-inset-bottom, 34px));
     overflow: hidden;
     overscroll-behavior: none;
     background-color: #1a1a1a;
