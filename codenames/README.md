@@ -14,7 +14,7 @@ A two-device PWA for playing Codenames in Turkish. Board = iPad on the table, Sp
 - Pass turn, undo, card swap, and spymaster-side new map features
 - Random starting team — starting team gets one extra card
 - Color layout constraint: no 5+ consecutive same-color cells in any row or column
-- UI language: TR / EN
+- UI language: EN / TR (default EN)
 - PWA — installable to iPad and iPhone home screen
 
 ## Files
@@ -71,6 +71,7 @@ Pairing is required once per session. If either device closes the page, re-pair.
 |Tap a card (Board, not connected) |Manual color picker                                    |
 |Long-press a card (Board)         |Card swap — only works before any card is revealed     |
 |PASS button                       |Ends current team’s turn immediately                   |
+|Topbar ← button                   |Return to home screen                                  |
 |Topbar ↩ button                   |Undo last reveal                                       |
 |New Game (Board)                  |Rolls a fresh board, syncs to Spymaster                |
 |New Map (Spymaster, connected)    |Board rolls new game, full sync                        |
@@ -109,7 +110,7 @@ Starting team is chosen randomly each game.
 
 |Setting        |Description                                |
 |---------------|-------------------------------------------|
-|UI Language    |TR / EN                                    |
+|UI Language    |EN / TR (default EN)                       |
 |Board Size     |5×5 or 4×4 — takes effect on next New Game |
 |Display Font   |13 font options, live preview              |
 |Background     |6 texture themes, live preview             |
@@ -142,6 +143,10 @@ Starting team is chosen randomly each game.
 
 **Keepalive:** Ping every 15s to prevent WebRTC idle disconnect.
 
+**Background scaling:** `background-size: 100vw 100vh` (not `cover`) — avoids iOS Safari PWA body-height bug where `cover` scales against `scrollHeight` (~1000px) instead of the visible viewport.
+
+**Offline background:** Background images load from a remote URL. If the fetch fails (no network), a dark gradient fallback is applied and a dismissing toast is shown.
+
 **WakeLock:** `navigator.wakeLock` keeps both screens on. Reacquired on tab foreground.
 
 **STUN:** Google’s `stun.l.google.com:19302`.
@@ -158,6 +163,14 @@ Starting team is chosen randomly each game.
 -----
 
 ## Changelog
+
+### v2.3.x
+
+- Back button (←) added to Board and Spymaster topbars — returns to home screen, resets peer connection
+- Mode-select buttons widened to 420px
+- Background scaling fixed for iOS Safari PWA: `background-size: 100vw 100vh` replaces `cover`
+- Offline background: gradient fallback + auto-dismissing toast when image can't be loaded
+- Default UI language changed to EN
 
 ### v2.2.x
 
