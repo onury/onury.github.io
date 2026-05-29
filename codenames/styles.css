@@ -27,16 +27,16 @@
   html {
     margin: 0; padding: 0;
     height: 100%; width: 100%;
-    overflow: hidden;
     overscroll-behavior: none;
-    -webkit-overflow-scrolling: none;
-    background: #1a1a1a;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
   body {
     margin: 0; padding: 0;
     position: fixed;
-    top: 0; left: 0; right: 0;
-    bottom: min(calc(-1 * env(safe-area-inset-bottom, 0px)), -34px);
+    inset: 0;
     overflow: hidden;
     overscroll-behavior: none;
     background-color: #1a1a1a;
