@@ -33,7 +33,6 @@
   #bg-layer {
     position: fixed;
     inset: 0;
-    z-index: -1;
     background-color: #1a1a1a;
     background-size: cover;
     background-position: center center;
