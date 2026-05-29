@@ -162,7 +162,7 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.24</div>
+    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.25</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -184,7 +184,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.24</span>
+          <span class="version-label">v2.3.25</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
@@ -226,7 +226,7 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.24</span>
+          <span class="version-label">v2.3.25</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
@@ -291,7 +291,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.24</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.25</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -412,6 +412,8 @@
     </div>
   </div>
 
+  <div id="bg-toast" style="display:none; position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:rgba(30,20,10,0.88); border:1px solid rgba(212,165,116,0.35); color:#d4a574; font-size:12px; letter-spacing:1px; padding:7px 16px; border-radius:20px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); white-space:nowrap; z-index:9999; pointer-events:none; transition:opacity 0.5s;"></div>
+
 </div>
 
 <script>
@@ -469,6 +471,7 @@ const I18n = {
       swap_msg: 'Bu kartın değiştirilmesini istiyor musunuz?',
       swap_yes: 'Değiştir', swap_no: 'İptal',
       swap_late: 'Kart değişimi sadece oyun başında yapılabilir.',
+      bg_offline: 'Çevrimdışı — arkaplan yüklenemedi',
     },
     en: {
       conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
@@ -517,6 +520,7 @@ const I18n = {
       swap_msg: 'Do you want this card to be changed?',
       swap_yes: 'Change it', swap_no: 'Cancel',
       swap_late: 'Cards can only be changed at the beginning of the game.',
+      bg_offline: 'Offline — background unavailable',
     },
   },
   t(key) {
@@ -1349,17 +1353,46 @@ const App = {
   
   applyBgTexture(key) {
     const BASE = 'https://onury.io/codenames/bg/';
-    [document.documentElement, document.body].forEach(el => {
-      if (key === 'dark') {
+    if (key === 'dark') {
+      [document.documentElement, document.body].forEach(el => {
         el.style.backgroundImage = 'none';
         el.style.backgroundColor = '#1a1a1a';
-      } else {
-        el.style.backgroundImage = `url('${BASE}${key}.jpg')`;
-        el.style.backgroundSize = '100vw 100vh';
-        el.style.backgroundPosition = 'center center';
-        el.style.backgroundRepeat = 'no-repeat';
-      }
+      });
+      return;
+    }
+    const url = `${BASE}${key}.jpg`;
+    [document.documentElement, document.body].forEach(el => {
+      el.style.backgroundImage = `url('${url}')`;
+      el.style.backgroundSize = '100vw 100vh';
+      el.style.backgroundPosition = 'center center';
+      el.style.backgroundRepeat = 'no-repeat';
     });
+    const probe = new Image();
+    probe.onload = () => App._hideBgToast();
+    probe.onerror = () => {
+      [document.documentElement, document.body].forEach(el => {
+        el.style.backgroundImage = 'linear-gradient(135deg, #221e18 0%, #1a1a1a 50%, #100f0c 100%)';
+        el.style.backgroundSize = '100vw 100vh';
+      });
+      App._showBgToast(I18n.t('bg_offline'));
+    };
+    probe.src = url;
+  },
+  _bgToastTimer: null,
+  _showBgToast(msg) {
+    const el = document.getElementById('bg-toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.style.opacity = '1';
+    clearTimeout(App._bgToastTimer);
+    App._bgToastTimer = setTimeout(() => App._hideBgToast(), 4000);
+  },
+  _hideBgToast() {
+    const el = document.getElementById('bg-toast');
+    if (!el) return;
+    el.style.opacity = '0';
+    setTimeout(() => { el.style.display = 'none'; }, 500);
   },
 
   applyDisplayFont(fontName) {
