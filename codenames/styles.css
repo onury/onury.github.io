@@ -546,13 +546,13 @@
   .modal label:first-of-type { margin-top: 0; }
   .modal select, .modal input[type=text] {
     width: 100%;
-    background: var(--bg);
+    background: #1c1408;
     border: 1px solid var(--line);
     color: var(--ink);
     padding: 10px 12px;
     font-family: inherit;
     font-size: 16px;
-    border-radius: 2px;
+    border-radius: 6px;
   }
   .modal .btn-row {
     display: flex;
@@ -576,7 +576,7 @@
   #qr-display {
     background: #fff;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -589,7 +589,7 @@
     width: 100%;
     aspect-ratio: 1;
     background: #000;
-    border-radius: 4px;
+    border-radius: 6px;
     overflow: hidden;
     margin: 12px 0;
   }
