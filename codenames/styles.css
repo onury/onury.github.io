@@ -112,7 +112,7 @@
     font-size: 12px;
     letter-spacing: 2px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 8px;
     text-transform: uppercase;
     transition: all 0.15s;
     text-shadow: 0 1px 3px rgba(0,0,0,0.7);
@@ -134,7 +134,7 @@
     padding: 20px 32px;
     background: rgba(0,0,0,0.45);
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 10px;
+    border-radius: 20px;
     color: var(--ink);
     font-family: var(--font-display);
     font-size: 20px;
@@ -241,7 +241,7 @@
     font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 6px;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
@@ -317,7 +317,7 @@
   .turn-indicator.blue { background: var(--blue-soft); color: #aaccff; border: 1px solid var(--blue); }
   #pass-btn {
     padding: 5px 14px;
-    border-radius: 3px;
+    border-radius: 6px;
     font-weight: bold;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -522,7 +522,7 @@
   .modal {
     background: rgba(0,0,0,0.55);
     border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
+    border-radius: 24px;
     padding: 24px 24px 40px 24px;
     max-width: 480px;
     width: 100%;
@@ -565,6 +565,11 @@
     padding: 12px;
     font-size: 13px;
     min-width: 100px;
+  }
+  #advanced-section label { margin: 0; }
+  #advanced-section .iconbtn {
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   /* QR */
@@ -677,7 +682,7 @@
     font-family: inherit;
     font-size: 12px;
     letter-spacing: 1px;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     text-transform: uppercase;
   }
