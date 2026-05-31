@@ -26,21 +26,8 @@
     margin: 0 auto;
   }
 
-  .help-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--line);
-  }
-
   .help-header h1 {
-    font-family: 'Paytone One', system-ui, sans-serif;
-    color: var(--accent);
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-size: 18px;
+    display: none;
     margin: 0;
   }
 
@@ -162,14 +149,6 @@
 </head>
 <body>
 <div class="help-wrap">
-
-  <div class="help-header">
-    <h1 id="page-title">Help</h1>
-    <div class="lang-row" style="margin:0; gap:6px;">
-      <button class="lang-btn" id="btn-tr" onclick="setLang('tr')">TR</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
 
   <!-- ══════════════ ENGLISH ══════════════ -->
   <div id="content-en">
@@ -339,9 +318,6 @@
   function setLang(lang) {
     document.getElementById('content-en').style.display = lang === 'en' ? '' : 'none';
     document.getElementById('content-tr').style.display = lang === 'tr' ? '' : 'none';
-    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-    document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
-    document.getElementById('page-title').textContent = lang === 'tr' ? 'Yardım' : 'Help';
     document.documentElement.lang = lang;
   }
   setLang(localStorage.getItem('codenames_ui_lang') || 'en');
