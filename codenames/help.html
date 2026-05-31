@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codenames — Help</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Paytone+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  html, body {
+    position: static !important;
+    inset: auto !important;
+    overflow: auto !important;
+    height: auto !important;
+    min-height: 100%;
+    background: #111009 !important;
+    background-image: none !important;
+  }
+
+  .help-wrap {
+    padding: 20px 24px 40px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .help-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .help-header h1 {
+    font-family: 'Paytone One', system-ui, sans-serif;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .section {
+    margin-bottom: 28px;
+  }
+
+  .section h2 {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section ul {
+    margin: 0;
+    padding: 0 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .section li {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+  }
+
+  .section li b {
+    color: var(--ink);
+  }
+
+  .section .steps {
+    list-style: decimal;
+    padding-left: 20px;
+  }
+
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 16px;
+    font-size: 13px;
+  }
+
+  .kv dt {
+    color: var(--ink-dim);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+
+  .kv dd {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .card-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .card-table th {
+    text-align: left;
+    color: var(--ink-dim);
+    padding: 4px 10px 4px 0;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .card-table td {
+    padding: 5px 10px 5px 0;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .card-table td:first-child { font-weight: 600; color: var(--accent); }
+
+  .tip {
+    background: rgba(212,165,116,0.08);
+    border-left: 2px solid var(--accent);
+    padding: 7px 10px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  code {
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+
+  .chip {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+<div class="help-wrap">
+
+  <div class="help-header">
+    <h1 id="page-title">Help</h1>
+    <div class="lang-row" style="margin:0; gap:6px;">
+      <button class="lang-btn" id="btn-tr" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ ENGLISH ══════════════ -->
+  <div id="content-en">
+
+    <div class="section">
+      <h2>Getting Started</h2>
+      <ul>
+        <li><b>Board (Tablet)</b> — shows the word grid. Place it on the table where all players can see.</li>
+        <li><b>Spymaster (Phone)</b> — shows the color map. Hold it privately; only the spymaster looks at it.</li>
+        <li>Start with the Board device, then the Spymaster. Pair once per session.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Pairing Devices</h2>
+      <ol class="steps">
+        <li>Board → <span class="chip">Pair</span> → <span class="chip">Generate QR</span></li>
+        <li>Spymaster → <span class="chip">Pair</span> → scan QR with camera → answer QR appears</li>
+        <li>Board → <span class="chip">Scan Answer QR</span></li>
+        <li>Both devices show <b>Connected</b></li>
+      </ol>
+      <div class="tip">If the connection drops, a red bar appears. Tap Reconnect and re-pair both devices.</div>
+    </div>
+
+    <div class="section">
+      <h2>Gameplay</h2>
+      <ul>
+        <li>Spymaster gives a <b>one-word clue</b> and a number (how many cards relate to it).</li>
+        <li>Team taps cards on the board to reveal them.</li>
+        <li>Revealing <b>your team's card</b> → keep guessing this turn.</li>
+        <li>Revealing the <b>opponent's card or neutral</b> → turn passes automatically.</li>
+        <li>Tap <span class="chip">PASS</span> to end your turn voluntarily.</li>
+        <li>Revealing the <b>death card ☠</b> → your team loses immediately.</li>
+        <li>First team to reveal all their cards wins.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Card Counts</h2>
+      <table class="card-table">
+        <tr><th>Mode</th><th>Starting team</th><th>Other team</th><th>Neutral</th><th>Death</th></tr>
+        <tr><td>5×5</td><td>9</td><td>8</td><td>7</td><td>1</td></tr>
+        <tr><td>4×4</td><td>6</td><td>5</td><td>4</td><td>1</td></tr>
+      </table>
+      <div class="tip">Starting team is chosen randomly each game.</div>
+    </div>
+
+    <div class="section">
+      <h2>Special Actions</h2>
+      <dl class="kv">
+        <dt>Swap a card</dt>
+        <dd>Long-press a card (~700 ms) <b>before any card is revealed</b>. Confirm to replace it with a random unused word. Synced to Spymaster if connected.</dd>
+        <dt>Undo</dt>
+        <dd>Tap <span class="chip">↩</span> in the topbar to undo the last reveal. Configure max steps in Settings.</dd>
+        <dt>Pass</dt>
+        <dd>Tap <span class="chip">PASS</span> to end your turn without revealing another card.</dd>
+      </dl>
+    </div>
+
+    <div class="section">
+      <h2>Settings</h2>
+      <dl class="kv">
+        <dt>Board Size</dt><dd>5×5 (classic) or 4×4 (quick) — takes effect on next New Game.</dd>
+        <dt>Display Font</dt><dd>14 options with live preview.</dd>
+        <dt>Background</dt><dd>6 texture themes with live preview.</dd>
+        <dt>Undo Steps</dt><dd>Max undo history depth. 0 = disabled (default 2).</dd>
+        <dt>Word Pool</dt><dd>775 Turkish words tracked across sessions (~31 games before repeating).</dd>
+      </dl>
+    </div>
+
+    <div class="section">
+      <h2>Maintenance</h2>
+      <dl class="kv">
+        <dt>Reset Word Pool</dt><dd>Clears word usage history so all 775 words are available again.</dd>
+        <dt>Cache Reset</dt><dd>Clears the service worker and all caches, then reloads. Use when something looks broken or stuck.</dd>
+        <dt>Ping Interval</dt><dd>How often the WebRTC connection sends a keepalive heartbeat (default 15 s). Lower = more stable, more battery use.</dd>
+      </dl>
+      <div class="tip"><code>?reset</code> in the URL also clears caches and reloads. <code>?debug</code> opens the developer console.</div>
+    </div>
+
+  </div><!-- #content-en -->
+
+  <!-- ══════════════ TURKISH ══════════════ -->
+  <div id="content-tr" style="display:none;">
+
+    <div class="section">
+      <h2>Başlarken</h2>
+      <ul>
+        <li><b>Board (Tablet)</b> — kelime tahtasını gösterir. Tüm oyuncuların görebileceği şekilde masaya koy.</li>
+        <li><b>Anlatıcı (Telefon)</b> — renk haritasını gösterir. Gizli tut; sadece anlatıcı bakar.</li>
+        <li>Önce Board cihazıyla, ardından Anlatıcı ile başla. Oturum başına bir kez eşleştir.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Cihaz Eşleştirme</h2>
+      <ol class="steps">
+        <li>Board → <span class="chip">Eşle</span> → <span class="chip">QR Oluştur</span></li>
+        <li>Anlatıcı → <span class="chip">Eşle</span> → QR'ı kamerayla tara → yanıt QR'ı görünür</li>
+        <li>Board → <span class="chip">Yanıt QR'ı Tara</span></li>
+        <li>Her iki cihaz da <b>Bağlandı</b> gösterir</li>
+      </ol>
+      <div class="tip">Bağlantı kesilirse kırmızı bir çubuk görünür. Yeniden Bağlan'a dokun ve her iki cihazı yeniden eşleştir.</div>
+    </div>
+
+    <div class="section">
+      <h2>Oynanış</h2>
+      <ul>
+        <li>Anlatıcı <b>tek kelimelik bir ipucu</b> ve bir sayı verir (kaç kartla ilişkili).</li>
+        <li>Takım, tahtadaki kartlara basarak açar.</li>
+        <li><b>Kendi takımının kartı</b> → bu turda tahmin etmeye devam et.</li>
+        <li><b>Rakip kartı veya nötr kart</b> → sıra otomatik geçer.</li>
+        <li>Gönüllü bitirmek için <span class="chip">PAS</span> tuşuna bas.</li>
+        <li><b>Ölüm kartı ☠</b> → takımın anında kaybeder.</li>
+        <li>Tüm kartlarını ilk açan takım kazanır.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Kart Sayıları</h2>
+      <table class="card-table">
+        <tr><th>Mod</th><th>Başlayan</th><th>Diğer</th><th>Nötr</th><th>Ölüm</th></tr>
+        <tr><td>5×5</td><td>9</td><td>8</td><td>7</td><td>1</td></tr>
+        <tr><td>4×4</td><td>6</td><td>5</td><td>4</td><td>1</td></tr>
+      </table>
+      <div class="tip">Her oyunda başlayan takım rastgele seçilir.</div>
+    </div>
+
+    <div class="section">
+      <h2>Özel Hamleler</h2>
+      <dl class="kv">
+        <dt>Kart değiştirme</dt>
+        <dd>Bir kartı uzun bas (~700 ms), <b>hiçbir kart açılmadan önce</b>. Rastgele kullanılmamış bir kelimeyle değiştirmek için onayla. Bağlıysa Anlatıcı'ya senkronize edilir.</dd>
+        <dt>Geri al</dt>
+        <dd>Son açılan kartı geri almak için topbardaki <span class="chip">↩</span> düğmesine bas. Maksimum adımı Ayarlar'dan yapılandır.</dd>
+        <dt>Pas</dt>
+        <dd>Başka kart açmadan sırayı bitirmek için <span class="chip">PAS</span>'a bas.</dd>
+      </dl>
+    </div>
+
+    <div class="section">
+      <h2>Ayarlar</h2>
+      <dl class="kv">
+        <dt>Board Boyutu</dt><dd>5×5 (klasik) veya 4×4 (hızlı) — sonraki Yeni Oyun'da geçerli olur.</dd>
+        <dt>Yazı Tipi</dt><dd>Canlı önizlemeli 14 seçenek.</dd>
+        <dt>Arka Plan</dt><dd>Canlı önizlemeli 6 doku teması.</dd>
+        <dt>Geri Al Adımı</dt><dd>Maksimum geri alma derinliği. 0 = kapalı (varsayılan 2).</dd>
+        <dt>Kelime Havuzu</dt><dd>775 Türkçe kelime oturumlar arasında takip edilir (~31 oyun döngüsü).</dd>
+      </dl>
+    </div>
+
+    <div class="section">
+      <h2>Bakım</h2>
+      <dl class="kv">
+        <dt>Kelime Havuzunu Sıfırla</dt><dd>Kelime kullanım geçmişini temizler; tüm 775 kelime tekrar kullanılabilir hale gelir.</dd>
+        <dt>Önbellek Sıfırlama</dt><dd>Service worker ve tüm önbellekleri temizler, sayfayı yeniler. Bir şeyler bozulur veya takılırsa kullan.</dd>
+        <dt>Ping Aralığı</dt><dd>WebRTC bağlantısının bağlantı sağlıklık kontrolü gönderme sıklığı (varsayılan 15 s). Düşük = daha kararlı, daha fazla pil.</dd>
+      </dl>
+      <div class="tip">URL'de <code>?reset</code> önbellekleri temizler ve sayfayı yeniler. <code>?debug</code> geliştirici konsolunu açar.</div>
+    </div>
+
+  </div><!-- #content-tr -->
+
+</div><!-- .help-wrap -->
+
+<script>
+  function setLang(lang) {
+    document.getElementById('content-en').style.display = lang === 'en' ? '' : 'none';
+    document.getElementById('content-tr').style.display = lang === 'tr' ? '' : 'none';
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+    document.getElementById('page-title').textContent = lang === 'tr' ? 'Yardım' : 'Help';
+    document.documentElement.lang = lang;
+  }
+  setLang(localStorage.getItem('codenames_ui_lang') || 'en');
+</script>
+</body>
+</html>

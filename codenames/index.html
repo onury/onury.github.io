@@ -162,7 +162,8 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (Telefon)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <div class="version-tag" style="margin-top:50px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.33</div>
+    <button class="iconbtn" onclick="App.openHelp()" style="margin-top:24px;padding:7px 18px;font-size:12px;letter-spacing:1px;"><i class="ti ti-help-circle" style="font-size:14px;margin-right:6px;"></i><span data-i18n="help">Help</span></button>
+    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.34</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -184,10 +185,11 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.33</span>
+          <span class="version-label">v2.3.34</span>
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
           <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
+          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-help-circle" style="font-size:16px;"></i></button>
           <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
         </div>
       </div>
@@ -226,9 +228,10 @@
           <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
         </div>
         <div class="topbar-right">
-          <span class="version-label">v2.3.33</span>
+          <span class="version-label">v2.3.34</span>
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
           <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
+          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-help-circle" style="font-size:16px;"></i></button>
           <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
         </div>
       </div>
@@ -291,7 +294,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.33</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.34</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -425,6 +428,17 @@
 
   <div id="bg-toast" style="display:none; position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:rgba(30,20,10,0.88); border:1px solid rgba(212,165,116,0.35); color:#d4a574; font-size:12px; letter-spacing:1px; padding:7px 16px; border-radius:20px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); white-space:nowrap; z-index:9999; pointer-events:none; transition:opacity 0.5s;"></div>
 
+  <!-- Help modal -->
+  <div id="help-modal" class="modal-bg">
+    <div class="modal" style="max-width:640px;height:80vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);flex-shrink:0;">
+        <span id="help-modal-title" style="font-family:var(--font-display);font-size:18px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;" data-i18n="help">Help</span>
+        <button class="iconbtn" onclick="App.closeModal('help-modal')" style="padding:4px 10px;" data-i18n="close">Close</button>
+      </div>
+      <iframe id="help-iframe" src="" style="flex:1;border:none;width:100%;background:transparent;" title="Help"></iframe>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -484,6 +498,7 @@ const I18n = {
       swap_yes: 'Değiştir', swap_no: 'İptal',
       swap_late: 'Kart değişimi sadece oyun başında yapılabilir.',
       bg_offline: 'Çevrimdışı — arkaplan yüklenemedi',
+      help: 'Yardım',
     },
     en: {
       conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
@@ -534,6 +549,7 @@ const I18n = {
       swap_yes: 'Change it', swap_no: 'Cancel',
       swap_late: 'Cards can only be changed at the beginning of the game.',
       bg_offline: 'Offline — background unavailable',
+      help: 'Help',
     },
   },
   t(key) {
@@ -1777,6 +1793,12 @@ const App = {
   },
   
   // === Modal helpers ===
+  openHelp() {
+    const iframe = document.getElementById('help-iframe');
+    if (iframe && !iframe._loaded) { iframe.src = 'help.html'; iframe._loaded = true; }
+    document.getElementById('help-modal').classList.add('active');
+  },
+
   closeModal(id) {
     document.getElementById(id).classList.remove('active');
     if (id === 'pair-modal') {
