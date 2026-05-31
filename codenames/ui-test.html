@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codenames — UI Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Paytone+One&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Override app layout for scrollable test page */
+  html, body {
+    position: static !important;
+    inset: auto !important;
+    overflow: auto !important;
+    height: auto !important;
+    min-height: 100vh;
+    background-color: #1a1a1a !important;
+    background-image: none !important;
+  }
+
+  .test-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .test-page h1 {
+    font-family: 'Paytone One', system-ui, sans-serif;
+    color: var(--accent);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-size: 28px;
+    margin: 0 0 4px 0;
+  }
+
+  .test-page > p {
+    color: var(--ink-dim);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin: 0;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    margin: 0;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Card samples — fixed size, no grid */
+  .card-sample {
+    width: 130px;
+    height: 84px;
+    flex-shrink: 0;
+  }
+
+  /* Topbar sample — contained width */
+  .topbar-sample {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="test-page">
+
+  <div>
+    <h1>UI Test</h1>
+    <p>Codenames — component reference</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ BUTTONS -->
+  <div class="section">
+    <p class="section-title">Icon Buttons (.iconbtn)</p>
+    <div class="row">
+      <button class="iconbtn">Default</button>
+      <button class="iconbtn primary">Primary</button>
+      <button class="iconbtn danger">Danger</button>
+      <button class="iconbtn" disabled>Disabled</button>
+    </div>
+    <div class="row">
+      <button class="iconbtn"><i class="ti ti-arrow-left"></i></button>
+      <button class="iconbtn"><i class="ti ti-arrow-back-up"></i></button>
+      <button class="iconbtn"><i class="ti ti-settings"></i></button>
+      <button class="iconbtn"><i class="ti ti-plug-connected-x"></i></button>
+      <button class="iconbtn primary"><i class="ti ti-settings"></i> Settings</button>
+      <button class="iconbtn danger"><i class="ti ti-wifi-off"></i> Offline</button>
+    </div>
+    <div class="row">
+      <div class="btn-row" style="flex:1; min-width:200px; margin:0;">
+        <button class="iconbtn" style="flex:1; padding:12px; font-size:13px;">Cancel</button>
+        <button class="iconbtn primary" style="flex:1; padding:12px; font-size:13px;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ MODE BUTTONS -->
+  <div class="section">
+    <p class="section-title">Mode Buttons (.mode-btn)</p>
+    <div class="col" style="align-items:flex-start;">
+      <button class="mode-btn">
+        Board (Tablet)
+        <span class="hint">word grid · players look here</span>
+      </button>
+      <button class="mode-btn">
+        Spymaster (Phone)
+        <span class="hint">color map · spymasters only</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ LANG / CHIP BUTTONS -->
+  <div class="section">
+    <p class="section-title">Lang Buttons &amp; Option Chips</p>
+    <div class="row">
+      <div class="lang-row" style="margin:0;">
+        <button class="lang-btn">TR</button>
+        <button class="lang-btn active">EN</button>
+      </div>
+      <div class="option-row" style="margin:0;">
+        <button class="option-chip">TR</button>
+        <button class="option-chip active">EN</button>
+        <button class="option-chip soon">Soon</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ PASS / TURN -->
+  <div class="section">
+    <p class="section-title">Pass Button &amp; Turn Indicator</p>
+    <div class="row">
+      <span class="turn-indicator red">Red's Turn</span>
+      <span class="turn-indicator blue">Blue's Turn</span>
+      <button id="pass-btn">PASS</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ STATUS BADGES -->
+  <div class="section">
+    <p class="section-title">Connection Status &amp; Score</p>
+    <div class="row">
+      <span class="conn-status off">Disconnected</span>
+      <span class="conn-status connecting">Connecting...</span>
+      <span class="conn-status on">Connected</span>
+    </div>
+    <div class="row">
+      <div class="score-item">
+        <span class="score-dot red"></span>
+        <span style="color:var(--red);">4</span>
+      </div>
+      <div class="score-item">
+        <span class="score-dot blue"></span>
+        <span style="color:var(--blue);">7</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ FORM ELEMENTS -->
+  <div class="section">
+    <p class="section-title">Form Elements (modal context)</p>
+    <div class="modal" style="position:static; max-width:480px; padding:24px;">
+      <label style="margin-top:0;">Board Size</label>
+      <select>
+        <option>5×5 (classic)</option>
+        <option>4×4 (quick)</option>
+      </select>
+
+      <label>Display Font</label>
+      <select>
+        <option>Paytone One</option>
+        <option>Archivo Black</option>
+        <option>Luckiest Guy</option>
+      </select>
+
+      <label>Text Input</label>
+      <input type="text" placeholder="Enter text…">
+
+      <label>Background Preview</label>
+      <div id="bg-preview" style="width:100%;height:48px;border-radius:6px;margin:8px 0 4px 0;border:1px solid var(--line);background:url('https://onury.io/codenames/bg/wood-dark.jpg') center/cover;"></div>
+
+      <div class="btn-row">
+        <button class="iconbtn" style="flex:1;padding:12px;font-size:13px;">Cancel</button>
+        <button class="iconbtn danger" style="flex:1;padding:12px;font-size:13px;">Reset</button>
+        <button class="iconbtn primary" style="flex:1;padding:12px;font-size:13px;">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ BOARD CARDS -->
+  <div class="section">
+    <p class="section-title">Board Cards</p>
+    <div class="row" style="align-items:stretch;">
+
+      <!-- Unrevealed -->
+      <div class="card card-sample">
+        <div class="word">KARTAL</div>
+      </div>
+
+      <!-- Revealed: red -->
+      <div class="card card-sample revealed red">
+        <div class="word">ATEŞ</div>
+      </div>
+
+      <!-- Revealed: blue -->
+      <div class="card card-sample revealed blue">
+        <div class="word">OKYANUS</div>
+      </div>
+
+      <!-- Revealed: yellow (neutral) -->
+      <div class="card card-sample revealed yellow">
+        <div class="word">MASA</div>
+      </div>
+
+      <!-- Revealed: black (death) -->
+      <div class="card card-sample revealed black">
+        <div class="word">BOMBA</div>
+      </div>
+
+      <!-- Waiting (pending reveal) -->
+      <div class="card card-sample waiting">
+        <div class="word">KÖPRÜ</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ SPYMASTER CARDS -->
+  <div class="section">
+    <p class="section-title">Spymaster Cards</p>
+    <div class="row" style="align-items:stretch;">
+
+      <div class="card card-sample color-red" style="background:var(--red);">
+        <div class="word" style="font-family:'Paytone One',sans-serif;font-size:14px;font-weight:700;background:none;box-shadow:none;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3);text-transform:uppercase;letter-spacing:0.5px;">ATEŞ</div>
+      </div>
+
+      <div class="card card-sample color-blue" style="background:var(--blue);">
+        <div class="word" style="font-family:'Paytone One',sans-serif;font-size:14px;font-weight:700;background:none;box-shadow:none;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.3);text-transform:uppercase;letter-spacing:0.5px;">OKYANUS</div>
+      </div>
+
+      <div class="card card-sample color-yellow" style="background:var(--yellow);">
+        <div class="word" style="font-family:'Paytone One',sans-serif;font-size:14px;font-weight:700;background:none;box-shadow:none;color:#2a2010;text-shadow:0 1px 2px rgba(0,0,0,0.2);text-transform:uppercase;letter-spacing:0.5px;">MASA</div>
+      </div>
+
+      <div class="card card-sample color-black" style="background:#0a0a0a;">
+        <div class="word" style="font-family:'Paytone One',sans-serif;font-size:14px;font-weight:700;background:none;box-shadow:none;color:var(--accent);text-shadow:0 1px 2px rgba(0,0,0,0.3);text-transform:uppercase;letter-spacing:0.5px;">BOMBA</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ TOPBAR -->
+  <div class="section">
+    <p class="section-title">Topbar</p>
+    <div class="topbar topbar-sample">
+      <div class="topbar-row1">
+        <div class="topbar-left">
+          <button class="iconbtn" style="padding:5px 8px;flex-shrink:0;margin-right:22px;"><i class="ti ti-arrow-left" style="font-size:16px;"></i></button>
+          <span class="title">Codenames Board</span>
+          <span class="conn-status off">Disconnected</span>
+        </div>
+        <div class="topbar-center">
+          <div class="score-item" style="font-size:22px;">
+            <span class="score-dot red"></span>
+            <span style="color:var(--red);">4</span>
+          </div>
+          <div class="score-item" style="font-size:22px;">
+            <span class="score-dot blue"></span>
+            <span style="color:var(--blue);">7</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="iconbtn">Pair</button>
+          <button class="iconbtn primary">New Game</button>
+          <button class="iconbtn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+        </div>
+      </div>
+      <div class="topbar-row2">
+        <span class="turn-indicator red">Red's Turn</span>
+        <button id="pass-btn-2" style="padding:5px 14px;border-radius:6px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;font-size:11px;font-family:inherit;cursor:pointer;background:none;border:1px solid rgba(255,255,255,0.4);color:#fff;display:inline-flex;align-items:center;">PASS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ BANNER / TOAST -->
+  <div class="section">
+    <p class="section-title">Banner &amp; Toast</p>
+    <div style="position:relative; height:60px;">
+      <div class="banner" style="position:absolute; top:0; left:50%; transform:translateX(-50%); animation:none;">
+        New game started
+      </div>
+    </div>
+    <div style="display:flex; justify-content:center; margin-top:8px;">
+      <div id="bg-toast" style="display:block; position:static; transform:none; background:rgba(30,20,10,0.88); border:1px solid rgba(212,165,116,0.35); color:#d4a574; font-size:12px; letter-spacing:1px; padding:7px 16px; border-radius:20px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); white-space:nowrap;">
+        Offline — background unavailable
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ HELP TEXT -->
+  <div class="section">
+    <p class="section-title">Help Text</p>
+    <div class="help-text">Tap to reveal · Long press to swap card</div>
+  </div>
+
+</div>
+</body>
+</html>
