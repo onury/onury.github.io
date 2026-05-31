@@ -284,7 +284,6 @@
         <div class="topbar-left">
           <button class="iconbtn" style="padding:5px 8px;flex-shrink:0;margin-right:22px;"><i class="ti ti-arrow-left" style="font-size:16px;"></i></button>
           <span class="title">Codenames Board</span>
-          <span class="conn-status off">Disconnected</span>
         </div>
         <div class="topbar-center">
           <div class="score-item" style="font-size:22px;">
@@ -297,14 +296,23 @@
           </div>
         </div>
         <div class="topbar-right">
-          <button class="iconbtn">Pair</button>
+          <button class="iconbtn"><i class="ti ti-access-point" style="font-size:14px;margin-right:4px;"></i>Pair</button>
           <button class="iconbtn primary">New Game</button>
-          <button class="iconbtn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+          <button class="iconbtn" style="padding:5px 8px;"><i class="ti ti-question-mark" style="font-size:16px;"></i></button>
+          <button class="iconbtn" style="padding:5px 8px;"><i class="ti ti-settings-2" style="font-size:16px;"></i></button>
         </div>
       </div>
       <div class="topbar-row2">
-        <span class="turn-indicator red">Red's Turn</span>
-        <button id="pass-btn-2" style="padding:5px 14px;border-radius:6px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;font-size:11px;font-family:inherit;cursor:pointer;background:none;border:1px solid rgba(255,255,255,0.4);color:#fff;display:inline-flex;align-items:center;">PASS</button>
+        <div style="flex:1;display:flex;align-items:center;gap:6px;padding-left:64px;">
+          <span class="conn-status off">Disconnected</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="turn-indicator red">Red's Turn</span>
+          <button id="pass-btn">PASS</button>
+        </div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;">
+          <span class="version-label">v2.3.41</span>
+        </div>
       </div>
     </div>
   </div>
