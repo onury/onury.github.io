@@ -162,8 +162,8 @@
       <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (Telefon)</span>
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
-    <button class="iconbtn" onclick="App.openHelp()" style="margin-top:24px;padding:7px 18px;font-size:12px;letter-spacing:1px;"><i class="ti ti-help-circle" style="font-size:14px;margin-right:6px;"></i><span data-i18n="help">Help</span></button>
-    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.36</div>
+    <button class="iconbtn" onclick="App.openHelp()" style="margin-top:24px;padding:7px 18px;font-size:12px;letter-spacing:1px;"><i class="ti ti-question-mark" style="font-size:14px;margin-right:6px;"></i><span data-i18n="help">Help</span></button>
+    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.37</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -184,14 +184,14 @@
         </div>
         <div class="topbar-right">
           <button class="iconbtn" id="undo-btn" onclick="App.doUndo()"><i class="ti ti-arrow-back-up"></i></button>
-          <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
+          <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn"><i class="ti ti-access-point" style="font-size:14px;margin-right:4px;"></i><span data-i18n="pair">Eşle</span></button>
           <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
-          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-help-circle" style="font-size:16px;"></i></button>
-          <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-question-mark" style="font-size:16px;"></i></button>
+          <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings-2" style="font-size:16px;"></i></button>
         </div>
       </div>
       <div class="topbar-row2">
-        <div style="flex:1;display:flex;align-items:center;gap:6px;">
+        <div style="flex:1;display:flex;align-items:center;gap:6px;padding-left:64px;">
           <span id="board-conn" class="conn-status off">Bağlı değil</span>
           <button id="disc-icon-btn" onclick="App.confirmDisconnect()" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
         </div>
@@ -199,7 +199,7 @@
           <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
           <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()">PAS</button>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.36</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.37</span></div>
       </div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
@@ -231,20 +231,20 @@
         </div>
         <div class="topbar-right">
           <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
-          <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
-          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-help-circle" style="font-size:16px;"></i></button>
-          <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+          <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn"><i class="ti ti-access-point" style="font-size:14px;margin-right:4px;"></i><span data-i18n="pair">Eşle</span></button>
+          <button class="iconbtn" onclick="App.openHelp()" style="padding:5px 8px;"><i class="ti ti-question-mark" style="font-size:16px;"></i></button>
+          <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings-2" style="font-size:16px;"></i></button>
         </div>
       </div>
       <div class="topbar-row2">
-        <div style="flex:1;display:flex;align-items:center;gap:6px;">
+        <div style="flex:1;display:flex;align-items:center;gap:6px;padding-left:64px;">
           <span id="spy-conn" class="conn-status off">Bağlı değil</span>
           <button id="spy-disc-icon-btn" onclick="App.confirmDisconnect()" style="display:none;background:none;border:none;cursor:pointer;padding:2px 4px;color:var(--red);font-size:16px;"><i class="ti ti-plug-connected-x"></i></button>
         </div>
         <div style="display:flex;align-items:center;">
           <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.36</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.37</span></div>
       </div>
     </div>
     <div class="board-wrap">
@@ -302,7 +302,7 @@
     <div class="modal">
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
         <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.36</span>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v2.3.37</span>
       </div>
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
@@ -378,7 +378,7 @@
   <!-- Game over -->
   <div id="gameover-modal" class="modal-bg">
     <div class="modal">
-      <h2 id="gameover-title">Oyun Bitti</h2>
+      <h2 id="gameover-title" style="display:flex;align-items:center;justify-content:center;gap:8px;"><i id="gameover-icon" class="ti ti-trophy"></i><span id="gameover-title-text">Oyun Bitti</span></h2>
       <p id="gameover-msg"></p>
       <div class="btn-row">
         <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn" data-i18n="new_game">Yeni Oyun</button>
@@ -473,7 +473,7 @@ const I18n = {
       gameover_death: 'takım ölüm kartını açtı!', gameover_win: ' takım kazandı.',
       gameover_red_win: 'Kırmızı takım tüm kelimelerini buldu!',
       gameover_blue_win: 'Mavi takım tüm kelimelerini buldu!',
-      death_title: '☠ Ölüm Kartı', win_title: '★ Tebrikler',
+      death_title: 'Ölüm Kartı', win_title: 'Tebrikler',
       pool_reset: 'Kelime havuzu sıfırlandı',
       new_game_started: 'Yeni oyun başladı',
       size_changed: 'Yeni boyut sonraki oyunda etkili',
@@ -524,7 +524,7 @@ const I18n = {
       gameover_death: 'team revealed the death card!', gameover_win: ' team wins!',
       gameover_red_win: 'Red team found all their words!',
       gameover_blue_win: 'Blue team found all their words!',
-      death_title: '☠ Death Card', win_title: '★ Congratulations',
+      death_title: 'Death Card', win_title: 'Congratulations',
       pool_reset: 'Word pool reset',
       new_game_started: 'New game started',
       size_changed: 'New size takes effect next game',
@@ -1665,7 +1665,8 @@ const App = {
   endGame(msg) {
     const L = I18n.t;
     const isDeathCard = State.board.some(c => c.revealed && c.color === 'black');
-    document.getElementById('gameover-title').textContent = isDeathCard ? L('death_title') : L('win_title');
+    document.getElementById('gameover-icon').className = 'ti ' + (isDeathCard ? 'ti-skull' : 'ti-trophy');
+    document.getElementById('gameover-title-text').textContent = isDeathCard ? L('death_title') : L('win_title');
     document.getElementById('gameover-msg').textContent = msg;
     document.getElementById('gameover-modal').classList.add('active');
     this.updateUndoBtn();
