@@ -519,6 +519,21 @@
     padding: calc(env(safe-area-inset-top, 0px) + 44px) 20px 20px;
   }
   .modal-bg.active { display: flex; }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .modal-header-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
   .modal {
     background: rgba(0,0,0,0.55);
     border: 1px solid rgba(255,255,255,0.12);

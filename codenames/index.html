@@ -163,7 +163,7 @@
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
     <button class="iconbtn" onclick="App.openHelp()" style="margin-top:24px;padding:7px 18px;font-size:12px;letter-spacing:1px;"><i class="ti ti-question-mark" style="font-size:14px;margin-right:6px;"></i><span data-i18n="help">Help</span></button>
-    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.40</div>
+    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.3.41</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -199,7 +199,7 @@
           <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
           <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()">PAS</button>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.40</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.41</span></div>
       </div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
@@ -244,7 +244,7 @@
         <div style="display:flex;align-items:center;">
           <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.40</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.3.41</span></div>
       </div>
     </div>
     <div class="board-wrap">
@@ -299,11 +299,12 @@
 
   <!-- Settings modal -->
   <div id="settings-modal" class="modal-bg">
-    <div class="modal">
-      <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; margin-bottom:20px; border-bottom:1px solid var(--line);">
-        <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
-        <button class="iconbtn" onclick="App.closeModal('settings-modal')" style="padding:4px 10px;" data-i18n="close">Kapat</button>
+    <div class="modal" style="padding:0;display:flex;flex-direction:column;overflow:hidden;">
+      <div class="modal-header">
+        <span id="settings-title" class="modal-header-title" data-i18n="settings_title">Settings</span>
+        <button class="iconbtn" onclick="App.closeModal('settings-modal')" style="padding:4px 10px;" data-i18n="close">Close</button>
       </div>
+      <div style="padding:20px 24px 40px;overflow-y:auto;flex:1;">
       <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
       <div class="option-row" style="margin-bottom:25px;">
         <button class="option-chip active" id="settings-lang-tr">TR</button>
@@ -357,6 +358,7 @@
         </div>
       </div>
 
+      </div><!-- content wrapper -->
     </div>
   </div>
 
@@ -436,8 +438,8 @@
   <!-- Help modal -->
   <div id="help-modal" class="modal-bg">
     <div class="modal" style="max-width:640px;height:80vh;padding:0;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);flex-shrink:0;">
-        <span id="help-modal-title" style="font-family:var(--font-display);font-size:18px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;" data-i18n="help">Help</span>
+      <div class="modal-header">
+        <span id="help-modal-title" class="modal-header-title" data-i18n="help">Help</span>
         <button class="iconbtn" onclick="App.closeModal('help-modal')" style="padding:4px 10px;" data-i18n="close">Close</button>
       </div>
       <iframe id="help-iframe" src="" style="flex:1;border:none;width:100%;background:transparent;" title="Help"></iframe>
