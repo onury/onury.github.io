@@ -163,7 +163,7 @@
       <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
     </button>
     <button class="iconbtn" onclick="App.openHelp()" style="margin-top:24px;padding:7px 18px;font-size:12px;letter-spacing:1px;"><i class="ti ti-question-mark" style="font-size:14px;margin-right:6px;"></i><span data-i18n="help">Help</span></button>
-    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.4.0</div>
+    <div class="version-tag" style="margin-top:16px;text-shadow:0 1px 4px rgba(0,0,0,0.8);">v2.4.1</div>
     <div style="display:flex;gap:16px;margin-top:10px;">
       <button onclick="App.loadDebug()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Debug Console</button>
       <button onclick="App.cacheReset()" style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:rgba(255,255,255,0.5);font-family:inherit;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;padding:4px 12px;text-shadow:0 1px 3px rgba(0,0,0,0.7);">Reset Cache</button>
@@ -199,7 +199,7 @@
           <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
           <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()">PAS</button>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.4.0</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.4.1</span></div>
       </div>
     </div>
     <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
@@ -244,7 +244,7 @@
         <div style="display:flex;align-items:center;">
           <div id="spy-turn-indicator" class="turn-indicator red" style="display:none;">Kırmızı Sıra</div>
         </div>
-        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.4.0</span></div>
+        <div style="flex:1;display:flex;justify-content:flex-end;align-items:center;"><span class="version-label">v2.4.1</span></div>
       </div>
     </div>
     <div class="board-wrap">
@@ -433,7 +433,7 @@
     </div>
   </div>
 
-  <div id="bg-toast" style="display:none; position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:rgba(30,20,10,0.88); border:1px solid rgba(212,165,116,0.35); color:#d4a574; font-size:12px; letter-spacing:1px; padding:7px 16px; border-radius:20px; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); white-space:nowrap; z-index:9999; pointer-events:none; transition:opacity 0.5s;"></div>
+  <div id="bg-toast" style="display:none; position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.12); color:var(--ink); font-size:12px; letter-spacing:1px; padding:7px 16px; border-radius:20px; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); white-space:nowrap; z-index:9999; pointer-events:none; transition:opacity 0.5s;"></div>
 
   <!-- Help modal -->
   <div id="help-modal" class="modal-bg">
