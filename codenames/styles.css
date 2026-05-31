@@ -134,7 +134,7 @@
     padding: 20px 32px;
     background: rgba(0,0,0,0.45);
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
+    border-radius: 10px;
     color: var(--ink);
     font-family: var(--font-display);
     font-size: 20px;
@@ -521,7 +521,7 @@
   .modal {
     background: rgba(0,0,0,0.55);
     border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 24px;
+    border-radius: 18px;
     padding: 24px 24px 40px 24px;
     max-width: 480px;
     width: 100%;
