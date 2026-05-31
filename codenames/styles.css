@@ -179,17 +179,18 @@
     position: relative;
   }
   .topbar-row1 {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     min-height: 44px;
-    gap: 8px;
+    column-gap: 8px;
     padding: 0 25px;
     box-sizing: border-box;
   }
   .topbar-row2 {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: flex-start;
     padding: 0 25px 6px;
     box-sizing: border-box;
   }
@@ -513,9 +514,9 @@
     inset: 0;
     background: rgba(0,0,0,0.6);
     z-index: 100;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 20px;
+    padding: 30px 20px 20px;
   }
   .modal-bg.active { display: flex; }
   .modal {
