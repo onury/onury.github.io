@@ -1,0 +1,2307 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Codenames">
+<title>Codenames TR</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%231a1a1a'/><text x='90' y='115' font-size='100' text-anchor='middle' fill='%23d4a574'>C</text></svg>">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- FONT: Değiştirmek için aşağıdaki satırı düzenle -->
+<link id="google-font-link" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link id="google-font-display-link" href="https://fonts.googleapis.com/css2?family=Coiny&display=swap" rel="stylesheet">
+<!-- Örnekler:
+  Outfit:     https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap
+  DM Sans:    https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap
+  Nunito:     https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap
+  Figtree:    https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css">
+
+<script src="words.js"></script>
+<script>
+  // Library loader: try local first, then multiple CDNs.
+  // This handles Brave Shields, adblockers, and offline use after first load.
+  function loadScript(urls) {
+    return new Promise((resolve, reject) => {
+      let i = 0;
+      const tryNext = () => {
+        if (i >= urls.length) {
+          reject(new Error('Tüm kaynaklar başarısız: ' + urls.join(', ')));
+          return;
+        }
+        const url = urls[i++];
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = () => { console.log('Loaded:', url); resolve(url); };
+        s.onerror = () => { console.warn('Failed:', url); s.remove(); tryNext(); };
+        document.head.appendChild(s);
+      };
+      tryNext();
+    });
+  }
+
+  window.LIBS_READY = Promise.all([
+    loadScript([
+      'lib/qrcode.min.js',
+      'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
+      'https://unpkg.com/qrcode@1.4.4/build/qrcode.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.min.js',
+    ]),
+    loadScript([
+      'lib/jsQR.min.js',
+      'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js',
+      'https://unpkg.com/jsqr@1.4.0/dist/jsQR.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js',
+    ]),
+  ]).then(() => {
+    window.LIBS_OK = true;
+    console.log('All libs loaded. QRCode:', typeof QRCode, 'jsQR:', typeof jsQR);
+  }).catch(err => {
+    window.LIBS_OK = false;
+    window.LIBS_ERR = err;
+    console.error('Library load failed:', err);
+  });
+</script>
+<script>
+  // ?reset → clear service worker & caches and reload
+  if (/[?&]reset\b/.test(location.search)) {
+    (async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) await r.unregister();
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const k of keys) await caches.delete(k);
+        }
+        alert('Cache temizlendi. Sayfayı yeniden açabilirsin.');
+      } catch(e) { alert('Reset hatası: ' + e.message); }
+      location.href = location.pathname;
+    })();
+  }
+  // Register service worker for offline support
+  if ('serviceWorker' in navigator && !/[?&]reset\b/.test(location.search)) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+  // Debug mode: append ?debug to URL to load on-device console (Eruda)
+  if (/[?&]debug\b/.test(location.search)) {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+    s.onload = () => { try { eruda.init(); console.log('Eruda console loaded'); } catch(e){} };
+    s.onerror = () => alert('Eruda yüklenemedi (Brave Shields açık olabilir)');
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --bg-elev: #232323;
+    --bg-card: #2d2d2d;
+    --ink: #ebe5d8;
+    --ink-dim: #8a8478;
+    --accent: #d4a574;
+    --line: #3a3a3a;
+    --red: #c84545;
+    --blue: #3a7bc8;
+    --yellow: #d4a574;
+    --black: #1a1a1a;
+    --red-soft: #5a2a2a;
+    --blue-soft: #2a3f5a;
+    --yellow-soft: #5a4a2a;
+    --safe-top: env(safe-area-inset-top);
+    --safe-bottom: env(safe-area-inset-bottom);
+  }
+
+  @font-face {
+    font-family: 'serif-fb';
+    src: local('Georgia');
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%; width: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Be Vietnam Pro', 'Outfit', 'DM Sans', system-ui, sans-serif;
+    --font-display: 'Coiny', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  #app {
+    height: 100vh;
+    width: 100vw;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* === Screens === */
+  .screen { display: none; flex-direction: column; height: 100%; width: 100%; }
+  .screen.active { display: flex; }
+
+  /* === Mode select === */
+  #mode-screen {
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    background: radial-gradient(ellipse at top, #2a2520 0%, var(--bg) 60%);
+  }
+  #mode-screen h1 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    color: var(--accent);
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+  }
+  #mode-screen .version-tag {
+    font-size: 11px;
+    color: var(--ink-dim);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  #mode-screen .subtitle {
+    color: var(--ink-dim);
+    font-style: italic;
+    margin-bottom: 28px;
+    letter-spacing: 2px;
+    font-size: 13px;
+  }
+  .lang-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .lang-btn {
+    padding: 5px 14px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 2px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .lang-btn.active { border-color: var(--accent); color: var(--accent); }
+  .lang-btn.disabled { opacity: 0.35; cursor: not-allowed; }
+  .lang-section-label {
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .mode-btn {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px 32px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .mode-btn:hover, .mode-btn:active {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .mode-btn .hint {
+    display: block;
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-top: 5px;
+    letter-spacing: 1px;
+    text-transform: none;
+    font-style: italic;
+    font-weight: 400;
+    text-align: center;
+  }
+  }
+
+  /* === Top bar === */
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 8px 25px;
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--line);
+    min-height: 48px;
+    flex-shrink: 0;
+    gap: 12px;
+  }
+  .topbar .left {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .topbar .center {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar .right {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .topbar .title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .iconbtn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .iconbtn:active { background: var(--bg-card); }
+  .iconbtn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .iconbtn.primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .iconbtn.danger {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  /* === Status strip === */
+  .status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 25px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    position: relative;
+    margin-bottom: 0;
+  }
+  .status .score {
+    position: absolute;
+    left: 25px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .status .turn-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .status .pass-wrap {
+    position: absolute;
+    right: 25px;
+    display: flex;
+    align-items: center;
+  }
+  .score-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .score-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+  }
+  .score-dot.red { background: var(--red); }
+  .score-dot.blue { background: var(--blue); }
+  .turn-indicator {
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .turn-indicator.red { background: var(--red-soft); color: #ffaaaa; border: 1px solid var(--red); }
+  .turn-indicator.blue { background: var(--blue-soft); color: #aaccff; border: 1px solid var(--blue); }
+
+  /* === Board grid === */
+  .board-wrap {
+    flex: 1;
+    min-height: 0;
+    padding: 25px;
+    overflow: hidden;
+  }
+  .grid {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+  }
+  .grid.size-4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); }
+  .grid.size-5 { grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); }
+
+  .card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    cursor: pointer;
+    overflow: hidden;
+    min-height: 0;
+    min-width: 0;
+    transition: transform 0.1s, opacity 0.3s;
+  }
+  .card .word {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 1.9vw, 22px);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    color: var(--ink);
+    z-index: 2;
+    word-break: break-word;
+    text-transform: uppercase;
+  }
+  .card.revealed { cursor: default; }
+  .card.revealed .word {
+    opacity: 0.55;
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+  }
+  .card.revealed.red { background: var(--red); border-color: #8a3030; }
+  .card.revealed.red .word { color: #fff; opacity: 0.8; }
+  .card.revealed.blue { background: var(--blue); border-color: #2a5688; }
+  .card.revealed.blue .word { color: #fff; opacity: 0.85; }
+  .card.revealed.yellow { background: var(--yellow); border-color: #8a6a3a; }
+  .card.revealed.yellow .word { color: #2a2010; opacity: 0.7; }
+  .card.revealed.black { 
+    background: #0a0a0a; border-color: #000;
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.05);
+  }
+  .card.revealed.black .word { color: #d4a574; opacity: 0.9; }
+  
+  .card.waiting { 
+    opacity: 0.6;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.9; }
+  }
+
+  /* spymaster: full color cards with word readable */
+  .grid.spymaster { height: 100%; }
+  .grid.spymaster .card {
+    cursor: pointer;
+    padding: 2px;
+  }
+  .grid.spymaster .card .word {
+    font-size: clamp(8px, 1.6vw, 14px);
+    padding-bottom: 0;
+    font-weight: 700;
+  }
+  /* Starting team banner on spy grid */
+  .starting-team-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 12px;
+    margin: 0 5px 4px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .starting-team-badge.red { background: var(--red-soft); color: #ffaaaa; border: 1px solid var(--red); }
+  .starting-team-badge.blue { background: var(--blue-soft); color: #aaccff; border: 1px solid var(--blue); }
+  .grid.spymaster .card.color-red { background: var(--red); border-color: #8a3030; }
+  .grid.spymaster .card.color-red .word { color: #fff; }
+  .grid.spymaster .card.color-blue { background: var(--blue); border-color: #2a5688; }
+  .grid.spymaster .card.color-blue .word { color: #fff; }
+  .grid.spymaster .card.color-yellow { background: var(--yellow); border-color: #8a6a3a; }
+  .grid.spymaster .card.color-yellow .word { color: #2a2010; }
+  .grid.spymaster .card.color-black { background: #0a0a0a; border-color: #000; }
+  .grid.spymaster .card.color-black .word { color: var(--accent); }
+  .grid.spymaster .card.revealed {
+    opacity: 0.35;
+  }
+  .grid.spymaster .card.revealed .word {
+    text-decoration: line-through;
+  }
+
+  /* === Modal === */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-bg.active { display: flex; }
+  .modal {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 24px 24px 40px 24px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal h2 {
+    margin: 0 0 16px 0;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: normal;
+  }
+  .modal p { color: var(--ink-dim); margin: 0 0 16px 0; font-size: 14px; line-height: 1.5; }
+  .modal label { display: block; margin: 25px 0 6px 0; font-size: 12px; letter-spacing: 1px; color: var(--ink-dim); text-transform: uppercase; }
+  .modal label:first-of-type { margin-top: 0; }
+  .modal select, .modal input[type=text] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 16px;
+    border-radius: 2px;
+  }
+  .modal .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .modal .btn-row .iconbtn {
+    flex: 1;
+    padding: 12px;
+    font-size: 13px;
+    min-width: 100px;
+  }
+
+  /* QR */
+  #qr-display {
+    background: #fff;
+    padding: 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+  }
+  #qr-display canvas { display: block; max-width: 100%; height: auto; }
+  
+  #qr-scanner-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 12px 0;
+  }
+  #qr-scanner-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #qr-scanner-overlay {
+    position: absolute;
+    inset: 15%;
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  }
+  
+  .conn-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .conn-status.off { background: var(--red-soft); color: #ffaaaa; }
+  .conn-status.on { background: #2a5a2a; color: #aaffaa; }
+  .conn-status.connecting { background: var(--yellow-soft); color: #ffd9aa; }
+
+  /* Banner */
+  .banner {
+    position: fixed;
+    left: 50%;
+    top: 80px;
+    transform: translateX(-50%);
+    background: var(--bg-elev);
+    border: 1px solid var(--accent);
+    padding: 14px 28px;
+    border-radius: 4px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 200;
+    font-size: 13px;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    animation: bannerIn 0.3s ease-out;
+  }
+  @keyframes bannerIn {
+    from { transform: translate(-50%, -20px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+  }
+  
+  /* Help text */
+  .help-text {
+    text-align: center;
+    color: var(--ink-dim);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+
+  .ti { font-size: 16px; line-height: 1; vertical-align: middle; }
+  .iconbtn .ti { font-size: 15px; }
+    width: 100%;
+    height: 80px;
+    background: var(--bg);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 8px;
+    font-family: monospace;
+    font-size: 10px;
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+
+  /* Settings lang option */
+  .option-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .option-chip {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-dim);
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .option-chip.active { border-color: var(--accent); color: var(--accent); background: var(--yellow-soft); }
+  .option-chip.soon { opacity: 0.35; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Mode select -->
+  <div id="mode-screen" class="screen active">
+    <h1>Codenames</h1>
+
+    <div style="display:flex; gap:50px; justify-content:center; align-items:flex-start; flex-wrap:wrap;">
+      <div>
+        <div class="lang-section-label" id="lbl-ui-lang" data-i18n="ui_lang_label">UI Language</div>
+        <div class="lang-row" style="justify-content:center">
+          <button class="lang-btn active" id="ui-lang-tr">TR</button>
+          <button class="lang-btn" id="ui-lang-en">EN</button>
+        </div>
+      </div>
+      <div>
+        <div class="lang-section-label" id="lbl-game-lang" data-i18n="game_lang_label">Game Language</div>
+        <div class="lang-row" style="justify-content:center">
+          <button class="lang-btn active" id="game-lang-tr">TR</button>
+          <button class="lang-btn disabled" title="Coming soon" onclick="App.showBanner(I18n.t('soon'))">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="mode-btn" style="border-radius:3px;" onclick="App.startBoard()">
+      <span id="btn-board-label" data-i18n="btn_board">Board (iPad)</span>
+      <span class="hint" id="btn-board-hint" data-i18n="btn_board_hint">kelime tahtası · oyuncular bakar</span>
+    </button>
+    <button class="mode-btn" style="border-radius:6px;" onclick="App.startSpymaster()">
+      <span id="btn-spy-label" data-i18n="btn_spy">Anlatıcı (iPhone)</span>
+      <span class="hint" id="btn-spy-hint" data-i18n="btn_spy_hint">renkli harita · sadece anlatıcılar</span>
+    </button>
+    <div class="version-tag" style="margin-top:50px;">v1.8.5</div>
+  </div>
+
+  <!-- Board screen -->
+  <div id="board-screen" class="screen">
+    <div class="topbar">
+      <div class="left">
+        <span class="title" id="board-title-el">CODENAMES BOARD</span>
+        <span id="board-conn" class="conn-status off">Bağlı değil</span>
+      </div>
+      <div class="center">
+        <div class="score-item"><span class="score-dot red"></span><span id="score-red">0</span></div>
+        <div class="score-item"><span class="score-dot blue"></span><span id="score-blue">0</span></div>
+      </div>
+      <div class="right">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.5</span>
+        <button class="iconbtn" id="undo-btn" onclick="App.doUndo()" title="Undo"><i class="ti ti-arrow-back-up"></i></button>
+        <button class="iconbtn" onclick="App.openPair()" id="board-pair-btn" data-i18n="pair">Eşle</button>
+        <button class="iconbtn primary" onclick="App.confirmNewGame()" id="newgame-topbtn" data-i18n="new_game">Yeni Oyun</button>
+        <button class="iconbtn" onclick="App.openSettings()" id="settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+      </div>
+    </div>
+    <div class="status">
+      <div class="turn-center">
+        <div id="turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+      </div>
+      <div class="pass-wrap">
+        <button id="pass-btn" data-i18n="pass" onclick="App.passTurn()" class="turn-indicator" style="cursor:pointer;background:none;border:1px solid var(--line);color:var(--ink-dim);font-family:inherit;font-size:10px;letter-spacing:1.5px;padding:3px 10px;border-radius:2px;">PAS</button>
+      </div>
+    </div>
+    <div id="disc-bar" style="display:none; align-items:center; justify-content:space-between; gap:10px; padding:7px 12px; background:#3a1a1a; border-bottom:1px solid var(--red); flex-shrink:0;">
+      <div style="display:flex; align-items:center; gap:8px; flex:1; min-width:0;">
+        <i class="ti ti-wifi-off" style="color:#ffaaaa; flex-shrink:0; font-size:14px;"></i>
+        <span id="disc-msg" data-i18n="disc_msg" style="color:#ffaaaa; font-size:11px; letter-spacing:0.5px;">Bağlantı kesildi. Tekrar eşleme gerekiyor.</span>
+      </div>
+      <div style="display:flex; gap:6px; flex-shrink:0;">
+        <button class="iconbtn primary" id="disc-reconnect-btn" data-i18n="reconnect" onclick="App.hideDiscBar(); App.openPair()" style="border-color:#c84545; color:#ffaaaa; padding:4px 10px; font-size:11px;">Tekrar Bağlan</button>
+        <button class="iconbtn" id="disc-dismiss-btn" data-i18n="close" onclick="App.hideDiscBar()" style="padding:4px 10px; font-size:11px;">Kapat</button>
+      </div>
+    </div>
+    <div class="board-wrap">
+      <div id="grid" class="grid size-5"></div>
+    </div>
+    <div class="help-text" id="help-board">Karta uzun bas → renk seç</div>
+  </div>
+
+  <!-- Spymaster screen -->
+  <div id="spy-screen" class="screen">
+    <div class="topbar">
+      <div class="left">
+        <span class="title" id="spy-title" data-i18n="spy_title">Anlatıcı</span>
+        <span id="spy-conn" class="conn-status off">Bağlı değil</span>
+      </div>
+      <div class="right">
+        <span style="font-size:9px;color:var(--ink-dim);letter-spacing:1px;opacity:0.6;">v1.8.5</span>
+        <button class="iconbtn primary" onclick="App.spyNewMap()" id="spy-newmap-btn" data-i18n="new_map">Yeni Harita</button>
+        <button class="iconbtn" onclick="App.openPair()" id="spy-pair-btn" data-i18n="pair">Eşle</button>
+        <button class="iconbtn" onclick="App.openSettings()" id="spy-settings-btn" style="padding:5px 8px;"><i class="ti ti-settings" style="font-size:16px;"></i></button>
+      </div>
+    </div>
+    <div class="status">
+      <div class="score">
+        <div class="score-item"><span class="score-dot red"></span><span id="spy-score-red">0</span></div>
+        <div class="score-item"><span class="score-dot blue"></span><span id="spy-score-blue">0</span></div>
+      </div>
+      <div id="spy-turn-indicator" class="turn-indicator red">Kırmızı Sıra</div>
+    </div>
+    <div id="starting-team-badge" class="starting-team-badge red" style="display:none"></div>
+    <div class="board-wrap">
+      <div id="spy-grid" class="grid spymaster size-5"></div>
+    </div>
+    <div class="help-text" id="spy-help" data-i18n="help_spy">Eşleme için → "Eşle"</div>
+  </div>
+
+  <!-- Pairing modal -->
+  <div id="pair-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="pair-title">Cihaz Eşleme</h2>
+      <p id="pair-desc">Board QR üretir, Anlatıcı tarar, sonra rolleri değişir.</p>
+      
+      <div id="pair-step-1" style="display:none">
+        <p><strong>Adım 1 (Board):</strong> Bu QR'ı Anlatıcı'ya okut.</p>
+        <div id="qr-display"><canvas id="qr-canvas"></canvas></div>
+        <textarea class="qr-text-fallback" id="offer-text" readonly placeholder="QR çalışmazsa bu metni manuel kopyala"></textarea>
+      </div>
+      
+      <div id="pair-step-2" style="display:none">
+        <p><strong>Adım 2 (Anlatıcı):</strong> Board'daki QR'ı tara.</p>
+        <div id="qr-scanner-wrap">
+          <video id="qr-scanner-video" playsinline></video>
+          <div id="qr-scanner-overlay"></div>
+        </div>
+        <textarea class="qr-text-fallback" id="offer-input" placeholder="Veya QR metnini buraya yapıştır"></textarea>
+      </div>
+
+      <div id="pair-step-3" style="display:none">
+        <p><strong>Adım 3 (Anlatıcı):</strong> Cevap QR'ı oluşturuldu. Board'a okut.</p>
+        <div id="qr-display-2" style="background:#fff;padding:12px;border-radius:4px;display:flex;align-items:center;justify-content:center;margin:12px 0;"><canvas id="qr-canvas-2"></canvas></div>
+        <textarea class="qr-text-fallback" id="answer-text" readonly></textarea>
+      </div>
+
+      <div id="pair-step-4" style="display:none">
+        <p><strong>Adım 4 (Board):</strong> Anlatıcı'nın cevap QR'ını tara.</p>
+        <div id="qr-scanner-wrap-2" style="position:relative;width:100%;aspect-ratio:1;background:#000;border-radius:4px;overflow:hidden;margin:12px 0;">
+          <video id="qr-scanner-video-2" playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+          <div style="position:absolute;inset:15%;border:2px solid var(--accent);border-radius:4px;pointer-events:none;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);"></div>
+        </div>
+        <textarea class="qr-text-fallback" id="answer-input" placeholder="Veya cevap metnini buraya yapıştır"></textarea>
+      </div>
+
+      <div id="pair-status" style="margin-top:8px; font-size:12px; color: var(--ink-dim);"></div>
+
+      <div class="btn-row">
+        <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pair-modal')">İptal</button>
+        <button class="iconbtn primary" id="pair-next-btn" onclick="App.pairNext()">İleri</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings modal -->
+  <div id="settings-modal" class="modal-bg">
+    <div class="modal">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;">
+        <h2 id="settings-title" data-i18n="settings_title" style="margin:0;">Ayarlar</h2>
+        <span style="font-size:11px; color:var(--ink-dim); letter-spacing:1px;">v1.8.5</span>
+      </div>
+      <label id="lbl-ui-lang-settings" data-i18n="ui_lang_label">Arayüz Dili</label>
+      <div class="option-row" style="margin-bottom:25px;">
+        <button class="option-chip active" id="settings-lang-tr">TR</button>
+        <button class="option-chip" id="settings-lang-en">EN</button>
+      </div>
+      <label id="lbl-board-size" data-i18n="board_size_label">Board Boyutu</label>
+      <select id="board-size">
+        <option value="5" id="opt-5x5" data-i18n="opt_5x5">5×5 (klasik)</option>
+        <option value="4" id="opt-4x4" data-i18n="opt_4x4">4×4 (hızlı)</option>
+      </select>
+      <label id="lbl-undo-steps" data-i18n="undo_steps_label">Undo Adımı</label>
+      <select id="undo-steps-select">
+        <option value="0" id="opt-undo-0" data-i18n="undo_steps_off">0 (kapalı)</option>
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+      </select>
+      <label id="lbl-word-pool" data-i18n="word_pool_label">Kullanılan Kelime Havuzu</label>
+      <p id="word-stats" style="margin:4px 0 8px 0; font-size:12px;"></p>
+      <div class="btn-row">
+        <button class="iconbtn danger" id="btn-reset-pool" data-i18n="reset_pool" onclick="App.resetUsedWords()">Havuzu Sıfırla</button>
+      </div>
+
+      <!-- Advanced -->
+      <div style="margin-top:25px; margin-bottom:16px;">
+        <button id="advanced-toggle" onclick="App.toggleAdvanced()" style="background:none;border:none;color:var(--ink-dim);font-family:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;padding:0;display:flex;align-items:center;gap:6px;">
+          <i class="ti ti-chevron-right" id="advanced-arrow"></i> <span id="lbl-advanced" data-i18n="advanced">Advanced</span>
+        </button>
+        <div id="advanced-section" style="display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:4px;flex-direction:column;gap:8px;">
+          <button class="iconbtn danger" onclick="App.cacheReset()" id="btn-cache-reset" data-i18n="cache_reset">Cache Reset</button>
+          <button class="iconbtn" onclick="App.loadDebug()" id="btn-debug" data-i18n="debug_console">Debug Console</button>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:24px;">
+        <button class="iconbtn" id="btn-close-settings" data-i18n="close" onclick="App.closeModal('settings-modal')">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- New game confirm -->
+  <div id="newgame-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="newgame-modal-title" data-i18n="newgame_title">Yeni Oyun</h2>
+      <p id="newgame-modal-msg" data-i18n="newgame_msg">Mevcut oyunu bitirip yeni board oluşturulsun mu?</p>
+      <div class="btn-row">
+        <button class="iconbtn cmbtn-cancel" data-i18n="cancel" onclick="App.closeModal('newgame-modal')">İptal</button>
+        <button class="iconbtn primary" onclick="App.newGame()" id="newgame-confirm-btn" data-i18n="new_game">Yeni Oyun</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game over -->
+  <div id="gameover-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="gameover-title">Oyun Bitti</h2>
+      <p id="gameover-msg"></p>
+      <div class="btn-row">
+        <button class="iconbtn primary" onclick="App.closeModal('gameover-modal'); App.newGame()" id="gameover-newgame-btn" data-i18n="new_game">Yeni Oyun</button>
+        <button class="iconbtn" onclick="App.closeModal('gameover-modal')" id="gameover-close-btn" data-i18n="close">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color picker (long press) -->
+  <div id="color-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="color-modal-title" data-i18n="color_pick_title">Renk Seç</h2>
+      <p id="color-modal-word" style="color:var(--accent); font-size:20px; letter-spacing:2px;"></p>
+      <div class="btn-row">
+        <button class="iconbtn" style="background:var(--red); color:#fff; border-color:var(--red)" onclick="App.manualReveal('red')" id="cmbtn-red" data-i18n="color_red">Kırmızı</button>
+        <button class="iconbtn" style="background:var(--blue); color:#fff; border-color:var(--blue)" onclick="App.manualReveal('blue')" id="cmbtn-blue" data-i18n="color_blue">Mavi</button>
+        <button class="iconbtn" style="background:var(--yellow); color:#000; border-color:var(--yellow)" onclick="App.manualReveal('yellow')" id="cmbtn-yellow" data-i18n="color_yellow">Sarı</button>
+        <button class="iconbtn" style="background:#000; color:var(--accent); border-color:#555" onclick="App.manualReveal('black')" id="cmbtn-black" data-i18n="color_black">Ölüm</button>
+      </div>
+      <div class="btn-row">
+        <button class="iconbtn" onclick="App.closeModal('color-modal')" id="cmbtn-cancel" data-i18n="cancel">İptal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pass confirm modal -->
+  <div id="pass-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="pass-modal-title" data-i18n="pass">PAS</h2>
+      <p id="pass-modal-msg"></p>
+      <div class="btn-row">
+        <button class="iconbtn primary" id="pass-yes-btn" onclick="App.confirmPass()">Evet</button>
+        <button class="iconbtn" data-i18n="cancel" onclick="App.closeModal('pass-modal')">İptal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swap card modal -->
+  <div id="swap-modal" class="modal-bg">
+    <div class="modal">
+      <h2 id="swap-title" data-i18n="swap_title">Kart Değiştir</h2>
+      <p id="swap-word" style="color:var(--accent);font-size:22px;letter-spacing:2px;font-weight:700;margin:8px 0 4px;"></p>
+      <p id="swap-msg" data-i18n="swap_msg" style="margin-bottom:0;">Bu kartın değiştirilmesini istiyor musunuz?</p>
+      <div class="btn-row">
+        <button class="iconbtn primary" id="swap-yes-btn" data-i18n="swap_yes" onclick="App.confirmSwap()">Değiştir</button>
+        <button class="iconbtn" id="swap-no-btn" data-i18n="swap_no" onclick="App.closeModal('swap-modal')">İptal</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+// ============================================================
+// i18n
+// ============================================================
+const I18n = {
+  strings: {
+    tr: {
+      conn_off: 'Bağlı değil', conn_connecting: 'Bağlanıyor...', conn_on: 'Bağlı',
+      turn_red: 'SIRA KIRMIZIDA', turn_blue: 'SIRA MAVİDE', turn_over: 'OYUN BİTTİ',
+      starts_red: 'Kırmızı Başlıyor', starts_blue: 'Mavi Başlıyor',
+      new_game: 'Yeni Oyun', pair: 'Eşle', settings: '⚙',
+      board_title: 'Board', spy_title: 'Anlatıcı',
+      help_board_conn: 'Dokun → renk aç · Uzun bas → kart değiştir',
+      help_board_noconn: 'Dokun → renk seç · Uzun bas → kart değiştir',
+      help_spy: 'Eşleme için → "Eşle"',
+      btn_board: 'Board (iPad)', btn_board_hint: 'kelime tahtası · oyuncular bakar',
+      btn_spy: 'Anlatıcı (iPhone)', btn_spy_hint: 'renkli harita · sadece anlatıcılar',
+      subtitle: '— türkçe —',
+      ui_lang_label: 'Arayüz Dili', game_lang_label: 'Oyun Dili',
+      gameover_death: 'takım ölüm kartını açtı!', gameover_win: ' takım kazandı.',
+      gameover_red_win: 'Kırmızı takım tüm kelimelerini buldu!',
+      gameover_blue_win: 'Mavi takım tüm kelimelerini buldu!',
+      death_title: '☠ Ölüm Kartı', win_title: '★ Tebrikler',
+      pool_reset: 'Kelime havuzu sıfırlandı',
+      new_game_started: 'Yeni oyun başladı',
+      size_changed: 'Yeni boyut sonraki oyunda etkili',
+      undo_steps_label: 'Undo Adımı',
+      undo_steps_off: '0 (kapalı)',
+      spy_no_board: 'Board hazır değil — Yeni Oyun bekleniyor',
+      color_pick_title: 'Renk Seç',
+      color_red: 'Kırmızı', color_blue: 'Mavi', color_yellow: 'Sarı', color_black: 'Ölüm',
+      cancel: 'İptal', close: 'Kapat', confirm: 'Yeni Oyun',
+      settings_title: 'Ayarlar', board_size_label: 'Board Boyutu',
+      word_pool_label: 'Kelime Havuzu', reset_pool: 'Havuzu Sıfırla',
+      opt_5x5: '5×5 (klasik)', opt_4x4: '4×4 (hızlı)',
+      newgame_title: 'Yeni Oyun', newgame_msg: 'Mevcut oyunu bitirip yeni board oluşturulsun mu?',
+      disc_title: 'Bağlantı Kesildi', disc_msg: 'Anlatıcı cihazıyla bağlantı kesildi. Tekrar eşlemek gerekiyor.',
+      reconnect: 'Tekrar Bağlan',
+      pair_title_board: 'Cihaz Eşleme (Board)', pair_title_spy: 'Cihaz Eşleme (Anlatıcı)',
+      soon: 'yakında',
+      advanced: 'Gelişmiş', cache_reset: 'Önbelleği Temizle', debug_console: 'Debug Konsolu',
+      new_map: 'Yeni Harita',
+      spy_newmap_confirm: 'Kartlar ve harita yenilenecek, mevcut oyun sonlanacak. Emin misiniz?',
+      spy_disconnected_msg: 'Bağlantı yok — eşleşince harita görünür',
+      pass_confirm_red: 'Sıra maviye geçecek. Emin misiniz?',
+      pass_confirm_blue: 'Sıra kırmızıya geçecek. Emin misiniz?',
+      pass_confirm_yes: 'Evet',
+      swap_title: 'Kart Değiştir',
+      swap_msg: 'Bu kartın değiştirilmesini istiyor musunuz?',
+      swap_yes: 'Değiştir', swap_no: 'İptal',
+      swap_late: 'Kart değişimi sadece oyun başında yapılabilir.',
+    },
+    en: {
+      conn_off: 'Disconnected', conn_connecting: 'Connecting...', conn_on: 'Connected',
+      turn_red: 'RED\'S TURN', turn_blue: 'BLUE\'S TURN', turn_over: 'GAME OVER',
+      starts_red: 'Red Starts', starts_blue: 'Blue Starts',
+      new_game: 'New Game', pair: 'Pair', settings: '⚙',
+      board_title: 'Board', spy_title: 'Spymaster',
+      help_board_conn: 'Tap → reveal · Long press → swap card',
+      help_board_noconn: 'Tap → pick color · Long press → swap card',
+      help_spy: 'Tap "Pair" to connect',
+      btn_board: 'Board (iPad)', btn_board_hint: 'word grid · players look here',
+      btn_spy: 'Spymaster (iPhone)', btn_spy_hint: 'color map · spymasters only',
+      subtitle: '— turkish —',
+      ui_lang_label: 'UI Language', game_lang_label: 'Game Language',
+      gameover_death: 'team revealed the death card!', gameover_win: ' team wins!',
+      gameover_red_win: 'Red team found all their words!',
+      gameover_blue_win: 'Blue team found all their words!',
+      death_title: '☠ Death Card', win_title: '★ Congratulations',
+      pool_reset: 'Word pool reset',
+      new_game_started: 'New game started',
+      size_changed: 'New size takes effect next game',
+      undo_steps_label: 'Undo Steps',
+      undo_steps_off: '0 (off)',
+      spy_no_board: 'Board not ready — waiting for New Game',
+      color_pick_title: 'Pick Color',
+      color_red: 'Red', color_blue: 'Blue', color_yellow: 'Yellow', color_black: 'Death',
+      cancel: 'Cancel', close: 'Close', confirm: 'New Game',
+      settings_title: 'Settings', board_size_label: 'Board Size',
+      word_pool_label: 'Word Pool', reset_pool: 'Reset Pool',
+      opt_5x5: '5×5 (classic)', opt_4x4: '4×4 (quick)',
+      newgame_title: 'New Game', newgame_msg: 'End current game and start a new board?',
+      disc_title: 'Connection Lost', disc_msg: 'Lost connection with spymaster. Re-pairing required.',
+      reconnect: 'Reconnect',
+      pair_title_board: 'Device Pairing (Board)', pair_title_spy: 'Device Pairing (Spymaster)',
+      soon: 'coming soon',
+      advanced: 'Advanced', cache_reset: 'Cache Reset', debug_console: 'Debug Console',
+      new_map: 'New Map',
+      spy_newmap_confirm: 'Cards and map will be reset, current game will end. Are you sure?',
+      spy_disconnected_msg: 'Not connected — map will appear after pairing',
+      pass_confirm_red: 'Turn will pass to blue. Are you sure?',
+      pass_confirm_blue: 'Turn will pass to red. Are you sure?',
+      pass_confirm_yes: 'Yes',
+      swap_title: 'Swap Card',
+      swap_msg: 'Do you want this card to be changed?',
+      swap_yes: 'Change it', swap_no: 'Cancel',
+      swap_late: 'Cards can only be changed at the beginning of the game.',
+    },
+  },
+  t(key) {
+    const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
+    const dict = I18n.strings[lang] || I18n.strings.tr;
+    return dict[key] || key;
+  },
+  applyAll() {
+    const lang = (typeof State !== 'undefined' && State.uiLang) ? State.uiLang : 'tr';
+    // data-i18n: translate all marked elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = I18n.t(key);
+    });
+    // active state on lang buttons — use classList directly, no toggle to avoid side effects
+    ['tr','en'].forEach(l => {
+      const s = document.getElementById('settings-lang-' + l);
+      const m = document.getElementById('ui-lang-' + l);
+      if (s) { s.classList.toggle('active', l === lang); }
+      if (m) { m.classList.toggle('active', l === lang); }
+    });
+    // help text (depends on connection state)
+    const hb = document.getElementById('help-board');
+    if (hb) hb.textContent = (typeof Peer !== 'undefined' && Peer.state === 'on')
+      ? I18n.t('help_board_conn') : I18n.t('help_board_noconn');
+    // turn indicator
+    if (typeof State !== 'undefined' && typeof UI !== 'undefined') {
+      UI.updateStatus();
+      UI.updateSpyStatus();
+      UI.updateConnStatus();
+    }
+  },
+};
+
+// ============================================================
+// State
+// ============================================================
+const State = {
+  mode: null,
+  size: 5,
+  board: [],
+  turn: 'red',
+  scoreRed: 0,
+  scoreBlue: 0,
+  redTarget: 9,
+  blueTarget: 8,
+  gameOver: false,
+  usedWords: [],
+  pendingRevealIdx: null,
+  longPressTimer: null,
+  longPressTriggered: false,
+  longPressIdx: null,
+  uiLang: 'tr',
+  undoSteps: 2,
+  undoStack: [],
+  lastTapIdx: null,
+  lastTapTime: 0,
+  swapIdx: null,
+};
+
+// ============================================================
+// Persistence
+// ============================================================
+const Store = {
+  load() {
+    try {
+      State.usedWords = JSON.parse(localStorage.getItem('codenames_used_words') || '[]');
+      State.size = parseInt(localStorage.getItem('codenames_size') || '5');
+      State.undoSteps = parseInt(localStorage.getItem('codenames_undo_steps') || '2');
+      // try to load game in progress
+      const saved = localStorage.getItem('codenames_game');
+      if (saved) {
+        try {
+          const g = JSON.parse(saved);
+          if (g && g.board && g.board.length) {
+            State.board = g.board;
+            State.turn = g.turn || 'red';
+            State.scoreRed = g.scoreRed || 0;
+            State.scoreBlue = g.scoreBlue || 0;
+            State.redTarget = g.redTarget || 9;
+            State.blueTarget = g.blueTarget || 8;
+            State.size = g.size || 5;
+            State.gameOver = !!g.gameOver;
+          }
+        } catch(e){}
+      }
+    } catch(e) {}
+  },
+  saveUsed() {
+    localStorage.setItem('codenames_used_words', JSON.stringify(State.usedWords));
+  },
+  saveSize() {
+    localStorage.setItem('codenames_size', String(State.size));
+  },
+  saveGame() {
+    localStorage.setItem('codenames_game', JSON.stringify({
+      board: State.board,
+      turn: State.turn,
+      scoreRed: State.scoreRed,
+      scoreBlue: State.scoreBlue,
+      redTarget: State.redTarget,
+      blueTarget: State.blueTarget,
+      size: State.size,
+      gameOver: State.gameOver,
+    }));
+  },
+  saveMode(m) {
+    localStorage.setItem('codenames_last_mode', m);
+  }
+};
+
+// ============================================================
+// Game logic
+// ============================================================
+const Game = {
+  rollNewBoard() {
+    const total = State.size * State.size;
+    let red, blue, yellow, black = 1;
+    if (State.size === 5) {
+      red = 9; blue = 8; yellow = 7; // 25 total, 9+8+7+1
+    } else { // 4x4 = 16 total: 6+5+4+1
+      red = 6; blue = 5; yellow = 4;
+    }
+    State.redTarget = red;
+    State.blueTarget = blue;
+    State.turn = 'red'; // red always starts (more cards)
+    State.scoreRed = 0;
+    State.scoreBlue = 0;
+    State.gameOver = false;
+    
+    // pick words
+    const pool = window.SEED_WORDS.filter(w => !State.usedWords.includes(w));
+    let words;
+    if (pool.length < total) {
+      // pool depleted, reset
+      State.usedWords = [];
+      Store.saveUsed();
+      words = shuffle([...window.SEED_WORDS]).slice(0, total);
+      App.showBanner('Kelime havuzu sıfırlandı');
+    } else {
+      words = shuffle(pool).slice(0, total);
+    }
+    // mark as used
+    State.usedWords = [...State.usedWords, ...words];
+    Store.saveUsed();
+    
+    // assign colors with constraint: no 5+ consecutive same color horizontally or vertically
+    const colors = [];
+    for (let i = 0; i < red; i++) colors.push('red');
+    for (let i = 0; i < blue; i++) colors.push('blue');
+    for (let i = 0; i < yellow; i++) colors.push('yellow');
+    colors.push('black');
+
+    let attempts = 0;
+    do {
+      shuffle(colors);
+      attempts++;
+    } while (!colorLayoutOk(colors, State.size) && attempts < 200);
+    
+    State.board = words.map((w, i) => ({
+      word: w,
+      color: colors[i],
+      revealed: false,
+    }));
+    Store.saveGame();
+  },
+  
+  revealCard(idx, color) {
+    if (State.gameOver) return;
+    const card = State.board[idx];
+    if (!card || card.revealed) return;
+
+    // save undo snapshot before mutating
+    if (State.undoSteps > 0) {
+      State.undoStack.push({
+        board: JSON.parse(JSON.stringify(State.board)),
+        turn: State.turn,
+        scoreRed: State.scoreRed,
+        scoreBlue: State.scoreBlue,
+        gameOver: false,
+      });
+      if (State.undoStack.length > State.undoSteps) State.undoStack.shift();
+    }
+    // if color provided, override (manual mode); else use board color
+    if (color) card.color = color;
+    card.revealed = true;
+    // score
+    if (card.color === 'red') State.scoreRed++;
+    else if (card.color === 'blue') State.scoreBlue++;
+    
+    // turn change logic (simplified codenames rules)
+    // if current team's color → can continue (we don't auto-end turn)
+    // if other team's color or yellow → end turn
+    // if black → game over for current team
+    
+    if (card.color === 'black') {
+      State.gameOver = true;
+      const L = I18n.t;
+      const loser = State.turn === 'red' ? L('color_red') : L('color_blue');
+      const winner = State.turn === 'red' ? L('color_blue') : L('color_red');
+      App.endGame(`${loser} ${L('gameover_death')} ${winner}${L('gameover_win')}`);
+    } else if (State.scoreRed >= State.redTarget) {
+      State.gameOver = true;
+      App.endGame(I18n.t('gameover_red_win'));
+    } else if (State.scoreBlue >= State.blueTarget) {
+      State.gameOver = true;
+      App.endGame(I18n.t('gameover_blue_win'));
+    } else {
+      // turn change if wrong guess
+      if (card.color !== State.turn) {
+        State.turn = State.turn === 'red' ? 'blue' : 'red';
+      }
+    }
+    
+    Store.saveGame();
+  },
+  
+  switchTurn() {
+    if (State.gameOver) return;
+    State.turn = State.turn === 'red' ? 'blue' : 'red';
+    Store.saveGame();
+  },
+
+  swapCard(idx) {
+    // Pull a fresh word from unused pool
+    const used = new Set(State.board.map(c => c.word));
+    State.usedWords.forEach(w => used.add(w));
+    const pool = window.SEED_WORDS.filter(w => !used.has(w));
+    if (!pool.length) return false;
+    const newWord = pool[Math.floor(Math.random() * pool.length)];
+    State.usedWords.push(State.board[idx].word, newWord);
+    Store.saveUsed();
+    State.board[idx].word = newWord;
+    Store.saveGame();
+    return newWord;
+  },
+
+  undo() {
+    if (!State.undoStack.length) return false;
+    const snap = State.undoStack.pop();
+    State.board = snap.board;
+    State.turn = snap.turn;
+    State.scoreRed = snap.scoreRed;
+    State.scoreBlue = snap.scoreBlue;
+    State.gameOver = snap.gameOver;
+    Store.saveGame();
+    return true;
+  },
+};
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Returns true if no 4-connected same-color component is larger than 4 cells
+function colorLayoutOk(colors, size) {
+  const visited = new Array(colors.length).fill(false);
+  for (let start = 0; start < colors.length; start++) {
+    if (visited[start]) continue;
+    // BFS flood-fill from this cell
+    const color = colors[start];
+    const queue = [start];
+    visited[start] = true;
+    let count = 0;
+    while (queue.length) {
+      const idx = queue.shift();
+      count++;
+      if (count > 4) return false;
+      const r = Math.floor(idx / size), c = idx % size;
+      // 4 neighbors: up, down, left, right
+      [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].forEach(([nr,nc]) => {
+        if (nr >= 0 && nr < size && nc >= 0 && nc < size) {
+          const ni = nr * size + nc;
+          if (!visited[ni] && colors[ni] === color) {
+            visited[ni] = true;
+            queue.push(ni);
+          }
+        }
+      });
+    }
+  }
+  return true;
+}
+
+// ============================================================
+// WebRTC peer connection
+// ============================================================
+const Peer = {
+  pc: null,
+  channel: null,
+  isInitiator: false,
+  state: 'off', // off | connecting | on
+  onMessage: null,
+  
+  reset() {
+    this._stopPing();
+    this._releaseWakeLock();
+    if (this.channel) { try { this.channel.close(); } catch(e){} this.channel = null; }
+    if (this.pc) { try { this.pc.close(); } catch(e){} this.pc = null; }
+    this.state = 'off';
+    UI.updateConnStatus();
+  },
+  
+  async createOffer() {
+    this.reset();
+    this.isInitiator = true;
+    this.state = 'connecting';
+    UI.updateConnStatus();
+    
+    this.pc = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    });
+    this.channel = this.pc.createDataChannel('game', { ordered: true });
+    this._wireChannel(this.channel);
+    this._wirePc();
+    
+    const offer = await this.pc.createOffer();
+    await this.pc.setLocalDescription(offer);
+    
+    // wait for ICE gathering to complete (so SDP is self-contained)
+    await this._waitIceComplete();
+    return this._encode(this.pc.localDescription);
+  },
+  
+  async acceptOffer(offerStr) {
+    this.reset();
+    this.isInitiator = false;
+    this.state = 'connecting';
+    UI.updateConnStatus();
+    
+    this.pc = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    });
+    this.pc.ondatachannel = (e) => {
+      this.channel = e.channel;
+      this._wireChannel(this.channel);
+    };
+    this._wirePc();
+    
+    const offer = await this._decode(offerStr);
+    await this.pc.setRemoteDescription(offer);
+    const answer = await this.pc.createAnswer();
+    await this.pc.setLocalDescription(answer);
+    await this._waitIceComplete();
+    return this._encode(this.pc.localDescription);
+  },
+  
+  async acceptAnswer(answerStr) {
+    if (!this.pc) throw new Error('No pc');
+    const answer = await this._decode(answerStr);
+    await this.pc.setRemoteDescription(answer);
+  },
+  
+  _waitIceComplete() {
+    return new Promise((resolve) => {
+      if (this.pc.iceGatheringState === 'complete') { resolve(); return; }
+      const check = () => {
+        if (this.pc.iceGatheringState === 'complete') {
+          this.pc.removeEventListener('icegatheringstatechange', check);
+          resolve();
+        }
+      };
+      this.pc.addEventListener('icegatheringstatechange', check);
+      // timeout safety
+      setTimeout(() => resolve(), 8000);
+    });
+  },
+  
+  _wirePc() {
+    this.pc.onconnectionstatechange = () => {
+      const s = this.pc.connectionState;
+      if (s === 'connected') {
+        this.state = 'on';
+        if (State.mode === 'board' && State.board.length) UI.renderBoard();
+      } else if (s === 'disconnected' || s === 'failed' || s === 'closed') {
+        const wasOn = this.state === 'on';
+        this.state = 'off';
+        if (wasOn) {
+          if (State.mode === 'board' && State.board.length) UI.renderBoard();
+          App.onDisconnect();
+        }
+      }
+      UI.updateConnStatus();
+    };
+  },
+  
+  _pingTimer: null,
+  _wakeLock: null,
+
+  _wireChannel(ch) {
+    ch.onopen = () => {
+      this.state = 'on';
+      UI.updateConnStatus();
+      // initial sync
+      if (State.mode === 'board') {
+        this.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+      } else {
+        this.send({ type: 'request_state' });
+      }
+      // keepalive: ping every 15s to prevent WebRTC from going idle
+      this._startPing();
+      // WakeLock: keep screen awake (board stays on table, spy holds phone)
+      this._acquireWakeLock();
+    };
+    ch.onmessage = (e) => {
+      try {
+        const msg = JSON.parse(e.data);
+        if (msg.type === 'ping') { this.send({ type: 'pong' }); return; }
+        if (msg.type === 'pong') { return; } // heartbeat reply, ignore
+        if (this.onMessage) this.onMessage(msg);
+      } catch(err) { console.error('msg parse', err); }
+    };
+    ch.onclose = () => {
+      this.state = 'off';
+      this._stopPing();
+      this._releaseWakeLock();
+      UI.updateConnStatus();
+    };
+  },
+
+  _startPing() {
+    this._stopPing();
+    this._pingTimer = setInterval(() => {
+      if (this.channel && this.channel.readyState === 'open') {
+        this.channel.send(JSON.stringify({ type: 'ping' }));
+      } else {
+        this._stopPing();
+      }
+    }, 15000);
+  },
+
+  _stopPing() {
+    if (this._pingTimer) { clearInterval(this._pingTimer); this._pingTimer = null; }
+  },
+
+  async _acquireWakeLock() {
+    if (!('wakeLock' in navigator)) return;
+    try {
+      this._wakeLock = await navigator.wakeLock.request('screen');
+      this._wakeLock.addEventListener('release', () => {
+        // reacquire on visibility change (iOS releases it when tab goes background)
+        this._wakeLock = null;
+      });
+      console.log('WakeLock acquired');
+    } catch(e) { console.warn('WakeLock failed:', e.message); }
+  },
+
+  _releaseWakeLock() {
+    if (this._wakeLock) { this._wakeLock.release().catch(() => {}); this._wakeLock = null; }
+  },
+
+  send(obj) {
+    if (this.channel && this.channel.readyState === 'open') {
+      this.channel.send(JSON.stringify(obj));
+    }
+  },
+  
+  // SDP is big; we compress to fit in a QR code
+  async _encode(desc) {
+    const obj = { t: desc.type, s: desc.sdp };
+    const json = JSON.stringify(obj);
+    // try compression if available (iOS Safari 16.4+)
+    if (typeof CompressionStream !== 'undefined') {
+      try {
+        const stream = new Blob([json]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+        const buf = await new Response(stream).arrayBuffer();
+        const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+        return 'z:' + b64;
+      } catch(e) { /* fall through */ }
+    }
+    return 'r:' + json;
+  },
+  async _decode(str) {
+    if (str.startsWith('z:')) {
+      const b64 = str.slice(2);
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      const text = await new Response(stream).text();
+      const o = JSON.parse(text);
+      return { type: o.t, sdp: o.s };
+    } else if (str.startsWith('r:')) {
+      const o = JSON.parse(str.slice(2));
+      return { type: o.t, sdp: o.s };
+    } else {
+      // legacy: raw JSON
+      const o = JSON.parse(str);
+      return { type: o.t, sdp: o.s };
+    }
+  },
+};
+
+// ============================================================
+// UI
+// ============================================================
+const UI = {
+  showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  },
+  
+  renderBoard() {
+    const grid = document.getElementById('grid');
+    grid.className = `grid size-${State.size}`;
+    grid.innerHTML = '';
+    const connected = Peer.state === 'on';
+    State.board.forEach((card, i) => {
+      const el = document.createElement('div');
+      el.className = 'card';
+      if (card.revealed) el.classList.add('revealed', card.color);
+      el.innerHTML = `<div class="word">${card.word}</div>`;
+      if (!card.revealed) {
+        el.addEventListener('click', (e) => {
+          if (State.longPressTriggered) { State.longPressTriggered = false; return; }
+          App.boardCardTap(i);
+        });
+        el.addEventListener('touchstart', (e) => {
+          State.longPressTriggered = false;
+          State.longPressIdx = i;
+          const t = e.touches[0];
+          State._lpStartX = t.clientX;
+          State._lpStartY = t.clientY;
+          State.longPressTimer = setTimeout(() => {
+            State.longPressTriggered = true;
+            App.openSwap(i);
+          }, 700);
+        }, { passive: true });
+        el.addEventListener('touchmove', (e) => {
+          if (State.longPressTimer) {
+            const t = e.touches[0];
+            const dx = t.clientX - (State._lpStartX || 0);
+            const dy = t.clientY - (State._lpStartY || 0);
+            if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+              clearTimeout(State.longPressTimer);
+              State.longPressTimer = null;
+            }
+          }
+        }, { passive: true });
+        ['touchend','touchcancel'].forEach(ev => {
+          el.addEventListener(ev, () => {
+            if (State.longPressTimer) { clearTimeout(State.longPressTimer); State.longPressTimer = null; }
+          }, { passive: true });
+        });
+      }
+      grid.appendChild(el);
+    });
+    this.updateStatus();
+  },
+  
+  renderSpyBoard() {
+    const grid = document.getElementById('spy-grid');
+    grid.className = `grid spymaster size-${State.size}`;
+    grid.innerHTML = '';
+    const connected = Peer.state === 'on';
+
+    // Starting team badge
+    const badge = document.getElementById('starting-team-badge');
+    if (State.board.length) {
+      const t = State.turn;
+      badge.textContent = I18n.t(t === 'red' ? 'starts_red' : 'starts_blue');
+      badge.className = `starting-team-badge ${t}`;
+      badge.style.display = 'flex';
+    } else {
+      badge.style.display = 'none';
+    }
+
+    if (!State.board.length) {
+      grid.innerHTML = `<div class="help-text" style="grid-column:1/-1; align-self:center; font-size:14px; text-align:center;">${I18n.t('spy_no_board')}</div>`;
+      this.updateSpyStatus();
+      return;
+    }
+
+    State.board.forEach((card, i) => {
+      const el = document.createElement('div');
+      el.className = `card color-${card.color}`;
+      if (card.revealed) el.classList.add('revealed');
+      // Show word only when connected
+      el.innerHTML = `<div class="word">${connected ? card.word : ''}</div>`;
+      el.addEventListener('click', () => {
+        if (connected && !card.revealed) {
+          Peer.send({ type: 'reveal', idx: i, color: card.color });
+          Game.revealCard(i, card.color);
+          UI.renderSpyBoard();
+        }
+      });
+      grid.appendChild(el);
+    });
+    this.updateSpyStatus();
+  },
+  
+  updateStatus() {
+    const L = I18n.t;
+    document.getElementById('score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
+    document.getElementById('score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
+    const ti = document.getElementById('turn-indicator');
+    ti.className = `turn-indicator ${State.turn}`;
+    ti.textContent = State.gameOver ? L('turn_over') : (State.turn === 'red' ? L('turn_red') : L('turn_blue'));
+    const hb = document.getElementById('help-board');
+    if (hb) hb.textContent = Peer.state === 'on' ? L('help_board_conn') : L('help_board_noconn');
+  },
+
+  updateSpyStatus() {
+    const L = I18n.t;
+    const connected = typeof Peer !== 'undefined' && Peer.state === 'on';
+    document.getElementById('spy-score-red').textContent = `${State.scoreRed}/${State.redTarget}`;
+    document.getElementById('spy-score-blue').textContent = `${State.scoreBlue}/${State.blueTarget}`;
+    const ti = document.getElementById('spy-turn-indicator');
+    if (connected) {
+      ti.style.display = '';
+      ti.className = `turn-indicator ${State.turn}`;
+      ti.textContent = State.gameOver ? L('turn_over') : (State.turn === 'red' ? L('turn_red') : L('turn_blue'));
+    } else {
+      ti.style.display = 'none';
+    }
+  },
+  
+  updateConnStatus() {
+    const L = I18n.t;
+    const map = {
+      off: ['off', L('conn_off')],
+      connecting: ['connecting', L('conn_connecting')],
+      on: ['on', L('conn_on')]
+    };
+    const [cls, txt] = map[Peer.state] || map.off;
+    ['board-conn', 'spy-conn'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.className = `conn-status ${cls}`; el.textContent = txt; }
+    });
+    if (State.mode === 'spy') UI.renderSpyBoard();
+  },
+  
+  showBanner(text, duration = 2500) {
+    const old = document.querySelector('.banner');
+    if (old) old.remove();
+    const b = document.createElement('div');
+    b.className = 'banner';
+    b.textContent = text;
+    document.body.appendChild(b);
+    setTimeout(() => { try { b.remove(); } catch(e){} }, duration);
+  },
+};
+
+// ============================================================
+// QR helpers
+// ============================================================
+const QR = {
+  scanner: null,
+  scannerActive: false,
+  
+  async drawTo(canvasId, text) {
+    // wait for libs
+    await window.LIBS_READY;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) throw new Error('Canvas bulunamadı: ' + canvasId);
+    if (typeof QRCode === 'undefined') {
+      throw new Error('QRCode kütüphanesi yüklenemedi. Brave Shields veya adblock CDN\'leri bloklamış olabilir. Adres çubuğundaki kalkan ikonuna basıp bu site için kapatmayı dene.');
+    }
+    console.log('QR drawing:', canvasId, 'text length:', text.length);
+    // Try with progressively lower error correction if data is large
+    const levels = ['M', 'L'];
+    let lastErr = null;
+    for (const ec of levels) {
+      try {
+        await new Promise((resolve, reject) => {
+          QRCode.toCanvas(canvas, text, {
+            errorCorrectionLevel: ec,
+            margin: 2,
+            width: 320,
+            color: { dark: '#000000', light: '#ffffff' },
+          }, (err) => err ? reject(err) : resolve());
+        });
+        console.log('QR drawn successfully with EC level:', ec);
+        return;
+      } catch (e) {
+        console.warn('QR failed at EC=' + ec + ':', e.message);
+        lastErr = e;
+      }
+    }
+    throw lastErr || new Error('QR oluşturulamadı (veri çok büyük olabilir)');
+  },
+  
+  async startScan(videoId, onResult) {
+    await window.LIBS_READY;
+    if (typeof jsQR === 'undefined') {
+      alert('jsQR kütüphanesi yüklenemedi. Brave Shields veya adblock CDN\'leri bloklamış olabilir. Kalkan ikonundan bu site için kapat.');
+      return;
+    }
+    const video = document.getElementById(videoId);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
+      });
+      video.srcObject = stream;
+      video.setAttribute('playsinline', true);
+      await video.play();
+      this.scannerActive = true;
+      this._scanLoop(video, onResult, stream);
+    } catch(err) {
+      alert('Kameraya erişilemedi: ' + err.message + '\nQR metnini elden yapıştırabilirsin.');
+    }
+  },
+  
+  _scanLoop(video, onResult, stream) {
+    if (!this.scannerActive) {
+      stream.getTracks().forEach(t => t.stop());
+      return;
+    }
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      try {
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imgData.data, imgData.width, imgData.height);
+        if (code && code.data) {
+          this.scannerActive = false;
+          stream.getTracks().forEach(t => t.stop());
+          onResult(code.data);
+          return;
+        }
+      } catch(e) {}
+    }
+    requestAnimationFrame(() => this._scanLoop(video, onResult, stream));
+  },
+  
+  stopScan() {
+    this.scannerActive = false;
+  }
+};
+
+// ============================================================
+// App controller
+// ============================================================
+const App = {
+  pairStep: 0, // 0 idle, 1 offer shown (board), 2 scanning offer (spy), 3 answer shown (spy), 4 scanning answer (board)
+  
+  init() {
+    window.SEED_WORDS = [...new Set(window.SEED_WORDS)];
+    Store.load();
+    const savedLang = localStorage.getItem('codenames_ui_lang') || 'tr';
+    State.uiLang = savedLang;
+    Peer.onMessage = (msg) => this.handlePeerMessage(msg);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && Peer.state === 'on') {
+        Peer._acquireWakeLock();
+      }
+    });
+    // Bind ALL lang buttons at init — they're always in DOM
+    ['tr','en'].forEach(l => {
+      document.getElementById('ui-lang-' + l)?.addEventListener('click', () => App.setUiLang(l));
+      document.getElementById('settings-lang-' + l)?.addEventListener('click', () => App.setUiLang(l));
+    });
+    I18n.applyAll();
+  },
+  
+  setUiLang(lang) {
+    State.uiLang = lang;
+    localStorage.setItem('codenames_ui_lang', lang);
+    I18n.applyAll();
+    const ws = document.getElementById('word-stats');
+    if (ws && State.usedWords !== undefined) {
+      const used = State.usedWords.length, total = window.SEED_WORDS ? window.SEED_WORDS.length : 0;
+      ws.textContent = lang === 'en'
+        ? `${used} / ${total} words used (${total - used} remaining)`
+        : `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+    }
+  },
+
+  onDisconnect() {
+    // Show disconnect bar (board screen only)
+    if (State.mode === 'board') {
+      const bar = document.getElementById('disc-bar');
+      if (bar) bar.style.display = 'flex';
+    }
+    if (State.mode === 'board') UI.renderBoard();
+  },
+
+  hideDiscBar() {
+    const bar = document.getElementById('disc-bar');
+    if (bar) bar.style.display = 'none';
+  },
+  
+  startBoard() {
+    State.mode = 'board';
+    Store.saveMode('board');
+    if (!State.board.length) Game.rollNewBoard();
+    UI.showScreen('board-screen');
+    UI.renderBoard();
+    UI.updateConnStatus();
+    this.updateUndoBtn();
+  },
+  
+  startSpymaster() {
+    State.mode = 'spy';
+    Store.saveMode('spy');
+    UI.showScreen('spy-screen');
+    // If no board exists yet, auto-generate a color map
+    if (!State.board.length) this.spyNewMap();
+    else UI.renderSpyBoard();
+    UI.updateConnStatus();
+  },
+  
+  // === Card interactions (board) ===
+  boardCardTap(idx) {
+    if (State.gameOver) return;
+    const card = State.board[idx];
+    if (card.revealed) return;
+    
+    if (Peer.state === 'on') {
+      // ask spymaster
+      Peer.send({ type: 'request_reveal', idx });
+      const el = document.querySelectorAll('#grid .card')[idx];
+      if (el) el.classList.add('waiting');
+      State.pendingRevealIdx = idx;
+      // timeout fallback
+      setTimeout(() => {
+        if (State.pendingRevealIdx === idx) {
+          if (el) el.classList.remove('waiting');
+          State.pendingRevealIdx = null;
+          UI.showBanner('Anlatıcı cevap vermedi — renk butonlarını kullan', 3000);
+        }
+      }, 5000);
+    } else {
+      // no peer, prompt for color
+      this.openColorPicker(idx);
+    }
+  },
+  
+  boardCardManualReveal(idx, color) {
+    if (State.gameOver) return;
+    Game.revealCard(idx, color);
+    Peer.send({ type: 'reveal_done', idx, color });
+    UI.renderBoard();
+    this.updateUndoBtn();
+  },
+  
+  openColorPicker(idx) {
+    State.pendingRevealIdx = idx;
+    const card = State.board[idx];
+    if (!card || card.revealed) return;
+    document.getElementById('color-modal-word').textContent = card.word;
+    document.getElementById('color-modal').classList.add('active');
+  },
+  
+  manualReveal(color) {
+    const idx = State.pendingRevealIdx;
+    if (idx === null || idx === undefined) return;
+    this.closeModal('color-modal');
+    State.pendingRevealIdx = null;
+    this.boardCardManualReveal(idx, color);
+  },
+  
+  // === Peer message handling ===
+  handlePeerMessage(msg) {
+    if (msg.type === 'board_state') {
+      // spy receives full state
+      State.board = msg.board;
+      State.turn = msg.turn;
+      State.scoreRed = msg.scoreRed;
+      State.scoreBlue = msg.scoreBlue;
+      State.size = msg.size;
+      State.gameOver = msg.gameOver;
+      State.redTarget = State.size === 5 ? 9 : 6;
+      State.blueTarget = State.size === 5 ? 8 : 5;
+      Store.saveGame();
+      if (State.mode === 'spy') {
+        UI.renderSpyBoard();
+        UI.updateSpyStatus();
+        if (!State.gameOver) App.closeModal('gameover-modal');
+      } else UI.renderBoard();
+    } else if (msg.type === 'request_state') {
+      // board sends current state
+      if (State.mode === 'board') {
+        Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+      }
+    } else if (msg.type === 'request_reveal') {
+      // spymaster gets request from board; respond with color
+      if (State.mode === 'spy') {
+        const card = State.board[msg.idx];
+        if (card) {
+          Peer.send({ type: 'reveal', idx: msg.idx, color: card.color });
+          // also reveal on spy side
+          Game.revealCard(msg.idx, card.color);
+          UI.renderSpyBoard();
+        }
+      }
+    } else if (msg.type === 'reveal') {
+      if (State.mode === 'board') {
+        State.pendingRevealIdx = null;
+        Game.revealCard(msg.idx, msg.color);
+        UI.renderBoard();
+        App.updateUndoBtn();
+      }
+    } else if (msg.type === 'reveal_done') {
+      // spymaster gets confirmation of manual reveal
+      if (State.mode === 'spy') {
+        Game.revealCard(msg.idx, msg.color);
+        UI.renderSpyBoard();
+      }
+    } else if (msg.type === 'new_game') {
+      // board pushed new game to spy
+      State.board = msg.board;
+      State.turn = msg.turn;
+      State.scoreRed = 0;
+      State.scoreBlue = 0;
+      State.size = msg.size;
+      State.gameOver = false;
+      State.redTarget = State.size === 5 ? 9 : 6;
+      State.blueTarget = State.size === 5 ? 8 : 5;
+      Store.saveGame();
+      if (State.mode === 'spy') UI.renderSpyBoard();
+    } else if (msg.type === 'undo_request') {
+      if (State.mode === 'board' && State.undoStack.length) {
+        const ok = Game.undo();
+        if (ok) {
+          UI.renderBoard();
+          this.updateUndoBtn();
+          Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+        }
+      }
+    } else if (msg.type === 'request_new_game') {
+      // Spy requested a new game — board rolls it
+      if (State.mode === 'board') {
+        App.newGame();
+      }
+    }
+  },
+  
+  // === Game controls ===
+  confirmNewGame() {
+    if (!State.board.length || State.gameOver) {
+      this.newGame();
+    } else {
+      document.getElementById('newgame-modal').classList.add('active');
+    }
+  },
+
+  newGame() {
+    this.closeModal('newgame-modal');
+    this.closeModal('gameover-modal');
+    State.undoStack = [];
+    Game.rollNewBoard();
+    UI.renderBoard();
+    this.updateUndoBtn();
+    Peer.send({ type: 'new_game', board: State.board, turn: State.turn, size: State.size });
+    UI.showBanner(I18n.t('new_game_started'));
+  },
+  
+  endGame(msg) {
+    const L = I18n.t;
+    const isDeathCard = State.board.some(c => c.revealed && c.color === 'black');
+    document.getElementById('gameover-title').textContent = isDeathCard ? L('death_title') : L('win_title');
+    document.getElementById('gameover-msg').textContent = msg;
+    document.getElementById('gameover-modal').classList.add('active');
+  },
+  
+  // === Settings ===
+  openSettings() {
+    const sizeEl = document.getElementById('board-size');
+    const undoEl = document.getElementById('undo-steps-select');
+    if (sizeEl) sizeEl.value = String(State.size);
+    if (undoEl) undoEl.value = String(State.undoSteps);
+    const used = State.usedWords.length;
+    const total = window.SEED_WORDS.length;
+    const ws = document.getElementById('word-stats');
+    if (ws) ws.textContent = State.uiLang === 'en'
+      ? `${used} / ${total} words used (${total - used} remaining)`
+      : `${used} / ${total} kelime kullanıldı (${total - used} kaldı)`;
+
+    // Hide board-only sections in spy mode
+    const spyMode = State.mode === 'spy';
+    ['lbl-undo-steps','undo-steps-select','lbl-word-pool','word-stats'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = spyMode ? 'none' : '';
+    });
+    const resetPoolRow = document.getElementById('btn-reset-pool')?.closest('.btn-row');
+    if (resetPoolRow) resetPoolRow.style.display = spyMode ? 'none' : '';
+
+    I18n.applyAll();
+    document.getElementById('settings-modal').classList.add('active');
+
+    if (sizeEl) sizeEl.onchange = (e) => {
+      State.size = parseInt(e.target.value);
+      Store.saveSize();
+      UI.showBanner(I18n.t('size_changed'));
+    };
+    if (undoEl) undoEl.onchange = (e) => {
+      State.undoSteps = parseInt(e.target.value);
+      localStorage.setItem('codenames_undo_steps', String(State.undoSteps));
+      State.undoStack = [];
+      this.updateUndoBtn();
+    };
+  },
+  
+  resetUsedWords() {
+    if (!confirm('Tüm kullanılmış kelimeler silinecek. Emin misin?')) return;
+    State.usedWords = [];
+    Store.saveUsed();
+    this.openSettings(); // refresh
+    UI.showBanner('Kelime havuzu sıfırlandı');
+  },
+  
+  // === Modal helpers ===
+  closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    if (id === 'pair-modal') {
+      QR.stopScan();
+      this.pairStep = 0;
+    }
+  },
+  
+  // === Pairing flow ===
+  openPair() {
+    this.pairStep = 0;
+    document.getElementById('pair-status').textContent = '';
+    ['pair-step-1','pair-step-2','pair-step-3','pair-step-4'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    document.getElementById('pair-modal').classList.add('active');
+    
+    if (State.mode === 'board') {
+      document.getElementById('pair-title').textContent = 'Cihaz Eşleme (Board)';
+      document.getElementById('pair-desc').textContent = 'QR oluşturulacak. Anlatıcı bunu tarayacak.';
+      document.getElementById('pair-next-btn').textContent = 'QR Oluştur';
+    } else {
+      document.getElementById('pair-title').textContent = 'Cihaz Eşleme (Anlatıcı)';
+      document.getElementById('pair-desc').textContent = 'Board\'daki QR\'ı tara, sonra cevap QR\'ını Board\'a göster.';
+      document.getElementById('pair-next-btn').textContent = 'QR Taramayı Başlat';
+    }
+  },
+  
+  async pairNext() {
+    const status = document.getElementById('pair-status');
+    
+    try {
+      if (State.mode === 'board') {
+        if (this.pairStep === 0) {
+          // create offer, show QR
+          status.textContent = 'Bağlantı hazırlanıyor...';
+          const offer = await Peer.createOffer();
+          document.getElementById('offer-text').value = offer;
+          document.getElementById('pair-step-1').style.display = 'block';
+          let qrOk = false;
+          try {
+            await QR.drawTo('qr-canvas', offer);
+            qrOk = true;
+          } catch(e) {
+            console.error('QR draw failed:', e);
+            status.innerHTML = '⚠ QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Anlatıcı\'ya gönder (yapıştırabilir).';
+          }
+          document.getElementById('pair-next-btn').textContent = 'Cevap QR Tara';
+          this.pairStep = 1;
+          if (qrOk) {
+            status.textContent = 'QR hazır. Anlatıcı taradıktan sonra "Cevap QR Tara"';
+          }
+        } else if (this.pairStep === 1) {
+          // scan answer
+          document.getElementById('pair-step-1').style.display = 'none';
+          document.getElementById('pair-step-4').style.display = 'block';
+          document.getElementById('pair-next-btn').textContent = 'Metni Uygula';
+          status.textContent = 'Cevap QR\'ı tara veya metni yapıştır.';
+          this.pairStep = 4;
+          
+          QR.startScan('qr-scanner-video-2', async (data) => {
+            document.getElementById('answer-input').value = data;
+            status.textContent = 'QR okundu, bağlanılıyor...';
+            try {
+              await Peer.acceptAnswer(data);
+              status.textContent = '✓ Bağlandı!';
+              setTimeout(() => this.closeModal('pair-modal'), 1000);
+            } catch(e) {
+              status.textContent = 'Hata: ' + e.message;
+            }
+          });
+        } else if (this.pairStep === 4) {
+          // manual paste of answer
+          const text = document.getElementById('answer-input').value.trim();
+          if (!text) { status.textContent = 'Cevap metni boş.'; return; }
+          QR.stopScan();
+          status.textContent = 'Bağlanılıyor...';
+          await Peer.acceptAnswer(text);
+          status.textContent = '✓ Bağlandı!';
+          setTimeout(() => this.closeModal('pair-modal'), 1000);
+        }
+      } else {
+        // spymaster flow
+        if (this.pairStep === 0) {
+          document.getElementById('pair-step-2').style.display = 'block';
+          document.getElementById('pair-next-btn').textContent = 'Metni Uygula';
+          this.pairStep = 2;
+          status.textContent = 'Board\'daki QR\'ı tara';
+          
+          QR.startScan('qr-scanner-video', async (data) => {
+            document.getElementById('offer-input').value = data;
+            status.textContent = 'QR okundu, cevap hazırlanıyor...';
+            try {
+              const answer = await Peer.acceptOffer(data);
+              document.getElementById('answer-text').value = answer;
+              document.getElementById('pair-step-2').style.display = 'none';
+              document.getElementById('pair-step-3').style.display = 'block';
+              document.getElementById('pair-next-btn').textContent = 'Tamam';
+              this.pairStep = 3;
+              let qrOk = false;
+              try {
+                await QR.drawTo('qr-canvas-2', answer);
+                qrOk = true;
+              } catch(e) {
+                console.error('Answer QR draw failed:', e);
+                status.innerHTML = '⚠ Cevap QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Board\'a gönder.';
+              }
+              if (qrOk) status.textContent = 'Cevap QR hazır. Board tarasın.';
+            } catch(e) {
+              status.textContent = 'Hata: ' + e.message;
+            }
+          });
+        } else if (this.pairStep === 2) {
+          // manual paste
+          const text = document.getElementById('offer-input').value.trim();
+          if (!text) { status.textContent = 'Metin boş.'; return; }
+          QR.stopScan();
+          status.textContent = 'Cevap hazırlanıyor...';
+          const answer = await Peer.acceptOffer(text);
+          document.getElementById('answer-text').value = answer;
+          document.getElementById('pair-step-2').style.display = 'none';
+          document.getElementById('pair-step-3').style.display = 'block';
+          document.getElementById('pair-next-btn').textContent = 'Tamam';
+          this.pairStep = 3;
+          let qrOk = false;
+          try {
+            await QR.drawTo('qr-canvas-2', answer);
+            qrOk = true;
+          } catch(e) {
+            console.error('Answer QR draw failed:', e);
+            status.innerHTML = '⚠ Cevap QR oluşturulamadı: ' + e.message + '<br>Aşağıdaki metni Board\'a gönder.';
+          }
+          if (qrOk) status.textContent = 'Cevap hazır. Board tarasın.';
+        } else if (this.pairStep === 3) {
+          this.closeModal('pair-modal');
+        }
+      }
+    } catch(err) {
+      status.textContent = 'Hata: ' + err.message;
+      console.error(err);
+    }
+  },
+  
+  doUndo(fromGameover = false) {
+    if (State.mode === 'spy') return; // undo only from board
+    if (!State.undoStack.length) return;
+    const ok = Game.undo();
+    if (!ok) return;
+    if (fromGameover) this.closeModal('gameover-modal');
+    UI.renderBoard();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    this.updateUndoBtn();
+  },
+
+  updateUndoBtn() {
+    const btn = document.getElementById('undo-btn');
+    if (!btn) return;
+    const hasUndo = State.undoSteps > 0 && State.undoStack.length > 0;
+    btn.disabled = !hasUndo;
+    btn.style.opacity = hasUndo ? '1' : '0.3';
+    // gameover modal undo btn
+    const goBtn = document.getElementById('gameover-undo-btn');
+    if (goBtn) goBtn.style.display = State.undoSteps > 0 ? '' : 'none';
+  },
+
+  spyNewMap() {
+    if (Peer.state === 'on') {
+      // Connected: confirm, then board rolls new game + syncs everything
+      if (!confirm(I18n.t('spy_newmap_confirm'))) return;
+      Peer.send({ type: 'request_new_game' });
+      UI.showBanner(I18n.t('new_game_started'));
+    } else {
+      // Not connected: generate fresh color map locally, no words
+      const size = State.size || 5;
+      const red = size === 5 ? 9 : 6;
+      const blue = size === 5 ? 8 : 5;
+      const yellow = size === 5 ? 7 : 4;
+      const colors = [];
+      for (let i = 0; i < red; i++) colors.push('red');
+      for (let i = 0; i < blue; i++) colors.push('blue');
+      for (let i = 0; i < yellow; i++) colors.push('yellow');
+      colors.push('black');
+      let attempts = 0;
+      do { shuffle(colors); attempts++; }
+      while (!colorLayoutOk(colors, size) && attempts < 200);
+      State.board = colors.map(color => ({ word: '', color, revealed: false }));
+      State.turn = 'red';
+      State.scoreRed = 0; State.scoreBlue = 0; State.gameOver = false;
+      State.redTarget = red; State.blueTarget = blue;
+      UI.renderSpyBoard();
+    }
+  },
+
+  passTurn() {
+    if (State.gameOver) return;
+    const msg = State.turn === 'red' ? I18n.t('pass_confirm_red') : I18n.t('pass_confirm_blue');
+    document.getElementById('pass-modal-msg').textContent = msg;
+    document.getElementById('pass-yes-btn').textContent = I18n.t('pass_confirm_yes');
+    document.getElementById('pass-modal').classList.add('active');
+  },
+
+  confirmPass() {
+    this.closeModal('pass-modal');
+    Game.switchTurn();
+    UI.renderBoard();
+    UI.updateStatus();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+  },
+
+  openSwap(idx) {
+    const anyRevealed = State.board.some(c => c.revealed);
+    if (anyRevealed) {
+      UI.showBanner(I18n.t('swap_late'), 3000);
+      return;
+    }
+    State.swapIdx = idx;
+    document.getElementById('swap-word').textContent = State.board[idx].word;
+    document.getElementById('swap-modal').classList.add('active');
+  },
+
+  confirmSwap() {
+    const idx = State.swapIdx;
+    if (idx === null) return;
+    this.closeModal('swap-modal');
+    const newWord = Game.swapCard(idx);
+    if (!newWord) { UI.showBanner('Kelime havuzu boş!'); return; }
+    UI.renderBoard();
+    Peer.send({ type: 'board_state', board: State.board, turn: State.turn, scoreRed: State.scoreRed, scoreBlue: State.scoreBlue, size: State.size, gameOver: State.gameOver });
+    State.swapIdx = null;
+  },
+
+  showBanner: (...args) => UI.showBanner(...args),
+
+  toggleAdvanced() {
+    const sec = document.getElementById('advanced-section');
+    const arrow = document.getElementById('advanced-arrow');
+    const open = sec.style.display === 'flex';
+    sec.style.display = open ? 'none' : 'flex';
+    arrow.className = open ? 'ti ti-chevron-right' : 'ti ti-chevron-down';
+  },
+
+  async cacheReset() {
+    if (!confirm('Cache ve service worker temizlenecek, sayfa yeniden yüklenecek.')) return;
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) await r.unregister();
+      }
+      if ('caches' in window) {
+        const keys = await caches.keys();
+        for (const k of keys) await caches.delete(k);
+      }
+    } catch(e) { console.error(e); }
+    location.reload();
+  },
+
+  loadDebug() {
+    if (document.getElementById('eruda-script')) {
+      try { eruda.show(); } catch(e) {}
+      return;
+    }
+    const s = document.createElement('script');
+    s.id = 'eruda-script';
+    s.src = 'https://cdn.jsdelivr.net/npm/eruda';
+    s.onload = () => { try { eruda.init(); eruda.show(); } catch(e) { alert('Eruda yüklenemedi'); } };
+    s.onerror = () => alert('Eruda CDN\'e erişilemiyor');
+    document.head.appendChild(s);
+  },
+};
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  App.init();
+});
+
+// Make App globally reachable
+window.App = App;
+</script>
+</body>
+</html>
