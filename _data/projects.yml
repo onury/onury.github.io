@@ -5,7 +5,11 @@ custom-error-test:
     npm: false
 grunt-docma:
     hidden: true
+grunt-jasmine-nodejs:
+    hidden: true
 json-more:
+    hidden: true
+ocli:
     hidden: true
 ocpp:
     hidden: true
