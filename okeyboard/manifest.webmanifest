@@ -1,13 +1,13 @@
 {
   "name": "Okey Board",
   "short_name": "Okey",
-  "description": "Scoreboard and dice for team okey.",
+  "description": "Scoreboard and dice for okey.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#2a050c",
-  "theme_color": "#490a15",
+  "orientation": "any",
+  "background_color": "#072a1d",
+  "theme_color": "#0f4a32",
   "icons": [
     {
       "src": "./tile.svg",

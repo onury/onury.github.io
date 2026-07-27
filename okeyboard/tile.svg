@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>Okey Board</title>
-  <rect width="64" height="64" rx="14" fill="#7d1324" />
+  <rect width="64" height="64" rx="14" fill="#0f4a32" />
   <g transform="translate(14 8)">
     <rect width="36" height="48" rx="6" fill="#fbf5e4" stroke="#cbbd9b" />
     <text
