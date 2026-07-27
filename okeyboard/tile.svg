@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Okey Board</title>
+  <rect width="64" height="64" rx="14" fill="#7d1324" />
+  <g transform="translate(14 8)">
+    <rect width="36" height="48" rx="6" fill="#fbf5e4" stroke="#cbbd9b" />
+    <text
+      x="18"
+      y="27"
+      font-family="ui-rounded, -apple-system, system-ui, sans-serif"
+      font-size="24"
+      font-weight="800"
+      fill="#d8342b"
+      text-anchor="middle"
+    >1</text>
+    <path
+      transform="translate(12 31) scale(0.5)"
+      fill="#d8342b"
+      d="M12 21.3C6.3 17 2 13.4 2 8.9 2 5.6 4.5 3 7.7 3c1.9 0 3.4.9 4.3 2.3C12.9 3.9 14.4 3 16.3 3 19.5 3 22 5.6 22 8.9c0 4.5-4.3 8.1-10 12.4Z"
+    />
+  </g>
+</svg>
