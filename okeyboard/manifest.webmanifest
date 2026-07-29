@@ -1,6 +1,6 @@
 {
   "name": "Okey Board",
-  "short_name": "Okey",
+  "short_name": "Okey Board",
   "description": "Scoreboard and dice for okey.",
   "start_url": "./",
   "scope": "./",
